@@ -1,0 +1,20 @@
+@layer components {
+  @scope (.giants) {
+    .giants__row {
+      display: grid; grid-auto-flow: column; grid-auto-columns: min(60vw, 16rem);
+      gap: var(--space-3); overflow-x: auto; padding-block-end: var(--space-3);
+      scroll-snap-type: inline mandatory; scroll-padding-inline: var(--space-5);
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+    }
+    .giants__card {
+      scroll-snap-align: start;
+      display: grid; gap: var(--space-2);
+      padding: var(--space-4); border: 1px solid var(--color-hairline); border-radius: var(--radius);
+      font-family: var(--font-sans);
+    }
+    .giants__card figcaption { font-size: var(--step-1); font-weight: 700; }
+    .giants__attendance { font-size: var(--step-3); font-variant-numeric: tabular-nums; color: var(--color-accent); }
+    .giants__meta { color: var(--color-muted); font-size: var(--step--1); }
+  }
+}

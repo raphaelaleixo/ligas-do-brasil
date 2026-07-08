@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="/assets/css/home/workload-chart.css">
   <link rel="stylesheet" href="/assets/css/home/contrast-strip.css">
   <link rel="stylesheet" href="/assets/css/home/estrutura-strip.css">
+  <link rel="stylesheet" href="/assets/css/home/sleeping-giants.css">
 
   <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
@@ -137,6 +138,13 @@
           return `<span style="block-size:1.25rem;background:${bg};border-radius:1px;"></span>`;
         }).join('');
       </script>
+    </section>
+
+    <section class="giants" aria-labelledby="giants-heading">
+      <h2 id="giants-heading">Gigantes adormecidos</h2>
+      <p class="giants__tagline">A torcida já sustenta esses clubes. Falta o palco.</p>
+      <ul class="giants__row" role="list" id="giants-row"></ul>
+      <p class="giants__caveat">Média de público — estimativa 2024.</p>
     </section>
   </main>
 
