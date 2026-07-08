@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="/assets/css/home/analogy-table.css">
   <link rel="stylesheet" href="/assets/css/home/escala.css">
   <link rel="stylesheet" href="/assets/css/home/metric-cards.css">
+  <link rel="stylesheet" href="/assets/css/home/workload-chart.css">
 
   <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
@@ -91,6 +92,13 @@
         <li class="metric-card"><span class="metric-card__value" data-metric="desempregadosEmAbril"></span><span class="metric-card__label">Clubes desempregados em abril</span></li>
         <li class="metric-card"><span class="metric-card__value" data-metric="reducaoVoos"></span><span class="metric-card__label">Redução de voos na fase regular</span></li>
       </ul>
+    </section>
+
+    <section class="workload" aria-labelledby="workload-heading">
+      <h2 id="workload-heading">Jogos por temporada</h2>
+      <p class="workload__caption">Modelo atual (2024, estimativa) vs Reforma 2.0 — média por bucket.</p>
+      <div class="workload__chart" id="workload-chart"></div>
+      <p class="workload__legend"><span class="dot dot--current"></span> Modelo atual · <span class="dot dot--reform"></span> Reforma 2.0</p>
     </section>
   </main>
 

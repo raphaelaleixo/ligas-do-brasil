@@ -1,0 +1,24 @@
+@layer components {
+  @scope (.workload) {
+    :scope { container-type: inline-size; }
+    .workload__chart { display: grid; gap: var(--space-4); font-family: var(--font-sans); }
+    .workload__row { display: grid; grid-template-columns: 8rem 1fr; align-items: center; gap: var(--space-3); }
+    .workload__label { font-weight: 600; text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.05em; }
+    .workload__bars { display: grid; gap: var(--space-1); }
+    .workload__bar {
+      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-2);
+      block-size: 1.75rem;
+    }
+    .workload__bar::before {
+      content: ""; grid-area: 1 / 1;
+      background: var(--bar-color, var(--color-muted));
+      inline-size: calc(var(--w, 0) * 1%); block-size: 100%; border-radius: 2px;
+    }
+    .workload__bar[data-set="current"] { --bar-color: color-mix(in oklab, var(--color-muted) 65%, transparent); }
+    .workload__bar[data-set="reform"]  { --bar-color: var(--color-accent); }
+    .workload__value { grid-area: 1 / 2; font-variant-numeric: tabular-nums; }
+    .dot { display: inline-block; inline-size: 0.75em; block-size: 0.75em; border-radius: 50%; margin-inline-end: 0.25em; }
+    .dot--current { background: color-mix(in oklab, var(--color-muted) 65%, transparent); }
+    .dot--reform  { background: var(--color-accent); }
+  }
+}

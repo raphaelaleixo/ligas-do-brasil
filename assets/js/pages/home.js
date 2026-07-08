@@ -24,8 +24,30 @@ function renderMetrics(season) {
   }
 }
 
+const CURRENT_REFERENCE = { elite: 75, media: 54, base: 14 };
+
+function renderWorkload(season) {
+  const el = document.getElementById('workload-chart');
+  if (!el) return;
+  const buckets = ['elite', 'media', 'base'];
+  const labels = { elite: 'Elite', media: 'Classe Média', base: 'Base' };
+  const maxVal = Math.max(...buckets.map(b => Math.max(CURRENT_REFERENCE[b], season.perfisDashboard[b].mediaJogos)));
+  el.innerHTML = buckets.map((b) => {
+    const cur = CURRENT_REFERENCE[b];
+    const ref = season.perfisDashboard[b].mediaJogos;
+    return `<div class="workload__row">
+      <div class="workload__label">${labels[b]}</div>
+      <div class="workload__bars">
+        <div class="workload__bar" data-set="current" style="--w:${(cur / maxVal * 100).toFixed(1)}"><span class="workload__value">${cur} jogos</span></div>
+        <div class="workload__bar" data-set="reform"  style="--w:${(ref / maxVal * 100).toFixed(1)}"><span class="workload__value">${ref} jogos</span></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
 renderAnalogy();
 loadSeason().then((season) => {
   window.__season = season;
   renderMetrics(season);
+  renderWorkload(season);
 });
