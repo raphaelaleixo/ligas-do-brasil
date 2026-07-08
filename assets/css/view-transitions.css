@@ -1,0 +1,28 @@
+@layer base {
+  @view-transition {
+    navigation: auto;
+  }
+
+  /* Cross-fade for the whole viewport (default) */
+  :where(::view-transition-old(root), ::view-transition-new(root)) {
+    animation-duration: 250ms;
+    animation-timing-function: ease;
+  }
+
+  /* Persist the sticky nav visually across navigations */
+  .site-nav {
+    view-transition-name: site-nav;
+  }
+  :where(::view-transition-old(site-nav), ::view-transition-new(site-nav)) {
+    animation: none;
+  }
+
+  /* Persist the site brand across navigations */
+  .site-nav__brand {
+    view-transition-name: brand;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition { navigation: none; }
+  }
+}
