@@ -26,7 +26,9 @@ function renderTabs(season) {
   tabsEl.setAttribute('role', 'tablist');
 }
 
-function renderTable(rows, quota) {
+function renderTable(rows, quota, conmebol) {
+  const libSet = new Set(conmebol?.libertadores ?? []);
+  const sulSet = new Set(conmebol?.sulAmericana ?? []);
   return `<table class="liga-tabela">
     <caption class="visually-hidden">Classificação da Série ${rows[0].divisao}</caption>
     <thead><tr>
@@ -43,8 +45,12 @@ function renderTable(rows, quota) {
         } else {
           if (r.posicao <= 3) zona = 'acesso';
         }
+        const badges = [
+          libSet.has(r.id) ? '<span class="badge badge--lib" title="Libertadores">🌎 Libertadores</span>' : '',
+          sulSet.has(r.id) ? '<span class="badge badge--sul" title="Sul-Americana">🏆 Sul-Americana</span>' : '',
+        ].join('');
         return `<tr data-zona="${zona}">
-          <td>${r.posicao}</td><td><a href="/timeline?clube=${r.id}">${r.nome}</a></td>
+          <td>${r.posicao}</td><td><a href="/timeline?clube=${r.id}">${r.nome}</a>${badges}</td>
           <td>${r.jogos}</td><td>${r.vitorias}</td><td>${r.empates}</td><td>${r.derrotas}</td>
           <td>${r.golsPro}</td><td>${r.golsContra}</td><td>${r.saldoGols}</td><td><strong>${r.pontos}</strong></td>
         </tr>`;
@@ -64,11 +70,11 @@ function renderLiga(season, key) {
     </div>
     <section aria-labelledby="serieA-heading">
       <h2 id="serieA-heading">Série A</h2>
-      ${renderTable(liga.tabelaA, CAMPEOES_QUOTAS[liga.nome])}
+      ${renderTable(liga.tabelaA, CAMPEOES_QUOTAS[liga.nome], season.conmebol)}
     </section>
     <section aria-labelledby="serieB-heading">
       <h2 id="serieB-heading">Série B</h2>
-      ${renderTable(liga.tabelaB)}
+      ${renderTable(liga.tabelaB, undefined, season.conmebol)}
     </section>
   `;
   const url = new URL(location.href); url.hash = `liga=${key}`; history.replaceState(null, '', url);

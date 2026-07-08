@@ -93,9 +93,57 @@ function renderBrasil() {
   el.innerHTML = funilHtml + bracketHtml;
 }
 
+function renderConmebol() {
+  const cc = season.copaCampeoes.matamata;
+  const cb = season.copaBrasil.matamata;
+  // Slot origin labels, in priority order (matches src/sim/conmebol.js allocation)
+  const libOrigens = [
+    { source: 'Campeão da Copa dos Campeões', preferId: cc.campeao },
+    { source: 'Vice-campeão da Copa dos Campeões', preferId: cc.vice },
+    { source: 'Campeão da Copa do Brasil', preferId: cb.campeao },
+    { source: 'Semifinalista Copa dos Campeões', preferId: cc.semifinalistas?.[0] },
+    { source: 'Semifinalista Copa dos Campeões', preferId: cc.semifinalistas?.[1] },
+    { source: 'Vice-campeão da Copa do Brasil', preferId: cb.vice },
+    { source: 'G7 · melhor campanha geral', preferId: null },
+  ];
+
+  // Walk the actual allocated list, labelling each with the priority slot's label OR "cascata"
+  const libIds = season.conmebol.libertadores;
+  const usedOrigens = new Set();
+  const libItems = libIds.map((id, i) => {
+    // Prefer matching by ID to the slot's preferred candidate
+    const match = libOrigens.findIndex(
+      (o, idx) => !usedOrigens.has(idx) && o.preferId === id
+    );
+    let origem;
+    if (match >= 0) { origem = libOrigens[match].source; usedOrigens.add(match); }
+    else origem = 'Cascata (slot vago)';
+    return { id, origem };
+  });
+
+  const libListEl = document.getElementById('lib-list');
+  libListEl.innerHTML = libItems.map((it, i) => `
+    <li class="conmebol__item">
+      <span class="conmebol__item__num">${i + 1}</span>
+      <span class="conmebol__item__nome">${nome(it.id)}</span>
+      <span class="conmebol__item__origem">${it.origem}</span>
+    </li>`).join('');
+
+  // Sul-Americana: allocated per region, in the sim's iteration order over ligasRegionais
+  const ligaOrder = season.ligasRegionais.map((l) => l.nome);
+  const sulListEl = document.getElementById('sul-list');
+  sulListEl.innerHTML = season.conmebol.sulAmericana.map((id, i) => `
+    <li class="conmebol__item">
+      <span class="conmebol__item__num">${i + 1}</span>
+      <span class="conmebol__item__nome">${nome(id)}</span>
+      <span class="conmebol__item__origem">${ligaOrder[i] ?? ''}</span>
+    </li>`).join('');
+}
+
 const tabsEl = document.getElementById('copa-tabs');
 tabsEl.addEventListener('tab-change', (e) => {
   if (e.detail.key === 'campeoes') renderCampeoes();
   else renderBrasil();
 });
 wireTabs(tabsEl, { defaultKey: 'campeoes' });
+renderConmebol();

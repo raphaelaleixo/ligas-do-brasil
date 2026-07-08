@@ -20,6 +20,15 @@
     .liga-tabela tr[data-zona="rebaixamento"] td:first-child { box-shadow: inset 3px 0 0 var(--color-badge-rebaixamento); }
     .liga-tabela tr[data-zona="acesso"] td:first-child { box-shadow: inset 3px 0 0 var(--color-accent); }
 
+    .badge {
+      display: inline-block; margin-inline-start: var(--space-2);
+      padding: 2px var(--space-2); border-radius: 999px;
+      font-size: 0.7em; font-weight: 600; font-family: var(--font-sans);
+      vertical-align: middle;
+    }
+    .badge--lib { background: color-mix(in oklab, var(--color-badge-campeoes) 22%, transparent); color: var(--color-badge-campeoes); }
+    .badge--sul { background: color-mix(in oklab, var(--color-badge-sulamericana) 22%, transparent); color: var(--color-badge-sulamericana); }
+
     .liga-context { padding: var(--space-4); border: 1px solid var(--color-hairline); border-radius: var(--radius); font-family: var(--font-sans); display: grid; gap: var(--space-2); }
     .liga-context__analog { color: var(--color-muted); }
     .liga-context__quota { font-size: var(--step-2); font-weight: 700; color: var(--color-accent); }
