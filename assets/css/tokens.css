@@ -1,0 +1,52 @@
+@layer tokens {
+  :root {
+    color-scheme: light dark;
+
+    /* Type scale (fluid — clamp for graceful scaling) */
+    --step--1: clamp(0.83rem, 0.79rem + 0.20cqi, 0.94rem);
+    --step-0:  clamp(1.00rem, 0.94rem + 0.30cqi, 1.13rem);
+    --step-1:  clamp(1.20rem, 1.10rem + 0.50cqi, 1.35rem);
+    --step-2:  clamp(1.44rem, 1.29rem + 0.75cqi, 1.62rem);
+    --step-3:  clamp(1.73rem, 1.52rem + 1.05cqi, 1.94rem);
+    --step-4:  clamp(2.07rem, 1.77rem + 1.50cqi, 2.32rem);
+    --step-5:  clamp(2.49rem, 2.06rem + 2.15cqi, 2.79rem);
+
+    /* Spacing scale */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    /* Fonts */
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+    /* Semantic colors — resolve per color-scheme via light-dark() */
+    --color-bg:       light-dark(#faf8f4, #0e0f10);
+    --color-fg:       light-dark(#1a1b1c, #eae7e0);
+    --color-muted:    light-dark(#5b5b58, #a3a09a);
+    --color-hairline: light-dark(#e5e2da, #2a2b2c);
+    --color-accent:   light-dark(#0a5f38, #2fa07b);   /* Brasil green tuned for AA */
+    --color-warn:     light-dark(#8a1c1c, #d97a7a);
+    --color-badge-campeoes:    light-dark(#c9a24a, #d4b26a);
+    --color-badge-sulamericana: light-dark(#4f7cac, #6a97c9);
+    --color-badge-rebaixamento: light-dark(#8a1c1c, #d97a7a);
+
+    /* Competition palette (calendar) */
+    --comp-liga:        light-dark(#0a5f38, #2fa07b);
+    --comp-campeoes:    light-dark(#c9a24a, #d4b26a);
+    --comp-brasil:      light-dark(#3d6b9c, #6a97c9);
+    --comp-conmebol:    light-dark(#7a7a7a, #b0b0b0);
+    --comp-fifa-pause:  light-dark(#e5e2da, #2a2b2c);
+
+    /* Layout */
+    --measure: 65ch;
+    --nav-h: 3.5rem;
+    --radius: 4px;
+  }
+}
