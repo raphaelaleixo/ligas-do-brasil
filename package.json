@@ -1,0 +1,15 @@
+{
+  "name": "futebol-br-simulator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "bake": "node scripts/bake-seed-0.js"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0"
+  }
+}
