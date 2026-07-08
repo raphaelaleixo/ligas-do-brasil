@@ -1,4 +1,4 @@
 node_modules
-data/season-seed-*.json
+data/season-*.json
 .DS_Store
 coverage

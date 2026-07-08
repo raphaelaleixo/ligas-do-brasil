@@ -7,7 +7,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "bake": "node scripts/bake-seed-0.js"
+    "bake": "node scripts/bake-default.js"
   },
   "devDependencies": {
     "vitest": "^2.1.0"
