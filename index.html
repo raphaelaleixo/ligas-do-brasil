@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="/assets/css/home/hero.css">
   <link rel="stylesheet" href="/assets/css/home/analogy-table.css">
   <link rel="stylesheet" href="/assets/css/home/escala.css">
+  <link rel="stylesheet" href="/assets/css/home/metric-cards.css">
 
   <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
@@ -79,6 +80,17 @@
         Brasil promove <strong>2 clubes a mais</strong> que Portugal.
         Em um país <strong>92× maior</strong> em área e <strong>21× maior</strong> em população.
       </p>
+    </section>
+
+    <section class="metrics" aria-labelledby="metrics-heading">
+      <h2 id="metrics-heading">O impacto da pirâmide</h2>
+      <ul class="metric-cards" role="list">
+        <li class="metric-card"><span class="metric-card__value" data-metric="totalClubes"></span><span class="metric-card__label">Clubes ativos</span></li>
+        <li class="metric-card"><span class="metric-card__value" data-metric="tetoJogos"></span><span class="metric-card__label">Teto de jogos por temporada</span></li>
+        <li class="metric-card"><span class="metric-card__value" data-metric="mesesGarantidos"></span><span class="metric-card__label">Meses de calendário garantido</span></li>
+        <li class="metric-card"><span class="metric-card__value" data-metric="desempregadosEmAbril"></span><span class="metric-card__label">Clubes desempregados em abril</span></li>
+        <li class="metric-card"><span class="metric-card__value" data-metric="reducaoVoos"></span><span class="metric-card__label">Redução de voos na fase regular</span></li>
+      </ul>
     </section>
   </main>
 

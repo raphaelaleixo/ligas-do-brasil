@@ -1,0 +1,8 @@
+@layer components {
+  @scope (.metrics) {
+    .metric-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--space-4); font-family: var(--font-sans); }
+    .metric-card { display: grid; gap: var(--space-2); padding: var(--space-4); border: 1px solid var(--color-hairline); border-radius: var(--radius); }
+    .metric-card__value { font-size: var(--step-4); font-weight: 700; color: var(--color-accent); font-variant-numeric: tabular-nums; }
+    .metric-card__label { color: var(--color-muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.03em; }
+  }
+}

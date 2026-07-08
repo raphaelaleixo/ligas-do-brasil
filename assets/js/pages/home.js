@@ -17,8 +17,15 @@ function renderAnalogy() {
   ).join('');
 }
 
+function renderMetrics(season) {
+  for (const el of document.querySelectorAll('[data-metric]')) {
+    const key = el.getAttribute('data-metric');
+    el.textContent = season.meta[key];
+  }
+}
+
 renderAnalogy();
 loadSeason().then((season) => {
-  window.__season = season; // convenience for later widgets
-  // additional widgets wired in later tasks
+  window.__season = season;
+  renderMetrics(season);
 });
