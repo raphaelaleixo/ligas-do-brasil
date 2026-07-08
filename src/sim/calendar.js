@@ -12,18 +12,47 @@ const COPA_BRASIL_WEEKS = {
 // FIFA breaks — no midweek matches these weeks
 const FIFA_MIDWEEKS = new Set([14, 24, 34]);
 
+// Conmebol calendar budget — spread across the season, avoiding weeks already
+// occupied by Copa dos Campeões / Copa do Brasil / FIFA. Collision-avoiding
+// placement below shifts forward if a specific week is already taken for a club.
+// Libertadores: 13 games (group stage + all KO rounds), matching the 60-game
+// cap arithmetic in the reform's metadata.
+const LIBERTADORES_MIDWEEKS = [2, 4, 7, 10, 13, 15, 17, 19, 22, 27, 32, 37, 42];
+// Sul-Americana: 8 games for a finalist (group + KO).
+const SUL_AMERICANA_MIDWEEKS = [4, 15, 19, 27, 32, 37, 39, 42];
+
 function emptyWeek() {
   return { fimDeSemana: null, meioDeSemana: null };
 }
 
 export function assignCalendar(simResult) {
-  const { regionalLeagueMatches, copaCampeoesMatches, copaBrasilMatches, clubIds } = simResult;
+  const {
+    regionalLeagueMatches, copaCampeoesMatches, copaBrasilMatches,
+    conmebolLibertadores = [], conmebolSulAmericana = [],
+    clubIds,
+  } = simResult;
   const calendariosPorClube = new Map();
   for (const id of clubIds) {
     calendariosPorClube.set(id, Array.from({ length: TOTAL_WEEKS }, () => emptyWeek()));
   }
 
   const matchesGeral = [];
+
+  function placeConmebolSlot(clubId, semana, competicao) {
+    const cal = calendariosPorClube.get(clubId);
+    if (!cal) return;
+    const entry = { competicao, rodada: null, casa: null, adversarioId: null, golsPro: null, golsContra: null };
+    let attempt = semana;
+    while (attempt <= TOTAL_WEEKS) {
+      if (FIFA_MIDWEEKS.has(attempt)) { attempt++; continue; }
+      if (cal[attempt - 1].meioDeSemana === null) {
+        cal[attempt - 1].meioDeSemana = entry;
+        matchesGeral.push({ competicao, rodada: null, casaId: clubId, foraId: null, golsCasa: null, golsFora: null, semana: attempt });
+        return;
+      }
+      attempt++;
+    }
+  }
 
   function place(competicao, semana, slotKey, match) {
     const home = calendariosPorClube.get(match.casaId);
@@ -59,6 +88,19 @@ export function assignCalendar(simResult) {
   for (const m of copaBrasilMatches) {
     const semana = COPA_BRASIL_WEEKS[m.rodada] ?? 15;
     place('copa_brasil', semana, 'meioDeSemana', m);
+  }
+
+  // Conmebol slots — placed last so Copa dos Campeões / Copa do Brasil weeks
+  // take priority; if a club's Conmebol week is already busy, walks forward.
+  for (const clubId of conmebolLibertadores) {
+    for (const week of LIBERTADORES_MIDWEEKS) {
+      placeConmebolSlot(clubId, week, 'conmebol_libertadores');
+    }
+  }
+  for (const clubId of conmebolSulAmericana) {
+    for (const week of SUL_AMERICANA_MIDWEEKS) {
+      placeConmebolSlot(clubId, week, 'conmebol_sul_americana');
+    }
   }
 
   const calendariosPorClubeObj = Object.fromEntries(calendariosPorClube);

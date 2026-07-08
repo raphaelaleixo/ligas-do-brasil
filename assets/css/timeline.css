@@ -16,6 +16,8 @@
     .tl-slot[data-comp="liga_regional"] { --slot-color: var(--comp-liga); }
     .tl-slot[data-comp="copa_campeoes"] { --slot-color: var(--comp-campeoes); }
     .tl-slot[data-comp="copa_brasil"]   { --slot-color: var(--comp-brasil); }
+    .tl-slot[data-comp="conmebol_libertadores"]  { --slot-color: var(--color-badge-campeoes); }
+    .tl-slot[data-comp="conmebol_sul_americana"] { --slot-color: var(--color-badge-sulamericana); }
     .tl-slot:empty { opacity: 0.4; cursor: default; }
   }
 }

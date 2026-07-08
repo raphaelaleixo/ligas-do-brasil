@@ -9,5 +9,7 @@
     .contrast__cell[data-comp="liga_regional"] { --cell: var(--comp-liga); }
     .contrast__cell[data-comp="copa_campeoes"] { --cell: var(--comp-campeoes); }
     .contrast__cell[data-comp="copa_brasil"]   { --cell: var(--comp-brasil); }
+    .contrast__cell[data-comp="conmebol_libertadores"]  { --cell: var(--color-badge-campeoes); }
+    .contrast__cell[data-comp="conmebol_sul_americana"] { --cell: var(--color-badge-sulamericana); }
   }
 }

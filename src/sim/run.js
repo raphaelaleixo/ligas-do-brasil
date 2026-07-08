@@ -94,6 +94,8 @@ export function simulateSeason(seed) {
     regionalLeagueMatches: regionalMatches,
     copaCampeoesMatches: campeoesMatches,
     copaBrasilMatches: brasilMatches,
+    conmebolLibertadores: conmebol.libertadores,
+    conmebolSulAmericana: conmebol.sulAmericana,
     clubIds,
   });
 

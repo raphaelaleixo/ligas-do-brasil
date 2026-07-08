@@ -37,6 +37,13 @@ function render(id) {
       const wnum = i + 1;
       const slot = (entry, kind) => {
         if (!entry) return `<button type="button" class="tl-slot" data-comp="" aria-label="Sem jogo"></button>`;
+        // Conmebol slots: reserved dates, no simulated opponent/score
+        if (entry.competicao === 'conmebol_libertadores') {
+          return `<button type="button" class="tl-slot" data-comp="conmebol_libertadores" data-week="${wnum}" data-kind="${kind}" aria-label="Libertadores">🌎 Libertadores</button>`;
+        }
+        if (entry.competicao === 'conmebol_sul_americana') {
+          return `<button type="button" class="tl-slot" data-comp="conmebol_sul_americana" data-week="${wnum}" data-kind="${kind}" aria-label="Sul-Americana">🏆 Sul-Americana</button>`;
+        }
         const adv = clubById(season, entry.adversarioId);
         return `<button type="button" class="tl-slot" data-comp="${entry.competicao}" data-week="${wnum}" data-kind="${kind}" aria-label="${adv?.nome ?? entry.adversarioId} ${entry.golsPro}-${entry.golsContra}">
           ${adv?.nome ?? entry.adversarioId} <strong>${entry.golsPro}–${entry.golsContra}</strong>
@@ -51,7 +58,7 @@ function render(id) {
       const week = parseInt(btn.dataset.week, 10);
       const kind = btn.dataset.kind;
       const entry = kind === 'fds' ? cal[week - 1].fimDeSemana : cal[week - 1].meioDeSemana;
-      const adv = clubById(season, entry.adversarioId);
+      const adv = entry.adversarioId ? clubById(season, entry.adversarioId) : null;
       openMatchDialog({ semana: week, entry, ownerClub: club, adversario: adv });
     });
   });
