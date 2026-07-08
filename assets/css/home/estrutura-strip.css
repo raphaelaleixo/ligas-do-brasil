@@ -1,0 +1,5 @@
+@layer components {
+  @scope (.estrutura) {
+    .estrutura__strip { display: grid; grid-template-columns: repeat(42, 1fr); gap: 2px; }
+  }
+}

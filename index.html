@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="/assets/css/home/metric-cards.css">
   <link rel="stylesheet" href="/assets/css/home/workload-chart.css">
   <link rel="stylesheet" href="/assets/css/home/contrast-strip.css">
+  <link rel="stylesheet" href="/assets/css/home/estrutura-strip.css">
 
   <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
@@ -112,6 +113,30 @@
         <span class="dot" style="background:var(--comp-brasil)"></span> Copa do Brasil ·
         <span class="dot" style="background:var(--comp-fifa-pause)"></span> Livre
       </p>
+    </section>
+
+    <section class="estrutura" aria-labelledby="estrutura-heading">
+      <h2 id="estrutura-heading">42 semanas, 21+21</h2>
+      <p class="estrutura__caption">21 semanas de rodada dupla (fim-de-semana + meio-de-semana) e 21 semanas de rodada simples, com pausas FIFA.</p>
+      <div class="estrutura__strip" aria-hidden="true" id="estrutura-strip"></div>
+      <p class="estrutura__legend">
+        <span class="dot" style="background:var(--color-accent)"></span> Rodada dupla ·
+        <span class="dot" style="background:color-mix(in oklab, var(--color-accent) 40%, transparent)"></span> Rodada simples ·
+        <span class="dot" style="background:var(--comp-fifa-pause)"></span> Pausa FIFA
+      </p>
+      <script type="module">
+        const FIFA = new Set([14, 24, 34]);
+        const DUPLE = new Set([3, 5, 6, 8, 9, 11, 12, 20, 21, 25, 26, 30, 31, 35, 36, 40, 41]);
+        const s = document.getElementById('estrutura-strip');
+        s.innerHTML = Array.from({ length: 42 }, (_, i) => {
+          const w = i + 1;
+          const kind = FIFA.has(w) ? 'fifa' : (DUPLE.has(w) ? 'dupla' : 'simples');
+          const bg = kind === 'fifa' ? 'var(--comp-fifa-pause)' :
+                     kind === 'dupla' ? 'var(--color-accent)' :
+                     'color-mix(in oklab, var(--color-accent) 40%, transparent)';
+          return `<span style="block-size:1.25rem;background:${bg};border-radius:1px;"></span>`;
+        }).join('');
+      </script>
     </section>
   </main>
 
