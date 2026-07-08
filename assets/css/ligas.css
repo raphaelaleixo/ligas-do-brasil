@@ -1,0 +1,32 @@
+@layer components {
+  @scope (.ligas) {
+    .ligas__tabs ul { display: flex; gap: var(--space-4); flex-wrap: wrap; padding-block-end: var(--space-4); border-block-end: 1px solid var(--color-hairline); font-family: var(--font-sans); list-style: none; padding-inline-start: 0; }
+    .ligas__tab {
+      background: none; border: 0; padding: var(--space-2) var(--space-3); cursor: pointer;
+      font-size: var(--step-0); font-family: inherit; color: inherit;
+      border-block-end: 2px solid transparent;
+      display: grid; gap: 2px; text-align: start;
+    }
+    .ligas__tab[aria-selected="true"] { color: var(--color-accent); border-block-end-color: var(--color-accent); font-weight: 700; }
+    .ligas__tab-sub { display: block; color: var(--color-muted); font-size: var(--step--1); }
+
+    .liga-detalhe { display: grid; gap: var(--space-6); padding-block-start: var(--space-5); }
+    .liga-tabela { border-collapse: collapse; inline-size: 100%; font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
+    .liga-tabela th, .liga-tabela td { padding: var(--space-2) var(--space-3); border-block-end: 1px solid var(--color-hairline); text-align: end; }
+    .liga-tabela th:first-child, .liga-tabela td:nth-child(2) { text-align: start; }
+    .liga-tabela th { font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-muted); }
+    .liga-tabela tr[data-zona="campeoes"] td:first-child { box-shadow: inset 3px 0 0 var(--color-badge-campeoes); }
+    .liga-tabela tr[data-zona="sulamericana"] td:first-child { box-shadow: inset 3px 0 0 var(--color-badge-sulamericana); }
+    .liga-tabela tr[data-zona="rebaixamento"] td:first-child { box-shadow: inset 3px 0 0 var(--color-badge-rebaixamento); }
+    .liga-tabela tr[data-zona="acesso"] td:first-child { box-shadow: inset 3px 0 0 var(--color-accent); }
+
+    .liga-context { padding: var(--space-4); border: 1px solid var(--color-hairline); border-radius: var(--radius); font-family: var(--font-sans); display: grid; gap: var(--space-2); }
+    .liga-context__analog { color: var(--color-muted); }
+    .liga-context__quota { font-size: var(--step-2); font-weight: 700; color: var(--color-accent); }
+
+    .visually-hidden {
+      position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden;
+      clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    }
+  }
+}
