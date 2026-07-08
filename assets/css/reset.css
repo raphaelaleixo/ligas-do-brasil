@@ -1,0 +1,21 @@
+@layer reset {
+  /* Targeted reset — no global * selector so cascade layers stay in control */
+  html { box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: inherit; }
+
+  body, h1, h2, h3, h4, p, figure, blockquote, dl, dd, ul, ol { margin: 0; }
+  ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+  img, picture, svg, video { display: block; max-inline-size: 100%; }
+
+  :where(input, button, textarea, select) { font: inherit; }
+
+  /* Reduced motion — everything transitions instantly */
+  @media (prefers-reduced-motion: reduce) {
+    :where(*, *::before, *::after) {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

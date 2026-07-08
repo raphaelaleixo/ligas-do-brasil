@@ -1,0 +1,61 @@
+@layer base {
+  html {
+    font-family: var(--font-serif);
+    font-size: 100%;
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-fg);
+    min-block-size: 100dvb;
+    font-size: var(--step-0);
+  }
+
+  :where(h1, h2, h3, h4) {
+    font-family: var(--font-serif);
+    line-height: 1.15;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+  }
+  h1 { font-size: var(--step-5); }
+  h2 { font-size: var(--step-3); }
+  h3 { font-size: var(--step-2); }
+  h4 { font-size: var(--step-1); }
+
+  p { text-wrap: pretty; max-inline-size: var(--measure); }
+
+  a {
+    color: inherit;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: from-font;
+  }
+
+  :where(a, button):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Interactive touch target minimum */
+  :where(a, button, [role="button"]) {
+    min-block-size: 24px;
+    min-inline-size: 24px;
+  }
+  @media (pointer: coarse) {
+    :where(a, button, [role="button"]) {
+      min-block-size: 44px;
+      min-inline-size: 44px;
+    }
+  }
+
+  /* Forced Colors Mode: preserve borders/badges via system colors */
+  @media (forced-colors: active) {
+    :root {
+      --color-accent: LinkText;
+      --color-hairline: CanvasText;
+    }
+  }
+}
