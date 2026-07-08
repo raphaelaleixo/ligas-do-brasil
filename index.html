@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="/assets/css/home/escala.css">
   <link rel="stylesheet" href="/assets/css/home/metric-cards.css">
   <link rel="stylesheet" href="/assets/css/home/workload-chart.css">
+  <link rel="stylesheet" href="/assets/css/home/contrast-strip.css">
 
   <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
@@ -99,6 +100,18 @@
       <p class="workload__caption">Modelo atual (2024, estimativa) vs Reforma 2.0 — média por bucket.</p>
       <div class="workload__chart" id="workload-chart"></div>
       <p class="workload__legend"><span class="dot dot--current"></span> Modelo atual · <span class="dot dot--reform"></span> Reforma 2.0</p>
+    </section>
+
+    <section class="contrast" aria-labelledby="contrast-heading">
+      <h2 id="contrast-heading">A mesma temporada, dois clubes</h2>
+      <p class="contrast__caption">Todos os jogos de dois clubes ao longo de 42 semanas.</p>
+      <div class="contrast__rows" id="contrast-rows"></div>
+      <p class="contrast__legend">
+        <span class="dot" style="background:var(--comp-liga)"></span> Liga Regional ·
+        <span class="dot" style="background:var(--comp-campeoes)"></span> Copa dos Campeões ·
+        <span class="dot" style="background:var(--comp-brasil)"></span> Copa do Brasil ·
+        <span class="dot" style="background:var(--comp-fifa-pause)"></span> Livre
+      </p>
     </section>
   </main>
 
