@@ -25,11 +25,37 @@ function ligaLookupFrom(qualificados) {
   return map;
 }
 
-function campanhaGeral(grupos) {
+function computeKOReach(matamata) {
+  // Score = furthest round survived. Higher is better.
+  // Group-only clubs never appear here → default to 1 downstream.
+  const scores = { '16avos': 2, 'oitavas': 3, 'quartas': 4, 'semis': 5 };
+  const reach = new Map();
+  const bump = (id, s) => reach.set(id, Math.max(reach.get(id) ?? 0, s));
+  for (const [round, s] of Object.entries(scores)) {
+    for (const m of matamata[round]) { bump(m.casaId, s); bump(m.foraId, s); }
+  }
+  // Final (both finalists reach = 6)
+  bump(matamata.final.casaId, 6);
+  bump(matamata.final.foraId, 6);
+  return reach;
+}
+
+/**
+ * "Melhor campanha geral" = order by how deep a club went in the KO (semifinalist
+ * outranks quarter-finalist outranks oitavas outranks 16-avos outranks group-only),
+ * tiebroken by group-stage table (pontos > SG > GP > name). Fixes the artefact
+ * where a club with an easy group but zero KO progression outranks a legit
+ * quarter-finalist.
+ */
+function campanhaGeral(grupos, matamata) {
+  const reach = computeKOReach(matamata);
   const rows = grupos.flatMap((g) => g.tabela);
   return rows
     .slice()
     .sort((a, b) => {
+      const ra = reach.get(a.id) ?? 1;
+      const rb = reach.get(b.id) ?? 1;
+      if (rb !== ra) return rb - ra;
       if (b.pontos !== a.pontos) return b.pontos - a.pontos;
       if (b.saldoGols !== a.saldoGols) return b.saldoGols - a.saldoGols;
       if (b.golsPro !== a.golsPro) return b.golsPro - a.golsPro;
@@ -63,7 +89,7 @@ export function simulateSeason(seed) {
       campeao: koCampeoes.campeao,
       vice: koCampeoes.vice,
       semifinalistas: koCampeoes.semifinalistas,
-      campanhaGeral: campanhaGeral(grupos),
+      campanhaGeral: campanhaGeral(grupos, koCampeoes),
     },
     copaBrasil: { campeao: koBrasil.campeao, vice: koBrasil.vice },
     ligasRegionais: regional.ligas,

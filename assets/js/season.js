@@ -1,4 +1,4 @@
-const CACHE_NAME = 'futebol-br-v3';
+const CACHE_NAME = 'futebol-br-v4';
 const SEASON_URL = '/data/season-default.json';
 
 let cached = null;
