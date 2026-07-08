@@ -72,6 +72,13 @@
     max-inline-size: 72rem;
     margin-inline: auto;
     inline-size: 100%;
+    /* Prevent horizontal page overflow: grid items default to min-width:auto,
+       which lets horizontal-scroll children (sleeping giants row, bracket, etc.)
+       stretch their parent instead of scrolling internally. */
+    min-inline-size: 0;
+  }
+  main > * {
+    min-inline-size: 0;
   }
 
   footer {
