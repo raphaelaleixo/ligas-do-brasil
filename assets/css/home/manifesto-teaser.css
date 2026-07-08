@@ -1,0 +1,8 @@
+@layer components {
+  @scope (.teaser) {
+    :scope { border-block: 1px solid var(--color-hairline); padding-block: var(--space-6); }
+    .teaser__body { font-size: var(--step-1); max-inline-size: 55ch; }
+    .teaser__cta { font-family: var(--font-sans); font-weight: 700; color: var(--color-accent); font-size: var(--step-1); text-decoration: none; }
+    .teaser__cta:hover { text-decoration: underline; }
+  }
+}
