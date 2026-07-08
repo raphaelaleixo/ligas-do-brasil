@@ -1,0 +1,19 @@
+@layer components {
+  @scope (.escala) {
+    :scope { display: grid; gap: var(--space-5); padding-block: var(--space-6); border-block: 1px solid var(--color-hairline); }
+    .escala__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
+    .escala__country { display: grid; gap: var(--space-3); font-family: var(--font-sans); }
+    .escala__country figcaption { font-size: var(--step-2); font-weight: 700; }
+    dl { display: grid; gap: var(--space-2); }
+    dl > div { display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-hairline); padding-block: var(--space-2); }
+    dt { color: var(--color-muted); }
+    dd { font-variant-numeric: tabular-nums; }
+    .escala__punchline { font-size: var(--step-2); text-align: center; text-wrap: balance; max-inline-size: 35ch; margin-inline: auto; }
+    .escala__punchline strong { color: var(--color-accent); }
+  }
+
+  .visually-hidden {
+    position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden;
+    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+  }
+}
