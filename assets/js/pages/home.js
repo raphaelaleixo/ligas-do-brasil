@@ -60,8 +60,14 @@ function renderContrast(season) {
   el.innerHTML = [elite, base].map(club => {
     const cal = season.calendariosPorClube[club.id] ?? [];
     const cells = cal.map(w => {
-      const comp = w.fimDeSemana?.competicao ?? w.meioDeSemana?.competicao ?? '';
-      return `<div class="contrast__cell" data-comp="${comp}"></div>`;
+      const fds = w.fimDeSemana?.competicao ?? '';
+      const mds = w.meioDeSemana?.competicao ?? '';
+      // Each week = two stacked mini-cells: fim-de-semana on top, meio-de-semana below.
+      // Otherwise weekend games mask midweek Conmebol slots and the strip looks flat.
+      return `<div class="contrast__cell">
+        <span class="contrast__cell__half" data-comp="${fds}"></span>
+        <span class="contrast__cell__half" data-comp="${mds}"></span>
+      </div>`;
     }).join('');
     return `<div class="contrast__row">
       <div class="contrast__label">${club.nome} <span class="contrast__sub">${club.liga_regional}</span></div>

@@ -5,11 +5,16 @@
     .contrast__label { font-size: var(--step--1); font-weight: 600; }
     .contrast__sub { color: var(--color-muted); font-weight: 400; display: block; }
     .contrast__strip { display: grid; grid-template-columns: repeat(42, 1fr); gap: 2px; }
-    .contrast__cell { block-size: 1.25rem; background: var(--cell, var(--comp-fifa-pause)); border-radius: 1px; }
-    .contrast__cell[data-comp="liga_regional"] { --cell: var(--comp-liga); }
-    .contrast__cell[data-comp="copa_campeoes"] { --cell: var(--comp-campeoes); }
-    .contrast__cell[data-comp="copa_brasil"]   { --cell: var(--comp-brasil); }
-    .contrast__cell[data-comp="conmebol_libertadores"]  { --cell: var(--color-badge-campeoes); }
-    .contrast__cell[data-comp="conmebol_sul_americana"] { --cell: var(--color-badge-sulamericana); }
+    .contrast__cell {
+      display: grid; grid-template-rows: 1fr 1fr; gap: 1px;
+      block-size: 1.5rem;
+    }
+    .contrast__cell__half { background: var(--cell, transparent); border-radius: 1px; }
+    .contrast__cell__half[data-comp=""] { background: var(--comp-fifa-pause); opacity: 0.5; }
+    .contrast__cell__half[data-comp="liga_regional"] { --cell: var(--comp-liga); }
+    .contrast__cell__half[data-comp="copa_campeoes"] { --cell: var(--comp-campeoes); }
+    .contrast__cell__half[data-comp="copa_brasil"]   { --cell: var(--comp-brasil); }
+    .contrast__cell__half[data-comp="conmebol_libertadores"]  { --cell: var(--color-badge-campeoes); }
+    .contrast__cell__half[data-comp="conmebol_sul_americana"] { --cell: var(--color-badge-sulamericana); }
   }
 }
