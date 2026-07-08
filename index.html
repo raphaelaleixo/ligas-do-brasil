@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Futebol BR 2.0 · O problema não é o calendário. É a escala.</title>
+  <meta name="description" content="Simulação da reforma estrutural do futebol brasileiro: 192 clubes, 6 ligas regionais, Copa dos Campeões.">
+
+  <link rel="stylesheet" href="/assets/css/layers.css">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/view-transitions.css">
+  <link rel="stylesheet" href="/assets/css/home/hero.css">
+  <link rel="stylesheet" href="/assets/css/home/analogy-table.css">
+
+  <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
+  <link rel="expect" href="#page-ready" blocking="render">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="site-nav__brand" href="/">Futebol BR <span aria-hidden="true">2.0</span></a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <nav>
+      <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
+        <li><a href="/">Início</a></li>
+        <li><a href="/manifesto">Manifesto</a></li>
+        <li><a href="/ligas">Ligas Regionais</a></li>
+        <li><a href="/timeline">Calendário</a></li>
+        <li><a href="/copa">Copas Nacionais</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="page-ready">
+    <section class="hero">
+      <p class="hero__pullquote">
+        O problema não é o calendário. É a escala.
+      </p>
+      <p class="hero__thesis">
+        O Brasil, com dimensões continentais, promove menos clubes ao topo do futebol nacional do que Portugal.
+        A Reforma 2.0 corrige a pirâmide antes de tocar no calendário.
+      </p>
+
+      <section class="analogy" aria-labelledby="analogy-heading">
+        <h2 id="analogy-heading">Cada região é uma liga europeia</h2>
+        <table class="analogy__table">
+          <thead>
+            <tr><th scope="col">Reforma 2.0</th><th scope="col">Análogo europeu</th><th scope="col">Pop.</th></tr>
+          </thead>
+          <tbody id="analogy-rows"></tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <p>Simulação seed 740 · Botafogo campeão · <a href="/manifesto">Leia o manifesto</a></p>
+  </footer>
+
+  <script type="module" src="/assets/js/nav.js"></script>
+  <script type="module" src="/assets/js/pages/home.js"></script>
+</body>
+</html>
