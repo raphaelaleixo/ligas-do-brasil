@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendário | Futebol BR 2.0</title>
+  <meta name="description" content="Calendário anual completo de qualquer um dos 192 clubes.">
+
+  <link rel="stylesheet" href="/assets/css/layers.css">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/reset.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/layout.css">
+  <link rel="stylesheet" href="/assets/css/view-transitions.css">
+  <link rel="stylesheet" href="/assets/css/ligas.css">
+  <link rel="stylesheet" href="/assets/css/timeline.css">
+  <link rel="stylesheet" href="/assets/css/match-dialog.css">
+
+  <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
+  <link rel="expect" href="#page-ready" blocking="render">
+</head>
+<body>
+  <header class="site-nav">
+    <a class="site-nav__brand" href="/">Futebol BR <span aria-hidden="true">2.0</span></a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <nav>
+      <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
+        <li><a href="/">Início</a></li>
+        <li><a href="/manifesto">Manifesto</a></li>
+        <li><a href="/ligas">Ligas Regionais</a></li>
+        <li><a href="/timeline">Calendário</a></li>
+        <li><a href="/copa">Copas Nacionais</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="page-ready">
+    <section class="timeline">
+      <header class="timeline__header">
+        <h1>Calendário</h1>
+        <search>
+          <form class="timeline__picker" id="club-picker-form">
+            <label for="clube-select">Clube:</label>
+            <select id="clube-select" name="clube" class="club-picker" required>
+              <button><selectedcontent></selectedcontent></button>
+            </select>
+            <button type="submit">Ver</button>
+          </form>
+        </search>
+        <div id="club-header"></div>
+      </header>
+
+      <div class="timeline__grid" id="timeline-grid"></div>
+
+      <div id="timeline-stats"></div>
+    </section>
+
+    <dialog id="match-dialog" closedby="any" class="match-dialog">
+      <form method="dialog">
+        <header><h2 id="match-title"></h2><button type="submit" aria-label="Fechar">✕</button></header>
+        <div id="match-body"></div>
+      </form>
+    </dialog>
+  </main>
+
+  <footer>
+    <p>Simulação seed 740 · Botafogo campeão · <a href="/manifesto">Leia o manifesto</a></p>
+  </footer>
+
+  <script type="module" src="/assets/js/nav.js"></script>
+  <script type="module" src="/assets/js/pages/timeline.js"></script>
+</body>
+</html>
