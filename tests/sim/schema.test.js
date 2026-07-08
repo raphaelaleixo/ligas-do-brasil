@@ -19,12 +19,13 @@ describe('season JSON schema', () => {
     ]);
   });
 
-  it('every clube has required fields including calendario length 42', () => {
+  it('every clube has required fields; calendars live at top level', () => {
     for (const c of season.clubes) {
-      for (const k of ['id', 'nome', 'liga_regional', 'divisao', 'ranking_forca', 'estatisticas_temporada', 'status_ano_seguinte', 'calendario']) {
+      for (const k of ['id', 'nome', 'liga_regional', 'divisao', 'ranking_forca', 'estatisticas_temporada', 'status_ano_seguinte']) {
         expect(c).toHaveProperty(k);
       }
-      expect(c.calendario).toHaveLength(42);
+      expect(c).not.toHaveProperty('calendario');
+      expect(season.calendariosPorClube[c.id]).toHaveLength(42);
     }
   });
 

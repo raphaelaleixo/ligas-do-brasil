@@ -29,14 +29,10 @@ export function assignCalendar(simResult) {
     const home = calendariosPorClube.get(match.casaId);
     const away = calendariosPorClube.get(match.foraId);
     if (!home || !away) return;
-    const base = {
-      competicao,
-      rodada: match.rodada ?? null,
-      casaId: match.casaId, foraId: match.foraId,
-      golsCasa: match.golsCasa, golsFora: match.golsFora,
-    };
-    const entryHome = { ...base, casa: true, adversarioId: match.foraId, golsPro: match.golsCasa, golsContra: match.golsFora };
-    const entryAway = { ...base, casa: false, adversarioId: match.casaId, golsPro: match.golsFora, golsContra: match.golsCasa };
+    const rodada = match.rodada ?? null;
+    // Per-club entries: pre-oriented, no redundant fields.
+    const entryHome = { competicao, rodada, casa: true,  adversarioId: match.foraId, golsPro: match.golsCasa, golsContra: match.golsFora };
+    const entryAway = { competicao, rodada, casa: false, adversarioId: match.casaId, golsPro: match.golsFora, golsContra: match.golsCasa };
     let attempt = semana;
     while (attempt <= TOTAL_WEEKS) {
       if (slotKey === 'meioDeSemana' && FIFA_MIDWEEKS.has(attempt)) { attempt++; continue; }
@@ -45,7 +41,7 @@ export function assignCalendar(simResult) {
       if (okHome && okAway) {
         home[attempt - 1][slotKey] = entryHome;
         away[attempt - 1][slotKey] = entryAway;
-        matchesGeral.push({ ...base, semana: attempt });
+        matchesGeral.push({ competicao, rodada, casaId: match.casaId, foraId: match.foraId, golsCasa: match.golsCasa, golsFora: match.golsFora, semana: attempt });
         return;
       }
       attempt++;

@@ -112,6 +112,7 @@ export function simulateSeason(seed) {
   const clubes = getAllTeams().map((t) => {
     const liga = regional.ligas.find((l) => l.nome === t.liga_regional);
     const row = liga.tabelaA.find((r) => r.id === t.id) ?? liga.tabelaB.find((r) => r.id === t.id);
+    // Calendar lives in top-level `calendariosPorClube` keyed by id; not duplicated here.
     return {
       id: t.id,
       nome: t.nome,
@@ -130,14 +131,16 @@ export function simulateSeason(seed) {
         libertadores: libSet.has(t.id),
         sul_americana: sulSet.has(t.id),
       },
-      calendario: calendar.calendariosPorClube[t.id],
     };
   });
+
+  // Strip matches from each liga on output — they live in matchesGeral (filter by ligaNome).
+  const ligasRegionaisSlim = regional.ligas.map(({ matches: _m, ...rest }) => rest);
 
   return {
     seed,
     meta: META,
-    ligasRegionais: regional.ligas,
+    ligasRegionais: ligasRegionaisSlim,
     copaCampeoes: {
       potes: pots,
       grupos,

@@ -1,0 +1,142 @@
+{
+  "ligas": [
+    {
+      "nome": "Liga Paulista",
+      "clubes": [
+        { "nome": "Palmeiras", "estado": "SP", "ranking": 10 },
+        { "nome": "São Paulo", "estado": "SP", "ranking": 9 },
+        { "nome": "Corinthians", "estado": "SP", "ranking": 8 },
+        { "nome": "Santos", "estado": "SP", "ranking": 8 },
+        { "nome": "Red Bull Bragantino", "estado": "SP", "ranking": 8 },
+        { "nome": "Novorizontino", "estado": "SP", "ranking": 7 },
+        { "nome": "Mirassol", "estado": "SP", "ranking": 7 },
+        { "nome": "Ponte Preta", "estado": "SP", "ranking": 5 },
+        { "nome": "Guarani", "estado": "SP", "ranking": 5 },
+        { "nome": "Ituano", "estado": "SP", "ranking": 5 },
+        { "nome": "Botafogo-SP", "estado": "SP", "ranking": 4 },
+        { "nome": "São Bernardo", "estado": "SP", "ranking": 4 },
+        { "nome": "Ferroviária", "estado": "SP", "ranking": 4 },
+        { "nome": "Inter de Limeira", "estado": "SP", "ranking": 4 },
+        { "nome": "Água Santa", "estado": "SP", "ranking": 4 },
+        { "nome": "Santo André", "estado": "SP", "ranking": 3 },
+        { "nome": "Portuguesa", "estado": "SP", "ranking": 3 },
+        { "nome": "XV de Piracicaba", "estado": "SP", "ranking": 3 }
+      ]
+    },
+    {
+      "nome": "Liga Guanabara-Capixaba",
+      "clubes": [
+        { "nome": "Flamengo", "estado": "RJ", "ranking": 10 },
+        { "nome": "Botafogo", "estado": "RJ", "ranking": 10 },
+        { "nome": "Fluminense", "estado": "RJ", "ranking": 9 },
+        { "nome": "Vasco da Gama", "estado": "RJ", "ranking": 8 },
+        { "nome": "Volta Redonda", "estado": "RJ", "ranking": 5 },
+        { "nome": "Nova Iguaçu", "estado": "RJ", "ranking": 5 },
+        { "nome": "Boavista", "estado": "RJ", "ranking": 3 },
+        { "nome": "Madureira", "estado": "RJ", "ranking": 3 },
+        { "nome": "Bangu", "estado": "RJ", "ranking": 3 },
+        { "nome": "Real Noroeste", "estado": "ES", "ranking": 3 },
+        { "nome": "Porto Vitória", "estado": "ES", "ranking": 3 },
+        { "nome": "Rio Branco-ES", "estado": "ES", "ranking": 3 },
+        { "nome": "America", "estado": "RJ", "ranking": 2 },
+        { "nome": "Americano", "estado": "RJ", "ranking": 2 },
+        { "nome": "Audax-RJ", "estado": "RJ", "ranking": 2 },
+        { "nome": "Desportiva Ferroviária", "estado": "ES", "ranking": 2 },
+        { "nome": "Goytacaz", "estado": "RJ", "ranking": 1 },
+        { "nome": "Friburguense", "estado": "RJ", "ranking": 1 }
+      ]
+    },
+    {
+      "nome": "Liga Nordeste",
+      "clubes": [
+        { "nome": "Fortaleza", "estado": "CE", "ranking": 9 },
+        { "nome": "Bahia", "estado": "BA", "ranking": 9 },
+        { "nome": "Ceará", "estado": "CE", "ranking": 7 },
+        { "nome": "Vitória", "estado": "BA", "ranking": 7 },
+        { "nome": "Sport Recife", "estado": "PE", "ranking": 7 },
+        { "nome": "CRB", "estado": "AL", "ranking": 5 },
+        { "nome": "Náutico", "estado": "PE", "ranking": 4 },
+        { "nome": "Santa Cruz", "estado": "PE", "ranking": 4 },
+        { "nome": "CSA", "estado": "AL", "ranking": 4 },
+        { "nome": "ABC", "estado": "RN", "ranking": 4 },
+        { "nome": "América-RN", "estado": "RN", "ranking": 4 },
+        { "nome": "Sampaio Corrêa", "estado": "MA", "ranking": 4 },
+        { "nome": "Botafogo-PB", "estado": "PB", "ranking": 4 },
+        { "nome": "Treze", "estado": "PB", "ranking": 3 },
+        { "nome": "Confiança", "estado": "SE", "ranking": 3 },
+        { "nome": "River-PI", "estado": "PI", "ranking": 3 },
+        { "nome": "Juazeirense", "estado": "BA", "ranking": 3 },
+        { "nome": "Moto Club", "estado": "MA", "ranking": 2 }
+      ]
+    },
+    {
+      "nome": "Liga Sulista",
+      "clubes": [
+        { "nome": "Internacional", "estado": "RS", "ranking": 9 },
+        { "nome": "Grêmio", "estado": "RS", "ranking": 9 },
+        { "nome": "Athletico-Paranaense", "estado": "PR", "ranking": 9 },
+        { "nome": "Criciúma", "estado": "SC", "ranking": 7 },
+        { "nome": "Juventude", "estado": "RS", "ranking": 7 },
+        { "nome": "Maringá", "estado": "PR", "ranking": 6 },
+        { "nome": "Coritiba", "estado": "PR", "ranking": 6 },
+        { "nome": "Operário-PR", "estado": "PR", "ranking": 5 },
+        { "nome": "Chapecoense", "estado": "SC", "ranking": 5 },
+        { "nome": "Avaí", "estado": "SC", "ranking": 5 },
+        { "nome": "Brusque", "estado": "SC", "ranking": 5 },
+        { "nome": "Londrina", "estado": "PR", "ranking": 4 },
+        { "nome": "Caxias", "estado": "RS", "ranking": 4 },
+        { "nome": "Ypiranga de Erechim", "estado": "RS", "ranking": 4 },
+        { "nome": "Figueirense", "estado": "SC", "ranking": 3 },
+        { "nome": "Joinville", "estado": "SC", "ranking": 3 },
+        { "nome": "Brasil de Pelotas", "estado": "RS", "ranking": 3 },
+        { "nome": "Cascavel", "estado": "PR", "ranking": 3 }
+      ]
+    },
+    {
+      "nome": "Liga Mineira/Centro-Oeste",
+      "clubes": [
+        { "nome": "Atlético-MG", "estado": "MG", "ranking": 10 },
+        { "nome": "Cruzeiro", "estado": "MG", "ranking": 9 },
+        { "nome": "Cuiabá", "estado": "MT", "ranking": 7 },
+        { "nome": "Atlético-GO", "estado": "GO", "ranking": 7 },
+        { "nome": "Goiás", "estado": "GO", "ranking": 6 },
+        { "nome": "América-MG", "estado": "MG", "ranking": 6 },
+        { "nome": "Vila Nova-GO", "estado": "GO", "ranking": 5 },
+        { "nome": "Athletic Club", "estado": "MG", "ranking": 5 },
+        { "nome": "Tombense", "estado": "MG", "ranking": 4 },
+        { "nome": "Anápolis", "estado": "GO", "ranking": 4 },
+        { "nome": "Aparecidense", "estado": "GO", "ranking": 4 },
+        { "nome": "Luverdense", "estado": "MT", "ranking": 3 },
+        { "nome": "Ipatinga", "estado": "MG", "ranking": 3 },
+        { "nome": "Uberlândia", "estado": "MG", "ranking": 3 },
+        { "nome": "Villa Nova-MG", "estado": "MG", "ranking": 3 },
+        { "nome": "Brasiliense", "estado": "DF", "ranking": 3 },
+        { "nome": "Gama", "estado": "DF", "ranking": 3 },
+        { "nome": "Operário-MS", "estado": "MS", "ranking": 2 }
+      ]
+    },
+    {
+      "nome": "Liga Norte",
+      "clubes": [
+        { "nome": "Amazonas FC", "estado": "AM", "ranking": 6 },
+        { "nome": "Paysandu", "estado": "PA", "ranking": 5 },
+        { "nome": "Remo", "estado": "PA", "ranking": 5 },
+        { "nome": "Manaus FC", "estado": "AM", "ranking": 4 },
+        { "nome": "Porto Velho", "estado": "RO", "ranking": 3 },
+        { "nome": "Águia de Marabá", "estado": "PA", "ranking": 3 },
+        { "nome": "Tocantinópolis", "estado": "TO", "ranking": 3 },
+        { "nome": "Trem", "estado": "AP", "ranking": 2 },
+        { "nome": "Nacional-AM", "estado": "AM", "ranking": 2 },
+        { "nome": "Tuna Luso", "estado": "PA", "ranking": 2 },
+        { "nome": "Castanhal", "estado": "PA", "ranking": 2 },
+        { "nome": "Rio Branco-AC", "estado": "AC", "ranking": 2 },
+        { "nome": "Galvez", "estado": "AC", "ranking": 2 },
+        { "nome": "Real Ariquemes", "estado": "RO", "ranking": 2 },
+        { "nome": "Ypiranga-AP", "estado": "AP", "ranking": 2 },
+        { "nome": "São Raimundo-RR", "estado": "RR", "ranking": 2 },
+        { "nome": "Capital-TO", "estado": "TO", "ranking": 2 },
+        { "nome": "São Raimundo-AM", "estado": "AM", "ranking": 2 }
+      ]
+    }
+  ]
+}
