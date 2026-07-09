@@ -3,12 +3,12 @@ import { wireTabs } from '../components/tabs.js';
 
 // Pop figures: IBGE 2022 (regiões) / UN 2023 (países).
 const ANALOG = {
-  'Liga Nordestina':   { pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', regiaoPop: '54M' },
-  'Liga Paulista':     { pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', regiaoPop: '44M' },
-  'Liga Central':      { pais: 'Polônia',       flag: '🇵🇱', paisPop: '37M', regiaoPop: '37M' },
+  'Liga Nordestina':   { pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', regiaoPop: '54M' },
+  'Liga Paulista':     { pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', regiaoPop: '44M' },
+  'Liga Central':      { pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', regiaoPop: '37M' },
   'Liga Sulista':      { pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', regiaoPop: '30M' },
   'Liga Rio-Capixaba': { pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', regiaoPop: '20M' },
-  'Liga Amazônica':    { pais: 'Bélgica',       flag: '🇧🇪', paisPop: '12M', regiaoPop: '18M' },
+  'Liga Amazônica':    { pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M', regiaoPop: '18M' },
 };
 
 const CAMPEOES_QUOTAS = {

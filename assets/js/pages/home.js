@@ -3,12 +3,12 @@ import { loadSeason } from '../season.js';
 // Population figures: IBGE 2022 Census (Brazil regions) / UN 2023 (Europe).
 // Each Brazilian regional league is roughly the size of a European country.
 const ANALOGIES = [
-  { liga: 'Liga Nordestina',    regiaoPop: '54M', pais: 'Itália',         flag: '🇮🇹', paisPop: '59M'   },
-  { liga: 'Liga Paulista',      regiaoPop: '44M', pais: 'Espanha',        flag: '🇪🇸', paisPop: '48M'   },
-  { liga: 'Liga Central',       regiaoPop: '37M', pais: 'Polônia',        flag: '🇵🇱', paisPop: '37M'   },
-  { liga: 'Liga Sulista',       regiaoPop: '30M', pais: 'Ucrânia',        flag: '🇺🇦', paisPop: '32M'   },
-  { liga: 'Liga Rio-Capixaba',  regiaoPop: '20M', pais: 'Países Baixos',  flag: '🇳🇱', paisPop: '18M'   },
-  { liga: 'Liga Amazônica',     regiaoPop: '18M', pais: 'Bélgica',        flag: '🇧🇪', paisPop: '12M'   },
+  { liga: 'Liga Nordestina',    regiaoPop: '54M', pais: 'Inglaterra',     flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M' },
+  { liga: 'Liga Paulista',      regiaoPop: '44M', pais: 'Itália',         flag: '🇮🇹', paisPop: '59M' },
+  { liga: 'Liga Central',       regiaoPop: '37M', pais: 'Espanha',        flag: '🇪🇸', paisPop: '48M' },
+  { liga: 'Liga Sulista',       regiaoPop: '30M', pais: 'Ucrânia',        flag: '🇺🇦', paisPop: '32M' },
+  { liga: 'Liga Rio-Capixaba',  regiaoPop: '20M', pais: 'Países Baixos',  flag: '🇳🇱', paisPop: '18M' },
+  { liga: 'Liga Amazônica',     regiaoPop: '18M', pais: 'Portugal',       flag: '🇵🇹', paisPop: '10M' },
 ];
 
 function renderAnalogy() {
