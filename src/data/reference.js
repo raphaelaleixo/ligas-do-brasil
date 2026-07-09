@@ -4,7 +4,7 @@
 const REFERENCE_PROFILES = {
   elite: {
     jogosMediaAno: 75,
-    descricao: 'Clubes na Libertadores em 2024 (Botafogo, Palmeiras, Flamengo, Fluminense, Atlético-MG, São Paulo). Estadual + Brasileirão + Copa do Brasil + Libertadores.',
+    descricao: 'Botafogo em 2024 (campeão da Libertadores e do Brasileirão) jogou 75 partidas — o time com mais jogos no mundo naquele ano. Flamengo em 2025 chegou a 78 com o novo Mundial de Clubes da FIFA. Estadual + Brasileirão + Copa do Brasil + Libertadores (+ eventualmente Mundial).',
   },
   media: {
     jogosMediaAno: 54,
