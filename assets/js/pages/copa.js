@@ -27,16 +27,23 @@ const CC_KO = [
   { rodada: 'Final',   clubes:  2, formato: 'Jogo único',    detalhe: 'Sábado 7 dez — o último jogo da temporada brasileira.' },
 ];
 
+// Copa do Brasil funnel: 4 byes total (2 na Preliminar + 1 na 1ª + 1 na 2ª),
+// premiando os clubes mais bem ranqueados da Série B do ano anterior — mecanismo
+// que torna a Série B disputada. Numerical check:
+//   Preliminar: 108 in → 106 jogam → 53 vencedores + 2 byes = 55 out
+//   1ª Fase:    150 in (55 + 95 Série A) → 149 jogam → 74 vencedores + 1 bye = 75 out
+//   2ª Fase:    75 in → 74 jogam → 37 vencedores + 1 bye = 38 out
+//   3ª Fase:    38 in → todos jogam → 19 vencedores = 19 out
+//   16-avos:    19 sobreviventes + 13 elite bypass = 32
 const CB_FUNIL = [
-  { fase: 'Preliminar',  entram: 26,  saem: 13,  origem: 'Clubes da Série B das ligas regionais e melhores da Série C nacional.' },
-  { fase: '1ª Fase',     entram: 118, saem: 59,  origem: '13 sobreviventes da Preliminar + 105 clubes de base.' },
-  { fase: '2ª Fase',     entram: 60,  saem: 30,  origem: '59 sobreviventes + 1 convidado (campeão da Copa Verde ou Copa do Nordeste).' },
-  { fase: '3ª Fase',     entram: 30,  saem: 15,  origem: '30 sobreviventes da 2ª Fase.' },
-  { fase: 'Repescagem',  entram: 4,   saem: 4,   origem: 'Melhores desempenhos entre eliminados na 3ª Fase — mecanismo lucky-loser.' },
+  { fase: 'Preliminar', entram: 108, byes: 2, saem: 55, origem: 'Todos os 108 clubes da Série B. Byes para o top-1 e top-2 do ranking Série B do ano anterior.' },
+  { fase: '1ª Fase',    entram: 150, byes: 1, saem: 75, origem: '55 sobreviventes + 95 clubes da Série A. Bye para o top-1 Série B.' },
+  { fase: '2ª Fase',    entram: 75,  byes: 1, saem: 38, origem: '75 sobreviventes. Bye para o top-1 Série B.' },
+  { fase: '3ª Fase',    entram: 38,  byes: 0, saem: 19, origem: '38 sobreviventes. Sem byes — todos jogam.' },
 ];
 
 const CB_KO = [
-  { rodada: '16-avos', clubes: 32, detalhe: '19 sobreviventes da base + 13 do elite bypass.' },
+  { rodada: '16-avos', clubes: 32, detalhe: '19 sobreviventes do funil + 13 clubes do elite bypass.' },
   { rodada: 'Oitavas', clubes: 16, detalhe: '' },
   { rodada: 'Quartas', clubes:  8, detalhe: '' },
   { rodada: 'Semis',   clubes:  4, detalhe: '' },
@@ -147,10 +154,10 @@ function renderBrasil() {
   const el = document.getElementById('copa-detalhe');
   el.innerHTML = `
     <section class="copa-section" aria-labelledby="cb-intro">
-      <h2 id="cb-intro">144 clubes, da base ao topo</h2>
+      <h2 id="cb-intro">216 clubes, da base ao topo</h2>
       <p class="copa__lede">
-        A FA Cup brasileira: todo clube profissional pode disputar, do interior da Série D
-        ao finalista da Copa dos Campeões. É o único torneio em que Palmeiras e um clube da base
+        A FA Cup brasileira: <strong>todos os 216 clubes profissionais</strong> disputam — Série A e
+        Série B das 6 ligas regionais. É o único torneio em que Palmeiras e um clube da base
         podem se cruzar oficialmente.
       </p>
     </section>
@@ -158,8 +165,8 @@ function renderBrasil() {
     <section class="copa-section" aria-labelledby="cb-funil">
       <h3 id="cb-funil">O funil da base</h3>
       <p class="copa__body">
-        Os clubes de base entram pela Preliminar e vão sendo eliminados até restar um pequeno grupo
-        que se funde com o elite bypass no 16-avos.
+        A Série B começa no funil e é eliminada rodada a rodada. A Série A entra na 1ª Fase.
+        Restam 19 sobreviventes que se fundem com o elite bypass no 16-avos.
       </p>
       <ol class="funil">
         ${CB_FUNIL.map(s => `
@@ -167,7 +174,9 @@ function renderBrasil() {
             <span class="funil__stage__label">${s.fase}</span>
             <span class="funil__stage__count">${s.entram} → ${s.saem}</span>
             <span class="funil__stage__bar" style="--w:${(s.saem / s.entram * 100).toFixed(0)}"></span>
-            <span class="funil__stage__origem">${s.origem}</span>
+            <span class="funil__stage__origem">
+              ${s.origem}${s.byes > 0 ? ` <span class="funil__stage__byes">🎟️ ${s.byes} bye${s.byes > 1 ? 's' : ''}</span>` : ''}
+            </span>
           </li>`).join('')}
       </ol>
     </section>
@@ -175,14 +184,23 @@ function renderBrasil() {
     <section class="copa-section" aria-labelledby="cb-bypass">
       <h3 id="cb-bypass">Elite bypass: 13 clubes direto ao 16-avos</h3>
       <p class="copa__body">
-        Os clubes já garantidos na Copa dos Campeões (potes 1 e 2 principalmente) entram
-        diretamente no <strong>16-avos</strong>. Isso evita que gigantes atropelem clubes da base
-        nas fases iniciais e reserva o suspense do mata-mata para quando as diferenças de nível
-        importarem.
+        Os 13 clubes com melhor campanha nacional no ano anterior entram diretamente no
+        <strong>16-avos</strong>. Isso evita que gigantes atropelem clubes da base nas fases
+        iniciais e reserva o suspense do mata-mata para quando as diferenças de nível importarem.
+      </p>
+    </section>
+
+    <section class="copa-section" aria-labelledby="cb-byes">
+      <h3 id="cb-byes">Byes premiam a Série B</h3>
+      <p class="copa__body">
+        Os <strong>4 byes ao longo do funil</strong> vão para os clubes mais bem ranqueados da
+        Série B do ano anterior. O top-2 dorme na Preliminar. O top-1 tem descanso em três
+        rodadas seguintes.
       </p>
       <p class="copa__body">
-        Na 3ª Fase, uma <strong>repescagem técnica</strong> devolve 4 eliminados de melhor campanha
-        ao torneio — o mecanismo <em>lucky loser</em> que reduz a variância cruel do jogo único.
+        É um mecanismo estrutural: subir alguns lugares no ranking da Série B rende um caminho
+        mais curto na Copa do Brasil da próxima temporada. A Série B fica disputada até o
+        último jogo — não só pelo acesso, mas por byes.
       </p>
     </section>
 
