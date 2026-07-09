@@ -8,7 +8,41 @@ function nome(id) { return clubById(season, id)?.nome ?? id; }
 function renderCampeoes() {
   const cc = season.copaCampeoes;
   const el = document.getElementById('copa-detalhe');
-  const groupsHtml = `<section aria-labelledby="grupos-h"><h2 id="grupos-h">Fase de grupos</h2>
+
+  // Build a lookup: clubId → group id
+  const groupOfClub = new Map();
+  for (const g of cc.grupos) for (const clubId of g.clubes) groupOfClub.set(clubId, g.id);
+
+  // Collect cross-group matches per group (each match indexed once per participating group)
+  const crossByGroup = new Map();
+  for (const g of cc.grupos) crossByGroup.set(g.id, []);
+  for (const m of season.matchesGeral) {
+    if (m.competicao !== 'copa_campeoes') continue;
+    if (!m.rodada?.startsWith('cross-')) continue;
+    const gA = groupOfClub.get(m.casaId);
+    const gB = groupOfClub.get(m.foraId);
+    crossByGroup.get(gA)?.push({
+      rodada: m.rodada, ownId: m.casaId, otherId: m.foraId,
+      otherGroup: gB, ownScore: m.golsCasa, otherScore: m.golsFora,
+    });
+    crossByGroup.get(gB)?.push({
+      rodada: m.rodada, ownId: m.foraId, otherId: m.casaId,
+      otherGroup: gA, ownScore: m.golsFora, otherScore: m.golsCasa,
+    });
+  }
+
+  const rodadaLabel = (r) => {
+    const [kind, n] = r.split('-');
+    return kind === 'grupos' ? `Grupo R${n}` : `Cruz. R${n}`;
+  };
+
+  const groupsHtml = `<section aria-labelledby="grupos-h">
+    <h2 id="grupos-h">Fase de grupos</h2>
+    <p class="copa__format-intro">
+      Cada clube joga <strong>6 partidas</strong> na fase de grupos: <strong>3 contra os adversários do próprio grupo</strong>
+      e <strong>3 partidas cruzadas</strong> contra clubes do mesmo pote em outros grupos.
+      Todas contam para a classificação.
+    </p>
     <div class="grupos">${cc.grupos.map(g => `
       <article class="grupo">
         <div class="grupo__id">Grupo ${g.id}</div>
@@ -18,6 +52,32 @@ function renderCampeoes() {
             <span>${r.jogos}</span><span>${r.saldoGols}</span><span>${r.golsPro}</span><strong>${r.pontos}</strong>
           </div>`).join('')}
         </div>
+        <details class="grupo__partidas">
+          <summary>Ver partidas</summary>
+          <div class="grupo__partidas__section">
+            <h4>Rodadas do grupo</h4>
+            <ul>${g.jogos.map(j => `
+              <li class="grupo__partida">
+                <span class="grupo__partida__rodada">${rodadaLabel(j.rodada)}</span>
+                <span class="grupo__partida__casa">${nome(j.casaId)}</span>
+                <strong class="grupo__partida__placar">${j.golsCasa}–${j.golsFora}</strong>
+                <span class="grupo__partida__fora">${nome(j.foraId)}</span>
+              </li>`).join('')}</ul>
+          </div>
+          <div class="grupo__partidas__section">
+            <h4>Rodadas cruzadas</h4>
+            <ul>${crossByGroup.get(g.id)
+              .slice()
+              .sort((a, b) => a.rodada.localeCompare(b.rodada))
+              .map(c => `
+              <li class="grupo__partida grupo__partida--cross">
+                <span class="grupo__partida__rodada">${rodadaLabel(c.rodada)}</span>
+                <span class="grupo__partida__casa">${nome(c.ownId)}</span>
+                <strong class="grupo__partida__placar">${c.ownScore}–${c.otherScore}</strong>
+                <span class="grupo__partida__fora">${nome(c.otherId)} <span class="grupo__partida__badge">Grupo ${c.otherGroup}</span></span>
+              </li>`).join('')}</ul>
+          </div>
+        </details>
       </article>`).join('')}
     </div></section>`;
 
