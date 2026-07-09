@@ -13,91 +13,91 @@ const CC_QUOTAS = [
 ];
 
 const CC_POTES = [
-  { pote: 1, label: 'Pote 1 · Gigantes',    corte: '12 clubes mais bem colocados no ranking regional.'    },
-  { pote: 2, label: 'Pote 2 · Elite forte', corte: '12 clubes seguintes, ainda historicamente competitivos.' },
-  { pote: 3, label: 'Pote 3 · Meio-alto',   corte: '12 clubes de campanha mediana no ano anterior.'       },
-  { pote: 4, label: 'Pote 4 · Ascendentes', corte: '12 clubes que acabaram de garantir a vaga regional.'  },
+  { pote: 1, label: 'Pote 1 · Gigantes',       corte: 'Os 2 melhores clubes de cada uma das 6 regiões.' },
+  { pote: 2, label: 'Pote 2 · Elite forte',    corte: 'Os 2 seguintes de cada uma das 6 regiões.' },
+  { pote: 3, label: 'Pote 3 · Meio-alto',      corte: 'Próximos classificados das 5 regiões maiores. A Amazônica já cumpriu sua quota de 4 clubes.' },
+  { pote: 4, label: 'Pote 4 · Ascendentes',    corte: 'Últimos classificados das 5 regiões maiores. Nordestina e Paulista contribuem 3 clubes cada; Central, Sulista e Rio-Capixaba, 2 cada.' },
 ];
 
-// Illustrative draw derived from real 2024 ranking data:
-//   Pot 1 (12 gigantes):    top-12 ranking across regions
-//   Pot 2 (elite forte):    ranking 13-24
-//   Pot 3 (meio-alto):      ranking 25-36
-//   Pot 4 (ascendentes):    ranking 37-48
+// Illustrative draw following the corrected pot rule:
+//   Pot 1: top-2 of each region (2 per region = 12, all 6 regions present)
+//   Pot 2: next-2 of each region (2 per region = 12, all 6 regions present)
+//   Pot 3: next-2 of NE/SP/CE/SUL/RJ + AM already exhausted (NE 3, SP 3, others 2)
+//   Pot 4: bottom-2 of NE/SP/CE/SUL/RJ (NE 3, SP 3, others 2)
 // Each group: 1 clube per pot AND 4 different regions (geo-lock).
 const REG = { NE: 'Nordestina', SP: 'Paulista', CE: 'Central', SUL: 'Sulista', RJ: 'Rio-Capixaba', AM: 'Amazônica' };
 const CC_EXAMPLE_GROUPS = [
   { id: 'A', slots: [
     { pote: 1, clube: 'Bahia',                reg: 'NE' },
     { pote: 2, clube: 'Corinthians',          reg: 'SP' },
-    { pote: 3, clube: 'Coritiba',             reg: 'SUL' },
-    { pote: 4, clube: 'Volta Redonda',        reg: 'RJ' },
+    { pote: 3, clube: 'América-MG',           reg: 'CE' },
+    { pote: 4, clube: 'Maringá',              reg: 'SUL' },
   ]},
   { id: 'B', slots: [
     { pote: 1, clube: 'Fortaleza',            reg: 'NE' },
     { pote: 2, clube: 'Red Bull Bragantino',  reg: 'SP' },
-    { pote: 3, clube: 'América-MG',           reg: 'CE' },
-    { pote: 4, clube: 'Bangu',                reg: 'RJ' },
+    { pote: 3, clube: 'Goiás',                reg: 'CE' },
+    { pote: 4, clube: 'Avaí',                 reg: 'SUL' },
   ]},
   { id: 'C', slots: [
     { pote: 1, clube: 'Palmeiras',            reg: 'SP' },
-    { pote: 2, clube: 'Atlético-GO',          reg: 'CE' },
-    { pote: 3, clube: 'Vitória',              reg: 'NE' },
-    { pote: 4, clube: 'Boavista',             reg: 'RJ' },
+    { pote: 2, clube: 'Ceará',                reg: 'NE' },
+    { pote: 3, clube: 'Juventude',            reg: 'SUL' },
+    { pote: 4, clube: 'Bangu',                reg: 'RJ' },
   ]},
   { id: 'D', slots: [
     { pote: 1, clube: 'São Paulo',            reg: 'SP' },
-    { pote: 2, clube: 'Criciúma',             reg: 'SUL' },
-    { pote: 3, clube: 'CRB',                  reg: 'NE' },
-    { pote: 4, clube: 'Vila Nova-GO',         reg: 'CE' },
+    { pote: 2, clube: 'Sport Recife',         reg: 'NE' },
+    { pote: 3, clube: 'Coritiba',             reg: 'SUL' },
+    { pote: 4, clube: 'Boavista',             reg: 'RJ' },
   ]},
   { id: 'E', slots: [
     { pote: 1, clube: 'Atlético-MG',          reg: 'CE' },
-    { pote: 2, clube: 'Ceará',                reg: 'NE' },
-    { pote: 3, clube: 'Nova Iguaçu',          reg: 'RJ' },
-    { pote: 4, clube: 'Paysandu',             reg: 'AM' },
+    { pote: 2, clube: 'Fluminense',           reg: 'RJ' },
+    { pote: 3, clube: 'Vitória',              reg: 'NE' },
+    { pote: 4, clube: 'Guarani',              reg: 'SP' },
   ]},
   { id: 'F', slots: [
     { pote: 1, clube: 'Cruzeiro',             reg: 'CE' },
     { pote: 2, clube: 'Vasco da Gama',        reg: 'RJ' },
-    { pote: 3, clube: 'Maringá',              reg: 'SUL' },
-    { pote: 4, clube: 'ABC',                  reg: 'NE' },
+    { pote: 3, clube: 'CRB',                  reg: 'NE' },
+    { pote: 4, clube: 'Ituano',               reg: 'SP' },
   ]},
   { id: 'G', slots: [
     { pote: 1, clube: 'Athletico-Paranaense', reg: 'SUL' },
-    { pote: 2, clube: 'Santos',               reg: 'SP' },
-    { pote: 3, clube: 'Goiás',                reg: 'CE' },
-    { pote: 4, clube: 'América-RN',           reg: 'NE' },
+    { pote: 2, clube: 'Remo',                 reg: 'AM' },
+    { pote: 3, clube: 'Santos',               reg: 'SP' },
+    { pote: 4, clube: 'Athletic Club',        reg: 'CE' },
   ]},
   { id: 'H', slots: [
     { pote: 1, clube: 'Grêmio',               reg: 'SUL' },
-    { pote: 2, clube: 'Mirassol',             reg: 'SP' },
-    { pote: 3, clube: 'Athletic Club',        reg: 'CE' },
-    { pote: 4, clube: 'Botafogo-PB',          reg: 'NE' },
+    { pote: 2, clube: 'Manaus FC',            reg: 'AM' },
+    { pote: 3, clube: 'Mirassol',             reg: 'SP' },
+    { pote: 4, clube: 'Vila Nova-GO',         reg: 'CE' },
   ]},
   { id: 'I', slots: [
-    { pote: 1, clube: 'Internacional',        reg: 'SUL' },
-    { pote: 2, clube: 'Cuiabá',               reg: 'CE' },
-    { pote: 3, clube: 'Amazonas FC',          reg: 'AM' },
-    { pote: 4, clube: 'Ponte Preta',          reg: 'SP' },
+    { pote: 1, clube: 'Botafogo',             reg: 'RJ' },
+    { pote: 2, clube: 'Atlético-GO',          reg: 'CE' },
+    { pote: 3, clube: 'Novorizontino',        reg: 'SP' },
+    { pote: 4, clube: 'América-RN',           reg: 'NE' },
   ]},
   { id: 'J', slots: [
-    { pote: 1, clube: 'Botafogo',             reg: 'RJ' },
-    { pote: 2, clube: 'Novorizontino',        reg: 'SP' },
-    { pote: 3, clube: 'Avaí',                 reg: 'SUL' },
-    { pote: 4, clube: 'CSA',                  reg: 'NE' },
+    { pote: 1, clube: 'Flamengo',             reg: 'RJ' },
+    { pote: 2, clube: 'Cuiabá',               reg: 'CE' },
+    { pote: 3, clube: 'ABC',                  reg: 'NE' },
+    { pote: 4, clube: 'Ponte Preta',          reg: 'SP' },
   ]},
   { id: 'K', slots: [
-    { pote: 1, clube: 'Flamengo',             reg: 'RJ' },
-    { pote: 2, clube: 'Sport Recife',         reg: 'NE' },
-    { pote: 3, clube: 'Guarani',              reg: 'SP' },
-    { pote: 4, clube: 'Remo',                 reg: 'AM' },
+    { pote: 1, clube: 'Amazonas FC',          reg: 'AM' },
+    { pote: 2, clube: 'Internacional',        reg: 'SUL' },
+    { pote: 3, clube: 'Nova Iguaçu',          reg: 'RJ' },
+    { pote: 4, clube: 'Botafogo-PB',          reg: 'NE' },
   ]},
   { id: 'L', slots: [
-    { pote: 1, clube: 'Fluminense',           reg: 'RJ' },
-    { pote: 2, clube: 'Juventude',            reg: 'SUL' },
-    { pote: 3, clube: 'Ituano',               reg: 'SP' },
-    { pote: 4, clube: 'Manaus FC',            reg: 'AM' },
+    { pote: 1, clube: 'Paysandu',             reg: 'AM' },
+    { pote: 2, clube: 'Criciúma',             reg: 'SUL' },
+    { pote: 3, clube: 'Volta Redonda',        reg: 'RJ' },
+    { pote: 4, clube: 'CSA',                  reg: 'NE' },
   ]},
 ];
 
@@ -197,8 +197,8 @@ function renderCampeoes() {
       <h3 id="cc-sorteio">Um sorteio possível</h3>
       <p class="copa__body">
         Exemplo ilustrativo com o ranking real de 2024: 12 grupos, cada um com 1 clube por pote e
-        <strong>4 regiões diferentes</strong>. O grupo K coloca Flamengo, Sport, Guarani e Remo juntos.
-        O grupo E, Atlético-MG, Ceará, Nova Iguaçu e Paysandu.
+        <strong>4 regiões diferentes</strong>. O Pote 1 tem <strong>2 clubes de cada uma das 6 regiões</strong>
+        — inclusive Amazonas FC e Paysandu representando o Norte no topo do Pote 1.
       </p>
       <div class="cc-groups">
         ${CC_EXAMPLE_GROUPS.map(g => `
