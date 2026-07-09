@@ -49,7 +49,7 @@ const LIGA_WEEKS = Array.from({ length: 45 }, (_, i) => i + 1)
 // "national championship" drama. Copa do Brasil final placed a week earlier
 // still, so November has content every week for the elite finalist.
 const CC_GRUPOS = [3, 5, 7, 9, 12, 17];   // grupos + cruzadas (Fev–Mai)
-const CC_KO     = [22, 25, 30, 32, 44];   // 16-avos → final on week 44 (Nov 27, Wed)
+const CC_KO     = [22, 25, 30, 32, 43];   // 16-avos → final on week 43 (Nov 20, Wed)
 const CB_BASE   = [4, 6, 14, 19];         // Preliminar, 1ª, 2ª, 3ª (Fev–Mai)
 const CB_KO     = [21, 26, 33, 37, 42];   // 16-avos → final on week 42 (Nov 13, Wed)
 // Libertadores — midweeks matching real 2024 Botafogo dates
