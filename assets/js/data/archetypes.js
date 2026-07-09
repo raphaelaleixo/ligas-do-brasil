@@ -5,9 +5,11 @@
 // FIFA break weekends are excluded from Liga Regional; the 3 FIFA midweeks (14, 24, 34)
 // lose only their midweek slot. June break normalized to a single FIFA window.
 
-// 45 weeks: Sat Jan 27, 2024 through Sat Nov 30, 2024. Long enough to hold
-// the real 2024 Libertadores final (Botafogo 3-1 Atlético-MG in Buenos Aires).
-const TOTAL_WEEKS = 45;
+// 46 weeks: Sat Jan 27, 2024 through Sat Dec 7, 2024. Closes with the reform's
+// Copa dos Campeões final one week AFTER Libertadores — respects Conmebol's
+// fixed continental dates and gives the domestic "national title" the last
+// word instead of colliding with Sul-Americana on the same Saturday.
+const TOTAL_WEEKS = 46;
 
 // Approximate real 2024 Saturday date for each week (Jan 27 + N weeks)
 function saturdayForWeek(n) {
@@ -30,13 +32,15 @@ export function weekLabel(n) {
 export const FIFA_BREAKS = new Set([8, 20, 31, 36, 41]);
 export const FIFA_MIDWEEKS = FIFA_BREAKS;
 // Rest weekends: pre-season warm-up (week 1) + a couple of mid-season pauses.
-// The last four weekends (42-45) are all reserved for finals (see FINAIS below),
-// so they're excluded from Liga Regional too.
-const REST_WEEKENDS = new Set([1, 14, 25, 43, 44, 45]);
+// Weeks 42, 44, 45, 46 are dark for Liga Regional so the CB → Sul-Am → Lib → CC
+// finals sequence owns them (weekly override via FINAIS). The Liga última rodada
+// itself lives on week 43 (Nov 16), sandwiched between CB final (9 nov) and the
+// continental finals so no archetype has a 3-week gap before Sul-Am/Libertadores.
+const REST_WEEKENDS = new Set([1, 14, 25, 42, 44, 45, 46]);
 // Liga Regional lands on the weekends left after FIFA + rest.
-// Design intent: 34 rounds spread through the whole year, LAST round on week 42
-// (Nov 9), then four consecutive weekends of finals — Liga → CB → CC → Lib.
-const LIGA_WEEKS = Array.from({ length: 45 }, (_, i) => i + 1)
+// Design intent: 34 rounds spread through the whole year, LAST round on week 43
+// (16 nov), following the Copa do Brasil final on the previous Saturday.
+const LIGA_WEEKS = Array.from({ length: TOTAL_WEEKS }, (_, i) => i + 1)
   .filter((n) => !FIFA_BREAKS.has(n) && !REST_WEEKENDS.has(n));
 
 // Cup calendar — Libertadores anchored to real Botafogo 2024 dates:
@@ -64,16 +68,16 @@ const LIB_MIDWEEKS = [10, 11, 13, 15, 16, 18, 28, 29, 34, 35, 39, 40];
 // (Real Sul-Am final is Sat 23 nov = week 44 weekend — handled by FINAIS below)
 const SUL_AM_MIDWEEKS = [10, 11, 13, 15, 16, 18, 29, 30, 34, 35, 39, 40];
 
-// Weekend finals — the last four Saturdays each close a competition.
-// For elite archetypes: Liga → CB → CC → Libertadores (crescendo).
-// For Sul-Am archetype: Liga on week 42 + Sul-Am final on week 44 (Nov 23,
-//   the real 2024 date when Racing beat Cruzeiro in Paraguay).
+// Weekend finals — five consecutive Saturdays close the season.
+// Conmebol dates (Sul-Am 23 nov, Libertadores 30 nov) are fixed by Conmebol.
+// The reform slots its own finals (CB, CC) around them, ending with Copa dos
+// Campeões — the "Champions League brasileira" — on Sat 7 Dez as the finale.
 const FINAIS = {
-  liga_regional:  { week: 42, key: 'liga_regional',         label: 'Liga Regional · última rodada' },
-  copa_brasil:    { week: 43, key: 'copa_brasil',           label: 'Copa do Brasil · final (16 nov)' },
-  copa_campeoes:  { week: 44, key: 'copa_campeoes',         label: 'Copa dos Campeões · final (23 nov)' },
+  copa_brasil:    { week: 42, key: 'copa_brasil',           label: 'Copa do Brasil · final (9 nov)' },
+  liga_regional:  { week: 43, key: 'liga_regional',         label: 'Liga Regional · última rodada (16 nov)' },
   sul_americana:  { week: 44, key: 'conmebol_sul_americana',label: 'Sul-Americana · final (23 nov)' },
   libertadores:   { week: 45, key: 'conmebol_libertadores', label: 'Libertadores · final (30 nov)' },
+  copa_campeoes:  { week: 46, key: 'copa_campeoes',         label: 'Copa dos Campeões · final (7 dez)' },
 };
 
 // Which fixture types are eligible for each week under each archetype.
