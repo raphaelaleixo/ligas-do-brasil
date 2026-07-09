@@ -19,6 +19,25 @@ const CC_POTES = [
   { pote: 4, label: 'Pote 4 · Ascendentes', corte: '12 clubes que acabaram de garantir a vaga regional.'  },
 ];
 
+// Illustrative draw: 12 groups × 4 slots, each slot from a different pot AND a
+// different region (geo-lock). Region quotas match the CC quotas exactly:
+// Nordestina 10, Paulista 10, Central 8, Sulista 8, Rio-Capixaba 8, Amazônica 4.
+const REG = { NE: 'Nordestina', SP: 'Paulista', CE: 'Central', SUL: 'Sulista', RJ: 'Rio-Capixaba', AM: 'Amazônica' };
+const CC_EXAMPLE_GROUPS = [
+  { id: 'A', slots: [{pote: 1, reg: 'NE'}, {pote: 2, reg: 'SP'},  {pote: 3, reg: 'RJ'},  {pote: 4, reg: 'AM'}] },
+  { id: 'B', slots: [{pote: 1, reg: 'SP'}, {pote: 2, reg: 'SUL'}, {pote: 3, reg: 'NE'},  {pote: 4, reg: 'AM'}] },
+  { id: 'C', slots: [{pote: 1, reg: 'NE'}, {pote: 2, reg: 'CE'},  {pote: 3, reg: 'SP'},  {pote: 4, reg: 'AM'}] },
+  { id: 'D', slots: [{pote: 1, reg: 'RJ'}, {pote: 2, reg: 'SUL'}, {pote: 3, reg: 'CE'},  {pote: 4, reg: 'AM'}] },
+  { id: 'E', slots: [{pote: 1, reg: 'SP'}, {pote: 2, reg: 'RJ'},  {pote: 3, reg: 'CE'},  {pote: 4, reg: 'SUL'}] },
+  { id: 'F', slots: [{pote: 1, reg: 'NE'}, {pote: 2, reg: 'RJ'},  {pote: 3, reg: 'SUL'}, {pote: 4, reg: 'CE'}] },
+  { id: 'G', slots: [{pote: 1, reg: 'NE'}, {pote: 2, reg: 'SP'},  {pote: 3, reg: 'SUL'}, {pote: 4, reg: 'RJ'}] },
+  { id: 'H', slots: [{pote: 1, reg: 'SP'}, {pote: 2, reg: 'NE'},  {pote: 3, reg: 'RJ'},  {pote: 4, reg: 'SUL'}] },
+  { id: 'I', slots: [{pote: 1, reg: 'NE'}, {pote: 2, reg: 'SP'},  {pote: 3, reg: 'CE'},  {pote: 4, reg: 'RJ'}] },
+  { id: 'J', slots: [{pote: 1, reg: 'SP'}, {pote: 2, reg: 'NE'},  {pote: 3, reg: 'RJ'},  {pote: 4, reg: 'CE'}] },
+  { id: 'K', slots: [{pote: 1, reg: 'NE'}, {pote: 2, reg: 'SP'},  {pote: 3, reg: 'SUL'}, {pote: 4, reg: 'CE'}] },
+  { id: 'L', slots: [{pote: 1, reg: 'SP'}, {pote: 2, reg: 'NE'},  {pote: 3, reg: 'CE'},  {pote: 4, reg: 'SUL'}] },
+];
+
 const CC_KO = [
   { rodada: '16-avos', clubes: 32, formato: 'Ida e volta',   detalhe: '2 melhores de cada grupo + 8 melhores 3ºs colocados.' },
   { rodada: 'Oitavas', clubes: 16, formato: 'Ida e volta',   detalhe: '' },
@@ -107,6 +126,28 @@ function renderCampeoes() {
           <article class="pot" data-pote="${p.pote}">
             <h4 class="pot__label">${p.label}</h4>
             <p class="pot__corte">${p.corte}</p>
+          </article>`).join('')}
+      </div>
+    </section>
+
+    <section class="copa-section" aria-labelledby="cc-sorteio">
+      <h3 id="cc-sorteio">Um sorteio possível</h3>
+      <p class="copa__body">
+        Exemplo ilustrativo: 12 grupos, cada um com 1 clube por pote e
+        <strong>4 regiões diferentes</strong>. Amazônica (4 vagas) aparece nos grupos A–D;
+        Nordestina e Paulista (10 vagas cada) aparecem em 10 dos 12 grupos.
+      </p>
+      <div class="cc-groups">
+        ${CC_EXAMPLE_GROUPS.map(g => `
+          <article class="cc-group">
+            <div class="cc-group__id">Grupo ${g.id}</div>
+            <ul class="cc-group__slots">
+              ${g.slots.map(s => `
+                <li class="cc-group__slot" data-pote="${s.pote}">
+                  <span class="cc-group__pote">P${s.pote}</span>
+                  <span class="cc-group__reg">${REG[s.reg]}</span>
+                </li>`).join('')}
+            </ul>
           </article>`).join('')}
       </div>
     </section>

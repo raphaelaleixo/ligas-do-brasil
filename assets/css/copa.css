@@ -80,6 +80,54 @@
     .pot__label { font-size: var(--step-0); font-weight: 700; margin-block-end: var(--space-1); }
     .pot__corte { font-size: var(--step--1); color: var(--color-muted); line-height: 1.5; }
 
+    /* Illustrative 12-group draw */
+    .cc-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+      gap: var(--space-3);
+      margin-block-start: var(--space-4);
+    }
+    .cc-group {
+      border: 1px solid var(--color-hairline);
+      border-radius: var(--radius);
+      padding: var(--space-3);
+      display: grid;
+      gap: var(--space-2);
+    }
+    .cc-group__id {
+      font-weight: 700;
+      font-size: var(--step-1);
+      color: var(--color-accent);
+    }
+    .cc-group__slots {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 4px;
+    }
+    .cc-group__slot {
+      display: grid;
+      grid-template-columns: 1.75rem 1fr;
+      gap: var(--space-2);
+      align-items: baseline;
+      padding: 4px var(--space-2);
+      border-inline-start: 3px solid var(--slot-color, var(--color-hairline));
+      background: color-mix(in oklab, var(--slot-color, transparent) 8%, transparent);
+      border-radius: 2px;
+    }
+    .cc-group__slot[data-pote="1"] { --slot-color: var(--color-badge-campeoes); }
+    .cc-group__slot[data-pote="2"] { --slot-color: var(--color-accent); }
+    .cc-group__slot[data-pote="3"] { --slot-color: color-mix(in oklab, var(--color-accent) 60%, transparent); }
+    .cc-group__slot[data-pote="4"] { --slot-color: color-mix(in oklab, var(--color-accent) 35%, transparent); }
+    .cc-group__pote {
+      font-size: var(--step--1);
+      font-weight: 700;
+      color: var(--color-muted);
+      font-variant-numeric: tabular-nums;
+    }
+    .cc-group__reg { font-size: var(--step--1); }
+
     .copa__format-why {
       max-inline-size: 65ch;
       font-size: var(--step--1);
