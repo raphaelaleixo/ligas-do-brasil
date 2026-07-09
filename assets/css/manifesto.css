@@ -6,6 +6,14 @@
     .manifesto__header h1 { max-inline-size: 20ch; margin-inline: auto; font-size: var(--step-5); }
     .manifesto__lede { font-size: var(--step-2); font-style: italic; color: var(--color-accent); max-inline-size: 30ch; margin-inline: auto; }
     h2 { font-size: var(--step-2); margin-block-end: var(--space-4); }
+    .manifesto__objecao {
+      font-size: var(--step-1);
+      font-weight: 700;
+      font-style: italic;
+      color: var(--color-muted);
+      margin-block-start: var(--space-5);
+      margin-block-end: var(--space-2);
+    }
     p { font-size: var(--step-0); line-height: 1.65; margin-block-end: var(--space-4); }
     p:last-child { margin-block-end: 0; }
     strong { font-weight: 700; color: var(--color-accent); }
