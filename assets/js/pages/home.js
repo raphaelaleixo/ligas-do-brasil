@@ -90,7 +90,7 @@ function renderSleepingGiants() {
     <li><figure class="giants__card">
       <figcaption>${g.nome} <span class="giants__meta">${g.estado}</span></figcaption>
       <div class="giants__attendance">${g.mediaPublico.toLocaleString('pt-BR')} <small>por jogo</small></div>
-      <div class="giants__meta">${g.divisaoAtual} · ${g.liga}</div>
+      <div class="giants__meta">${g.divisaoAtual} hoje</div>
     </figure></li>
   `).join('');
 }
@@ -111,7 +111,6 @@ function renderRevelation() {
     <li><figure class="revelation__card">
       <div class="revelation__player">${r.jogador}</div>
       <div class="revelation__club">Revelado por ${r.clubeRevelador} (${r.estado})</div>
-      <div class="revelation__club">${r.liga}</div>
       <div class="revelation__cups">🏆 ${r.copasVencidas.join(', ')}</div>
     </figure></li>
   `).join('');
