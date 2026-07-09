@@ -22,18 +22,25 @@ export function weekLabel(n) {
   return { num: n, sat: formatDate(sat) };
 }
 
-// FIFA breaks — midweeks lost to national-team dates (real 2024 windows,
-// with the June Copa América normalized to a single window)
-export const FIFA_MIDWEEKS = new Set([8, 20, 31, 36, 41]);
+// FIFA breaks — full weeks lost to national-team dates (real 2024 windows,
+// June Copa América normalized to a single window). Both weekend and midweek
+// slots go dark on these weeks.
+export const FIFA_BREAKS = new Set([8, 20, 31, 36, 41]);
+export const FIFA_MIDWEEKS = FIFA_BREAKS;
+// Additional rest weekends (mid-season pause + year-end) so Liga Regional's
+// 34 rounds spread across 10 months instead of the first 8.
+const REST_WEEKENDS = new Set([14, 25, 42]);
+// The 34 Liga Regional rounds land on the 34 weekends left after FIFA + rest.
+const LIGA_WEEKS = Array.from({ length: 42 }, (_, i) => i + 1)
+  .filter((n) => !FIFA_BREAKS.has(n) && !REST_WEEKENDS.has(n));
 
-// Fixed calendar allocation for each competition/round.
-const LIGA_WEEKS = Array.from({ length: 34 }, (_, i) => i + 1);
-const CC_GRUPOS = [5, 8, 11, 13, 15, 17]; // 3 in-group + 3 cross-group
-const CC_KO     = [20, 25, 30, 35, 40];   // 16-avos → final
-const CB_BASE   = [3, 6, 9, 12];          // Preliminar, 1ª, 2ª, 3ª
-const CB_KO     = [21, 26, 31, 36, 41];   // 16-avos → final (elite bypass enters here)
-const LIB       = [2, 4, 7, 10, 15, 17, 19, 22, 27, 32, 37, 39, 42];
-const SUL_AM    = [4, 16, 18, 23, 27, 33, 38, 42];
+// Cup calendar — laid out to avoid FIFA weeks and stay evenly distributed.
+const CC_GRUPOS = [3, 5, 7, 9, 11, 13];         // 3 in-group + 3 cross-group (Jan–early Apr)
+const CC_KO     = [17, 22, 27, 32, 39];         // 16-avos → final (May–Nov)
+const CB_BASE   = [4, 6, 10, 12];               // Preliminar, 1ª, 2ª, 3ª (Fev–Mar)
+const CB_KO     = [19, 24, 29, 34, 40];         // 16-avos → final (elite bypass, May–Nov)
+const LIB       = [2, 15, 16, 18, 21, 23, 26, 28, 30, 33, 35, 37, 38];
+const SUL_AM    = [4, 15, 18, 25, 28, 33, 37, 40];
 
 // Which fixture types are eligible for each week under each archetype.
 // Value = a label for the mds slot (fds is always liga_regional for weeks 1-34).
@@ -121,11 +128,19 @@ export function calendarFor(archetype) {
   if (!arch) return [];
   const weeks = [];
   for (let n = 1; n <= TOTAL_WEEKS; n++) {
+    // FIFA break: both slots dark
+    if (FIFA_BREAKS.has(n)) {
+      weeks.push({
+        n, sat: weekLabel(n).sat,
+        fds: { key: 'fifa_pause', label: 'Data FIFA' },
+        mds: { key: 'fifa_pause', label: 'Data FIFA' },
+      });
+      continue;
+    }
     const fds = arch.hasLigaRegional && LIGA_WEEKS.includes(n)
       ? { key: 'liga_regional', label: 'Liga Regional' }
       : null;
-    let mds = arch.mdsMap.get(n) ?? null;
-    if (!mds && FIFA_MIDWEEKS.has(n)) mds = { key: 'fifa_pause', label: 'Data FIFA' };
+    const mds = arch.mdsMap.get(n) ?? null;
     weeks.push({ n, sat: weekLabel(n).sat, fds, mds });
   }
   return weeks;
