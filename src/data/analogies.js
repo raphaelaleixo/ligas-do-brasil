@@ -4,17 +4,17 @@ const ANALOGIES = [
   {
     liga: 'Liga Nordestina',
     regiaoPop: 54_000_000,
-    pais: 'Inglaterra',
-    paisFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-    paisPop: 57_000_000,
+    pais: 'Itália',
+    paisFlag: '🇮🇹',
+    paisPop: 59_000_000,
     rationale: 'Multi-cidade, rivalidades urbanas históricas em nove estados.',
   },
   {
     liga: 'Liga Paulista',
     regiaoPop: 44_000_000,
-    pais: 'Itália',
-    paisFlag: '🇮🇹',
-    paisPop: 59_000_000,
+    pais: 'Inglaterra',
+    paisFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+    paisPop: 57_000_000,
     rationale: 'Centro financeiro, marcas globais, elenco profundo.',
   },
   {

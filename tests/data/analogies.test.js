@@ -30,8 +30,8 @@ describe('analogies', () => {
   });
 
   it('getAnalogyForLeague returns the correct entry', () => {
-    expect(getAnalogyForLeague('Liga Paulista').pais).toBe('Itália');
-    expect(getAnalogyForLeague('Liga Nordestina').pais).toBe('Inglaterra');
+    expect(getAnalogyForLeague('Liga Paulista').pais).toBe('Inglaterra');
+    expect(getAnalogyForLeague('Liga Nordestina').pais).toBe('Itália');
     expect(getAnalogyForLeague('Liga Amazônica').pais).toBe('Portugal');
   });
 });

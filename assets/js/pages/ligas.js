@@ -3,8 +3,8 @@ import { wireTabs } from '../components/tabs.js';
 
 // Pop figures: IBGE 2022 (regiões) / UN 2023 (países).
 const ANALOG = {
-  'Liga Nordestina':   { pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', regiaoPop: '54M' },
-  'Liga Paulista':     { pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', regiaoPop: '44M' },
+  'Liga Nordestina':   { pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', regiaoPop: '54M' },
+  'Liga Paulista':     { pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', regiaoPop: '44M' },
   'Liga Central':      { pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', regiaoPop: '37M' },
   'Liga Sulista':      { pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', regiaoPop: '30M' },
   'Liga Rio-Capixaba': { pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', regiaoPop: '20M' },
