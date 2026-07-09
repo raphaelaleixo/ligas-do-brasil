@@ -60,9 +60,11 @@ function renderWorkload() {
         <div class="workload__bar" data-set="current" style="--w:${(c.modeloAtual.jogos / maxVal * 100).toFixed(1)}">
           <span class="workload__value"><strong>${c.modeloAtual.jogos}</strong> ${c.modeloAtual.clube}</span>
         </div>
+        <p class="workload__breakdown">${c.modeloAtual.det}</p>
         <div class="workload__bar" data-set="reform"  style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}">
           <span class="workload__value"><strong>${c.reforma.jogos}</strong> ${c.reforma.clube}</span>
         </div>
+        <p class="workload__breakdown">${c.reforma.det}</p>
       </div>
     </div>`).join('');
 }
