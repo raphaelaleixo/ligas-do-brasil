@@ -41,8 +41,8 @@ const WORKLOAD_COMPARISONS = [
   {
     label: 'Base',
     modeloAtual: { clube: 'Madureira 2024', jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
-    reforma:     { clube: 'Ligas do Brasil',    jogos: 34, det: '34 Liga Regional espalhados por 10 meses' },
-    delta: '+162%',
+    reforma:     { clube: 'Ligas do Brasil',    jogos: 35, det: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses' },
+    delta: '+169%',
   },
 ];
 
