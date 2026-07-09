@@ -16,14 +16,20 @@
     .ligas__tab[aria-selected="true"] { color: var(--color-accent); border-block-end-color: var(--color-accent); font-weight: 700; }
     .ligas__tab-sub { display: block; color: var(--color-muted); font-size: var(--step--1); }
 
-    .liga-detalhe { padding-block-start: var(--space-5); min-inline-size: 0; }
+    .liga-detalhe {
+      padding-block-start: var(--space-5);
+      min-inline-size: 0;
+      /* Establish a query container so .liga-layout can adapt to its own width */
+      container-type: inline-size;
+      container-name: liga;
+    }
     .liga-layout {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       gap: var(--space-6);
       align-items: start;
     }
-    @container (inline-size >= 60rem) {
+    @container liga (inline-size >= 60rem) {
       .liga-layout { grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr); }
     }
 
@@ -62,7 +68,7 @@
       justify-self: start;
       padding-inline-start: 2.5rem;
     }
-    @container (inline-size >= 40rem) {
+    @container liga (inline-size >= 40rem) {
       .clube { grid-template-columns: 2rem 1fr auto auto; }
       .clube__badge { grid-column: auto; justify-self: end; padding-inline-start: 0; }
     }
