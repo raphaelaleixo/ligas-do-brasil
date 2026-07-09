@@ -126,7 +126,15 @@
       color: var(--color-muted);
       font-variant-numeric: tabular-nums;
     }
-    .cc-group__reg { font-size: var(--step--1); }
+    .cc-group__clube { display: grid; gap: 1px; min-inline-size: 0; }
+    .cc-group__nome {
+      font-size: var(--step--1);
+      font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .cc-group__reg { font-size: 0.75rem; color: var(--color-muted); }
 
     .copa__format-why {
       max-inline-size: 65ch;
