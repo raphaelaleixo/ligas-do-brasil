@@ -56,15 +56,24 @@ const CB_BASE   = [4, 6, 14, 19];         // Preliminar, 1ª, 2ª, 3ª (Fev–Ma
 const CB_KO_MIDWEEKS = [21, 26, 33, 37];
 // Libertadores midweeks matching real 2024 Botafogo dates
 const LIB_MIDWEEKS = [10, 11, 13, 15, 16, 18, 28, 29, 34, 35, 39, 40];
-const SUL_AM   = [4, 16, 24, 27, 30, 34, 38, 42];
+// Sul-Americana midweeks matching real 2024 Sul-Am schedule for a finalist path:
+//   Grupos: same window as Libertadores group stage (Apr–May)
+//   R16 ida/volta: 14 / 21 ago  → weeks 29, 30
+//   Quartas: 17 / 24 set        → weeks 34, 35
+//   Semis: 22 / 29 out          → weeks 39, 40
+// (Real Sul-Am final is Sat 23 nov = week 44 weekend — handled by FINAIS below)
+const SUL_AM_MIDWEEKS = [10, 11, 13, 15, 16, 18, 29, 30, 34, 35, 39, 40];
 
-// Weekend finals — four consecutive Saturdays closing the season.
-// Reads as a crescendo: last regional round → national cup → national cup → continental.
+// Weekend finals — the last four Saturdays each close a competition.
+// For elite archetypes: Liga → CB → CC → Libertadores (crescendo).
+// For Sul-Am archetype: Liga on week 42 + Sul-Am final on week 44 (Nov 23,
+//   the real 2024 date when Racing beat Cruzeiro in Paraguay).
 const FINAIS = {
-  liga_regional: { week: 42, key: 'liga_regional',         label: 'Liga Regional · última rodada' },
-  copa_brasil:   { week: 43, key: 'copa_brasil',           label: 'Copa do Brasil · final (16 nov)' },
-  copa_campeoes: { week: 44, key: 'copa_campeoes',         label: 'Copa dos Campeões · final (23 nov)' },
-  libertadores:  { week: 45, key: 'conmebol_libertadores', label: 'Libertadores · final (30 nov)' },
+  liga_regional:  { week: 42, key: 'liga_regional',         label: 'Liga Regional · última rodada' },
+  copa_brasil:    { week: 43, key: 'copa_brasil',           label: 'Copa do Brasil · final (16 nov)' },
+  copa_campeoes:  { week: 44, key: 'copa_campeoes',         label: 'Copa dos Campeões · final (23 nov)' },
+  sul_americana:  { week: 44, key: 'conmebol_sul_americana',label: 'Sul-Americana · final (23 nov)' },
+  libertadores:   { week: 45, key: 'conmebol_libertadores', label: 'Libertadores · final (30 nov)' },
 };
 
 // Which fixture types are eligible for each week under each archetype.
@@ -85,15 +94,16 @@ const ELITE_FINALISTA = buildWeekMap([
   ...LIB_MIDWEEKS.map((w, i) => ({ week: w, key: 'conmebol_libertadores', label: `Libertadores · ${LIB_KO_LABELS[i]}` })),
 ]);
 
-// Sul-Am archetype: regional Serie A, eliminated in CC groups, in elite bypass for CB
-// (usually 16-avos to quartas), plays Sul-Americana slots
+// Sul-Am archetype: regional Serie A + Copa dos Campeões grupos + Copa do Brasil
+// bypass (eliminated quartas) + Sul-Am finalist path.
+const SUL_AM_LABELS = ['grupo 1','grupo 2','grupo 3','grupo 4','grupo 5','grupo 6','R16 ida','R16 volta','quartas ida','quartas volta','semis ida','semis volta'];
 const SUL_AM_ARCHETYPE = buildWeekMap([
   ...CC_GRUPOS.map((w, i) => ({ week: w, key: 'copa_campeoes', label: `Copa dos Campeões · ${i < 3 ? 'grupo' : 'cruzada'} R${(i % 3) + 1}` })),
   // Copa Brasil: bypass to 16-avos, wins to oitavas, loses in quartas — 3 games
   { week: 21, key: 'copa_brasil', label: 'Copa do Brasil · 16-avos' },
   { week: 26, key: 'copa_brasil', label: 'Copa do Brasil · oitavas' },
   { week: 33, key: 'copa_brasil', label: 'Copa do Brasil · quartas (eliminado)' },
-  ...SUL_AM.map((w) => ({ week: w, key: 'conmebol_sul_americana', label: 'Sul-Americana' })),
+  ...SUL_AM_MIDWEEKS.map((w, i) => ({ week: w, key: 'conmebol_sul_americana', label: `Sul-Americana · ${SUL_AM_LABELS[i]}` })),
 ]);
 
 // Regional Serie A: no continental, Copa Brasil base pool (1ª → 2ª → 3ª, out)
@@ -124,13 +134,13 @@ export const ARCHETYPES = {
   'sul-americana': {
     slug: 'sul-americana',
     label: 'Vaga Sul-Americana',
-    subtitle: 'Regional Série A · Copa dos Campeões grupos · Copa do Brasil (bypass) · Sul-Americana garantida',
-    totalGames: 51,
-    comparacao: { atual: 65, delta: '−22%' },
-    exemplos: 'O melhor clube da região que não sobe à Libertadores',
+    subtitle: 'Regional Série A · Copa dos Campeões grupos · Copa do Brasil (bypass) · Sul-Americana finalista',
+    totalGames: 56,
+    comparacao: { atual: 65, delta: '−14%' },
+    exemplos: 'Cruzeiro em 2024 (finalista da Sul-Americana)',
     mdsMap: SUL_AM_ARCHETYPE,
     hasLigaRegional: true,
-    weekendFinals: ['liga_regional'],
+    weekendFinals: ['liga_regional', 'sul_americana'],
   },
   'regional-a': {
     slug: 'regional-a',
