@@ -21,11 +21,10 @@ function slug(nome) { return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-
 
 function renderTabs(season) {
   const tabsEl = document.getElementById('ligas-tabs');
-  tabsEl.innerHTML = season.ligasRegionais.map((l) => {
-    const a = ANALOG[l.nome];
-    return `<li><button role="tab" data-key="${slug(l.nome)}" aria-selected="false" tabindex="-1"
-      class="ligas__tab">${l.nome}<span class="ligas__tab-sub">${a.flag} ${a.pais}</span></button></li>`;
-  }).join('');
+  tabsEl.innerHTML = season.ligasRegionais.map((l) =>
+    `<li><button role="tab" data-key="${slug(l.nome)}" aria-selected="false" tabindex="-1"
+      class="ligas__tab">${l.nome}</button></li>`
+  ).join('');
   tabsEl.setAttribute('role', 'tablist');
 }
 
