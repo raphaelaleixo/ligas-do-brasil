@@ -136,6 +136,54 @@
     }
     .cc-group__reg { font-size: 0.75rem; color: var(--color-muted); }
 
+    /* Cross-pot rounds example */
+    .cross-rounds {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+      gap: var(--space-4);
+      margin-block: var(--space-4);
+    }
+    .cross-round {
+      border: 1px solid var(--color-hairline);
+      border-radius: var(--radius);
+      padding: var(--space-4);
+    }
+    .cross-round__title {
+      font-size: var(--step-0);
+      font-weight: 700;
+      margin-block-end: var(--space-3);
+      padding-block-end: var(--space-2);
+      border-block-end: 1px solid var(--color-hairline);
+    }
+    .cross-round__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: var(--space-2);
+      font-size: var(--step--1);
+    }
+    .cross-round__list li {
+      display: grid;
+      grid-template-columns: 2.25rem 1fr;
+      gap: var(--space-2);
+      align-items: baseline;
+    }
+    .cross-round__list li strong { font-weight: 600; }
+    .cross-round__list span {
+      font-weight: 700;
+      font-size: 0.75em;
+      color: var(--slot-color, var(--color-muted));
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: color-mix(in oklab, var(--slot-color, transparent) 12%, transparent);
+      text-align: center;
+    }
+    .cross-round__list span[data-pote="1"] { --slot-color: var(--color-badge-campeoes); }
+    .cross-round__list span[data-pote="2"] { --slot-color: var(--color-accent); }
+    .cross-round__list span[data-pote="3"] { --slot-color: color-mix(in oklab, var(--color-accent) 60%, transparent); }
+    .cross-round__list span[data-pote="4"] { --slot-color: color-mix(in oklab, var(--color-accent) 35%, transparent); }
+
     .copa__format-why {
       max-inline-size: 65ch;
       font-size: var(--step--1);

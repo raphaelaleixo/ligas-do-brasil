@@ -251,6 +251,49 @@ function renderCampeoes() {
       </details>
     </section>
 
+    <section class="copa-section" aria-labelledby="cc-cross-a">
+      <h3 id="cc-cross-a">Exemplo: cross-pot do Grupo A</h3>
+      <p class="copa__body">
+        As 3 partidas cruzadas de cada clube do Grupo A. Cada rodada, o Grupo A enfrenta um
+        outro grupo inteiro — os 4 clubes do Grupo A jogam contra os 4 clubes do outro grupo,
+        pote contra pote.
+      </p>
+      <div class="cross-rounds">
+        <article class="cross-round">
+          <h4 class="cross-round__title">Rodada 1 · Grupo A × Grupo B</h4>
+          <ul class="cross-round__list">
+            <li><span data-pote="1">P1</span> <strong>Amazonas FC</strong> × <strong>Bahia</strong></li>
+            <li><span data-pote="2">P2</span> <strong>Corinthians</strong> × <strong>Paysandu</strong></li>
+            <li><span data-pote="3">P3</span> <strong>CRB</strong> × <strong>Mirassol</strong></li>
+            <li><span data-pote="4">P4</span> <strong>Bangu</strong> × <strong>Athletic Club</strong></li>
+          </ul>
+        </article>
+        <article class="cross-round">
+          <h4 class="cross-round__title">Rodada 2 · Grupo A × Grupo C</h4>
+          <ul class="cross-round__list">
+            <li><span data-pote="1">P1</span> <strong>Amazonas FC</strong> × <strong>Palmeiras</strong></li>
+            <li><span data-pote="2">P2</span> <strong>Corinthians</strong> × <strong>Fluminense</strong></li>
+            <li><span data-pote="3">P3</span> <strong>CRB</strong> × <strong>Remo</strong></li>
+            <li><span data-pote="4">P4</span> <strong>Bangu</strong> × <strong>Botafogo-PB</strong></li>
+          </ul>
+        </article>
+        <article class="cross-round">
+          <h4 class="cross-round__title">Rodada 3 · Grupo A × Grupo D</h4>
+          <ul class="cross-round__list">
+            <li><span data-pote="1">P1</span> <strong>Amazonas FC</strong> × <strong>Botafogo</strong></li>
+            <li><span data-pote="2">P2</span> <strong>Corinthians</strong> × <strong>Sport Recife</strong></li>
+            <li><span data-pote="3">P3</span> <strong>CRB</strong> × <strong>América-MG</strong></li>
+            <li><span data-pote="4">P4</span> <strong>Bangu</strong> × <strong>Manaus FC</strong></li>
+          </ul>
+        </article>
+      </div>
+      <p class="copa__body">
+        Amazonas FC (Pote 1, único clube do Norte no topo) enfrenta Bahia, Palmeiras e Botafogo —
+        três dos maiores do país. Bangu (Pote 4) enfrenta Athletic Club, Botafogo-PB e Manaus FC —
+        clubes de força equivalente. Os potes se cruzam entre si, mas nunca entre potes diferentes.
+      </p>
+    </section>
+
     <section class="copa-section" aria-labelledby="cc-mata-mata">
       <h3 id="cc-mata-mata">Mata-mata: 32 → 1</h3>
       <ol class="rounds">
