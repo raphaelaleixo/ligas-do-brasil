@@ -29,15 +29,15 @@ export function weekLabel(n) {
 // slots go dark on these weeks.
 export const FIFA_BREAKS = new Set([8, 20, 31, 36, 41]);
 export const FIFA_MIDWEEKS = FIFA_BREAKS;
-// Rest weekends: pre-season warm-up (week 1) + a couple of pauses through
-// the year, PLUS the two weekends immediately around Libertadores final week
-// so Liga Regional runs into mid-November instead of ending a month early.
-const REST_WEEKENDS = new Set([1, 14, 25, 43, 45]);
-// Liga Regional lands on the weekends left after FIFA + rest. Design intent:
-// 34 rounds spread through the whole year, last round in week 44 (Nov 23),
-// only one week gap before the Libertadores final on week 45.
+// Rest weekends: pre-season warm-up (week 1) + a couple of mid-season pauses.
+// The last four weekends (42-45) are all reserved for finals (see FINAIS below),
+// so they're excluded from Liga Regional too.
+const REST_WEEKENDS = new Set([1, 14, 25, 43, 44, 45]);
+// Liga Regional lands on the weekends left after FIFA + rest.
+// Design intent: 34 rounds spread through the whole year, LAST round on week 42
+// (Nov 9), then four consecutive weekends of finals — Liga → CB → CC → Lib.
 const LIGA_WEEKS = Array.from({ length: 45 }, (_, i) => i + 1)
-  .filter((n) => !FIFA_BREAKS.has(n) && !REST_WEEKENDS.has(n) && n !== 42);
+  .filter((n) => !FIFA_BREAKS.has(n) && !REST_WEEKENDS.has(n));
 
 // Cup calendar — Libertadores anchored to real Botafogo 2024 dates:
 //   Grupos: 3-4, 10-11 abr; 24 abr; 8 mai; 16 mai; 28 mai
@@ -49,14 +49,23 @@ const LIGA_WEEKS = Array.from({ length: 45 }, (_, i) => i + 1)
 // "national championship" drama. Copa do Brasil final placed a week earlier
 // still, so November has content every week for the elite finalist.
 const CC_GRUPOS = [3, 5, 7, 9, 12, 17];   // grupos + cruzadas (Fev–Mai)
-const CC_KO     = [22, 25, 30, 32, 43];   // 16-avos → final on week 43 (Nov 20, Wed)
+// Copa dos Campeões: 4 KO midweeks (16-avos → semis), final is a WEEKEND (see FINAIS)
+const CC_KO_MIDWEEKS = [22, 25, 30, 32];
 const CB_BASE   = [4, 6, 14, 19];         // Preliminar, 1ª, 2ª, 3ª (Fev–Mai)
-const CB_KO     = [21, 26, 33, 37, 42];   // 16-avos → final on week 42 (Nov 13, Wed)
-// Libertadores — midweeks matching real 2024 Botafogo dates
-const LIB_MIDWEEKS = [10, 11, 13, 15, 16, 18, 28, 29, 34, 35, 39, 40]; // 12 midweeks
-// Libertadores final is 30 nov 2024 — Saturday, weekend slot on week 45
-const LIB_FINAL_WEEK = 45;
-const SUL_AM        = [4, 16, 24, 27, 30, 34, 38, 42];
+// Copa do Brasil: 4 KO midweeks (16-avos → semis), final is a WEEKEND
+const CB_KO_MIDWEEKS = [21, 26, 33, 37];
+// Libertadores midweeks matching real 2024 Botafogo dates
+const LIB_MIDWEEKS = [10, 11, 13, 15, 16, 18, 28, 29, 34, 35, 39, 40];
+const SUL_AM   = [4, 16, 24, 27, 30, 34, 38, 42];
+
+// Weekend finals — four consecutive Saturdays closing the season.
+// Reads as a crescendo: last regional round → national cup → national cup → continental.
+const FINAIS = {
+  liga_regional: { week: 42, key: 'liga_regional',         label: 'Liga Regional · última rodada' },
+  copa_brasil:   { week: 43, key: 'copa_brasil',           label: 'Copa do Brasil · final (16 nov)' },
+  copa_campeoes: { week: 44, key: 'copa_campeoes',         label: 'Copa dos Campeões · final (23 nov)' },
+  libertadores:  { week: 45, key: 'conmebol_libertadores', label: 'Libertadores · final (30 nov)' },
+};
 
 // Which fixture types are eligible for each week under each archetype.
 // Value = a label for the mds slot (fds is always liga_regional for weeks 1-34).
@@ -67,10 +76,12 @@ function buildWeekMap(rounds) {
 }
 
 const LIB_KO_LABELS = ['grupo 1','grupo 2','grupo 3','grupo 4','grupo 5','grupo 6','oitavas ida','oitavas volta','quartas ida','quartas volta','semis ida','semis volta'];
+const CC_KO_LABELS  = ['16-avos','oitavas','quartas','semis'];
+const CB_KO_LABELS  = ['16-avos','oitavas','quartas','semis'];
 const ELITE_FINALISTA = buildWeekMap([
   ...CC_GRUPOS.map((w, i) => ({ week: w, key: 'copa_campeoes', label: `Copa dos Campeões · ${i < 3 ? 'grupo' : 'cruzada'} R${(i % 3) + 1}` })),
-  ...CC_KO.map((w, i) => ({ week: w, key: 'copa_campeoes', label: `Copa dos Campeões · ${['16-avos','oitavas','quartas','semis','final'][i]}` })),
-  ...CB_KO.map((w, i) => ({ week: w, key: 'copa_brasil', label: `Copa do Brasil · ${['16-avos','oitavas','quartas','semis','final'][i]}` })),
+  ...CC_KO_MIDWEEKS.map((w, i) => ({ week: w, key: 'copa_campeoes', label: `Copa dos Campeões · ${CC_KO_LABELS[i]}` })),
+  ...CB_KO_MIDWEEKS.map((w, i) => ({ week: w, key: 'copa_brasil', label: `Copa do Brasil · ${CB_KO_LABELS[i]}` })),
   ...LIB_MIDWEEKS.map((w, i) => ({ week: w, key: 'conmebol_libertadores', label: `Libertadores · ${LIB_KO_LABELS[i]}` })),
 ]);
 
@@ -107,6 +118,8 @@ export const ARCHETYPES = {
     exemplos: 'Botafogo em 2024 (75 jogos)',
     mdsMap: ELITE_FINALISTA,
     hasLigaRegional: true,
+    // Weekend finals this archetype reaches
+    weekendFinals: ['liga_regional', 'copa_brasil', 'copa_campeoes', 'libertadores'],
   },
   'sul-americana': {
     slug: 'sul-americana',
@@ -117,6 +130,7 @@ export const ARCHETYPES = {
     exemplos: 'O melhor clube da região que não sobe à Libertadores',
     mdsMap: SUL_AM_ARCHETYPE,
     hasLigaRegional: true,
+    weekendFinals: ['liga_regional'],
   },
   'regional-a': {
     slug: 'regional-a',
@@ -127,6 +141,7 @@ export const ARCHETYPES = {
     exemplos: 'Meio de tabela da Liga Regional',
     mdsMap: REGIONAL_A,
     hasLigaRegional: true,
+    weekendFinals: ['liga_regional'],
   },
   'serie-b': {
     slug: 'serie-b',
@@ -137,15 +152,21 @@ export const ARCHETYPES = {
     exemplos: 'Madureira em 2024 jogou 13 partidas em 3 meses. Aqui, 35 espalhados em 10.',
     mdsMap: SERIE_B,
     hasLigaRegional: true,
+    weekendFinals: ['liga_regional'],
   },
 };
 
 export function calendarFor(archetype) {
   const arch = ARCHETYPES[archetype];
   if (!arch) return [];
+  // Build a lookup of which weekend-final competitions this archetype reaches
+  const finalsByWeek = new Map();
+  for (const compKey of arch.weekendFinals ?? []) {
+    const f = FINAIS[compKey];
+    if (f) finalsByWeek.set(f.week, f);
+  }
   const weeks = [];
   for (let n = 1; n <= TOTAL_WEEKS; n++) {
-    // FIFA break: both slots dark
     if (FIFA_BREAKS.has(n)) {
       weeks.push({
         n, sat: weekLabel(n).sat,
@@ -154,13 +175,10 @@ export function calendarFor(archetype) {
       });
       continue;
     }
-    // Weekend
-    let fds = arch.hasLigaRegional && LIGA_WEEKS.includes(n)
-      ? { key: 'liga_regional', label: 'Liga Regional' }
-      : null;
-    // Special: Libertadores final on week 45 weekend (only Elite finalist)
-    if (n === LIB_FINAL_WEEK && archetype === 'elite-finalista') {
-      fds = { key: 'conmebol_libertadores', label: 'Libertadores · final (30 nov)' };
+    // Weekend: either a weekend final (last 4 weeks) or Liga Regional round
+    let fds = finalsByWeek.get(n) ?? null;
+    if (!fds && arch.hasLigaRegional && LIGA_WEEKS.includes(n)) {
+      fds = { key: 'liga_regional', label: 'Liga Regional' };
     }
     const mds = arch.mdsMap.get(n) ?? null;
     weeks.push({ n, sat: weekLabel(n).sat, fds, mds });
