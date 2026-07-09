@@ -379,28 +379,50 @@ function renderBrasil() {
 }
 
 function renderConmebol() {
-  const libListEl = document.getElementById('lib-list');
-  libListEl.innerHTML = LIB_ORIGENS.map(o => `
-    <li class="conmebol__item">
-      <span class="conmebol__item__num">${o.pos}</span>
-      <span class="conmebol__item__origem">${o.origem}</span>
-    </li>`).join('');
+  const el = document.getElementById('copa-detalhe');
+  el.innerHTML = `
+    <section class="copa-section" aria-labelledby="conmebol-intro">
+      <h2 id="conmebol-intro">Vagas Conmebol</h2>
+      <p class="copa__lede">
+        Onde as duas copas nacionais desembocam. <strong>A Sul-Americana garante uma vaga
+        por região — o mecanismo-chave da proposta.</strong>
+      </p>
+    </section>
 
-  const sulListEl = document.getElementById('sul-list');
-  sulListEl.innerHTML = CC_QUOTAS.map((q, i) => `
-    <li class="conmebol__item">
-      <span class="conmebol__item__num">${i + 1}</span>
-      <span class="conmebol__item__origem">
-        <span class="analogy__flag" aria-hidden="true">${q.flag}</span>
-        Melhor clube da ${q.liga} não classificado à Libertadores
-      </span>
-    </li>`).join('');
+    <section class="copa-section conmebol">
+      <div class="conmebol__cols">
+        <section aria-labelledby="lib-heading">
+          <h3 id="lib-heading">🌎 Libertadores <span class="conmebol__count">7 vagas · cascata prioritária</span></h3>
+          <ol class="conmebol__list">
+            ${LIB_ORIGENS.map(o => `
+              <li class="conmebol__item">
+                <span class="conmebol__item__num">${o.pos}</span>
+                <span class="conmebol__item__origem">${o.origem}</span>
+              </li>`).join('')}
+          </ol>
+        </section>
+        <section aria-labelledby="sul-heading">
+          <h3 id="sul-heading">🏆 Sul-Americana <span class="conmebol__count">6 vagas · uma por região, sem cascata</span></h3>
+          <ol class="conmebol__list">
+            ${CC_QUOTAS.map((q, i) => `
+              <li class="conmebol__item">
+                <span class="conmebol__item__num">${i + 1}</span>
+                <span class="conmebol__item__origem">
+                  <span class="analogy__flag" aria-hidden="true">${q.flag}</span>
+                  Melhor clube da ${q.liga} não classificado à Libertadores
+                </span>
+              </li>`).join('')}
+          </ol>
+        </section>
+      </div>
+    </section>
+  `;
 }
 
 const tabsEl = document.getElementById('copa-tabs');
 tabsEl.addEventListener('tab-change', (e) => {
   if (e.detail.key === 'campeoes') renderCampeoes();
-  else renderBrasil();
+  else if (e.detail.key === 'brasil') renderBrasil();
+  else if (e.detail.key === 'conmebol') renderConmebol();
 });
 wireTabs(tabsEl, { defaultKey: 'campeoes' });
-renderConmebol();

@@ -287,15 +287,7 @@
   }
 
   @scope (.conmebol) {
-    :scope {
-      margin-block-start: var(--space-7);
-      padding-block-start: var(--space-6);
-      border-block-start: 1px solid var(--color-hairline);
-      display: grid; gap: var(--space-5);
-      font-family: var(--font-sans);
-    }
-    .conmebol__tagline { font-size: var(--step-0); max-inline-size: 60ch; color: var(--color-muted); }
-    .conmebol__tagline strong { color: var(--color-accent); }
+    :scope { display: grid; gap: var(--space-5); font-family: var(--font-sans); }
     .conmebol__cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); gap: var(--space-5); }
     h3 { font-size: var(--step-1); display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; margin-block-end: var(--space-3); }
     .conmebol__count { color: var(--color-muted); font-weight: 400; font-size: var(--step--1); }
