@@ -43,6 +43,23 @@ function renderCampeoes() {
       e <strong>3 partidas cruzadas</strong> contra clubes do mesmo pote em outros grupos.
       Todas contam para a classificação.
     </p>
+    <details class="copa__format-why">
+      <summary>Por que as cruzadas são intra-pote?</summary>
+      <div class="copa__format-why__body">
+        <p>
+          Assim, cada pote joga um mini-torneio balanceado contra clubes de força equivalente — Pote 1 tem seus
+          clássicos entre gigantes, Pote 4 tem sua liga entre iguais. A expectativa em qualquer pote é
+          <strong>~4,5 pontos em 3 jogos cruzados</strong> (empate estatístico entre pares), então as cruzadas
+          são neutras para todos.
+        </p>
+        <p>
+          A diferença de nível entre os potes fica reservada aos <strong>jogos do próprio grupo</strong>, onde
+          a semeadura da temporada anterior efetivamente pesa. Se as cruzadas misturassem potes,
+          Pote 1 acumularia pontos fáceis contra Pote 4 e a distância dentro do grupo se ampliaria,
+          reduzindo o suspense da classificação.
+        </p>
+      </div>
+    </details>
     <div class="grupos">${cc.grupos.map(g => `
       <article class="grupo">
         <div class="grupo__id">Grupo ${g.id}</div>
