@@ -23,7 +23,7 @@ function renderTabs(season) {
   const tabsEl = document.getElementById('ligas-tabs');
   tabsEl.innerHTML = season.ligasRegionais.map((l) =>
     `<li><button role="tab" data-key="${slug(l.nome)}" aria-selected="false" tabindex="-1"
-      class="ligas__tab">${l.nome}</button></li>`
+      class="tabs__tab">${l.nome}</button></li>`
   ).join('');
   tabsEl.setAttribute('role', 'tablist');
 }

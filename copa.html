@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/assets/css/view-transitions.css">
   <link rel="stylesheet" href="/assets/css/ligas.css">
   <link rel="stylesheet" href="/assets/css/copa.css">
+  <link rel="stylesheet" href="/assets/css/components/tabs.css">
 
   <link rel="expect" href="#page-ready" blocking="render">
 </head>
@@ -35,10 +36,10 @@
   <main id="page-ready">
     <section class="copa">
       <h1>Copas Nacionais</h1>
-      <nav aria-label="Escolher copa" class="copa__tabs">
-        <ul role="tablist" id="copa-tabs">
-          <li><button role="tab" data-key="campeoes" aria-selected="true"  tabindex="0"  class="ligas__tab">Copa dos Campeões</button></li>
-          <li><button role="tab" data-key="brasil"   aria-selected="false" tabindex="-1" class="ligas__tab">Copa do Brasil</button></li>
+      <nav aria-label="Escolher copa">
+        <ul class="tabs" role="tablist" id="copa-tabs">
+          <li><button role="tab" data-key="campeoes" aria-selected="true"  tabindex="0"  class="tabs__tab">Copa dos Campeões</button></li>
+          <li><button role="tab" data-key="brasil"   aria-selected="false" tabindex="-1" class="tabs__tab">Copa do Brasil</button></li>
         </ul>
       </nav>
       <section id="copa-detalhe" aria-live="polite"></section>

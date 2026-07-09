@@ -3,13 +3,9 @@ import { wireTabs } from '../components/tabs.js';
 
 function renderTabs() {
   const tabsEl = document.getElementById('archetype-tabs');
-  tabsEl.innerHTML = Object.values(ARCHETYPES).map((a) => `
-    <li><button role="tab" data-key="${a.slug}" aria-selected="false" tabindex="-1" class="archetype-tab">
-      <span class="archetype-tab__label">${a.label}</span>
-      <span class="archetype-tab__meta">${a.totalGames} jogos <span class="archetype-tab__delta" data-sign="${a.comparacao.delta.startsWith('+') ? 'plus' : 'minus'}">${a.comparacao.delta}</span></span>
-    </button></li>
-  `).join('');
-  tabsEl.setAttribute('role', 'tablist');
+  tabsEl.innerHTML = Object.values(ARCHETYPES).map((a) =>
+    `<li><button role="tab" data-key="${a.slug}" aria-selected="false" tabindex="-1" class="tabs__tab">${a.label}</button></li>`
+  ).join('');
 }
 
 function renderArchetype(key) {

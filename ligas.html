@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="/assets/css/layout.css">
   <link rel="stylesheet" href="/assets/css/view-transitions.css">
   <link rel="stylesheet" href="/assets/css/ligas.css">
+  <link rel="stylesheet" href="/assets/css/components/tabs.css">
 
   <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
@@ -35,8 +36,8 @@
   <main id="page-ready">
     <section class="ligas">
       <h1>Ligas Regionais</h1>
-      <nav aria-label="Escolher liga" class="ligas__tabs">
-        <ul role="list" id="ligas-tabs"></ul>
+      <nav aria-label="Escolher liga">
+        <ul class="tabs" role="tablist" id="ligas-tabs"></ul>
       </nav>
       <section aria-live="polite" id="liga-detalhe" class="liga-detalhe"></section>
     </section>
