@@ -29,12 +29,15 @@ export function weekLabel(n) {
 // slots go dark on these weeks.
 export const FIFA_BREAKS = new Set([8, 20, 31, 36, 41]);
 export const FIFA_MIDWEEKS = FIFA_BREAKS;
-// Rest weekends: mid-season pauses + end-of-season rest for base clubs.
-// Continental competitions can still happen (e.g., Libertadores final on week 45).
-const REST_WEEKENDS = new Set([14, 25, 42, 43, 44]);
-// The 34 Liga Regional rounds land on the weekends left after FIFA + rest.
+// Rest weekends: pre-season warm-up (week 1) + a couple of pauses through
+// the year, PLUS the two weekends immediately around Libertadores final week
+// so Liga Regional runs into mid-November instead of ending a month early.
+const REST_WEEKENDS = new Set([1, 14, 25, 43, 45]);
+// Liga Regional lands on the weekends left after FIFA + rest. Design intent:
+// 34 rounds spread through the whole year, last round in week 44 (Nov 23),
+// only one week gap before the Libertadores final on week 45.
 const LIGA_WEEKS = Array.from({ length: 45 }, (_, i) => i + 1)
-  .filter((n) => !FIFA_BREAKS.has(n) && !REST_WEEKENDS.has(n));
+  .filter((n) => !FIFA_BREAKS.has(n) && !REST_WEEKENDS.has(n) && n !== 42);
 
 // Cup calendar — Libertadores anchored to real Botafogo 2024 dates:
 //   Grupos: 3-4, 10-11 abr; 24 abr; 8 mai; 16 mai; 28 mai
@@ -42,15 +45,18 @@ const LIGA_WEEKS = Array.from({ length: 45 }, (_, i) => i + 1)
 //   Quartas: 17/24 set
 //   Semis: 23/30 out
 //   Final: 30 nov (single-leg, Buenos Aires) — WEEKEND game
-const CC_GRUPOS = [3, 5, 7, 9, 11, 13];         // 3 in-group + 3 cross-group (Fev–Abr)
-const CC_KO     = [17, 22, 27, 32, 39];         // 16-avos → final (Mai–Out)
-const CB_BASE   = [4, 6, 10, 12];               // Preliminar, 1ª, 2ª, 3ª (Fev–Mar)
-const CB_KO     = [19, 24, 29, 34, 40];         // 16-avos → final (elite bypass, Mai–Nov)
+// Copa dos Campeões final placed a week before Libertadores final for the
+// "national championship" drama. Copa do Brasil final placed a week earlier
+// still, so November has content every week for the elite finalist.
+const CC_GRUPOS = [3, 5, 7, 9, 12, 17];   // grupos + cruzadas (Fev–Mai)
+const CC_KO     = [22, 25, 30, 32, 44];   // 16-avos → final on week 44 (Nov 27, Wed)
+const CB_BASE   = [4, 6, 14, 19];         // Preliminar, 1ª, 2ª, 3ª (Fev–Mai)
+const CB_KO     = [21, 26, 33, 37, 42];   // 16-avos → final on week 42 (Nov 13, Wed)
 // Libertadores — midweeks matching real 2024 Botafogo dates
 const LIB_MIDWEEKS = [10, 11, 13, 15, 16, 18, 28, 29, 34, 35, 39, 40]; // 12 midweeks
 // Libertadores final is 30 nov 2024 — Saturday, weekend slot on week 45
 const LIB_FINAL_WEEK = 45;
-const SUL_AM        = [4, 16, 18, 25, 28, 33, 37, 40];
+const SUL_AM        = [4, 16, 24, 27, 30, 34, 38, 42];
 
 // Which fixture types are eligible for each week under each archetype.
 // Value = a label for the mds slot (fds is always liga_regional for weeks 1-34).
@@ -75,7 +81,7 @@ const SUL_AM_ARCHETYPE = buildWeekMap([
   // Copa Brasil: bypass to 16-avos, wins to oitavas, loses in quartas — 3 games
   { week: 21, key: 'copa_brasil', label: 'Copa do Brasil · 16-avos' },
   { week: 26, key: 'copa_brasil', label: 'Copa do Brasil · oitavas' },
-  { week: 31, key: 'copa_brasil', label: 'Copa do Brasil · quartas (eliminado)' },
+  { week: 33, key: 'copa_brasil', label: 'Copa do Brasil · quartas (eliminado)' },
   ...SUL_AM.map((w) => ({ week: w, key: 'conmebol_sul_americana', label: 'Sul-Americana' })),
 ]);
 
