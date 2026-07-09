@@ -21,7 +21,7 @@ const pt = {
   revelationClubs: {
     title: 'De onde vieram os ídolos',
     tagline: 'Fortalecer o interior não é nostalgia; é ampliar a rede de captação.',
-    subtagline: 'Os últimos ídolos vieram daqui. Há quantos anos revelamos um novo Ronaldo?',
+    subtagline: 'Os últimos brasileiros que bateram europeus em mata-mata de Copa vieram daqui. Faz 23 anos.',
   },
   manifesto: {
     title: 'O Manifesto',
