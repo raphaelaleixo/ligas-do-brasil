@@ -2,7 +2,7 @@ const pt = {
   homepage: {
     heroPullquote: 'O problema não é o calendário. É a escala.',
     heroThesis:
-      'O Brasil, com dimensões continentais, promove menos clubes ao topo do futebol nacional do que Portugal. Esta proposta corrige a pirâmide antes de tocar no calendário.',
+      'O Brasil, com dimensões continentais, promove menos clubes ao topo do futebol nacional do que Portugal. Esta proposta corrige a arquitetura antes de tocar no calendário.',
     escalaContinental:
       'Brasil: 8,5 milhões de km², 214 milhões de habitantes, 20 clubes na elite. Portugal: 92 mil km², 10 milhões de habitantes, 18 clubes na elite.',
   },
