@@ -12,7 +12,17 @@ const ANALOG = {
 
 const CAMPEOES_QUOTAS = {
   'Liga Nordeste': 10, 'Liga Paulista': 10,
-  'Liga Guanabara-Capixaba': 8, 'Liga Sulista': 8, 'Liga Mineira/Centro-Oeste': 8, 'Liga Norte': 4,
+  'Liga Guanabara-Capixaba': 8, 'Liga Sulista': 8, 'Liga Mineira/Centro-Oeste': 8,
+  'Liga Norte': 4,
+};
+
+const POPULACAO = {
+  'Liga Paulista': '46M',
+  'Liga Nordeste': '54M',
+  'Liga Guanabara-Capixaba': '19M',
+  'Liga Sulista': '30M',
+  'Liga Mineira/Centro-Oeste': '28M',
+  'Liga Norte': '18M',
 };
 
 function slug(nome) { return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/g, ''); }
@@ -26,57 +36,80 @@ function renderTabs(season) {
   tabsEl.setAttribute('role', 'tablist');
 }
 
-function renderTable(rows, quota, conmebol) {
-  const libSet = new Set(conmebol?.libertadores ?? []);
-  const sulSet = new Set(conmebol?.sulAmericana ?? []);
-  return `<table class="liga-tabela">
-    <caption class="visually-hidden">Classificação da Série ${rows[0].divisao}</caption>
-    <thead><tr>
-      <th scope="col">#</th><th scope="col">Clube</th>
-      <th scope="col">J</th><th scope="col">V</th><th scope="col">E</th><th scope="col">D</th>
-      <th scope="col">GP</th><th scope="col">GC</th><th scope="col">SG</th><th scope="col">Pts</th>
-    </tr></thead>
-    <tbody>
-      ${rows.map((r) => {
-        let zona = '';
-        if (rows[0].divisao === 'A') {
-          if (r.posicao <= quota) zona = 'campeoes';
-          else if (r.posicao >= rows.length - 2) zona = 'rebaixamento';
-        } else {
-          if (r.posicao <= 3) zona = 'acesso';
-        }
-        const badges = [
-          libSet.has(r.id) ? '<span class="badge badge--lib" title="Libertadores">🌎 Libertadores</span>' : '',
-          sulSet.has(r.id) ? '<span class="badge badge--sul" title="Sul-Americana">🏆 Sul-Americana</span>' : '',
-        ].join('');
-        return `<tr data-zona="${zona}">
-          <td>${r.posicao}</td><td><a href="/timeline?clube=${r.id}">${r.nome}</a>${badges}</td>
-          <td>${r.jogos}</td><td>${r.vitorias}</td><td>${r.empates}</td><td>${r.derrotas}</td>
-          <td>${r.golsPro}</td><td>${r.golsContra}</td><td>${r.saldoGols}</td><td><strong>${r.pontos}</strong></td>
-        </tr>`;
-      }).join('')}
-    </tbody>
-  </table>`;
-}
-
 function renderLiga(season, key) {
   const liga = season.ligasRegionais.find((l) => slug(l.nome) === key);
   const el = document.getElementById('liga-detalhe');
-  el.className = 'liga-detalhe';
+
+  // Serie A clubs from this liga, ordered by prior-year ranking (Year-0 seeding
+  // by ranking_forca desc, tiebreak by name). This is structural — not simulated
+  // results.
+  const clubes = season.clubes
+    .filter((c) => c.liga_regional === liga.nome && c.divisao === 'A')
+    .slice()
+    .sort((a, b) => {
+      if (b.ranking_forca !== a.ranking_forca) return b.ranking_forca - a.ranking_forca;
+      return a.nome.localeCompare(b.nome);
+    });
+
+  const quota = CAMPEOES_QUOTAS[liga.nome];
+  const total = clubes.length;
+
+  const listItems = clubes.map((c, i) => {
+    const pos = i + 1;
+    let badge = '';
+    let zona = '';
+    if (pos <= quota) {
+      badge = '<span class="clube__badge clube__badge--cc">🌎 Copa dos Campeões</span>';
+      zona = 'campeoes';
+    } else if (pos >= total - 2) {
+      badge = '<span class="clube__badge clube__badge--reb">⬇️ Rebaixamento</span>';
+      zona = 'rebaixamento';
+    }
+    return `<li class="clube" data-zona="${zona}">
+      <span class="clube__pos">${pos}</span>
+      <span class="clube__nome">${c.nome}</span>
+      <span class="clube__estado">${c.estado ?? ''}</span>
+      ${badge}
+    </li>`;
+  }).join('');
+
   el.innerHTML = `
-    <div class="liga-context">
-      <div class="liga-context__analog">Análogo: <strong>${ANALOG[liga.nome]}</strong></div>
-      <div class="liga-context__quota">${CAMPEOES_QUOTAS[liga.nome]} vagas na Copa dos Campeões</div>
+    <div class="liga-layout">
+      <section class="liga-clubs" aria-labelledby="serieA-heading">
+        <h2 id="serieA-heading">Série A · ${total} clubes</h2>
+        <p class="liga-clubs__caveat">
+          Ordenados por ranking da temporada anterior. Cores de zona são estruturais —
+          esta é a moldura da reforma, não um resultado simulado.
+        </p>
+        <ol class="clubes">${listItems}</ol>
+      </section>
+
+      <aside class="liga-meta">
+        <div class="liga-meta__block">
+          <div class="liga-meta__label">Análogo europeu</div>
+          <div class="liga-meta__value">${ANALOG[liga.nome]}</div>
+        </div>
+        <div class="liga-meta__block">
+          <div class="liga-meta__label">População da região</div>
+          <div class="liga-meta__value">${POPULACAO[liga.nome]}</div>
+        </div>
+        <div class="liga-meta__block liga-meta__block--accent">
+          <div class="liga-meta__label">Vagas na Copa dos Campeões</div>
+          <div class="liga-meta__value">${quota}</div>
+        </div>
+        <div class="liga-meta__block">
+          <div class="liga-meta__label">Vaga garantida na Sul-Americana</div>
+          <div class="liga-meta__value">1 <span class="liga-meta__hint">para o melhor clube não classificado à Libertadores</span></div>
+        </div>
+        <div class="liga-meta__block">
+          <div class="liga-meta__label">Série B</div>
+          <div class="liga-meta__value">18 clubes</div>
+          <div class="liga-meta__hint">Também disputam 34 rodadas em pontos corridos ao longo dos mesmos 10 meses. Um lugar no calendário nacional para cada um.</div>
+        </div>
+      </aside>
     </div>
-    <section aria-labelledby="serieA-heading">
-      <h2 id="serieA-heading">Série A</h2>
-      ${renderTable(liga.tabelaA, CAMPEOES_QUOTAS[liga.nome], season.conmebol)}
-    </section>
-    <section aria-labelledby="serieB-heading">
-      <h2 id="serieB-heading">Série B</h2>
-      ${renderTable(liga.tabelaB, undefined, season.conmebol)}
-    </section>
   `;
+
   const url = new URL(location.href); url.hash = `liga=${key}`; history.replaceState(null, '', url);
 }
 
