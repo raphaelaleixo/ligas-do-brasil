@@ -13,19 +13,20 @@ const CC_QUOTAS = [
 ];
 
 const CC_POTES = [
-  { pote: 1, label: 'Pote 1 · Gigantes',       corte: '1 clube da Amazônica, 2 de cada demais região, e 1 extra da Nordestina.' },
-  { pote: 2, label: 'Pote 2 · Elite forte',    corte: '1 clube da Amazônica, 2 de cada demais região, e 1 extra da Paulista.' },
-  { pote: 3, label: 'Pote 3 · Meio-alto',      corte: 'Mesma distribuição do Pote 1: 1 Amazônica, 2 nas demais, extra na Nordestina.' },
-  { pote: 4, label: 'Pote 4 · Ascendentes',    corte: 'Mesma distribuição do Pote 2: 1 Amazônica, 2 nas demais, extra na Paulista.' },
+  { pote: 1, label: 'Pote 1 · Gigantes',       corte: '1 clube da Amazônica, 2 de cada demais região, e 1 extra sorteado entre Nordestina e Paulista.' },
+  { pote: 2, label: 'Pote 2 · Elite forte',    corte: 'Mesma regra do Pote 1 — o extra é sorteado a cada ano.' },
+  { pote: 3, label: 'Pote 3 · Meio-alto',      corte: 'Mesma regra.' },
+  { pote: 4, label: 'Pote 4 · Ascendentes',    corte: 'Mesma regra. Ao final dos 4 potes, Nordestina e Paulista terão 2 extras cada (10 vagas totais).' },
 ];
 
 // Illustrative draw. Pot rule (per proposta):
 //   Amazônica contribui 1 clube por pote (4 clubes / 4 potes = 1-1-1-1).
 //   Central, Sulista, Rio-Capixaba: 2 por pote (8 = 2-2-2-2).
-//   Nordestina e Paulista têm 10 vagas cada — alternam entre 2 e 3 por pote,
-//     com sorteio determinando qual leva o extra. Nesta simulação:
-//     Pote 1: Nordestina 3, Paulista 2   ·   Pote 2: Nordestina 2, Paulista 3
-//     Pote 3: Nordestina 3, Paulista 2   ·   Pote 4: Nordestina 2, Paulista 3
+//   Nordestina e Paulista têm 10 vagas cada — 2 clubes na base + 1 extra
+//     sorteado por pote a cada ano. Ao final, cada uma recebe 2 extras
+//     (2 extras × 2 regiões = 4 = número de potes) e totaliza 10 vagas.
+// Este exemplo mostra UM sorteio possível: NE teve o extra nos Potes 1 e 3;
+// Paulista, nos Potes 2 e 4. Outros anos podem sortear diferente.
 // Cada grupo tem 1 clube por pote E 4 regiões diferentes (geo-lock).
 const REG = { NE: 'Nordestina', SP: 'Paulista', CE: 'Central', SUL: 'Sulista', RJ: 'Rio-Capixaba', AM: 'Amazônica' };
 const CC_EXAMPLE_GROUPS = [
@@ -202,6 +203,11 @@ function renderCampeoes() {
         <strong>4 regiões diferentes</strong>. Amazonas FC representa o Norte no Pote 1, Paysandu no
         Pote 2, Remo no Pote 3 e Manaus FC no Pote 4 — o Norte aparece em <strong>cada tier</strong>
         do torneio, não só no topo.
+      </p>
+      <p class="copa__body">
+        Neste sorteio (um entre vários possíveis), a Nordestina recebeu o extra nos Potes 1 e 3, e
+        a Paulista nos Potes 2 e 4. A distribuição dos extras é <strong>sorteada a cada ano</strong>,
+        garantindo 2 extras para cada região ao longo dos 4 potes.
       </p>
       <div class="cc-groups">
         ${CC_EXAMPLE_GROUPS.map(g => `
