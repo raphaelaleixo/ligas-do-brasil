@@ -9,7 +9,7 @@ import { computePerfis } from './perfis.js';
 import { getAllTeams, getLeagues } from '../data/teams.js';
 
 const META = {
-  totalClubes: 192,
+  totalClubes: 216,
   tetoJogos: 63,
   mesesGarantidos: 10,
   desempregadosEmAbril: 0,

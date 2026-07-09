@@ -18,7 +18,7 @@ describe('simulateSeason', () => {
   });
 
   it('meta has the expected constants', () => {
-    expect(season.meta.totalClubes).toBe(192);
+    expect(season.meta.totalClubes).toBe(216);
     expect(season.meta.tetoJogos).toBe(63);
     expect(season.meta.semanasUtilizaveis).toBe(42);
   });
