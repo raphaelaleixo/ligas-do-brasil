@@ -75,7 +75,7 @@ export function simulateSeason(seed) {
   const pots = buildPots(regional.ligas);
   const lookup = ligaLookupFrom(regional.ligas);
   const groupsDrawn = drawGroups(pots, lookup, rng);
-  const { grupos } = simulateGroupStage(groupsDrawn, rng);
+  const { grupos, crossGroupMatches } = simulateGroupStage(groupsDrawn, rng);
   const { top2, melhoresTerceiros } = selectKnockoutQualifiers(grupos);
   const clubes32Campeoes = [...top2.map((r) => ({ id: r.id })), ...melhoresTerceiros.map((r) => ({ id: r.id }))];
   const koCampeoes = simulateKnockout(clubes32Campeoes, rng);
@@ -98,6 +98,7 @@ export function simulateSeason(seed) {
   const regionalMatches = regional.ligas.flatMap((l) => l.matches);
   const campeoesMatches = [
     ...grupos.flatMap((g) => g.jogos),
+    ...crossGroupMatches,
     ...koCampeoes['16avos'].map((m) => ({ ...m, rodada: '16avos' })),
     ...koCampeoes.oitavas.map((m) => ({ ...m, rodada: 'oitavas' })),
     ...koCampeoes.quartas.map((m) => ({ ...m, rodada: 'quartas' })),

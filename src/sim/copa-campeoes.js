@@ -115,9 +115,18 @@ const GROUP_ROUNDS = [
   [[0, 3], [1, 2]],
 ];
 
+// Cross-group sub-tournament rounds — sub-group of 4 = 3 rounds × 2 matches, same
+// pairing pattern as GROUP_ROUNDS above (round-robin).
+const CROSS_ROUNDS = GROUP_ROUNDS;
+
 export function simulateGroupStage(groups, rng) {
+  // rowMap is shared across in-group and cross-group phases so a club's tabela
+  // accumulates points from all 6 of its matches.
+  const rowMap = new Map();
+  for (const g of groups) for (const c of g) rowMap.set(c.id, emptyGroupRow(c.id));
+
+  // 1) In-group round-robin — 3 rounds, 2 matches per group per round.
   const grupos = groups.map((g, gi) => {
-    const rows = new Map(g.map((c) => [c.id, emptyGroupRow(c.id)]));
     const jogos = [];
     GROUP_ROUNDS.forEach((round, rIdx) => {
       for (const [hi, ai] of round) {
@@ -128,7 +137,7 @@ export function simulateGroupStage(groups, rng) {
           { rankingHome: homeTeam.ranking_forca, rankingAway: awayTeam.ranking_forca },
           rng
         );
-        applyGroupResult(rows.get(home.id), rows.get(away.id), golsCasa, golsFora);
+        applyGroupResult(rowMap.get(home.id), rowMap.get(away.id), golsCasa, golsFora);
         jogos.push({
           rodada: `grupos-${rIdx + 1}`,
           casaId: home.id, foraId: away.id,
@@ -136,15 +145,53 @@ export function simulateGroupStage(groups, rng) {
         });
       }
     });
-    const tabela = Array.from(rows.values()).sort(sortGroupTable).map((r, i) => ({ posicao: i + 1, ...r }));
     return {
       id: GROUP_LABELS[gi],
       clubes: g.map((c) => c.id),
       pots: Object.fromEntries(g.map((c) => [c.id, c.pot])),
-      jogos, tabela,
+      jogos,
     };
   });
-  return { grupos };
+
+  // 2) Cross-group series — per pot, split 12 clubs by group letter into 3
+  //    sub-tournaments (A-D, E-H, I-L), each a round-robin of 4. Each club plays
+  //    3 more games, all counting toward its group tabela.
+  const crossGroupMatches = [];
+  for (let potNum = 1; potNum <= 4; potNum++) {
+    // Collect this pot's clubs in group-letter order (0..11).
+    const potClubIds = groups.map((g) => g.find((c) => c.pot === potNum)?.id).filter(Boolean);
+    if (potClubIds.length !== 12) continue;
+    const subs = [potClubIds.slice(0, 4), potClubIds.slice(4, 8), potClubIds.slice(8, 12)];
+    for (const sub of subs) {
+      CROSS_ROUNDS.forEach((round, rIdx) => {
+        for (const [hi, ai] of round) {
+          const homeId = sub[hi], awayId = sub[ai];
+          const home = getTeamById(homeId);
+          const away = getTeamById(awayId);
+          const { golsCasa, golsFora } = simulateMatch(
+            { rankingHome: home.ranking_forca, rankingAway: away.ranking_forca },
+            rng
+          );
+          applyGroupResult(rowMap.get(homeId), rowMap.get(awayId), golsCasa, golsFora);
+          crossGroupMatches.push({
+            rodada: `cross-${rIdx + 1}`,
+            pot: potNum,
+            casaId: homeId, foraId: awayId,
+            golsCasa, golsFora,
+          });
+        }
+      });
+    }
+  }
+
+  // 3) Finalize tabelas per group (all 6 games counted).
+  for (const g of grupos) {
+    g.tabela = g.clubes
+      .map((id) => rowMap.get(id))
+      .sort(sortGroupTable)
+      .map((r, i) => ({ posicao: i + 1, ...r }));
+  }
+  return { grupos, crossGroupMatches };
 }
 
 export function selectKnockoutQualifiers(grupos) {

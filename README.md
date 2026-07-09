@@ -59,7 +59,7 @@ container queries, `light-dark()`. Older browsers get a plain but functional exp
 
 ## The default simulated season
 
-Seed `740` produces Botafogo lifting both national trophies:
-- Copa dos Campeões: **Botafogo 5–1 Flamengo** in the final.
-- Copa do Brasil: **Botafogo 5–2 Corinthians** in the final.
-- Libertadores slot 1: Botafogo.
+Seed `143` (under the NFL-style cross-group format):
+- Copa dos Campeões: **Botafogo 2–0 Flamengo** (Rio derby final).
+- Copa do Brasil: **São Paulo 1–0 Palmeiras** (Choque-Rei).
+- Libertadores 7: Botafogo, Flamengo, São Paulo, Fluminense, Palmeiras, Grêmio, Internacional.

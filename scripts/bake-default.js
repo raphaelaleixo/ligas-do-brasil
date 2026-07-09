@@ -3,10 +3,11 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import { simulateSeason } from '../src/sim/run.js';
 
-// Default seed chosen by hand for its narrative: Botafogo lifts the Copa dos Campeões
-// (5–1 vs Flamengo in the final) AND the Copa do Brasil in the same season.
-// The site ships this pre-baked so the first-load story is on-brand.
-const DEFAULT_SEED = 740;
+// Default seed chosen by hand for its narrative under the NFL-style cross-group format:
+// - Copa dos Campeões: Botafogo 2–0 Flamengo (Rio derby final)
+// - Copa do Brasil:    São Paulo 1–0 Palmeiras (Choque-Rei)
+// - Libertadores slot 1: Botafogo
+const DEFAULT_SEED = 143;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const outDir = resolve(__dirname, '../data');

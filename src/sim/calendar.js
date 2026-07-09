@@ -3,6 +3,7 @@ export const TOTAL_WEEKS = 42;
 const LIGA_WEEKS = Array.from({ length: 34 }, (_, i) => i + 1);
 const COPA_CAMPEOES_WEEKS = {
   'grupos-1': 5, 'grupos-2': 8, 'grupos-3': 11,
+  'cross-1': 13, 'cross-2': 15, 'cross-3': 17,
   '16avos': 20, 'oitavas': 25, 'quartas': 30, 'semis': 35, 'final': 40,
 };
 const COPA_BRASIL_WEEKS = {
