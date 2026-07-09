@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendário | Futebol BR 2.0</title>
-  <meta name="description" content="Calendário anual completo de qualquer um dos 192 clubes.">
+  <meta name="description" content="Calendário anual completo para cada arquétipo de clube na Reforma 2.0.">
 
   <link rel="stylesheet" href="/assets/css/layers.css">
   <link rel="stylesheet" href="/assets/css/tokens.css">
@@ -14,9 +14,7 @@
   <link rel="stylesheet" href="/assets/css/view-transitions.css">
   <link rel="stylesheet" href="/assets/css/ligas.css">
   <link rel="stylesheet" href="/assets/css/timeline.css">
-  <link rel="stylesheet" href="/assets/css/match-dialog.css">
 
-  <link rel="preload" as="fetch" href="/data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
 </head>
 <body>
@@ -38,29 +36,16 @@
     <section class="timeline">
       <header class="timeline__header">
         <h1>Calendário</h1>
-        <search>
-          <form class="timeline__picker" id="club-picker-form">
-            <label for="clube-select">Clube:</label>
-            <select id="clube-select" name="clube" class="club-picker" required>
-              <button><selectedcontent></selectedcontent></button>
-            </select>
-            <button type="submit">Ver</button>
-          </form>
-        </search>
-        <div id="club-header"></div>
+        <p style="color: var(--color-muted); max-inline-size: 65ch;">
+          Cada arquétipo mostra o padrão do calendário anual sob a Reforma 2.0 — competições e datas, não jogos específicos ou resultados. O objetivo é mostrar a <strong>forma</strong> da temporada de cada tipo de clube, não simular quem venceu.
+        </p>
+        <nav aria-label="Escolher arquétipo">
+          <ul class="archetype-tabs" id="archetype-tabs"></ul>
+        </nav>
       </header>
 
-      <div class="timeline__grid" id="timeline-grid"></div>
-
-      <div id="timeline-stats"></div>
+      <section id="archetype-detail" class="archetype-detail" aria-live="polite"></section>
     </section>
-
-    <dialog id="match-dialog" closedby="any" class="match-dialog">
-      <form method="dialog">
-        <header><h2 id="match-title"></h2><button type="submit" aria-label="Fechar">✕</button></header>
-        <div id="match-body"></div>
-      </form>
-    </dialog>
   </main>
 
   <footer>

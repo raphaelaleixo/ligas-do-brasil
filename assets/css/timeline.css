@@ -1,77 +1,103 @@
 @layer components {
   @scope (.timeline) {
-    .timeline__header { display: grid; gap: var(--space-4); padding-block-end: var(--space-5); border-block-end: 1px solid var(--color-hairline); }
-    .timeline__picker { display: flex; gap: var(--space-2); align-items: center; font-family: var(--font-sans); flex-wrap: wrap; }
-    .timeline__picker > button[type="submit"] { padding: var(--space-2) var(--space-4); background: var(--color-accent); color: white; border: 0; border-radius: var(--radius); cursor: pointer; }
+    .timeline__header {
+      display: grid; gap: var(--space-4);
+      padding-block-end: var(--space-5);
+      border-block-end: 1px solid var(--color-hairline);
+    }
 
-    #club-header { font-family: var(--font-sans); }
-    #club-header h2 { font-size: var(--step-3); }
-    #club-header .meta { color: var(--color-muted); font-size: var(--step-0); }
+    .archetype-tabs {
+      list-style: none; padding: 0; margin: 0;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      gap: var(--space-3);
+      font-family: var(--font-sans);
+    }
+    .archetype-tab {
+      display: grid; gap: 4px; text-align: start;
+      padding: var(--space-3) var(--space-4);
+      background: transparent;
+      border: 1px solid var(--color-hairline);
+      border-radius: var(--radius);
+      cursor: pointer;
+      color: inherit;
+      transition: border-color 120ms ease, background 120ms ease;
+    }
+    .archetype-tab:hover { border-color: var(--color-accent); }
+    .archetype-tab[aria-selected="true"] {
+      border-color: var(--color-accent);
+      background: color-mix(in oklab, var(--color-accent) 8%, transparent);
+    }
+    .archetype-tab__label { font-weight: 700; font-size: var(--step-0); }
+    .archetype-tab__meta {
+      color: var(--color-muted); font-size: var(--step--1);
+      display: flex; align-items: baseline; gap: var(--space-2);
+    }
+    .archetype-tab__delta { padding: 1px 6px; border-radius: 999px; font-weight: 700; font-size: 0.85em; }
+    .archetype-tab__delta[data-sign="minus"] { background: color-mix(in oklab, var(--color-warn) 18%, transparent); color: var(--color-warn); }
+    .archetype-tab__delta[data-sign="plus"]  { background: color-mix(in oklab, var(--color-accent) 20%, transparent); color: var(--color-accent); }
 
-    .timeline__grid { display: grid; grid-template-columns: 4rem repeat(2, 1fr); gap: var(--space-1) var(--space-2); font-family: var(--font-sans); font-size: var(--step--1); container-type: inline-size; padding-block: var(--space-4); }
-    .tl-week__hdr { padding-block: var(--space-2); font-weight: 600; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: var(--step--1); }
-    .tl-week { padding-block: var(--space-2); }
-    .tl-week__num { color: var(--color-muted); }
-    .tl-slot { padding: var(--space-2) var(--space-3); background: color-mix(in oklab, var(--slot-color, var(--comp-fifa-pause)) 15%, transparent); border-inline-start: 3px solid var(--slot-color, var(--comp-fifa-pause)); border-radius: var(--radius); cursor: pointer; text-align: start; font: inherit; color: inherit; }
-    .tl-slot[data-comp="liga_regional"] { --slot-color: var(--comp-liga); }
-    .tl-slot[data-comp="copa_campeoes"] { --slot-color: var(--comp-campeoes); }
-    .tl-slot[data-comp="copa_brasil"]   { --slot-color: var(--comp-brasil); }
-    .tl-slot[data-comp="conmebol_libertadores"]  { --slot-color: var(--color-badge-campeoes); }
-    .tl-slot[data-comp="conmebol_sul_americana"] { --slot-color: var(--color-badge-sulamericana); }
-    .tl-slot:empty { opacity: 0.4; cursor: default; }
+    .archetype-header { padding-block: var(--space-5); font-family: var(--font-sans); }
+    .archetype-header__eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--step--1); color: var(--color-muted); }
+    .archetype-header__title { font-size: var(--step-3); margin-block-start: var(--space-1); }
+    .archetype-header__subtitle { color: var(--color-muted); max-inline-size: 60ch; margin-block-start: var(--space-2); }
+    .archetype-header__counters {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+      gap: var(--space-3);
+      margin-block-start: var(--space-4);
+    }
+    .counter {
+      padding: var(--space-3);
+      border: 1px solid var(--color-hairline);
+      border-radius: var(--radius);
+      display: grid; gap: 2px;
+    }
+    .counter__label { color: var(--color-muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em; }
+    .counter__value { font-size: var(--step-2); font-weight: 700; color: var(--color-accent); }
+    .counter__value--muted { color: var(--color-muted); }
+    .counter__value[data-sign="minus"] { color: var(--color-warn); }
+    .counter__value[data-sign="plus"] { color: var(--color-accent); }
+    .archetype-header__example {
+      margin-block-start: var(--space-3);
+      color: var(--color-muted);
+      max-inline-size: 60ch;
+      font-style: italic;
+    }
+
+    .archetype-grid {
+      display: grid;
+      grid-template-columns: minmax(6rem, auto) minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2px var(--space-2);
+      font-family: var(--font-sans);
+      font-size: var(--step--1);
+      container-type: inline-size;
+      min-inline-size: 0;
+    }
+    .archetype-grid__col-header {
+      font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+      color: var(--color-muted); font-size: var(--step--1);
+      padding-block: var(--space-2);
+      border-block-end: 1px solid var(--color-hairline);
+    }
+    .archetype-grid__week {
+      display: flex; align-items: baseline; gap: var(--space-2);
+      padding-block: var(--space-2);
+    }
+    .archetype-grid__week-num { font-weight: 700; }
+    .archetype-grid__week-date { color: var(--color-muted); font-size: 0.85em; }
+    .archetype-grid__slot {
+      padding: var(--space-2) var(--space-3);
+      border-inline-start: 3px solid var(--slot-color, transparent);
+      background: color-mix(in oklab, var(--slot-color, transparent) 12%, transparent);
+      border-radius: var(--radius);
+      min-block-size: 1.75rem;
+      display: flex; align-items: center;
+    }
+    .archetype-grid__slot[data-comp=""] { --slot-color: transparent; }
+    .archetype-grid__slot[data-comp="liga_regional"]         { --slot-color: var(--comp-liga); }
+    .archetype-grid__slot[data-comp="copa_campeoes"]         { --slot-color: var(--comp-campeoes); }
+    .archetype-grid__slot[data-comp="copa_brasil"]           { --slot-color: var(--comp-brasil); }
+    .archetype-grid__slot[data-comp="conmebol_libertadores"] { --slot-color: var(--color-badge-campeoes); }
+    .archetype-grid__slot[data-comp="conmebol_sul_americana"]{ --slot-color: var(--color-badge-sulamericana); }
+    .archetype-grid__slot[data-comp="fifa_pause"]            { --slot-color: var(--comp-fifa-pause); font-style: italic; color: var(--color-muted); }
   }
-}
-
-/* Customizable <select>: Chrome/Edge 135+; degrades to native <select> */
-.club-picker,
-.club-picker::picker(select) {
-  appearance: base-select;
-}
-.club-picker {
-  min-inline-size: 22rem;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-hairline);
-  border-radius: var(--radius);
-  background: var(--color-bg);
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-}
-.club-picker::picker(select) {
-  max-block-size: 24rem;
-  inline-size: min(28rem, 90vw);
-  padding: var(--space-3);
-  background: var(--color-bg);
-  border: 1px solid var(--color-hairline);
-  border-radius: var(--radius);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  overflow-y: auto;
-  scrollbar-width: thin;
-}
-.club-picker optgroup {
-  font-weight: 700;
-  color: var(--color-muted);
-  font-size: var(--step--1);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding-block: var(--space-3) var(--space-2);
-}
-.club-picker option {
-  padding: var(--space-2) var(--space-3);
-  display: grid;
-  gap: 2px;
-  border-radius: var(--radius);
-}
-.club-picker option .club-picker__nome { font-weight: 600; }
-.club-picker option .club-picker__meta {
-  color: var(--color-muted);
-  font-size: var(--step--1);
-}
-.club-picker option:checked {
-  background: color-mix(in oklab, var(--color-accent) 12%, transparent);
-  outline: 2px solid var(--color-accent);
-  font-weight: 700;
-}
-.club-picker option:hover {
-  background: color-mix(in oklab, var(--color-fg) 5%, transparent);
 }

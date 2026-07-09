@@ -1,76 +1,68 @@
-import { loadSeason, clubById, calendarFor } from '../season.js';
-import { populateClubes } from '../components/club-picker.js';
-import { openMatchDialog } from '../components/match-dialog.js';
+import { ARCHETYPES, calendarFor } from '../data/archetypes.js';
+import { wireTabs } from '../components/tabs.js';
 
-const season = await loadSeason();
-const selectEl = document.getElementById('clube-select');
-populateClubes(selectEl, season.clubes);
+function renderTabs() {
+  const tabsEl = document.getElementById('archetype-tabs');
+  tabsEl.innerHTML = Object.values(ARCHETYPES).map((a) => `
+    <li><button role="tab" data-key="${a.slug}" aria-selected="false" tabindex="-1" class="archetype-tab">
+      <span class="archetype-tab__label">${a.label}</span>
+      <span class="archetype-tab__meta">${a.totalGames} jogos <span class="archetype-tab__delta" data-sign="${a.comparacao.delta.startsWith('+') ? 'plus' : 'minus'}">${a.comparacao.delta}</span></span>
+    </button></li>
+  `).join('');
+  tabsEl.setAttribute('role', 'tablist');
+}
 
-const params = new URLSearchParams(location.search);
-const initialId = params.get('clube') ?? 'BOT';
-selectEl.value = initialId;
+function renderArchetype(key) {
+  const arch = ARCHETYPES[key];
+  if (!arch) return;
+  const weeks = calendarFor(key);
+  const el = document.getElementById('archetype-detail');
 
-function selectClub(id) {
-  const club = clubById(season, id);
-  if (!club) return;
-  const url = new URL(location.href); url.searchParams.set('clube', club.id);
+  el.innerHTML = `
+    <header class="archetype-header">
+      <p class="archetype-header__eyebrow">Arquétipo</p>
+      <h2 class="archetype-header__title">${arch.label}</h2>
+      <p class="archetype-header__subtitle">${arch.subtitle}</p>
+      <div class="archetype-header__counters">
+        <div class="counter">
+          <div class="counter__label">Reforma</div>
+          <div class="counter__value">${arch.totalGames} jogos</div>
+        </div>
+        <div class="counter">
+          <div class="counter__label">Modelo atual</div>
+          <div class="counter__value counter__value--muted">${arch.comparacao.atual} jogos</div>
+        </div>
+        <div class="counter">
+          <div class="counter__label">Diferença</div>
+          <div class="counter__value" data-sign="${arch.comparacao.delta.startsWith('+') ? 'plus' : 'minus'}">${arch.comparacao.delta}</div>
+        </div>
+      </div>
+      <p class="archetype-header__example">${arch.exemplos}</p>
+    </header>
+
+    <div class="archetype-grid">
+      <div class="archetype-grid__col-header">Semana</div>
+      <div class="archetype-grid__col-header">Fim-de-semana</div>
+      <div class="archetype-grid__col-header">Meio-de-semana</div>
+      ${weeks.map((w) => `
+        <div class="archetype-grid__week">
+          <span class="archetype-grid__week-num">S${String(w.n).padStart(2, '0')}</span>
+          <span class="archetype-grid__week-date">${w.sat}</span>
+        </div>
+        <div class="archetype-grid__slot" data-comp="${w.fds?.key ?? ''}">${w.fds?.label ?? ''}</div>
+        <div class="archetype-grid__slot" data-comp="${w.mds?.key ?? ''}">${w.mds?.label ?? ''}</div>
+      `).join('')}
+    </div>
+  `;
+
+  const url = new URL(location.href);
+  url.searchParams.set('arquetipo', key);
   history.replaceState(null, '', url);
-  render(club.id);
 }
 
-selectEl.addEventListener('change', () => selectClub(selectEl.value));
-document.getElementById('club-picker-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  selectClub(selectEl.value);
-});
-
-function render(id) {
-  const club = clubById(season, id);
-  document.getElementById('club-header').innerHTML = `
-    <h2>${club.nome}</h2>
-    <p class="meta">${club.liga_regional} · Série ${club.divisao} · Posição ${club.estatisticas_temporada?.posicaoLiga ?? '—'}</p>`;
-
-  const cal = calendarFor(season, id);
-  const grid = document.getElementById('timeline-grid');
-  const rows = ['<div class="tl-week"></div><div class="tl-week__hdr">Fim-de-semana</div><div class="tl-week__hdr">Meio-de-semana</div>']
-    .concat(cal.map((w, i) => {
-      const wnum = i + 1;
-      const slot = (entry, kind) => {
-        if (!entry) return `<button type="button" class="tl-slot" data-comp="" aria-label="Sem jogo"></button>`;
-        // Conmebol slots: reserved dates, no simulated opponent/score
-        if (entry.competicao === 'conmebol_libertadores') {
-          return `<button type="button" class="tl-slot" data-comp="conmebol_libertadores" data-week="${wnum}" data-kind="${kind}" aria-label="Libertadores">🌎 Libertadores</button>`;
-        }
-        if (entry.competicao === 'conmebol_sul_americana') {
-          return `<button type="button" class="tl-slot" data-comp="conmebol_sul_americana" data-week="${wnum}" data-kind="${kind}" aria-label="Sul-Americana">🏆 Sul-Americana</button>`;
-        }
-        const adv = clubById(season, entry.adversarioId);
-        return `<button type="button" class="tl-slot" data-comp="${entry.competicao}" data-week="${wnum}" data-kind="${kind}" aria-label="${adv?.nome ?? entry.adversarioId} ${entry.golsPro}-${entry.golsContra}">
-          ${adv?.nome ?? entry.adversarioId} <strong>${entry.golsPro}–${entry.golsContra}</strong>
-        </button>`;
-      };
-      return `<div class="tl-week"><span class="tl-week__num">S${wnum}</span></div>${slot(w.fimDeSemana, 'fds')}${slot(w.meioDeSemana, 'mds')}`;
-    }));
-  grid.innerHTML = rows.join('');
-
-  grid.querySelectorAll('.tl-slot[data-week]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const week = parseInt(btn.dataset.week, 10);
-      const kind = btn.dataset.kind;
-      const entry = kind === 'fds' ? cal[week - 1].fimDeSemana : cal[week - 1].meioDeSemana;
-      const adv = entry.adversarioId ? clubById(season, entry.adversarioId) : null;
-      openMatchDialog({ semana: week, entry, ownerClub: club, adversario: adv });
-    });
-  });
-
-  const stats = club.estatisticas_temporada;
-  document.getElementById('timeline-stats').innerHTML = stats ? `
-    <table class="liga-tabela">
-      <tr><td>Jogos</td><td>${stats.jogos}</td></tr>
-      <tr><td>Vitórias / Empates / Derrotas</td><td>${stats.vitorias} / ${stats.empates} / ${stats.derrotas}</td></tr>
-      <tr><td>Gols Pró / Contra</td><td>${stats.golsPro} / ${stats.golsContra}</td></tr>
-      <tr><td>Pontos</td><td><strong>${stats.pontos}</strong></td></tr>
-    </table>` : '';
-}
-
-render(initialId);
+renderTabs();
+const tabsEl = document.getElementById('archetype-tabs');
+tabsEl.addEventListener('tab-change', (e) => renderArchetype(e.detail.key));
+const params = new URLSearchParams(location.search);
+const defaultKey = params.get('arquetipo') ?? 'elite-finalista';
+wireTabs(tabsEl, { defaultKey });
