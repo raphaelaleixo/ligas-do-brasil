@@ -17,15 +17,20 @@ describe('analogies', () => {
   it('each entry has all required fields', () => {
     for (const a of getAnalogies()) {
       expect(a).toHaveProperty('liga');
-      expect(a).toHaveProperty('analogoEuropeu');
-      expect(a).toHaveProperty('populacao');
+      expect(a).toHaveProperty('regiaoPop');
+      expect(a).toHaveProperty('pais');
+      expect(a).toHaveProperty('paisFlag');
+      expect(a).toHaveProperty('paisPop');
       expect(a).toHaveProperty('rationale');
-      expect(typeof a.populacao).toBe('number');
-      expect(a.populacao).toBeGreaterThan(0);
+      expect(typeof a.regiaoPop).toBe('number');
+      expect(typeof a.paisPop).toBe('number');
+      expect(a.regiaoPop).toBeGreaterThan(0);
+      expect(a.paisPop).toBeGreaterThan(0);
     }
   });
 
   it('getAnalogyForLeague returns the correct entry', () => {
-    expect(getAnalogyForLeague('Liga Paulista').analogoEuropeu).toBe('Premier League');
+    expect(getAnalogyForLeague('Liga Paulista').pais).toBe('Espanha');
+    expect(getAnalogyForLeague('Liga Amazônica').pais).toBe('Bélgica');
   });
 });

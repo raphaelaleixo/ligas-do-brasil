@@ -1,19 +1,26 @@
 import { loadSeason } from '../season.js';
 
+// Population figures: IBGE 2022 Census (Brazil regions) / UN 2023 (Europe).
+// Each Brazilian regional league is roughly the size of a European country.
 const ANALOGIES = [
-  { liga: 'Liga Paulista', europ: 'Premier League', pop: '46M' },
-  { liga: 'Liga Nordestina', europ: 'Serie A (Itália)', pop: '54M' },
-  { liga: 'Liga Central', europ: 'La Liga', pop: '28M' },
-  { liga: 'Liga Rio-Capixaba', europ: 'Primeira Liga (Portugal)', pop: '19M' },
-  { liga: 'Liga Sulista', europ: 'Bundesliga', pop: '30M' },
-  { liga: 'Liga Amazônica', europ: 'Eredivisie', pop: '18M' },
+  { liga: 'Liga Nordestina',    regiaoPop: '54M', pais: 'Itália',         flag: '🇮🇹', paisPop: '59M'   },
+  { liga: 'Liga Paulista',      regiaoPop: '44M', pais: 'Espanha',        flag: '🇪🇸', paisPop: '48M'   },
+  { liga: 'Liga Central',       regiaoPop: '37M', pais: 'Polônia',        flag: '🇵🇱', paisPop: '37M'   },
+  { liga: 'Liga Sulista',       regiaoPop: '30M', pais: 'Ucrânia',        flag: '🇺🇦', paisPop: '32M'   },
+  { liga: 'Liga Rio-Capixaba',  regiaoPop: '20M', pais: 'Países Baixos',  flag: '🇳🇱', paisPop: '18M'   },
+  { liga: 'Liga Amazônica',     regiaoPop: '18M', pais: 'Bélgica',        flag: '🇧🇪', paisPop: '12M'   },
 ];
 
 function renderAnalogy() {
   const tbody = document.getElementById('analogy-rows');
   if (!tbody) return;
   tbody.innerHTML = ANALOGIES.map(a =>
-    `<tr><td>${a.liga}</td><td>${a.europ}</td><td class="analogy__pop">${a.pop}</td></tr>`
+    `<tr>
+      <td>${a.liga}</td>
+      <td class="analogy__pop">${a.regiaoPop}</td>
+      <td><span class="analogy__flag" aria-hidden="true">${a.flag}</span> ${a.pais}</td>
+      <td class="analogy__pop">${a.paisPop}</td>
+    </tr>`
   ).join('');
 }
 

@@ -1,13 +1,14 @@
 import { loadSeason } from '../season.js';
 import { wireTabs } from '../components/tabs.js';
 
+// Pop figures: IBGE 2022 (regiões) / UN 2023 (países).
 const ANALOG = {
-  'Liga Paulista': 'Premier League',
-  'Liga Nordestina': 'Serie A (Itália)',
-  'Liga Central': 'La Liga',
-  'Liga Rio-Capixaba': 'Primeira Liga (Portugal)',
-  'Liga Sulista': 'Bundesliga',
-  'Liga Amazônica': 'Eredivisie',
+  'Liga Nordestina':   { pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', regiaoPop: '54M' },
+  'Liga Paulista':     { pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', regiaoPop: '44M' },
+  'Liga Central':      { pais: 'Polônia',       flag: '🇵🇱', paisPop: '37M', regiaoPop: '37M' },
+  'Liga Sulista':      { pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', regiaoPop: '30M' },
+  'Liga Rio-Capixaba': { pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', regiaoPop: '20M' },
+  'Liga Amazônica':    { pais: 'Bélgica',       flag: '🇧🇪', paisPop: '12M', regiaoPop: '18M' },
 };
 
 const CAMPEOES_QUOTAS = {
@@ -16,23 +17,15 @@ const CAMPEOES_QUOTAS = {
   'Liga Amazônica': 4,
 };
 
-const POPULACAO = {
-  'Liga Paulista': '46M',
-  'Liga Nordestina': '54M',
-  'Liga Rio-Capixaba': '19M',
-  'Liga Sulista': '30M',
-  'Liga Central': '28M',
-  'Liga Amazônica': '18M',
-};
-
 function slug(nome) { return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/g, ''); }
 
 function renderTabs(season) {
   const tabsEl = document.getElementById('ligas-tabs');
-  tabsEl.innerHTML = season.ligasRegionais.map((l) =>
-    `<li><button role="tab" data-key="${slug(l.nome)}" aria-selected="false" tabindex="-1"
-      class="ligas__tab">${l.nome}<span class="ligas__tab-sub">${ANALOG[l.nome]}</span></button></li>`
-  ).join('');
+  tabsEl.innerHTML = season.ligasRegionais.map((l) => {
+    const a = ANALOG[l.nome];
+    return `<li><button role="tab" data-key="${slug(l.nome)}" aria-selected="false" tabindex="-1"
+      class="ligas__tab">${l.nome}<span class="ligas__tab-sub">${a.flag} ${a.pais}</span></button></li>`;
+  }).join('');
   tabsEl.setAttribute('role', 'tablist');
 }
 
@@ -52,6 +45,7 @@ function renderLiga(season, key) {
     });
 
   const quota = CAMPEOES_QUOTAS[liga.nome];
+  const analog = ANALOG[liga.nome];
   const total = clubes.length;
 
   const listItems = clubes.map((c, i) => {
@@ -86,12 +80,13 @@ function renderLiga(season, key) {
 
       <aside class="liga-meta">
         <div class="liga-meta__block">
-          <div class="liga-meta__label">Análogo europeu</div>
-          <div class="liga-meta__value">${ANALOG[liga.nome]}</div>
+          <div class="liga-meta__label">População da região</div>
+          <div class="liga-meta__value">${analog.regiaoPop} habitantes</div>
         </div>
         <div class="liga-meta__block">
-          <div class="liga-meta__label">População da região</div>
-          <div class="liga-meta__value">${POPULACAO[liga.nome]}</div>
+          <div class="liga-meta__label">Equivalente europeu</div>
+          <div class="liga-meta__value">${analog.flag} ${analog.pais}</div>
+          <div class="liga-meta__hint">${analog.paisPop} habitantes — país que sustenta sua própria liga nacional.</div>
         </div>
         <div class="liga-meta__block liga-meta__block--accent">
           <div class="liga-meta__label">Vagas na Copa dos Campeões</div>

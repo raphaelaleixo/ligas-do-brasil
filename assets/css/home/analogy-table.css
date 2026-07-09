@@ -6,6 +6,8 @@
     th, td { text-align: start; padding: var(--space-3) var(--space-2); border-block-end: 1px solid var(--color-hairline); }
     th { font-weight: 600; color: var(--color-muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em; }
     tbody tr:hover { background: color-mix(in oklab, var(--color-accent) 6%, transparent); }
-    tbody tr:has(td.analogy__pop) td.analogy__pop { color: var(--color-muted); font-variant-numeric: tabular-nums; text-align: end; }
+    td.analogy__pop { color: var(--color-muted); font-variant-numeric: tabular-nums; text-align: end; }
+    .analogy__flag { font-size: 1.15em; margin-inline-end: 0.15em; }
+    .analogy__intro { color: var(--color-muted); max-inline-size: 60ch; margin-block-end: var(--space-4); }
   }
 }
