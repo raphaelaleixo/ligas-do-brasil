@@ -7,11 +7,11 @@ describe('analogies', () => {
     expect(a).toHaveLength(6);
     const ligas = a.map((x) => x.liga);
     expect(ligas).toContain('Liga Paulista');
-    expect(ligas).toContain('Liga Nordeste');
+    expect(ligas).toContain('Liga Nordestina');
     expect(ligas).toContain('Liga Sulista');
-    expect(ligas).toContain('Liga Mineira/Centro-Oeste');
-    expect(ligas).toContain('Liga Guanabara-Capixaba');
-    expect(ligas).toContain('Liga Norte');
+    expect(ligas).toContain('Liga Central');
+    expect(ligas).toContain('Liga Rio-Capixaba');
+    expect(ligas).toContain('Liga Amazônica');
   });
 
   it('each entry has all required fields', () => {

@@ -18,9 +18,9 @@ describe('sleeping giants', () => {
     }
   });
 
-  it('skews Norte/Nordeste (>= 7 of 11 are those regions)', () => {
+  it('skews Amazônica/Nordestina (>= 7 of 11 are those leagues)', () => {
     const count = getSleepingGiants().filter(
-      (g) => g.liga === 'Liga Norte' || g.liga === 'Liga Nordeste'
+      (g) => g.liga === 'Liga Amazônica' || g.liga === 'Liga Nordestina'
     ).length;
     expect(count).toBeGreaterThanOrEqual(7);
   });

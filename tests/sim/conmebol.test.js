@@ -11,11 +11,11 @@ describe('allocateConmebolSlots', () => {
     copaBrasil: { campeao: 'SAO', vice: 'BOT' },
     ligasRegionais: [
       { nome: 'Liga Paulista', tabelaA: [{ id: 'PAL' }, { id: 'SAO' }, { id: 'COR' }, { id: 'SAN' }] },
-      { nome: 'Liga Nordeste', tabelaA: [{ id: 'FOR' }, { id: 'BAH' }, { id: 'CEA' }] },
-      { nome: 'Liga Guanabara-Capixaba', tabelaA: [{ id: 'FLA' }, { id: 'FLU' }, { id: 'BOT' }] },
+      { nome: 'Liga Nordestina', tabelaA: [{ id: 'FOR' }, { id: 'BAH' }, { id: 'CEA' }] },
+      { nome: 'Liga Rio-Capixaba', tabelaA: [{ id: 'FLA' }, { id: 'FLU' }, { id: 'BOT' }] },
       { nome: 'Liga Sulista', tabelaA: [{ id: 'CAP' }, { id: 'GRE' }, { id: 'INT' }] },
-      { nome: 'Liga Mineira/Centro-Oeste', tabelaA: [{ id: 'CRU' }, { id: 'CAM' }, { id: 'GOI' }] },
-      { nome: 'Liga Norte', tabelaA: [{ id: 'REM' }, { id: 'PAY' }, { id: 'ABC' }] },
+      { nome: 'Liga Central', tabelaA: [{ id: 'CRU' }, { id: 'CAM' }, { id: 'GOI' }] },
+      { nome: 'Liga Amazônica', tabelaA: [{ id: 'REM' }, { id: 'PAY' }, { id: 'ABC' }] },
     ],
   };
   const out = allocateConmebolSlots(input);

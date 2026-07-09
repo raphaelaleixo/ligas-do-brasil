@@ -7,12 +7,12 @@ function idAtPos(liga, pos) {
 
 export function buildPots(ligas) {
   const byName = new Map(ligas.map((l) => [l.nome, l]));
-  const NE = byName.get('Liga Nordeste');
+  const NE = byName.get('Liga Nordestina');
   const SP = byName.get('Liga Paulista');
-  const GC = byName.get('Liga Guanabara-Capixaba');
+  const GC = byName.get('Liga Rio-Capixaba');
   const SUL = byName.get('Liga Sulista');
-  const MG = byName.get('Liga Mineira/Centro-Oeste');
-  const N = byName.get('Liga Norte');
+  const MG = byName.get('Liga Central');
+  const N = byName.get('Liga Amazônica');
 
   const pot1 = [NE, SP, GC, SUL, MG, N].flatMap((l) => [idAtPos(l, 1), idAtPos(l, 2)]);
   const pot2 = [NE, SP, GC, SUL, MG, N].flatMap((l) => [idAtPos(l, 3), idAtPos(l, 4)]);

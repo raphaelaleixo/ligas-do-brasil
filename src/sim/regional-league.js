@@ -81,12 +81,12 @@ export function simulateLeague({ teams, divisao, rng, ligaNome = null, competica
 }
 
 export const CAMPEOES_QUOTAS = {
-  'Liga Nordeste': 10,
+  'Liga Nordestina': 10,
   'Liga Paulista': 10,
-  'Liga Guanabara-Capixaba': 8,
+  'Liga Rio-Capixaba': 8,
   'Liga Sulista': 8,
-  'Liga Mineira/Centro-Oeste': 8,
-  'Liga Norte': 4,
+  'Liga Central': 8,
+  'Liga Amazônica': 4,
 };
 
 export function simulateAllRegionalLeagues({ rng }) {

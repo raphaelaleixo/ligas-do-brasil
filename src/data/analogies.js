@@ -6,19 +6,19 @@ const ANALOGIES = [
     rationale: 'Centro financeiro, marcas globais, elenco profundo.',
   },
   {
-    liga: 'Liga Nordeste',
+    liga: 'Liga Nordestina',
     analogoEuropeu: 'Serie A (Itália)',
     populacao: 54_000_000,
     rationale: 'Multi-cidade, rivalidades urbanas históricas.',
   },
   {
-    liga: 'Liga Mineira/Centro-Oeste',
+    liga: 'Liga Central',
     analogoEuropeu: 'La Liga',
     populacao: 28_000_000,
     rationale: 'Dois gigantes dominantes fatiando o resto.',
   },
   {
-    liga: 'Liga Guanabara-Capixaba',
+    liga: 'Liga Rio-Capixaba',
     analogoEuropeu: 'Primeira Liga (Portugal)',
     populacao: 19_000_000,
     rationale: 'Território pequeno, marcas globais desproporcionais.',
@@ -30,7 +30,7 @@ const ANALOGIES = [
     rationale: 'Herança germânica, cultura de torcida organizada.',
   },
   {
-    liga: 'Liga Norte',
+    liga: 'Liga Amazônica',
     analogoEuropeu: 'Eredivisie',
     populacao: 18_000_000,
     rationale: 'Liga menor com identidade forte, formadora de talento.',

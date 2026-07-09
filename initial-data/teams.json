@@ -24,7 +24,7 @@
       ]
     },
     {
-      "nome": "Liga Guanabara-Capixaba",
+      "nome": "Liga Rio-Capixaba",
       "clubes": [
         { "nome": "Flamengo", "estado": "RJ", "ranking": 10 },
         { "nome": "Botafogo", "estado": "RJ", "ranking": 10 },
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "nome": "Liga Nordeste",
+      "nome": "Liga Nordestina",
       "clubes": [
         { "nome": "Fortaleza", "estado": "CE", "ranking": 9 },
         { "nome": "Bahia", "estado": "BA", "ranking": 9 },
@@ -93,7 +93,7 @@
       ]
     },
     {
-      "nome": "Liga Mineira/Centro-Oeste",
+      "nome": "Liga Central",
       "clubes": [
         { "nome": "Atlético-MG", "estado": "MG", "ranking": 10 },
         { "nome": "Cruzeiro", "estado": "MG", "ranking": 9 },
@@ -116,7 +116,7 @@
       ]
     },
     {
-      "nome": "Liga Norte",
+      "nome": "Liga Amazônica",
       "clubes": [
         { "nome": "Amazonas FC", "estado": "AM", "ranking": 6 },
         { "nome": "Paysandu", "estado": "PA", "ranking": 5 },

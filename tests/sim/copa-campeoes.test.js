@@ -5,12 +5,12 @@ import { getAllTeams } from '../../src/data/teams.js';
 
 function fakeLigas() {
   const per = {
-    'Liga Nordeste': 10, 'Liga Paulista': 10,
-    'Liga Guanabara-Capixaba': 8, 'Liga Sulista': 8, 'Liga Mineira/Centro-Oeste': 8, 'Liga Norte': 4,
+    'Liga Nordestina': 10, 'Liga Paulista': 10,
+    'Liga Rio-Capixaba': 8, 'Liga Sulista': 8, 'Liga Central': 8, 'Liga Amazônica': 4,
   };
   return Object.entries(per).map(([nome, quota]) => {
-    const short = { 'Liga Nordeste': 'NE', 'Liga Paulista': 'SP',
-      'Liga Guanabara-Capixaba': 'GC', 'Liga Sulista': 'SUL', 'Liga Mineira/Centro-Oeste': 'MG', 'Liga Norte': 'N' }[nome];
+    const short = { 'Liga Nordestina': 'NE', 'Liga Paulista': 'SP',
+      'Liga Rio-Capixaba': 'GC', 'Liga Sulista': 'SUL', 'Liga Central': 'MG', 'Liga Amazônica': 'N' }[nome];
     const tabelaA = Array.from({ length: 18 }, (_, i) => ({ id: `${short}${i + 1}`, posicao: i + 1 }));
     return { nome, tabelaA, qualificadosCampeoes: tabelaA.slice(0, quota).map(r => r.id) };
   });

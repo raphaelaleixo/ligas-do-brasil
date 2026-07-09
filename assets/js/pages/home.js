@@ -2,11 +2,11 @@ import { loadSeason } from '../season.js';
 
 const ANALOGIES = [
   { liga: 'Liga Paulista', europ: 'Premier League', pop: '46M' },
-  { liga: 'Liga Nordeste', europ: 'Serie A (Itália)', pop: '54M' },
-  { liga: 'Liga Mineira/Centro-Oeste', europ: 'La Liga', pop: '28M' },
-  { liga: 'Liga Guanabara-Capixaba', europ: 'Primeira Liga (Portugal)', pop: '19M' },
+  { liga: 'Liga Nordestina', europ: 'Serie A (Itália)', pop: '54M' },
+  { liga: 'Liga Central', europ: 'La Liga', pop: '28M' },
+  { liga: 'Liga Rio-Capixaba', europ: 'Primeira Liga (Portugal)', pop: '19M' },
   { liga: 'Liga Sulista', europ: 'Bundesliga', pop: '30M' },
-  { liga: 'Liga Norte', europ: 'Eredivisie', pop: '18M' },
+  { liga: 'Liga Amazônica', europ: 'Eredivisie', pop: '18M' },
 ];
 
 function renderAnalogy() {
@@ -61,7 +61,7 @@ function renderWorkload() {
 }
 
 const ELITE_ID = 'BOT';
-const BASE_ID_HINT = { liga: 'Liga Norte', divisao: 'B' };
+const BASE_ID_HINT = { liga: 'Liga Amazônica', divisao: 'B' };
 
 function pickBaseClub(season) {
   return season.clubes.find(c => c.liga_regional === BASE_ID_HINT.liga && c.divisao === BASE_ID_HINT.divisao);
@@ -92,15 +92,15 @@ function renderContrast(season) {
 }
 
 const SLEEPING_GIANTS = [
-  { nome: 'Sport',      estado: 'PE', liga: 'Liga Nordeste',              mediaPublico: 28000, divisaoAtual: 'Série B' },
-  { nome: 'Náutico',    estado: 'PE', liga: 'Liga Nordeste',              mediaPublico: 17000, divisaoAtual: 'Série C' },
-  { nome: 'Santa Cruz', estado: 'PE', liga: 'Liga Nordeste',              mediaPublico: 22000, divisaoAtual: 'Série D' },
-  { nome: 'Vitória',    estado: 'BA', liga: 'Liga Nordeste',              mediaPublico: 25000, divisaoAtual: 'Série A' },
-  { nome: 'América-RN', estado: 'RN', liga: 'Liga Nordeste',              mediaPublico: 8000,  divisaoAtual: 'Série C' },
-  { nome: 'Remo',       estado: 'PA', liga: 'Liga Norte',                 mediaPublico: 32000, divisaoAtual: 'Série B' },
-  { nome: 'Paysandu',   estado: 'PA', liga: 'Liga Norte',                 mediaPublico: 30000, divisaoAtual: 'Série B' },
-  { nome: 'Goiás',      estado: 'GO', liga: 'Liga Mineira/Centro-Oeste',  mediaPublico: 18000, divisaoAtual: 'Série B' },
-  { nome: 'Vila Nova',  estado: 'GO', liga: 'Liga Mineira/Centro-Oeste',  mediaPublico: 14000, divisaoAtual: 'Série B' },
+  { nome: 'Sport',      estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 28000, divisaoAtual: 'Série B' },
+  { nome: 'Náutico',    estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 17000, divisaoAtual: 'Série C' },
+  { nome: 'Santa Cruz', estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 22000, divisaoAtual: 'Série D' },
+  { nome: 'Vitória',    estado: 'BA', liga: 'Liga Nordestina',              mediaPublico: 25000, divisaoAtual: 'Série A' },
+  { nome: 'América-RN', estado: 'RN', liga: 'Liga Nordestina',              mediaPublico: 8000,  divisaoAtual: 'Série C' },
+  { nome: 'Remo',       estado: 'PA', liga: 'Liga Amazônica',                 mediaPublico: 32000, divisaoAtual: 'Série B' },
+  { nome: 'Paysandu',   estado: 'PA', liga: 'Liga Amazônica',                 mediaPublico: 30000, divisaoAtual: 'Série B' },
+  { nome: 'Goiás',      estado: 'GO', liga: 'Liga Central',  mediaPublico: 18000, divisaoAtual: 'Série B' },
+  { nome: 'Vila Nova',  estado: 'GO', liga: 'Liga Central',  mediaPublico: 14000, divisaoAtual: 'Série B' },
   { nome: 'Coritiba',   estado: 'PR', liga: 'Liga Sulista',               mediaPublico: 20000, divisaoAtual: 'Série B' },
   { nome: 'Paraná',     estado: 'PR', liga: 'Liga Sulista',               mediaPublico: 6000,  divisaoAtual: 'Série D' },
 ];
@@ -118,10 +118,10 @@ function renderSleepingGiants() {
 }
 
 const REVELATION = [
-  { jogador: 'Romário',        clubeRevelador: 'Olaria',                     estado: 'RJ', liga: 'Liga Guanabara-Capixaba',    copasVencidas: [1994] },
-  { jogador: 'Ronaldo',        clubeRevelador: 'São Cristóvão',              estado: 'RJ', liga: 'Liga Guanabara-Capixaba',    copasVencidas: [1994, 2002] },
-  { jogador: 'Rivaldo',        clubeRevelador: 'Santa Cruz',                 estado: 'CE', liga: 'Liga Nordeste',              copasVencidas: [2002] },
-  { jogador: 'Lúcio',          clubeRevelador: 'Guará',                      estado: 'DF', liga: 'Liga Mineira/Centro-Oeste',  copasVencidas: [2002] },
+  { jogador: 'Romário',        clubeRevelador: 'Olaria',                     estado: 'RJ', liga: 'Liga Rio-Capixaba',    copasVencidas: [1994] },
+  { jogador: 'Ronaldo',        clubeRevelador: 'São Cristóvão',              estado: 'RJ', liga: 'Liga Rio-Capixaba',    copasVencidas: [1994, 2002] },
+  { jogador: 'Rivaldo',        clubeRevelador: 'Santa Cruz',                 estado: 'CE', liga: 'Liga Nordestina',              copasVencidas: [2002] },
+  { jogador: 'Lúcio',          clubeRevelador: 'Guará',                      estado: 'DF', liga: 'Liga Central',  copasVencidas: [2002] },
   { jogador: 'Cafu',           clubeRevelador: 'Itaquaquecetuba',            estado: 'SP', liga: 'Liga Paulista',              copasVencidas: [1994, 2002] },
   { jogador: 'Roberto Carlos', clubeRevelador: 'União São João de Araras',   estado: 'SP', liga: 'Liga Paulista',              copasVencidas: [2002] },
 ];

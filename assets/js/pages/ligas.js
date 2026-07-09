@@ -3,26 +3,26 @@ import { wireTabs } from '../components/tabs.js';
 
 const ANALOG = {
   'Liga Paulista': 'Premier League',
-  'Liga Nordeste': 'Serie A (Itália)',
-  'Liga Mineira/Centro-Oeste': 'La Liga',
-  'Liga Guanabara-Capixaba': 'Primeira Liga (Portugal)',
+  'Liga Nordestina': 'Serie A (Itália)',
+  'Liga Central': 'La Liga',
+  'Liga Rio-Capixaba': 'Primeira Liga (Portugal)',
   'Liga Sulista': 'Bundesliga',
-  'Liga Norte': 'Eredivisie',
+  'Liga Amazônica': 'Eredivisie',
 };
 
 const CAMPEOES_QUOTAS = {
-  'Liga Nordeste': 10, 'Liga Paulista': 10,
-  'Liga Guanabara-Capixaba': 8, 'Liga Sulista': 8, 'Liga Mineira/Centro-Oeste': 8,
-  'Liga Norte': 4,
+  'Liga Nordestina': 10, 'Liga Paulista': 10,
+  'Liga Rio-Capixaba': 8, 'Liga Sulista': 8, 'Liga Central': 8,
+  'Liga Amazônica': 4,
 };
 
 const POPULACAO = {
   'Liga Paulista': '46M',
-  'Liga Nordeste': '54M',
-  'Liga Guanabara-Capixaba': '19M',
+  'Liga Nordestina': '54M',
+  'Liga Rio-Capixaba': '19M',
   'Liga Sulista': '30M',
-  'Liga Mineira/Centro-Oeste': '28M',
-  'Liga Norte': '18M',
+  'Liga Central': '28M',
+  'Liga Amazônica': '18M',
 };
 
 function slug(nome) { return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/g, ''); }
