@@ -67,37 +67,6 @@ function renderWorkload() {
     </div>`).join('');
 }
 
-const ELITE_ID = 'BOT';
-const BASE_ID_HINT = { liga: 'Liga Amazônica', divisao: 'B' };
-
-function pickBaseClub(season) {
-  return season.clubes.find(c => c.liga_regional === BASE_ID_HINT.liga && c.divisao === BASE_ID_HINT.divisao);
-}
-
-function renderContrast(season) {
-  const el = document.getElementById('contrast-rows');
-  if (!el) return;
-  const elite = season.clubes.find(c => c.id === ELITE_ID);
-  const base = pickBaseClub(season);
-  el.innerHTML = [elite, base].map(club => {
-    const cal = season.calendariosPorClube[club.id] ?? [];
-    const cells = cal.map(w => {
-      const fds = w.fimDeSemana?.competicao ?? '';
-      const mds = w.meioDeSemana?.competicao ?? '';
-      // Each week = two stacked mini-cells: fim-de-semana on top, meio-de-semana below.
-      // Otherwise weekend games mask midweek Conmebol slots and the strip looks flat.
-      return `<div class="contrast__cell">
-        <span class="contrast__cell__half" data-comp="${fds}"></span>
-        <span class="contrast__cell__half" data-comp="${mds}"></span>
-      </div>`;
-    }).join('');
-    return `<div class="contrast__row">
-      <div class="contrast__label">${club.nome} <span class="contrast__sub">${club.liga_regional}</span></div>
-      <div class="contrast__strip">${cells}</div>
-    </div>`;
-  }).join('');
-}
-
 const SLEEPING_GIANTS = [
   { nome: 'Sport',      estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 28000, divisaoAtual: 'Série B' },
   { nome: 'Náutico',    estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 17000, divisaoAtual: 'Série C' },
@@ -153,5 +122,4 @@ renderWorkload();
 loadSeason().then((season) => {
   window.__season = season;
   renderMetrics(season);
-  renderContrast(season);
 });
