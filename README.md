@@ -1,4 +1,4 @@
-# Futebol BR 2.0
+# Ligas do Brasil
 
 A portfolio simulation + manifesto for a structural reform of Brazilian football.
 Argues that the country needs a new pyramid — six Regional Leagues, a Champions-League-style

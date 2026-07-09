@@ -35,13 +35,13 @@ const WORKLOAD_COMPARISONS = [
   {
     label: 'Elite finalista',
     modeloAtual: { clube: 'Botafogo 2024', jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
-    reforma:     { clube: 'Reforma 2.0',    jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
+    reforma:     { clube: 'Ligas do Brasil',    jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
     delta: '−16%',
   },
   {
     label: 'Base',
     modeloAtual: { clube: 'Madureira 2024', jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
-    reforma:     { clube: 'Reforma 2.0',    jogos: 34, det: '34 Liga Regional espalhados por 10 meses' },
+    reforma:     { clube: 'Ligas do Brasil',    jogos: 34, det: '34 Liga Regional espalhados por 10 meses' },
     delta: '+162%',
   },
 ];
