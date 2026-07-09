@@ -151,8 +151,8 @@ function renderCampeoes() {
     <section class="copa-section" aria-labelledby="cc-intro">
       <h2 id="cc-intro">48 clubes, 12 grupos, 4 potes</h2>
       <p class="copa__lede">
-        A Copa dos Campeões Regionais é o clube-clube nacional da proposta — a
-        <strong>Champions League brasileira</strong>. Reúne os melhores clubes das 6 ligas regionais,
+        A Copa dos Campeões Regionais é o campeonato nacional da proposta — o Brasileirão
+        <strong>em formato de Libertadores</strong>. Reúne os melhores clubes das 6 ligas regionais,
         com quota proporcional ao tamanho de cada região.
       </p>
     </section>

@@ -71,7 +71,7 @@ const SUL_AM_MIDWEEKS = [10, 11, 13, 15, 16, 18, 29, 30, 34, 35, 39, 40];
 // Weekend finals — five consecutive Saturdays close the season.
 // Conmebol dates (Sul-Am 23 nov, Libertadores 30 nov) are fixed by Conmebol.
 // The reform slots its own finals (CB, CC) around them, ending with Copa dos
-// Campeões — the "Champions League brasileira" — on Sat 7 Dez as the finale.
+// Campeões — the Brasileirão em formato de Libertadores — on Sat 7 Dez as the finale.
 const FINAIS = {
   copa_brasil:    { week: 42, key: 'copa_brasil',           label: 'Copa do Brasil · final (9 nov)' },
   liga_regional:  { week: 43, key: 'liga_regional',         label: 'Liga Regional · última rodada (16 nov)' },
