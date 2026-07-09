@@ -3,7 +3,10 @@
     :scope { container-type: inline-size; }
     .workload__chart { display: grid; gap: var(--space-4); font-family: var(--font-sans); }
     .workload__row { display: grid; grid-template-columns: 8rem 1fr; align-items: center; gap: var(--space-3); }
-    .workload__label { font-weight: 600; text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.05em; }
+    .workload__label { font-weight: 600; text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.05em; display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
+    .workload__delta { font-size: 0.85em; padding: 1px 6px; border-radius: 999px; font-weight: 700; letter-spacing: 0; text-transform: none; }
+    .workload__delta[data-sign="minus"] { background: color-mix(in oklab, var(--color-warn) 18%, transparent); color: var(--color-warn); }
+    .workload__delta[data-sign="plus"]  { background: color-mix(in oklab, var(--color-accent) 20%, transparent); color: var(--color-accent); }
     .workload__bars { display: grid; gap: var(--space-1); }
     .workload__bar {
       display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-2);

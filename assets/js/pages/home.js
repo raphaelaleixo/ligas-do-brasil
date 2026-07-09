@@ -24,25 +24,40 @@ function renderMetrics(season) {
   }
 }
 
-const CURRENT_REFERENCE = { elite: 75, media: 54, base: 14 };
+const WORKLOAD_COMPARISONS = [
+  {
+    label: 'Elite finalista',
+    modeloAtual: { clube: 'Botafogo 2024', jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
+    reforma:     { clube: 'Reforma 2.0',    jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
+    delta: '−16%',
+  },
+  {
+    label: 'Base',
+    modeloAtual: { clube: 'Madureira 2024', jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
+    reforma:     { clube: 'Reforma 2.0',    jogos: 34, det: '34 Liga Regional espalhados por 10 meses' },
+    delta: '+162%',
+  },
+];
 
-function renderWorkload(season) {
+function renderWorkload() {
   const el = document.getElementById('workload-chart');
   if (!el) return;
-  const buckets = ['elite', 'media', 'base'];
-  const labels = { elite: 'Elite', media: 'Classe Média', base: 'Base' };
-  const maxVal = Math.max(...buckets.map(b => Math.max(CURRENT_REFERENCE[b], season.perfisDashboard[b].mediaJogos)));
-  el.innerHTML = buckets.map((b) => {
-    const cur = CURRENT_REFERENCE[b];
-    const ref = season.perfisDashboard[b].mediaJogos;
-    return `<div class="workload__row">
-      <div class="workload__label">${labels[b]}</div>
-      <div class="workload__bars">
-        <div class="workload__bar" data-set="current" style="--w:${(cur / maxVal * 100).toFixed(1)}"><span class="workload__value">${cur} jogos</span></div>
-        <div class="workload__bar" data-set="reform"  style="--w:${(ref / maxVal * 100).toFixed(1)}"><span class="workload__value">${ref} jogos</span></div>
+  const maxVal = Math.max(...WORKLOAD_COMPARISONS.flatMap(c => [c.modeloAtual.jogos, c.reforma.jogos]));
+  el.innerHTML = WORKLOAD_COMPARISONS.map((c) => `
+    <div class="workload__row">
+      <div class="workload__label">
+        ${c.label}
+        <span class="workload__delta" data-sign="${c.delta.startsWith('+') ? 'plus' : 'minus'}">${c.delta}</span>
       </div>
-    </div>`;
-  }).join('');
+      <div class="workload__bars">
+        <div class="workload__bar" data-set="current" style="--w:${(c.modeloAtual.jogos / maxVal * 100).toFixed(1)}">
+          <span class="workload__value"><strong>${c.modeloAtual.jogos}</strong> ${c.modeloAtual.clube}</span>
+        </div>
+        <div class="workload__bar" data-set="reform"  style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}">
+          <span class="workload__value"><strong>${c.reforma.jogos}</strong> ${c.reforma.clube}</span>
+        </div>
+      </div>
+    </div>`).join('');
 }
 
 const ELITE_ID = 'BOT';
@@ -127,9 +142,9 @@ function renderRevelation() {
 renderAnalogy();
 renderSleepingGiants();
 renderRevelation();
+renderWorkload();
 loadSeason().then((season) => {
   window.__season = season;
   renderMetrics(season);
-  renderWorkload(season);
   renderContrast(season);
 });
