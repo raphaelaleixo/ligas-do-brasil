@@ -119,7 +119,7 @@ const CC_KO = [
 //   1ª Fase:    150 in (55 + 95 Série A) → 149 jogam → 74 vencedores + 1 bye = 75 out
 //   2ª Fase:    75 in → 74 jogam → 37 vencedores + 1 bye = 38 out
 //   3ª Fase:    38 in → todos jogam → 19 vencedores = 19 out
-//   16-avos:    19 sobreviventes + 13 elite bypass = 32
+//   16-avos:    19 sobreviventes + 13 competições Conmebol = 32
 const CB_FUNIL = [
   { fase: 'Preliminar', entram: 108, byes: 2, saem: 55, origem: 'Todos os 108 clubes da Série B. Byes para o top-1 e top-2 do ranking Série B do ano anterior.' },
   { fase: '1ª Fase',    entram: 150, byes: 1, saem: 75, origem: '55 sobreviventes + 95 clubes da Série A. Bye para o top-1 Série B.' },
@@ -128,7 +128,7 @@ const CB_FUNIL = [
 ];
 
 const CB_KO = [
-  { rodada: '16-avos', clubes: 32, detalhe: '19 sobreviventes do funil + 13 clubes do elite bypass.' },
+  { rodada: '16-avos', clubes: 32, detalhe: '19 sobreviventes do funil + 13 clubes das competições Conmebol (7 Libertadores + 6 Sul-Americana).' },
   { rodada: 'Oitavas', clubes: 16, detalhe: '' },
   { rodada: 'Quartas', clubes:  8, detalhe: '' },
   { rodada: 'Semis',   clubes:  4, detalhe: '' },
@@ -173,7 +173,7 @@ function renderCbSankey() {
   ];
   const W = phaseX[4] + PHASE_W + 90;
   const H_BOTTOM = Math.max(ebY + ebH, 210) + 40;      // altura mínima pro conteúdo + label
-  const V_TOP = 32;                                    // margem topo pra labels acima das fases
+  const V_TOP = 48;                                    // margem topo pra labels + bye annotation
 
   const P_ENT = 108 * S, P_SOB = 55 * S;
   const F1_ENT = 150 * S, F1_SOB = 75 * S;
@@ -189,12 +189,16 @@ function renderCbSankey() {
             C ${x2 - cp} ${y2b}, ${x1 + cp} ${y1b}, ${x1} ${y1b} Z`;
   };
 
-  // Barra da fase + labels acima (nome) e abaixo (entra→sai · -eliminados)
-  const phaseBar = (i, h, name, ent, sob, isFinal) => {
+  // Barra da fase + labels acima (bye + nome) e abaixo (entra→sai · -eliminados)
+  const phaseBar = (i, h, name, ent, sob, isFinal, byes = 0) => {
     const elim = sob != null ? ent - sob : 0;
     const meta = sob != null ? `${ent}→${sob}` : `${ent} clubes`;
     const elimText = elim > 0 ? `<tspan class="cb-sankey__meta cb-sankey__meta--dim"> · −${elim}</tspan>` : '';
+    const byeLine = byes > 0
+      ? `<text x="${phaseX[i] + PHASE_W / 2}" y="-26" text-anchor="middle" class="cb-sankey__bye">🎟 ${byes} bye${byes > 1 ? 's' : ''}</text>`
+      : '';
     return `
+      ${byeLine}
       <rect x="${phaseX[i]}" y="0" width="${PHASE_W}" height="${h}"
             fill="var(--phase-${isFinal ? 'final' : 'node'})"/>
       <text x="${phaseX[i] + PHASE_W / 2}" y="-10" text-anchor="middle" class="cb-sankey__label">${name}</text>
@@ -217,27 +221,28 @@ function renderCbSankey() {
         <text x="${SRC_W + 8}" y="${saY + 28}" class="cb-sankey__meta">95 clubes</text>
 
         <rect x="0" y="${ebY}" width="${SRC_W}" height="${ebH}" fill="var(--src-elite)" rx="2"/>
-        <text x="${SRC_W + 8}" y="${ebY + 14}" class="cb-sankey__label">Elite Bypass</text>
+        <text x="${SRC_W + 8}" y="${ebY + 14}" class="cb-sankey__label">Conmebol</text>
         <text x="${SRC_W + 8}" y="${ebY + 28}" class="cb-sankey__meta">13 clubes</text>
+        <text x="${SRC_W + 8}" y="${ebY + 42}" class="cb-sankey__meta">7 Lib + 6 Sul-Am</text>
       </g>
 
-      <!-- Elite Bypass renderizado ANTES dos fluxos principais para ficar atrás visualmente -->
+      <!-- Fluxo Conmebol renderizado ANTES dos fluxos principais pra ficar atrás visualmente -->
       <path d="${flow(SRC_W, ebY, ebY + ebH, phaseX[4], F3_SOB, R16_ENT)}" fill="var(--src-elite)" fill-opacity="0.35"/>
 
       <!-- SB → Preliminar -->
       <path d="${flow(SRC_W, sbY, sbY + sbH, phaseX[0], 0, P_ENT)}" fill="var(--src-serieb)" fill-opacity="0.32"/>
-      ${phaseBar(0, P_ENT, 'Preliminar', 108, 55)}
+      ${phaseBar(0, P_ENT, 'Preliminar', 108, 55, false, 2)}
 
       <!-- Preliminar sobreviventes → 1ª Fase (topo) -->
       <path d="${flow(phaseX[0] + PHASE_W, 0, P_SOB, phaseX[1], 0, P_SOB)}" fill="var(--src-serieb)" fill-opacity="0.32"/>
 
       <!-- SA → 1ª Fase (parte inferior) -->
       <path d="${flow(SRC_W, saY, saY + saH, phaseX[1], P_SOB, F1_ENT)}" fill="var(--src-seriea)" fill-opacity="0.32"/>
-      ${phaseBar(1, F1_ENT, '1ª Fase', 150, 75)}
+      ${phaseBar(1, F1_ENT, '1ª Fase', 150, 75, false, 1)}
 
       <!-- 1ª → 2ª -->
       <path d="${flow(phaseX[1] + PHASE_W, 0, F1_SOB, phaseX[2], 0, F1_SOB)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
-      ${phaseBar(2, F2_ENT, '2ª Fase', 75, 38)}
+      ${phaseBar(2, F2_ENT, '2ª Fase', 75, 38, false, 1)}
 
       <!-- 2ª → 3ª -->
       <path d="${flow(phaseX[2] + PHASE_W, 0, F2_SOB, phaseX[3], 0, F2_SOB)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
@@ -431,7 +436,7 @@ function renderBrasil() {
       <h3 id="cb-funil">O funil da base</h3>
       <p class="copa__body">
         A Série B começa no funil e é eliminada rodada a rodada. A Série A entra na 1ª Fase.
-        Restam 19 sobreviventes que se fundem com o elite bypass no 16-avos.
+        Restam 19 sobreviventes que se fundem com os 13 clubes vindos das competições Conmebol no 16-avos.
       </p>
       <div class="cb-sankey-wrap">
         ${renderCbSankey()}
@@ -446,11 +451,12 @@ function renderBrasil() {
     </section>
 
     <section class="copa-section" aria-labelledby="cb-bypass">
-      <h3 id="cb-bypass">Elite bypass: 13 clubes direto ao 16-avos</h3>
+      <h3 id="cb-bypass">Vagas Conmebol: 13 clubes direto ao 16-avos</h3>
       <p class="copa__body">
-        Os 13 clubes com melhor campanha nacional no ano anterior entram diretamente no
-        <strong>16-avos</strong>. Isso evita que gigantes atropelem clubes da base nas fases
-        iniciais e reserva o suspense do mata-mata para quando as diferenças de nível importarem.
+        Os <strong>13 clubes que disputaram Conmebol no ano anterior</strong> (7 Libertadores + 6 Sul-Americana)
+        entram diretamente no <strong>16-avos</strong>. Isso evita que gigantes atropelem clubes da base nas
+        fases iniciais, reserva o suspense do mata-mata para quando as diferenças de nível importarem, e
+        alivia o calendário de quem já teve semana dobrada por 6 meses.
       </p>
     </section>
 

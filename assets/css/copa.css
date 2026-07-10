@@ -265,6 +265,12 @@
       opacity: 0.55;
       fill: var(--color-warn);
     }
+    .cb-sankey__bye {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      font-weight: 700;
+      fill: var(--color-badge-campeoes);
+    }
     .cb-sankey__legend {
       list-style: none;
       padding: 0;
