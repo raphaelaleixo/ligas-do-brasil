@@ -261,6 +261,10 @@
       fill: currentColor;
       opacity: 0.65;
     }
+    .cb-sankey__meta--dim {
+      opacity: 0.55;
+      fill: var(--color-warn);
+    }
     .cb-sankey__legend {
       list-style: none;
       padding: 0;

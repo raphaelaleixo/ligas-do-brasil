@@ -153,39 +153,34 @@ const LIB_ORIGENS = [
  * conectando entrada e saída.
  */
 function renderCbSankey() {
-  const S = 1.35;                // 1 clube = 1.35 unidades verticais
+  const S = 1.35;
   const SRC_W = 62;
   const SRC_LBL_W = 92;
   const PHASE_W = 12;
   const FLOW_W = 130;
-  const DROP_Y = 260;
-  const DROP_H = 42;
 
-  // Source Y
   const sbY = 0,                     sbH = 108 * S;
   const saY = sbY + sbH + 14,        saH = 95 * S;
   const ebY = saY + saH + 14,        ebH = 13 * S;
 
-  // Phase X (bar left edges)
   const x0 = SRC_W + SRC_LBL_W;
   const phaseX = [
-    x0 + FLOW_W,                                      // Preliminar
-    x0 + FLOW_W + PHASE_W + FLOW_W,                  // 1ª Fase
-    x0 + FLOW_W + 2 * (PHASE_W + FLOW_W),            // 2ª Fase
-    x0 + FLOW_W + 3 * (PHASE_W + FLOW_W),            // 3ª Fase
-    x0 + FLOW_W + 4 * (PHASE_W + FLOW_W),            // 16-avos
+    x0 + FLOW_W,
+    x0 + FLOW_W + PHASE_W + FLOW_W,
+    x0 + FLOW_W + 2 * (PHASE_W + FLOW_W),
+    x0 + FLOW_W + 3 * (PHASE_W + FLOW_W),
+    x0 + FLOW_W + 4 * (PHASE_W + FLOW_W),
   ];
   const W = phaseX[4] + PHASE_W + 90;
-  const H = 330;
+  const H_BOTTOM = Math.max(ebY + ebH, 210) + 40;      // altura mínima pro conteúdo + label
+  const V_TOP = 32;                                    // margem topo pra labels acima das fases
 
-  // Alturas (entrada e sobreviventes)
   const P_ENT = 108 * S, P_SOB = 55 * S;
   const F1_ENT = 150 * S, F1_SOB = 75 * S;
   const F2_ENT = 75 * S,  F2_SOB = 38 * S;
   const F3_ENT = 38 * S,  F3_SOB = 19 * S;
   const R16_ENT = 32 * S;
 
-  // Fluxo entre duas colunas (ribbon)
   const flow = (x1, y1t, y1b, x2, y2t, y2b) => {
     const cp = (x2 - x1) * 0.5;
     return `M ${x1} ${y1t}
@@ -193,25 +188,22 @@ function renderCbSankey() {
             L ${x2} ${y2b}
             C ${x2 - cp} ${y2b}, ${x1 + cp} ${y1b}, ${x1} ${y1b} Z`;
   };
-  // Eliminados descem em curva e terminam num bar no drop zone
-  const drop = (x, yTop, yBot) => {
-    const w = yBot - yTop;
-    return `M ${x} ${yTop}
-            C ${x + 40} ${yTop}, ${x + 40} ${DROP_Y}, ${x + 70} ${DROP_Y}
-            L ${x + 70 + w} ${DROP_Y}
-            C ${x + 40 + w} ${DROP_Y}, ${x + 40 + w} ${yBot}, ${x + w} ${yBot}
-            L ${x} ${yBot} Z`;
+
+  // Barra da fase + labels acima (nome) e abaixo (entra→sai · -eliminados)
+  const phaseBar = (i, h, name, ent, sob, isFinal) => {
+    const elim = sob != null ? ent - sob : 0;
+    const meta = sob != null ? `${ent}→${sob}` : `${ent} clubes`;
+    const elimText = elim > 0 ? `<tspan class="cb-sankey__meta cb-sankey__meta--dim"> · −${elim}</tspan>` : '';
+    return `
+      <rect x="${phaseX[i]}" y="0" width="${PHASE_W}" height="${h}"
+            fill="var(--phase-${isFinal ? 'final' : 'node'})"/>
+      <text x="${phaseX[i] + PHASE_W / 2}" y="-10" text-anchor="middle" class="cb-sankey__label">${name}</text>
+      <text x="${phaseX[i] + PHASE_W / 2}" y="${h + 18}" text-anchor="middle" class="cb-sankey__meta">${meta}${elimText}</text>
+    `;
   };
 
-  const phaseBar = (i, h, name, ent, sob, isFinal) => `
-    <rect x="${phaseX[i]}" y="0" width="${PHASE_W}" height="${h}"
-          fill="var(--phase-${isFinal ? 'final' : 'node'})"/>
-    <text x="${phaseX[i] + PHASE_W / 2}" y="-8" text-anchor="middle" class="cb-sankey__label">${name}</text>
-    <text x="${phaseX[i] + PHASE_W / 2}" y="${h + 16}" text-anchor="middle" class="cb-sankey__meta">${sob != null ? `${ent}→${sob}` : `${ent} clubes`}</text>
-  `;
-
   return `
-    <svg viewBox="0 0 ${W} ${H}" class="cb-sankey" role="img" preserveAspectRatio="xMinYMid meet">
+    <svg viewBox="0 ${-V_TOP} ${W} ${H_BOTTOM + V_TOP}" class="cb-sankey" role="img" preserveAspectRatio="xMinYMid meet">
       <title>Funil da Copa do Brasil: 216 clubes entram, 32 chegam às 16-avos</title>
 
       <!-- Sources -->
@@ -229,41 +221,32 @@ function renderCbSankey() {
         <text x="${SRC_W + 8}" y="${ebY + 28}" class="cb-sankey__meta">13 clubes</text>
       </g>
 
-      <!-- Fluxos e fases -->
+      <!-- Elite Bypass renderizado ANTES dos fluxos principais para ficar atrás visualmente -->
+      <path d="${flow(SRC_W, ebY, ebY + ebH, phaseX[4], F3_SOB, R16_ENT)}" fill="var(--src-elite)" fill-opacity="0.35"/>
+
       <!-- SB → Preliminar -->
       <path d="${flow(SRC_W, sbY, sbY + sbH, phaseX[0], 0, P_ENT)}" fill="var(--src-serieb)" fill-opacity="0.32"/>
       ${phaseBar(0, P_ENT, 'Preliminar', 108, 55)}
 
-      <!-- Preliminar → 1ª Fase (55 sobreviventes) -->
+      <!-- Preliminar sobreviventes → 1ª Fase (topo) -->
       <path d="${flow(phaseX[0] + PHASE_W, 0, P_SOB, phaseX[1], 0, P_SOB)}" fill="var(--src-serieb)" fill-opacity="0.32"/>
-      <!-- Preliminar eliminados (53) -->
-      <path d="${drop(phaseX[0] + PHASE_W, P_SOB, P_ENT)}" fill="var(--elim)" fill-opacity="0.22"/>
 
-      <!-- SA → 1ª Fase (parte de baixo do bar 1ª Fase, y=55*S até 150*S) -->
+      <!-- SA → 1ª Fase (parte inferior) -->
       <path d="${flow(SRC_W, saY, saY + saH, phaseX[1], P_SOB, F1_ENT)}" fill="var(--src-seriea)" fill-opacity="0.32"/>
       ${phaseBar(1, F1_ENT, '1ª Fase', 150, 75)}
 
-      <!-- 1ª → 2ª (75 sobreviventes) -->
+      <!-- 1ª → 2ª -->
       <path d="${flow(phaseX[1] + PHASE_W, 0, F1_SOB, phaseX[2], 0, F1_SOB)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
-      <path d="${drop(phaseX[1] + PHASE_W, F1_SOB, F1_ENT)}" fill="var(--elim)" fill-opacity="0.22"/>
       ${phaseBar(2, F2_ENT, '2ª Fase', 75, 38)}
 
-      <!-- 2ª → 3ª (38 sobreviventes) -->
+      <!-- 2ª → 3ª -->
       <path d="${flow(phaseX[2] + PHASE_W, 0, F2_SOB, phaseX[3], 0, F2_SOB)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
-      <path d="${drop(phaseX[2] + PHASE_W, F2_SOB, F2_ENT)}" fill="var(--elim)" fill-opacity="0.22"/>
       ${phaseBar(3, F3_ENT, '3ª Fase', 38, 19)}
 
-      <!-- 3ª → 16-avos (19 sobreviventes) -->
+      <!-- 3ª → 16-avos -->
       <path d="${flow(phaseX[3] + PHASE_W, 0, F3_SOB, phaseX[4], 0, F3_SOB)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
-      <path d="${drop(phaseX[3] + PHASE_W, F3_SOB, F3_ENT)}" fill="var(--elim)" fill-opacity="0.22"/>
-
-      <!-- Elite Bypass → 16-avos (curva grande) -->
-      <path d="${flow(SRC_W, ebY, ebY + ebH, phaseX[4], F3_SOB, R16_ENT)}" fill="var(--src-elite)" fill-opacity="0.4"/>
 
       ${phaseBar(4, R16_ENT, '16-avos', 32, null, true)}
-
-      <!-- Legenda do drop zone (eliminados) -->
-      <text x="${x0 + FLOW_W}" y="${DROP_Y + DROP_H + 20}" class="cb-sankey__meta">↓ Clubes eliminados a cada fase</text>
     </svg>
   `;
 }
