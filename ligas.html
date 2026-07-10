@@ -6,6 +6,8 @@
   <title>Ligas Regionais | Ligas do Brasil</title>
   <meta name="description" content="Seis ligas regionais, 216 clubes: Paulista, Rio-Capixaba, Central, Sulista, Nordestina, Amazônica.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/layers.css">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -14,38 +16,94 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/view-transitions.css">
   <link rel="stylesheet" href="assets/css/ligas.css">
-  <link rel="stylesheet" href="assets/css/components/tabs.css">
 
   <link rel="preload" as="fetch" href="data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
 </head>
 <body>
   <header class="site-nav">
-    <a class="site-nav__brand" href="./">Ligas do Brasil</a>
-    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
     <nav>
       <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
         <li><a href="./">Início</a></li>
         <li><a href="manifesto">Manifesto</a></li>
-        <li><a href="ligas">Ligas Regionais</a></li>
+        <li><a href="ligas">Ligas</a></li>
         <li><a href="timeline">Calendário</a></li>
-        <li><a href="copa">Copas Nacionais</a></li>
+        <li><a href="copa">Copas</a></li>
       </ul>
     </nav>
   </header>
 
-  <main id="page-ready">
-    <section class="ligas">
-      <h1>Ligas Regionais</h1>
-      <nav aria-label="Escolher liga">
-        <ul class="tabs" role="tablist" id="ligas-tabs"></ul>
-      </nav>
-      <section aria-live="polite" id="liga-detalhe" class="liga-detalhe"></section>
+  <main id="page-ready" class="ligas">
+    <section class="act act--ink lig-title">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">6 ligas · 216 clubes</p>
+        <h1 class="lig-title__h1">Ligas Regionais</h1>
+        <p class="lig-title__intro">
+          Uma temporada simulada da reforma — 18 clubes na Série A, 34 rodadas em pontos corridos.
+          As zonas mostram quem sobe à Copa dos Campeões e quem cai.
+        </p>
+        <div class="lig-tabs" role="tablist" id="ligas-tabs"></div>
+        <div class="lig-title__spacer"></div>
+      </div>
+    </section>
+
+    <section class="act act--paper lig-content">
+      <div class="act__inner">
+        <div class="lig-head">
+          <h2 class="lig-head__h2"><span id="lig-name">Liga Nordestina</span> <span class="lig-head__sub">· Série A</span></h2>
+          <p class="lig-head__legend">
+            <span class="lig-head__key"><span class="lig-head__swatch lig-head__swatch--cc"></span>Copa dos Campeões</span>
+            <span class="lig-head__key"><span class="lig-head__swatch lig-head__swatch--reb"></span>Rebaixamento</span>
+          </p>
+        </div>
+
+        <div class="lig-table-wrap" aria-live="polite">
+          <p class="lig-loading" id="lig-loading">Carregando temporada…</p>
+          <table class="lig-table" id="lig-table" hidden>
+            <thead>
+              <tr>
+                <th class="lig-th lig-th--pos">#</th>
+                <th class="lig-th lig-th--name">Clube</th>
+                <th class="lig-th lig-th--num">J</th>
+                <th class="lig-th lig-th--num">V</th>
+                <th class="lig-th lig-th--num">E</th>
+                <th class="lig-th lig-th--num">D</th>
+                <th class="lig-th lig-th--num">GP</th>
+                <th class="lig-th lig-th--num">GC</th>
+                <th class="lig-th lig-th--num">SG</th>
+                <th class="lig-th lig-th--pts">Pts</th>
+              </tr>
+            </thead>
+            <tbody id="lig-rows"></tbody>
+          </table>
+        </div>
+
+        <aside class="lig-meta" id="lig-meta"></aside>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>Ligas do Brasil · 2026</p>
+    <div>Ligas do Brasil · 2026 · Temporada simulada, seed <span id="lig-seed">—</span></div>
   </footer>
 
   <script type="module" src="assets/js/nav.js"></script>

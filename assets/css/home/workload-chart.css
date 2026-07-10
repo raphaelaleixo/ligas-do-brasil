@@ -1,39 +1,115 @@
 @layer components {
   @scope (.workload) {
-    :scope { container-type: inline-size; }
-    .workload__chart { display: grid; gap: var(--space-4); font-family: var(--font-sans); }
-    .workload__row { display: grid; grid-template-columns: 8rem 1fr; align-items: center; gap: var(--space-3); }
-    .workload__label { font-weight: 600; text-transform: uppercase; font-size: var(--step--1); letter-spacing: 0.05em; display: flex; align-items: baseline; gap: var(--space-2); flex-wrap: wrap; }
-    .workload__delta { font-size: 0.85em; padding: 1px 6px; border-radius: 999px; font-weight: 700; letter-spacing: 0; text-transform: none; }
-    .workload__delta[data-sign="minus"] { background: color-mix(in oklab, var(--color-warn) 18%, transparent); color: var(--color-warn); }
-    .workload__delta[data-sign="plus"]  { background: color-mix(in oklab, var(--color-accent) 20%, transparent); color: var(--color-accent); }
-    .workload__bars { display: grid; gap: var(--space-1); }
+    .workload__heading {
+      font-size: clamp(1.9rem, 5vw, 3.5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
+      max-inline-size: 20ch;
+    }
+
+    .workload__legend {
+      display: flex;
+      gap: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin: 0 0 clamp(2rem, 4vw, 3rem);
+      flex-wrap: wrap;
+    }
+    .workload__key {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .workload__swatch {
+      inline-size: 14px;
+      block-size: 14px;
+      display: inline-block;
+    }
+    .workload__swatch--current { background: var(--terra); }
+    .workload__swatch--reform  { background: var(--green); }
+
+    .workload__chart {
+      display: grid;
+      gap: clamp(2rem, 4vw, 3rem);
+    }
+
+    .workload__row {
+      border-block-start: 3px solid var(--ink);
+      padding-block-start: 1.25rem;
+    }
+
+    .workload__row-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-block-end: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .workload__label {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .workload__delta {
+      font-family: var(--font-sans);
+      font-weight: 900;
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      color: var(--green-deep);
+    }
+
+    .workload__bars {
+      display: grid;
+      gap: 0.9rem;
+    }
+    .workload__bar-row {
+      display: grid;
+      gap: 0.5rem;
+    }
+    .workload__bar-line {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
     .workload__bar {
-      display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--space-2);
-      block-size: 1.75rem;
+      block-size: 38px;
+      display: flex;
+      align-items: center;
+      padding-inline-start: 14px;
+      min-inline-size: 56px;
+      inline-size: var(--w, 0%);
     }
-    .workload__bar::before {
-      content: ""; grid-area: 1 / 1;
-      background: var(--bar-color, var(--color-muted));
-      inline-size: calc(var(--w, 0) * 1%); block-size: 100%; border-radius: 2px;
+    .workload__bar--current { background: var(--terra); }
+    .workload__bar--reform  { background: var(--green); }
+    .workload__bar-value {
+      font-weight: 900;
+      font-size: 1.35rem;
+      color: var(--paper);
     }
-    .workload__bar[data-set="current"] { --bar-color: color-mix(in oklab, var(--color-muted) 65%, transparent); }
-    .workload__bar[data-set="reform"]  { --bar-color: var(--color-accent); }
-    .workload__value { grid-area: 1 / 2; font-variant-numeric: tabular-nums; }
-    .workload__breakdown {
-      color: var(--color-muted); font-size: var(--step--1);
-      margin: 0; padding-inline-start: var(--space-2);
-      border-inline-start: 2px solid color-mix(in oklab, var(--color-muted) 25%, transparent);
-      line-height: 1.35;
+    .workload__bar-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      opacity: 0.7;
     }
+    .workload__bar-detail {
+      font-size: 0.85rem;
+      color: rgba(12, 14, 10, 0.6);
+      margin: 0;
+      line-height: 1.4;
+    }
+
     .workload__note {
-      color: var(--color-muted); max-inline-size: 65ch;
-      margin-block-start: var(--space-4); padding-block-start: var(--space-3);
-      border-block-start: 1px solid var(--color-hairline);
-      font-size: var(--step--1); line-height: 1.5;
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.55;
+      max-inline-size: 60ch;
+      margin: clamp(2rem, 4vw, 3rem) 0 0;
+      color: rgba(12, 14, 10, 0.78);
     }
-    .dot { display: inline-block; inline-size: 0.75em; block-size: 0.75em; border-radius: 50%; margin-inline-end: 0.25em; }
-    .dot--current { background: color-mix(in oklab, var(--color-muted) 65%, transparent); }
-    .dot--reform  { background: var(--color-accent); }
   }
 }

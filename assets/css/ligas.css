@@ -1,84 +1,231 @@
 @layer components {
-  @scope (.ligas) {
-    .liga-detalhe {
-      padding-block-start: var(--space-5);
-      min-inline-size: 0;
-      /* Establish a query container so .liga-layout can adapt to its own width */
-      container-type: inline-size;
-      container-name: liga;
+  /* Ink title band */
+  @scope (.lig-title) {
+    :scope {
+      padding-block: clamp(2.75rem, 6vw, 5rem) 0;
     }
-    .liga-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: var(--space-6);
-      align-items: start;
+    .lig-title__h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin: 0 0 1.25rem;
     }
-    @container liga (inline-size >= 60rem) {
-      .liga-layout { grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr); }
+    .lig-title__intro {
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      line-height: 1.5;
+      max-inline-size: 56ch;
+      color: rgba(244, 239, 227, 0.75);
+      margin: 0 0 2rem;
     }
-
-    .liga-clubs { min-inline-size: 0; }
-    .liga-clubs h2 { font-size: var(--step-2); margin-block-end: var(--space-2); }
-    .liga-clubs__caveat {
-      color: var(--color-muted);
-      font-family: var(--font-sans);
-      font-size: var(--step--1);
-      max-inline-size: 55ch;
-      margin-block-end: var(--space-4);
+    .lig-title__spacer {
+      block-size: clamp(2rem, 5vw, 3.5rem);
     }
 
-    .clubes { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; font-family: var(--font-sans); font-variant-numeric: tabular-nums; }
-    .clube {
+    .lig-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-block-end: 2px;
+      margin-inline: -4px;
+      scrollbar-width: none;
+    }
+    .lig-tabs::-webkit-scrollbar { block-size: 0; }
+    .lig-tab {
+      flex: 0 0 auto;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 11px 18px;
+      background: transparent;
+      color: rgba(244, 239, 227, 0.7);
+      border: 1px solid rgba(244, 239, 227, 0.25);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+    .lig-tab:hover { color: var(--paper); border-color: rgba(244, 239, 227, 0.55); }
+    .lig-tab[aria-selected="true"] {
+      background: var(--gold);
+      color: var(--ink);
+      border-color: var(--gold);
+    }
+  }
+
+  /* Paper content section */
+  @scope (.lig-content) {
+    :scope {
+      padding-block: clamp(2.5rem, 5vw, 4rem) clamp(4rem, 8vw, 7rem);
+    }
+    .act__inner {
       display: grid;
-      grid-template-columns: 2rem 1fr auto auto;
-      gap: var(--space-2);
+      gap: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .lig-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .lig-head__h2 {
+      font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin: 0;
+    }
+    .lig-head__sub {
+      color: rgba(12, 14, 10, 0.35);
+      font-weight: 600;
+    }
+    .lig-head__legend {
+      display: flex;
+      gap: 1.25rem;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+    .lig-head__key {
+      display: inline-flex;
       align-items: center;
-      padding: var(--space-2) var(--space-3);
-      border-block-end: 1px solid var(--color-hairline);
-      transition: background 120ms ease;
+      gap: 7px;
     }
-    .clube:hover { background: color-mix(in oklab, var(--color-accent) 6%, transparent); }
-    .clube__pos { color: var(--color-muted); font-size: var(--step--1); }
-    .clube__nome { font-weight: 600; }
-    .clube__estado { color: var(--color-muted); font-size: var(--step--1); }
-
-    .clube[data-zona="campeoes"] { box-shadow: inset 3px 0 0 var(--color-badge-campeoes); padding-inline-start: calc(var(--space-3) + 3px); }
-    .clube[data-zona="rebaixamento"] { box-shadow: inset 3px 0 0 var(--color-badge-rebaixamento); padding-inline-start: calc(var(--space-3) + 3px); }
-
-    .clube__badge {
-      grid-column: 1 / -1;
-      font-size: 0.7em;
-      color: var(--color-muted);
-      justify-self: start;
-      padding-inline-start: 2.5rem;
+    .lig-head__swatch {
+      inline-size: 12px;
+      block-size: 12px;
+      display: inline-block;
     }
-    @container liga (inline-size >= 40rem) {
-      .clube { grid-template-columns: 2rem 1fr auto auto; }
-      .clube__badge { grid-column: auto; justify-self: end; padding-inline-start: 0; }
-    }
-    .clube__badge--cc { color: var(--color-badge-campeoes); }
-    .clube__badge--reb { color: var(--color-badge-rebaixamento); }
+    .lig-head__swatch--cc  { background: var(--green); }
+    .lig-head__swatch--reb { background: var(--terra); }
 
-    .liga-meta {
+    .lig-table-wrap {
+      overflow-x: auto;
+    }
+    .lig-loading {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: rgba(12, 14, 10, 0.5);
+      padding-block: 3rem;
+      margin: 0;
+    }
+
+    .lig-table {
+      inline-size: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+      min-inline-size: 560px;
+    }
+    .lig-th {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.5);
+      font-weight: 400;
+      padding-block: 0 12px;
+      padding-inline: 8px;
+      text-align: center;
+    }
+    .lig-th--pos  { text-align: start; padding-inline-start: 16px; }
+    .lig-th--name { text-align: start; }
+    .lig-th--pts  { text-align: end;   padding-inline-end: 16px; }
+
+    .lig-row { border-block-start: 1px solid rgba(12, 14, 10, 0.1); }
+    .lig-row[data-zone="cc"]  { background: rgba(0, 168, 90, 0.09); }
+    .lig-row[data-zone="reb"] { background: rgba(216, 85, 47, 0.08); }
+    .lig-row td { padding: 12px 8px; }
+    .lig-row .lig-td--pos {
+      padding: 0;
+      border-inline-start: 4px solid transparent;
+    }
+    .lig-row[data-zone="cc"]  .lig-td--pos { border-inline-start-color: var(--green); }
+    .lig-row[data-zone="reb"] .lig-td--pos { border-inline-start-color: var(--terra); }
+    .lig-td--pos span {
+      display: block;
+      padding: 12px 8px 12px 12px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: rgba(12, 14, 10, 0.4);
+    }
+    .lig-row[data-zone="cc"]  .lig-td--pos span { color: var(--green-deep); }
+    .lig-row[data-zone="reb"] .lig-td--pos span { color: var(--terra); }
+    .lig-td--name {
+      font-weight: 600;
+      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+      white-space: nowrap;
+      text-align: start;
+    }
+    .lig-td--num {
+      text-align: center;
+      font-weight: 500;
+      color: rgba(12, 14, 10, 0.65);
+    }
+    .lig-td--num-strong {
+      text-align: center;
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .lig-td--pts {
+      text-align: end;
+      padding-inline: 8px 16px !important;
+      font-weight: 900;
+      font-size: 1.15rem;
+    }
+
+    /* Meta strip — 5-up hairline grid */
+    .lig-meta {
       display: grid;
-      gap: var(--space-4);
-      padding: var(--space-5);
-      background: color-mix(in oklab, var(--color-accent) 4%, transparent);
-      border: 1px solid var(--color-hairline);
-      border-radius: var(--radius);
-      font-family: var(--font-sans);
-      position: sticky;
-      inset-block-start: calc(var(--nav-h) + var(--space-4));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: rgba(12, 14, 10, 0.14);
+      border: 1px solid rgba(12, 14, 10, 0.14);
     }
-    .liga-meta__block { display: grid; gap: 2px; }
-    .liga-meta__label { color: var(--color-muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em; }
-    .liga-meta__value { font-size: var(--step-2); font-weight: 700; }
-    .liga-meta__hint { color: var(--color-muted); font-size: var(--step--1); font-weight: 400; line-height: 1.4; }
-    .liga-meta__block--accent .liga-meta__value { color: var(--color-accent); }
-
-    .visually-hidden {
-      position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden;
-      clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    .lig-meta__block {
+      background: var(--paper);
+      padding: 1.5rem;
+    }
+    .lig-meta__block--accent { background: var(--green); }
+    .lig-meta__label {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.55);
+      margin-block-end: 0.5rem;
+    }
+    .lig-meta__block--accent .lig-meta__label { color: rgba(12, 14, 10, 0.7); }
+    .lig-meta__value {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.75rem;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lig-meta__block--accent .lig-meta__value {
+      font-weight: 900;
+      font-size: 2.75rem;
+    }
+    .lig-meta__unit {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.9rem;
+      color: rgba(12, 14, 10, 0.55);
+    }
+    .lig-meta__hint {
+      font-size: 0.82rem;
+      line-height: 1.4;
+      color: rgba(12, 14, 10, 0.6);
+      margin-block-start: 0.4rem;
     }
   }
 }

@@ -1,19 +1,79 @@
 @layer components {
   @scope (.escala) {
-    :scope { display: grid; gap: var(--space-5); padding-block: var(--space-6); border-block: 1px solid var(--color-hairline); }
-    .escala__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); }
-    .escala__country { display: grid; gap: var(--space-3); font-family: var(--font-sans); }
-    .escala__country figcaption { font-size: var(--step-2); font-weight: 700; }
-    dl { display: grid; gap: var(--space-2); }
-    dl > div { display: flex; justify-content: space-between; border-block-end: 1px solid var(--color-hairline); padding-block: var(--space-2); }
-    dt { color: var(--color-muted); }
-    dd { font-variant-numeric: tabular-nums; }
-    .escala__punchline { font-size: var(--step-2); text-align: center; text-wrap: balance; max-inline-size: 35ch; margin-inline: auto; }
-    .escala__punchline strong { color: var(--color-accent); }
-  }
+    .escala__row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      margin-block-end: clamp(2.5rem, 5vw, 4rem);
+    }
 
-  .visually-hidden {
-    position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden;
-    clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap;
+    .escala__country {
+      margin: 0;
+      border-block-start: 3px solid var(--ink);
+      padding-block-start: 1.25rem;
+    }
+    .escala__country figcaption {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      margin-block-end: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .escala__country dl {
+      display: grid;
+      gap: 0.75rem;
+      margin: 0;
+    }
+    .escala__stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-block-end: 1px solid rgba(12, 14, 10, 0.2);
+      padding-block-end: 0.5rem;
+    }
+    .escala__stat:last-child { border-block-end: 0; padding-block-end: 0; }
+    .escala__stat dt {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin: 0;
+    }
+    .escala__stat dd {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.15rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .escala__stat--big dd {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2.4rem;
+      line-height: 1;
+    }
+
+    .escala__punchline {
+      font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+      font-weight: 600;
+      line-height: 1.25;
+      max-inline-size: 22ch;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .escala__invert {
+      background: var(--ink);
+      color: var(--green);
+      padding: 0 8px;
+    }
+    .escala__underline {
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+    }
   }
 }

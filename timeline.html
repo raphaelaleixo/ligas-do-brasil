@@ -6,6 +6,8 @@
   <title>Calendário | Ligas do Brasil</title>
   <meta name="description" content="Calendário anual completo para cada arquétipo de clube na proposta Ligas do Brasil.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/layers.css">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -13,45 +15,89 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/view-transitions.css">
-  <link rel="stylesheet" href="assets/css/ligas.css">
   <link rel="stylesheet" href="assets/css/timeline.css">
-  <link rel="stylesheet" href="assets/css/components/tabs.css">
 
   <link rel="expect" href="#page-ready" blocking="render">
 </head>
 <body>
   <header class="site-nav">
-    <a class="site-nav__brand" href="./">Ligas do Brasil</a>
-    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
     <nav>
       <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
         <li><a href="./">Início</a></li>
         <li><a href="manifesto">Manifesto</a></li>
-        <li><a href="ligas">Ligas Regionais</a></li>
+        <li><a href="ligas">Ligas</a></li>
         <li><a href="timeline">Calendário</a></li>
-        <li><a href="copa">Copas Nacionais</a></li>
+        <li><a href="copa">Copas</a></li>
       </ul>
     </nav>
   </header>
 
-  <main id="page-ready">
-    <section class="timeline">
-      <header class="timeline__header">
-        <h1>Calendário</h1>
-        <p style="color: var(--color-muted); max-inline-size: 65ch;">
+  <main id="page-ready" class="timeline">
+    <section class="act act--ink cal-title">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">46 semanas · jan → dez</p>
+        <h1 class="cal-title__h1">Calendário</h1>
+        <p class="cal-title__intro">
           Cada arquétipo mostra o padrão do calendário anual sob esta proposta — competições e datas, não jogos específicos ou resultados. O objetivo é mostrar a <strong>forma</strong> da temporada de cada tipo de clube, não simular quem venceu.
         </p>
-        <nav aria-label="Escolher arquétipo">
-          <ul class="tabs" role="tablist" id="archetype-tabs"></ul>
-        </nav>
-      </header>
+        <div class="cal-tabs" role="tablist" id="archetype-tabs"></div>
+        <div class="cal-title__spacer"></div>
+      </div>
+    </section>
 
-      <section id="archetype-detail" class="archetype-detail" aria-live="polite"></section>
+    <section class="act act--paper cal-content">
+      <div class="act__inner">
+
+        <div class="arch-head">
+          <p class="arch-head__eyebrow">Arquétipo</p>
+          <h2 class="arch-head__title" id="arch-label">—</h2>
+          <p class="arch-head__subtitle" id="arch-subtitle">—</p>
+          <div class="arch-counters">
+            <div class="arch-counter arch-counter--reform">
+              <div class="arch-counter__label">Reforma</div>
+              <div class="arch-counter__value" id="arch-games">—</div>
+            </div>
+            <div class="arch-counter">
+              <div class="arch-counter__label">Modelo atual</div>
+              <div class="arch-counter__value arch-counter__value--muted" id="arch-atual">—</div>
+            </div>
+            <div class="arch-counter">
+              <div class="arch-counter__label">Diferença</div>
+              <div class="arch-counter__value arch-counter__value--delta" id="arch-delta">—</div>
+            </div>
+          </div>
+          <p class="arch-head__example" id="arch-example">—</p>
+        </div>
+
+        <div class="cal-legend" id="cal-legend"></div>
+
+        <div class="cal-grid" id="cal-grid"></div>
+
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>Ligas do Brasil · 2026</p>
+    <div>Ligas do Brasil · 2026 · Calendário ancorado em 2024</div>
   </footer>
 
   <script type="module" src="assets/js/nav.js"></script>

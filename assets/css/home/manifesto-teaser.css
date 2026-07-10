@@ -1,8 +1,51 @@
 @layer components {
   @scope (.teaser) {
-    :scope { border-block: 1px solid var(--color-hairline); padding-block: var(--space-6); }
-    .teaser__body { font-size: var(--step-1); max-inline-size: 55ch; }
-    .teaser__cta { font-family: var(--font-sans); font-weight: 700; color: var(--color-accent); font-size: var(--step-1); text-decoration: none; }
-    .teaser__cta:hover { text-decoration: underline; }
+    .teaser__quote {
+      font-weight: 700;
+      font-size: clamp(1.6rem, 4vw, 3rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin: 0 0 clamp(2rem, 4vw, 3rem);
+      max-inline-size: 24ch;
+      text-wrap: balance;
+      text-transform: none;
+    }
+
+    .teaser .btn { margin-block-end: clamp(2.5rem, 5vw, 4rem); }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1px;
+      background: rgba(244, 239, 227, 0.2);
+      border: 1px solid rgba(244, 239, 227, 0.2);
+    }
+
+    .tile {
+      background: var(--blue);
+      padding: clamp(1.5rem, 2.5vw, 2rem);
+      text-decoration: none;
+      color: var(--paper);
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: background 140ms ease;
+    }
+    .tile:hover {
+      background: #08388a;
+    }
+    .tile__label {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .tile__sub {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      opacity: 0.72;
+    }
   }
 }

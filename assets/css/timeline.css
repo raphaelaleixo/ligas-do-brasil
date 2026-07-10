@@ -1,73 +1,217 @@
 @layer components {
-  @scope (.timeline) {
-    .timeline__header {
-      display: grid; gap: var(--space-4);
-      padding-block-end: var(--space-5);
-      border-block-end: 1px solid var(--color-hairline);
+  /* Ink title band */
+  @scope (.cal-title) {
+    :scope {
+      padding-block: clamp(2.75rem, 6vw, 5rem) 0;
+    }
+    .cal-title__h1 {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin: 0 0 1.25rem;
+    }
+    .cal-title__intro {
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      line-height: 1.5;
+      max-inline-size: 62ch;
+      color: rgba(244, 239, 227, 0.75);
+      margin: 0 0 2rem;
+    }
+    .cal-title__intro strong { color: var(--paper); font-weight: 700; }
+    .cal-title__spacer { block-size: clamp(2rem, 5vw, 3.5rem); }
+
+    .cal-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-block-end: 2px;
+      margin-inline: -4px;
+      scrollbar-width: none;
+    }
+    .cal-tabs::-webkit-scrollbar { block-size: 0; }
+    .cal-tab {
+      flex: 0 0 auto;
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 11px 18px;
+      background: transparent;
+      color: rgba(244, 239, 227, 0.7);
+      border: 1px solid rgba(244, 239, 227, 0.25);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+    }
+    .cal-tab:hover { color: var(--paper); border-color: rgba(244, 239, 227, 0.55); }
+    .cal-tab[aria-selected="true"] {
+      background: var(--gold);
+      color: var(--ink);
+      border-color: var(--gold);
+    }
+  }
+
+  /* Paper content */
+  @scope (.cal-content) {
+    :scope {
+      padding-block: clamp(2.5rem, 5vw, 4rem) clamp(4rem, 8vw, 7rem);
     }
 
-    .archetype-header { padding-block: var(--space-5); font-family: var(--font-sans); }
-    .archetype-header__eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: var(--step--1); color: var(--color-muted); }
-    .archetype-header__title { font-size: var(--step-3); margin-block-start: var(--space-1); }
-    .archetype-header__subtitle { color: var(--color-muted); max-inline-size: 60ch; margin-block-start: var(--space-2); }
-    .archetype-header__counters {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-      gap: var(--space-3);
-      margin-block-start: var(--space-4);
+    /* Archetype header */
+    .arch-head {
+      margin-block-end: clamp(2rem, 4vw, 3rem);
     }
-    .counter {
-      padding: var(--space-3);
-      border: 1px solid var(--color-hairline);
-      border-radius: var(--radius);
-      display: grid; gap: 2px;
+    .arch-head__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--green-deep);
+      margin: 0 0 0.5rem;
     }
-    .counter__label { color: var(--color-muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em; }
-    .counter__value { font-size: var(--step-2); font-weight: 700; color: var(--color-accent); }
-    .counter__value--muted { color: var(--color-muted); }
-    .counter__value[data-sign="minus"] { color: var(--color-warn); }
-    .counter__value[data-sign="plus"] { color: var(--color-accent); }
-    .archetype-header__example {
-      margin-block-start: var(--space-3);
-      color: var(--color-muted);
+    .arch-head__title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(1.6rem, 4vw, 2.75rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin: 0 0 0.75rem;
+    }
+    .arch-head__subtitle {
+      font-size: clamp(0.98rem, 1.5vw, 1.15rem);
+      line-height: 1.5;
       max-inline-size: 60ch;
+      color: rgba(12, 14, 10, 0.72);
+      margin: 0 0 1.75rem;
+    }
+    .arch-head__example {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: rgba(12, 14, 10, 0.6);
+      margin: 1.25rem 0 0;
+      max-inline-size: 60ch;
+    }
+
+    .arch-counters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1px;
+      background: rgba(12, 14, 10, 0.14);
+      border: 1px solid rgba(12, 14, 10, 0.14);
+      max-inline-size: 640px;
+    }
+    .arch-counter {
+      background: var(--paper);
+      padding: 1.25rem 1.4rem;
+    }
+    .arch-counter--reform { background: var(--green); }
+    .arch-counter__label {
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.55);
+      margin-block-end: 0.4rem;
+    }
+    .arch-counter--reform .arch-counter__label { color: rgba(12, 14, 10, 0.7); }
+    .arch-counter__value {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 2.1rem;
+      line-height: 1;
+    }
+    .arch-counter__value--muted { color: rgba(12, 14, 10, 0.45); }
+    .arch-counter__value--delta { color: var(--green-deep); }
+    .arch-counter__value small {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      font-size: 0.85rem;
+    }
+
+    /* Legend */
+    .cal-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.25rem;
+      margin-block-end: 1.75rem;
+    }
+    .cal-legend__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.7);
+    }
+    .cal-legend__swatch {
+      inline-size: 13px;
+      block-size: 13px;
+      display: inline-block;
+    }
+
+    /* Grid */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: minmax(84px, 0.7fr) 1.65fr 1.65fr;
+      gap: 1px;
+      background: rgba(12, 14, 10, 0.14);
+      border: 1px solid rgba(12, 14, 10, 0.14);
+    }
+    .cal-grid__head {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 11px 14px;
+    }
+    .cal-grid__week-cell {
+      background: var(--paper);
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .cal-grid__week-num {
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+    .cal-grid__week-date {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: rgba(12, 14, 10, 0.5);
+    }
+    .cal-grid__slot {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      line-height: 1.3;
+      border-inline-start: 0 solid transparent;
+    }
+    .cal-grid__slot[data-comp=""]           { background: var(--paper); color: rgba(12, 14, 10, 0.3); font-weight: 400; }
+    .cal-grid__slot[data-comp="liga_regional"]         { background: var(--green);      color: var(--ink); }
+    .cal-grid__slot[data-comp="copa_campeoes"]         { background: var(--gold);       color: var(--ink); }
+    .cal-grid__slot[data-comp="copa_brasil"]           { background: var(--blue);       color: var(--paper); }
+    .cal-grid__slot[data-comp="conmebol_libertadores"] { background: var(--green-deep); color: var(--paper); }
+    .cal-grid__slot[data-comp="conmebol_sul_americana"]{ background: var(--terra);      color: var(--paper); }
+    .cal-grid__slot[data-comp="fifa_pause"] {
+      background: rgba(12, 14, 10, 0.06);
+      color: rgba(12, 14, 10, 0.5);
+      font-weight: 400;
       font-style: italic;
     }
-
-    .archetype-grid {
-      display: grid;
-      grid-template-columns: minmax(6rem, auto) minmax(0, 1fr) minmax(0, 1fr);
-      gap: 2px var(--space-2);
-      font-family: var(--font-sans);
-      font-size: var(--step--1);
-      container-type: inline-size;
-      min-inline-size: 0;
+    .cal-grid__slot[data-final="true"] {
+      border-inline-start: 3px solid var(--ink);
     }
-    .archetype-grid__col-header {
-      font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-      color: var(--color-muted); font-size: var(--step--1);
-      padding-block: var(--space-2);
-      border-block-end: 1px solid var(--color-hairline);
-    }
-    .archetype-grid__week {
-      display: flex; align-items: baseline; gap: var(--space-2);
-      padding-block: var(--space-2);
-    }
-    .archetype-grid__week-num { font-weight: 700; }
-    .archetype-grid__week-date { color: var(--color-muted); font-size: 0.85em; }
-    .archetype-grid__slot {
-      padding: var(--space-2) var(--space-3);
-      border-inline-start: 3px solid var(--slot-color, transparent);
-      background: color-mix(in oklab, var(--slot-color, transparent) 12%, transparent);
-      border-radius: var(--radius);
-      min-block-size: 1.75rem;
-      display: flex; align-items: center;
-    }
-    .archetype-grid__slot[data-comp=""] { --slot-color: transparent; }
-    .archetype-grid__slot[data-comp="liga_regional"]         { --slot-color: var(--comp-liga); }
-    .archetype-grid__slot[data-comp="copa_campeoes"]         { --slot-color: var(--comp-campeoes); }
-    .archetype-grid__slot[data-comp="copa_brasil"]           { --slot-color: var(--comp-brasil); }
-    .archetype-grid__slot[data-comp="conmebol_libertadores"] { --slot-color: var(--color-badge-campeoes); }
-    .archetype-grid__slot[data-comp="conmebol_sul_americana"]{ --slot-color: var(--color-badge-sulamericana); }
-    .archetype-grid__slot[data-comp="fifa_pause"]            { --slot-color: var(--comp-fifa-pause); font-style: italic; color: var(--color-muted); }
   }
 }

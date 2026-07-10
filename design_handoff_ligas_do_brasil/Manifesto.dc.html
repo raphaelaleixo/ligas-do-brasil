@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Archivo+Expanded:wght@600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; }
+    a { color: inherit; }
+    ::selection { background: #FFCB05; color: #0C0E0A; }
+    .mf-body p { font-size: clamp(1.08rem,1.5vw,1.28rem); line-height: 1.7; margin: 0 0 1.35rem; color: rgba(12,14,10,0.82); }
+    .mf-body p strong { font-weight: 700; color: #0C0E0A; }
+    .mf-body p em { font-style: italic; }
+  </style>
+</helmet>
+<div style="--green:#00A85A; --green-deep:#046B38; --gold:#FFCB05; --blue:#0A46B0; --paper:#F4EFE3; --ink:#0C0E0A; --terra:#D8552F; --mono:'Space Mono',ui-monospace,monospace; font-family:'Archivo',system-ui,sans-serif; background:var(--paper); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased; min-height:100vh;">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1.25rem,4vw,3.5rem); height:64px; background:rgba(12,14,10,0.88); backdrop-filter:blur(10px); border-bottom:1px solid rgba(244,239,227,0.14);">
+    <a href="Início.dc.html" style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:900; font-size:1.05rem; letter-spacing:-0.01em; text-transform:uppercase; color:var(--paper); text-decoration:none; display:flex; align-items:center; gap:10px;">
+      <svg viewBox="0 0 26 18" style="width:26px; height:18px; display:block;" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <nav style="display:flex; gap:clamp(0.9rem,2.2vw,2rem); align-items:center;">
+      <a href="Início.dc.html" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.7); text-decoration:none;">Início</a>
+      <a href="Manifesto.dc.html" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); text-decoration:none;">Manifesto</a>
+      <a href="Ligas.dc.html" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.7); text-decoration:none;">Ligas</a>
+      <a href="Calendario.dc.html" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.7); text-decoration:none;">Calendário</a>
+      <a href="Copas.dc.html" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.7); text-decoration:none;">Copas</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section style="background:var(--ink); color:var(--paper); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem) clamp(3rem,6vw,5rem);">
+    <div style="max-width:960px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.8rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin:0 0 clamp(1.5rem,4vw,2.5rem); display:flex; align-items:center; gap:12px;">
+        <span style="width:34px; height:2px; background:var(--gold); display:inline-block;"></span>Manifesto · 2026
+      </p>
+      <h1 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(2.1rem,5.5vw,4.25rem); line-height:1.0; letter-spacing:-0.025em; margin:0 0 clamp(1.75rem,4vw,2.75rem); max-width:20ch; text-wrap:balance;">
+        O futebol brasileiro precisa de uma nova arquitetura, não apenas de um novo calendário.
+      </h1>
+      <p style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:700; font-size:clamp(1.4rem,3vw,2.25rem); line-height:1.1; letter-spacing:-0.01em; color:var(--gold); margin:0;">
+        O problema não é o calendário. É a escala.
+      </p>
+    </div>
+  </section>
+
+  <!-- ARTICLE -->
+  <article style="background:var(--paper); color:var(--ink); padding:clamp(3rem,7vw,6rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:720px; margin:0 auto; display:grid; gap:clamp(3rem,6vw,5rem);">
+
+      <!-- 01 -->
+      <section class="mf-body">
+        <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-deep); margin:0 0 0.6rem;">01</p>
+        <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.5vw,2.6rem); line-height:1.05; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1.5rem;">Um funil excessivamente estreito</h2>
+        <p>O Brasil promove 20 clubes à sua elite nacional. Portugal, um país 92 vezes menor em área e 21 vezes menor em população, promove 18. Em uma potência futebolística de dimensão continental, essa proximidade de números é um desperdício estrutural.</p>
+        <p>A cada temporada, dezenas de clubes do interior encerram suas atividades após os estaduais e passam o resto do ano sem calendário. É o <strong>apagão do interior</strong>: sem calendário regular, eles perdem patrocínios, fecham estádios, reduzem a base e demitem profissionais. Esse processo enfraquece todo o ecossistema que forma atletas e sustenta os mercados locais.</p>
+      </section>
+
+      <!-- 02 -->
+      <section class="mf-body">
+        <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-deep); margin:0 0 0.6rem;">02</p>
+        <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.5vw,2.6rem); line-height:1.05; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1.5rem;">Uma nova arquitetura</h2>
+        <p>A proposta substitui os Campeonatos Estaduais e o Brasileirão por <strong>seis Ligas Regionais</strong> — cada uma com 18 clubes na Série A e 18 na Série B, disputadas em pontos corridos ao longo de 10 meses.</p>
+        <ul style="list-style:none; margin:0 0 1.6rem; padding:0; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1px; background:rgba(12,14,10,0.14); border:1px solid rgba(12,14,10,0.14);">
+          <li style="background:var(--paper); display:flex; align-items:center; gap:11px; padding:0.9rem 1.1rem; font-weight:600; font-size:1.02rem;"><span style="width:12px; height:12px; background:var(--green); flex:0 0 auto;"></span>Liga Paulista <span style="color:rgba(12,14,10,0.5); font-weight:400;">(SP)</span></li>
+          <li style="background:var(--paper); display:flex; align-items:center; gap:11px; padding:0.9rem 1.1rem; font-weight:600; font-size:1.02rem;"><span style="width:12px; height:12px; background:var(--gold); flex:0 0 auto;"></span>Liga Nordestina <span style="color:rgba(12,14,10,0.5); font-weight:400;">(9 estados)</span></li>
+          <li style="background:var(--paper); display:flex; align-items:center; gap:11px; padding:0.9rem 1.1rem; font-weight:600; font-size:1.02rem;"><span style="width:12px; height:12px; background:var(--blue); flex:0 0 auto;"></span>Liga Sulista <span style="color:rgba(12,14,10,0.5); font-weight:400;">(RS, SC, PR)</span></li>
+          <li style="background:var(--paper); display:flex; align-items:center; gap:11px; padding:0.9rem 1.1rem; font-weight:600; font-size:1.02rem;"><span style="width:12px; height:12px; background:var(--green-deep); flex:0 0 auto;"></span>Liga Central <span style="color:rgba(12,14,10,0.5); font-weight:400;">(MG + Centro-Oeste)</span></li>
+          <li style="background:var(--paper); display:flex; align-items:center; gap:11px; padding:0.9rem 1.1rem; font-weight:600; font-size:1.02rem;"><span style="width:12px; height:12px; background:var(--terra); flex:0 0 auto;"></span>Liga Rio-Capixaba <span style="color:rgba(12,14,10,0.5); font-weight:400;">(RJ, ES)</span></li>
+          <li style="background:var(--paper); display:flex; align-items:center; gap:11px; padding:0.9rem 1.1rem; font-weight:600; font-size:1.02rem;"><span style="width:12px; height:12px; background:var(--green); flex:0 0 auto;"></span>Liga Amazônica <span style="color:rgba(12,14,10,0.5); font-weight:400;">(7 estados do Norte)</span></li>
+        </ul>
+        <p>Cada liga regional tem escala populacional de um país europeu inteiro: Nordestina rivaliza com a Itália, Paulista com a Inglaterra, Central com a Espanha, Amazônica com Portugal. A Copa dos Campeões Regionais — 48 clubes, 12 grupos, mata-mata nacional culminando em final única — decide o campeão brasileiro em formato de Libertadores. A Copa do Brasil, com 216 clubes da base ao topo, é a FA Cup.</p>
+      </section>
+
+      <!-- 03 -->
+      <section class="mf-body">
+        <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-deep); margin:0 0 0.6rem;">03</p>
+        <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.5vw,2.6rem); line-height:1.05; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1.5rem;">Um laboratório que oxigenava o futebol nacional</h2>
+        <p>Fortalecer o interior não é nostalgia; é ampliar a rede de captação. Romário veio do Olaria, Ronaldo do São Cristóvão, Rivaldo do Santa Cruz, Lúcio do Guará. As últimas duas Copas do Mundo que o Brasil ganhou foram jogadas por talentos revelados em clubes que hoje mal existem no calendário nacional.</p>
+        <p>A escassez de novos craques e a perda de identidade da Amarelinha são reflexos — entre outras causas — de uma arquitetura que deixou de irrigar sua base.</p>
+      </section>
+
+      <!-- PULL QUOTE -->
+      <blockquote style="margin:0; border-left:5px solid var(--green); padding:0.25rem 0 0.25rem clamp(1.25rem,3vw,2rem);">
+        <p style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:700; font-size:clamp(1.5rem,3.5vw,2.4rem); line-height:1.15; letter-spacing:-0.015em; margin:0;">Na reforma, o teto é <span style="color:var(--green-deep);">63 jogos</span> — mesmo para um finalista que dispute todas as competições.</p>
+      </blockquote>
+
+      <!-- 04 -->
+      <section class="mf-body">
+        <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-deep); margin:0 0 0.6rem;">04</p>
+        <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.5vw,2.6rem); line-height:1.05; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1.5rem;">Menos jogos, menos voos, mais futebol</h2>
+        <p>O <strong>Botafogo campeão em 2024</strong> jogou <strong>75 partidas</strong> — o time que mais entrou em campo no mundo inteiro naquele ano. O <strong>Flamengo em 2025</strong> chegou a <strong>78</strong>, sete delas no novo Mundial de Clubes da FIFA. E nenhum dos dois chegou à final da Copa do Brasil: com o formato atual de mata-mata em jogo de ida e volta, um finalista das quatro competições passaria dos <strong>80 jogos</strong> sem esforço. Na reforma, o teto é <strong>63 jogos</strong> — mesmo para um finalista que dispute todas as competições. A fase regular reduz em <strong>mais de 50%</strong> os voos interestaduais, porque as Ligas Regionais são intra-região.</p>
+        <p>O <strong>Madureira</strong>, do Rio, jogou apenas <strong>13 partidas em 2024</strong> — 11 no Campeonato Carioca (Taça Guanabara) e 2 na Copa Rio, eliminado nas oitavas de final pelo Bonsucesso. Todas concentradas entre janeiro e abril. Na reforma, um clube desse porte joga <strong>35 partidas espalhadas ao longo de 10 meses</strong>. Zero clubes desempregados em abril.</p>
+      </section>
+
+      <!-- 05 OBJECOES -->
+      <section class="mf-body">
+        <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-deep); margin:0 0 0.6rem;">05</p>
+        <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.5vw,2.6rem); line-height:1.05; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 2rem;">Três objeções previsíveis</h2>
+
+        <div style="border-top:2px solid var(--ink); padding-top:1.5rem; margin-bottom:2.5rem;">
+          <p style="font-family:'Archivo',sans-serif; font-style:italic; font-weight:600; font-size:clamp(1.25rem,2.6vw,1.7rem); line-height:1.25; color:var(--terra); margin:0 0 1.35rem;">"O Brasileirão vai perder importância."</p>
+          <p>A grandeza migra — mas se redistribui em duas camadas com papéis mais claros. A <strong>rotina do Brasileirão</strong> (rodada semanal, tabela contínua, torcedor grudado no seu clube) migra para as <strong>Ligas Regionais</strong>. É onde o dia-a-dia do torcedor acontece: clube local, rivais históricos, estádio cheio, 34 rodadas em pontos corridos ao longo de 10 meses.</p>
+          <p>A <strong>decisão do título nacional</strong> migra para a <strong>Copa dos Campeões</strong> — que herda o papel do Brasileirão em formato análogo ao da Libertadores: mata-mata concentrado, 48 clubes de todas as regiões, campeão decidido em campo. O Brasileirão como pontos corridos nacional deixa de existir; o <em>papel</em> que ele ocupava (definir o melhor do Brasil) é herdado por um formato mais próximo do pico continental. A grandeza não desaparece — ela ganha duas casas em vez de uma.</p>
+        </div>
+
+        <div style="border-top:2px solid var(--ink); padding-top:1.5rem; margin-bottom:2.5rem;">
+          <p style="font-family:'Archivo',sans-serif; font-style:italic; font-weight:600; font-size:clamp(1.25rem,2.6vw,1.7rem); line-height:1.25; color:var(--terra); margin:0 0 1.35rem;">"Ligas regionais criam disparidade técnica."</p>
+          <p>A disparidade não desaparece — vai continuar existindo Grêmio × Chapecoense-B ou Palmeiras × Ituano. Mas ela muda de natureza: agora enche o Beira-Rio ou o Allianz, dura 90 minutos de rivalidade regional real, e ninguém precisa pegar avião. Disparidade intra-regional custa menos e vale mais que disparidade interestadual esvaziada. E os clássicos regionais — <strong>Grêmio × Internacional, Atlético-MG × Cruzeiro, Fortaleza × Bahia</strong> — voltam ao centro do calendário.</p>
+          <p>Há ainda um efeito de segunda ordem que o modelo atual impede: com calendário estável de 10 meses, patrocínio local recorrente e público garantido, clubes como a Chapecoense passam a ter condições para crescer que hoje simplesmente não têm. Três meses de estadual e o resto do ano fechado inviabilizam qualquer projeto de longo prazo. A expectativa é que <strong>a própria disparidade diminua ao longo do tempo</strong>. E a Copa dos Campeões redistribui, no mata-mata nacional, a chance de disputar em pé de igualdade — o que o Brasileirão fingia oferecer.</p>
+        </div>
+
+        <div style="border-top:2px solid var(--ink); padding-top:1.5rem;">
+          <p style="font-family:'Archivo',sans-serif; font-style:italic; font-weight:600; font-size:clamp(1.25rem,2.6vw,1.7rem); line-height:1.25; color:var(--terra); margin:0 0 1.35rem;">"Os clubes grandes vão resistir."</p>
+          <p>Vão? A elite é a <strong>maior interessada</strong> em um teto de 63 jogos por ano. Botafogo jogou 75 em 2024, Flamengo 78 em 2025 — em ambos os casos o esgotamento físico foi tema recorrente nas competições que mais importavam. A proposta dá aos gigantes o que eles mais precisam: menos jogos, mais treino, menos voos.</p>
+          <p>O contra-argumento honesto é econômico: menos jogos significa menos inventário de TV. Os 380 jogos anuais do Brasileirão são uma máquina de receita, mesmo os esvaziados. Verdade parcial. O que a matemática crua ignora: <strong>cada jogo vale mais quando importa</strong>. Grêmio × Cuiabá com estádio vazio vale menos ao pacote de TV do que Grêmio × Internacional com Beira-Rio lotado; o mata-mata da Copa dos Campeões concentra audiência que hoje se dilui em 38 rodadas. E há uma segunda face: calendário previsível de 10 meses cria condições para <strong>SAFs, investimento estrangeiro e patrocínios plurianuais</strong>. O Brasileirão inflado é receita imediata; a arquitetura reformada é ativo de longo prazo. É uma reforma <em>para</em> a elite, não <em>contra</em> ela.</p>
+        </div>
+      </section>
+
+      <!-- 06 -->
+      <section class="mf-body">
+        <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--green-deep); margin:0 0 0.6rem;">06</p>
+        <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.6rem,3.5vw,2.6rem); line-height:1.05; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1.5rem;">Uma reforma de escala, não de calendário</h2>
+        <p>As principais tentativas de reforma nos últimos anos giraram em torno do calendário — e, cada vez mais, no sentido de <strong>eliminar os estaduais</strong> para entregar o ano inteiro ao Brasileirão-padrão-europeu. É o erro exato oposto do que a arquitetura pede: não é o futebol regional que sobra, é o topo que ficou concentrado demais. Apagar os estaduais é apagar o dia-a-dia do torcedor no seu clube local. Existem discussões sobre escala — SAFs, ligas independentes — mas raramente ganham tração. Nenhuma proposta com apoio real ataca a própria arquitetura.</p>
+      </section>
+
+    </div>
+  </article>
+
+  <!-- FINALE -->
+  <section style="background:var(--ink); color:var(--paper); padding:clamp(4rem,9vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:960px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.74rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin:0 0 1.75rem;">A tese</p>
+      <p style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.9rem,5vw,3.75rem); line-height:1.05; letter-spacing:-0.025em; margin:0; max-width:20ch; text-wrap:balance;">
+        Esta proposta não parte do calendário. Parte da <span style="color:var(--gold);">forma</span>. O calendário vem depois — e resolve por si só.
+      </p>
+      <nav aria-label="Explorar" style="display:flex; flex-wrap:wrap; gap:12px; margin-top:clamp(2.5rem,5vw,4rem);">
+        <a href="Ligas.dc.html" style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--ink); background:var(--gold); padding:14px 24px; text-decoration:none;">Ver as ligas →</a>
+        <a href="Copas.dc.html" style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--paper); border:1px solid rgba(244,239,227,0.4); padding:14px 24px; text-decoration:none;">As copas nacionais →</a>
+      </nav>
+    </div>
+  </section>
+
+  <footer style="background:var(--ink); color:rgba(244,239,227,0.5); padding:2.5rem clamp(1.25rem,4vw,3.5rem); font-family:var(--mono); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; border-top:1px solid rgba(244,239,227,0.12);">
+    <div style="max-width:960px; margin:0 auto;">Ligas do Brasil · 2026</div>
+  </footer>
+
+</div>
+</x-dc>
+</body>
+</html>

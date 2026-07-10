@@ -1,64 +1,108 @@
 import { ARCHETYPES, calendarFor } from '../data/archetypes.js';
-import { wireTabs } from '../components/tabs.js';
+
+const tabsEl     = document.getElementById('archetype-tabs');
+const labelEl    = document.getElementById('arch-label');
+const subEl      = document.getElementById('arch-subtitle');
+const gamesEl    = document.getElementById('arch-games');
+const atualEl    = document.getElementById('arch-atual');
+const deltaEl    = document.getElementById('arch-delta');
+const exampleEl  = document.getElementById('arch-example');
+const legendEl   = document.getElementById('cal-legend');
+const gridEl     = document.getElementById('cal-grid');
+
+const ARCH_ORDER = ['elite-finalista', 'sul-americana', 'regional-a', 'serie-b'];
+
+const LEGEND = [
+  { key: 'liga_regional',          label: 'Liga Regional' },
+  { key: 'copa_campeoes',          label: 'Copa dos Campeões' },
+  { key: 'copa_brasil',            label: 'Copa do Brasil' },
+  { key: 'conmebol_libertadores',  label: 'Libertadores' },
+  { key: 'conmebol_sul_americana', label: 'Sul-Americana' },
+  { key: 'fifa_pause',             label: 'Data FIFA' },
+];
+
+let sel = 'elite-finalista';
 
 function renderTabs() {
-  const tabsEl = document.getElementById('archetype-tabs');
-  tabsEl.innerHTML = Object.values(ARCHETYPES).map((a) =>
-    `<li><button role="tab" data-key="${a.slug}" aria-selected="false" tabindex="-1" class="tabs__tab">${a.label}</button></li>`
-  ).join('');
+  tabsEl.innerHTML = ARCH_ORDER.map((k) => `
+    <button type="button" role="tab" data-key="${k}"
+      class="cal-tab" aria-selected="${k === sel}">${ARCHETYPES[k].label}</button>
+  `).join('');
 }
 
-function renderArchetype(key) {
-  const arch = ARCHETYPES[key];
-  if (!arch) return;
-  const weeks = calendarFor(key);
-  const el = document.getElementById('archetype-detail');
-
-  el.innerHTML = `
-    <header class="archetype-header">
-      <p class="archetype-header__eyebrow">Arquétipo</p>
-      <h2 class="archetype-header__title">${arch.label}</h2>
-      <p class="archetype-header__subtitle">${arch.subtitle}</p>
-      <div class="archetype-header__counters">
-        <div class="counter">
-          <div class="counter__label">Reforma</div>
-          <div class="counter__value">${arch.totalGames} jogos</div>
-        </div>
-        <div class="counter">
-          <div class="counter__label">Modelo atual</div>
-          <div class="counter__value counter__value--muted">${arch.comparacao.atual} jogos</div>
-        </div>
-        <div class="counter">
-          <div class="counter__label">Diferença</div>
-          <div class="counter__value" data-sign="${arch.comparacao.delta.startsWith('+') ? 'plus' : 'minus'}">${arch.comparacao.delta}</div>
-        </div>
-      </div>
-      <p class="archetype-header__example">${arch.exemplos}</p>
-    </header>
-
-    <div class="archetype-grid">
-      <div class="archetype-grid__col-header">Semana</div>
-      <div class="archetype-grid__col-header">Fim-de-semana</div>
-      <div class="archetype-grid__col-header">Meio-de-semana</div>
-      ${weeks.map((w) => `
-        <div class="archetype-grid__week">
-          <span class="archetype-grid__week-num">S${String(w.n).padStart(2, '0')}</span>
-          <span class="archetype-grid__week-date">${w.sat}</span>
-        </div>
-        <div class="archetype-grid__slot" data-comp="${w.fds?.key ?? ''}">${w.fds?.label ?? ''}</div>
-        <div class="archetype-grid__slot" data-comp="${w.mds?.key ?? ''}">${w.mds?.label ?? ''}</div>
-      `).join('')}
-    </div>
+function renderLegend() {
+  legendEl.innerHTML = LEGEND.map((l) => `
+    <span class="cal-legend__item">
+      <span class="cal-legend__swatch" data-comp="${l.key}"></span>${l.label}
+    </span>
+  `).join('') + `
+    <span class="cal-legend__item">
+      <span class="cal-legend__swatch" data-comp="final"></span>Final (destaque)
+    </span>
   `;
+  // Apply the same background rules as the grid slots to the legend swatches
+  for (const s of legendEl.querySelectorAll('.cal-legend__swatch')) {
+    const c = s.dataset.comp;
+    if (c === 'liga_regional')          s.style.background = 'var(--green)';
+    else if (c === 'copa_campeoes')     s.style.background = 'var(--gold)';
+    else if (c === 'copa_brasil')       s.style.background = 'var(--blue)';
+    else if (c === 'conmebol_libertadores') s.style.background = 'var(--green-deep)';
+    else if (c === 'conmebol_sul_americana') s.style.background = 'var(--terra)';
+    else if (c === 'fifa_pause')        s.style.background = 'rgba(12,14,10,0.06)';
+    else if (c === 'final')             { s.style.background = 'transparent'; s.style.border = '3px solid var(--ink)'; }
+  }
+}
+
+function isFinal(cell) {
+  return !!(cell && cell.label && cell.label.includes('final'));
+}
+
+function renderArchetype() {
+  const arch = ARCHETYPES[sel];
+  labelEl.textContent = arch.label;
+  subEl.textContent = arch.subtitle;
+  gamesEl.innerHTML = `${arch.totalGames} <small>jogos</small>`;
+  atualEl.innerHTML = `${arch.comparacao.atual} <small>jogos</small>`;
+  deltaEl.textContent = arch.comparacao.delta;
+  exampleEl.textContent = arch.exemplos;
+
+  const weeks = calendarFor(sel);
+
+  const cells = [
+    `<div class="cal-grid__head">Semana</div>`,
+    `<div class="cal-grid__head">Fim-de-semana</div>`,
+    `<div class="cal-grid__head">Meio-de-semana</div>`,
+  ];
+  for (const w of weeks) {
+    const num = 'S' + String(w.n).padStart(2, '0');
+    cells.push(`
+      <div class="cal-grid__week-cell">
+        <span class="cal-grid__week-num">${num}</span>
+        <span class="cal-grid__week-date">${w.sat}</span>
+      </div>
+      <div class="cal-grid__slot" data-comp="${w.fds?.key ?? ''}" data-final="${isFinal(w.fds)}">${w.fds?.label ?? '—'}</div>
+      <div class="cal-grid__slot" data-comp="${w.mds?.key ?? ''}" data-final="${isFinal(w.mds)}">${w.mds?.label ?? '—'}</div>
+    `);
+  }
+  gridEl.innerHTML = cells.join('');
 
   const url = new URL(location.href);
-  url.searchParams.set('arquetipo', key);
+  url.searchParams.set('arquetipo', sel);
   history.replaceState(null, '', url);
 }
 
-renderTabs();
-const tabsEl = document.getElementById('archetype-tabs');
-tabsEl.addEventListener('tab-change', (e) => renderArchetype(e.detail.key));
+tabsEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.cal-tab');
+  if (!btn) return;
+  sel = btn.dataset.key;
+  renderTabs();
+  renderArchetype();
+});
+
 const params = new URLSearchParams(location.search);
-const defaultKey = params.get('arquetipo') ?? 'elite-finalista';
-wireTabs(tabsEl, { defaultKey });
+const initial = params.get('arquetipo');
+if (initial && ARCHETYPES[initial]) sel = initial;
+
+renderTabs();
+renderLegend();
+renderArchetype();

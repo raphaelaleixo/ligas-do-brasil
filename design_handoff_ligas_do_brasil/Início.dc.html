@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; }
+    a { color: inherit; }
+    ::selection { background: #FFCB05; color: #0C0E0A; }
+  </style>
+</helmet>
+<div style="--green:#00A85A; --green-deep:#046B38; --gold:#FFCB05; --blue:#0A46B0; --paper:#F4EFE3; --ink:#0C0E0A; --terra:#D8552F; --mono:'Space Mono',ui-monospace,monospace; font-family:'Archivo',system-ui,sans-serif; background:var(--paper); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased;">
+
+  <!-- NAV -->
+  <header style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:0 clamp(1.25rem,4vw,3.5rem); height:64px; background:rgba(12,14,10,0.88); backdrop-filter:blur(10px); border-bottom:1px solid rgba(244,239,227,0.14);">
+    <a href="#topo" style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:900; font-size:1.05rem; letter-spacing:-0.01em; text-transform:uppercase; color:var(--paper); text-decoration:none; display:flex; align-items:center; gap:10px;">
+      <svg viewBox="0 0 26 18" style="width:26px; height:18px; display:block;" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <nav style="display:flex; gap:clamp(1rem,2.5vw,2.25rem); align-items:center;">
+      <a href="#escala" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.72); text-decoration:none;">Escala</a>
+      <a href="#impacto" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.72); text-decoration:none;">Impacto</a>
+      <a href="#gigantes" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(244,239,227,0.72); text-decoration:none;">Gigantes</a>
+      <a href="#manifesto" style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); background:var(--gold); padding:8px 14px; text-decoration:none; font-weight:700;">Manifesto →</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section id="topo" style="position:relative; background:var(--ink); color:var(--paper); padding:clamp(3.5rem,9vw,8rem) clamp(1.25rem,4vw,3.5rem) clamp(3rem,7vw,6rem); overflow:hidden; min-height:88vh; display:flex; flex-direction:column; justify-content:center;">
+    <div aria-hidden="true" style="position:absolute; top:clamp(84px,13vh,170px); right:clamp(1.25rem,4vw,3.5rem); width:min(44vw,520px); opacity:0.95; pointer-events:none;">
+      <svg viewBox="0 0 300 190" style="width:100%; height:auto; display:block;" fill="none">
+        <rect x="4" y="4" width="292" height="182" stroke="#00A85A" stroke-width="2.5"/>
+        <line x1="150" y1="4" x2="150" y2="186" stroke="#00A85A" stroke-width="2.5"/>
+        <circle cx="150" cy="95" r="30" stroke="#FFCB05" stroke-width="2.5"/>
+        <circle cx="150" cy="95" r="3.5" fill="#FFCB05"/>
+        <rect x="4" y="47" width="46" height="96" stroke="#00A85A" stroke-width="2.5"/>
+        <rect x="4" y="72" width="18" height="46" stroke="#00A85A" stroke-width="2.5"/>
+        <rect x="250" y="47" width="46" height="96" stroke="#00A85A" stroke-width="2.5"/>
+        <rect x="278" y="72" width="18" height="46" stroke="#00A85A" stroke-width="2.5"/>
+        <circle cx="35" cy="95" r="3" fill="#00A85A"/>
+        <circle cx="265" cy="95" r="3" fill="#00A85A"/>
+      </svg>
+    </div>
+    <div style="position:relative; max-width:1180px; margin:0 auto; width:100%;">
+      <p style="font-family:var(--mono); font-size:0.8rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin:0 0 clamp(1.5rem,4vw,2.75rem); display:flex; align-items:center; gap:12px;">
+        <span style="width:34px; height:2px; background:var(--gold); display:inline-block;"></span>Manifesto · 2026
+      </p>
+      <h1 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:900; font-size:clamp(3rem,10vw,9rem); line-height:0.9; letter-spacing:-0.03em; text-transform:uppercase; margin:0; max-width:16ch; text-wrap:balance;">
+        O problema não é o calendário. <span style="color:var(--gold);">É a escala.</span>
+      </h1>
+      <div style="display:grid; grid-template-columns:minmax(0,1fr); gap:clamp(1.5rem,3vw,2.5rem); margin-top:clamp(2rem,5vw,3.5rem); max-width:640px;">
+        <p style="font-size:clamp(1.05rem,1.6vw,1.4rem); line-height:1.5; color:rgba(244,239,227,0.82); margin:0; font-weight:500;">
+          O Brasil, com dimensões continentais, promove menos clubes ao topo do futebol nacional do que Portugal. Esta proposta corrige a arquitetura antes de tocar no calendário.
+        </p>
+        <a href="#manifesto" style="font-family:var(--mono); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink); background:var(--gold); padding:15px 26px; text-decoration:none; font-weight:700; justify-self:start; transition:transform 120ms ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Leia o manifesto completo →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESCALA -->
+  <section id="escala" style="background:var(--green); color:var(--ink); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 2.5rem; opacity:0.75;">01 — Escala continental</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:clamp(1.5rem,3vw,2.5rem); margin-bottom:clamp(2.5rem,5vw,4rem);">
+        <sc-for list="{{ countries }}" as="c" hint-placeholder-count="2">
+          <figure style="margin:0; border-top:3px solid var(--ink); padding-top:1.25rem;">
+            <figcaption style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.5rem,3vw,2.1rem); text-transform:uppercase; letter-spacing:-0.01em; margin-bottom:1.25rem; display:flex; align-items:center; gap:10px;">
+              <span aria-hidden="true">{{ c.flag }}</span>{{ c.nome }}
+            </figcaption>
+            <dl style="margin:0; display:grid; gap:0.75rem;">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid rgba(12,14,10,0.2); padding-bottom:0.5rem;">
+                <dt style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.7;">Área</dt>
+                <dd style="margin:0; font-weight:700; font-size:1.15rem;">{{ c.area }}</dd>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid rgba(12,14,10,0.2); padding-bottom:0.5rem;">
+                <dt style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.7;">População</dt>
+                <dd style="margin:0; font-weight:700; font-size:1.15rem;">{{ c.pop }}</dd>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:baseline;">
+                <dt style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; opacity:0.7;">Clubes na elite</dt>
+                <dd style="margin:0; font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:900; font-size:2.4rem; line-height:1;">{{ c.elite }}</dd>
+              </div>
+            </dl>
+          </figure>
+        </sc-for>
+      </div>
+      <p style="font-size:clamp(1.4rem,3.5vw,2.4rem); font-weight:600; line-height:1.25; max-width:22ch; margin:0; text-wrap:balance;">
+        Brasil promove <strong style="background:var(--ink); color:var(--green); padding:0 8px;">2 clubes a mais</strong> que Portugal. Em um país <strong style="text-decoration:underline; text-decoration-thickness:3px;">92× maior</strong> em área e <strong style="text-decoration:underline; text-decoration-thickness:3px;">21× maior</strong> em população.
+      </p>
+    </div>
+  </section>
+
+  <!-- ANALOGIA -->
+  <section style="background:var(--paper); color:var(--ink); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 1.25rem; color:var(--green-deep);">02 — Cada liga tem escala de país</p>
+      <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.9rem,5vw,3.5rem); line-height:1; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1.5rem; max-width:18ch;">6 ligas regionais, 6 países</h2>
+      <p style="font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.5; max-width:52ch; color:rgba(12,14,10,0.72); margin:0 0 clamp(2rem,4vw,3rem);">
+        A proposta agrupa os 27 estados em <strong>6 ligas regionais</strong>. Cada uma, sozinha, tem população comparável à de um país europeu inteiro — que sustenta suas próprias divisões nacionais.
+      </p>
+      <div style="display:flex; flex-direction:column;">
+        <div style="display:grid; grid-template-columns:1.6fr 1fr 1.6fr 1fr; gap:1rem; padding:0 0 0.75rem; border-bottom:2px solid var(--ink); font-family:var(--mono); font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; opacity:0.6;">
+          <span>Liga regional</span><span style="text-align:right;">Pop. região</span><span>País equivalente</span><span style="text-align:right;">Pop. país</span>
+        </div>
+        <sc-for list="{{ analogies }}" as="a" hint-placeholder-count="6">
+          <div style="display:grid; grid-template-columns:1.6fr 1fr 1.6fr 1fr; gap:1rem; align-items:center; padding:1.15rem 0; border-bottom:1px solid rgba(12,14,10,0.14);">
+            <span style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:700; font-size:clamp(1.05rem,2vw,1.4rem); text-transform:uppercase; letter-spacing:-0.01em;">{{ a.liga }}</span>
+            <span style="text-align:right; font-weight:800; font-size:clamp(1.2rem,2.5vw,1.75rem); font-variant-numeric:tabular-nums;">{{ a.regiaoPop }}</span>
+            <span style="display:flex; align-items:center; gap:8px; font-weight:500; font-size:clamp(0.95rem,1.6vw,1.15rem);"><span aria-hidden="true" style="font-size:1.3em;">{{ a.flag }}</span>{{ a.pais }}</span>
+            <span style="text-align:right; font-weight:600; font-size:clamp(1rem,2vw,1.4rem); font-variant-numeric:tabular-nums; color:rgba(12,14,10,0.55);">{{ a.paisPop }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- IMPACTO / METRICS -->
+  <section id="impacto" style="background:var(--ink); color:var(--paper); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 1.25rem; color:var(--gold);">03 — O impacto da nova arquitetura</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; background:rgba(244,239,227,0.14); border:1px solid rgba(244,239,227,0.14);">
+        <sc-for list="{{ metrics }}" as="m" hint-placeholder-count="5">
+          <div style="background:var(--ink); padding:clamp(1.75rem,3vw,2.5rem) clamp(1.25rem,2vw,1.75rem); display:flex; flex-direction:column; gap:0.75rem; min-height:190px;">
+            <span style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:900; font-size:clamp(3rem,6vw,4.75rem); line-height:0.85; color:var(--green); font-variant-numeric:tabular-nums;">{{ m.value }}</span>
+            <span style="font-family:var(--mono); font-size:0.74rem; line-height:1.4; letter-spacing:0.04em; text-transform:uppercase; color:rgba(244,239,227,0.7); margin-top:auto;">{{ m.label }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKLOAD -->
+  <section style="background:var(--paper); color:var(--ink); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 1.25rem; color:var(--green-deep);">04 — Jogos por temporada</p>
+      <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.9rem,5vw,3.5rem); line-height:1; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1rem; max-width:20ch;">Menos sobrecarga no topo, mais palco na base</h2>
+      <p style="display:flex; gap:1.5rem; font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; margin:0 0 clamp(2rem,4vw,3rem); flex-wrap:wrap;">
+        <span style="display:inline-flex; align-items:center; gap:8px;"><span style="width:14px; height:14px; background:var(--terra);"></span>Modelo atual</span>
+        <span style="display:inline-flex; align-items:center; gap:8px;"><span style="width:14px; height:14px; background:var(--green);"></span>Ligas do Brasil</span>
+      </p>
+      <div style="display:grid; gap:clamp(2rem,4vw,3rem);">
+        <sc-for list="{{ workload }}" as="w" hint-placeholder-count="2">
+          <div style="border-top:3px solid var(--ink); padding-top:1.25rem;">
+            <div style="display:flex; align-items:baseline; justify-content:space-between; gap:1rem; margin-bottom:1.25rem; flex-wrap:wrap;">
+              <span style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.3rem,3vw,2rem); text-transform:uppercase; letter-spacing:-0.01em;">{{ w.label }}</span>
+              <span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(1.5rem,4vw,2.5rem); color:{{ w.deltaColor }};">{{ w.delta }}</span>
+            </div>
+            <div style="display:grid; gap:0.9rem;">
+              <div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="height:38px; background:var(--terra); width:{{ w.atualPct }}%; min-width:56px; display:flex; align-items:center; padding-left:14px;">
+                    <span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:1.35rem; color:var(--paper);">{{ w.atualJogos }}</span>
+                  </div>
+                  <span style="font-family:var(--mono); font-size:0.78rem; opacity:0.7;">{{ w.atualClube }}</span>
+                </div>
+                <p style="font-size:0.85rem; color:rgba(12,14,10,0.6); margin:0.5rem 0 0; line-height:1.4;">{{ w.atualDet }}</p>
+              </div>
+              <div>
+                <div style="display:flex; align-items:center; gap:12px;">
+                  <div style="height:38px; background:var(--green); width:{{ w.reformaPct }}%; min-width:56px; display:flex; align-items:center; padding-left:14px;">
+                    <span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:1.35rem; color:var(--paper);">{{ w.reformaJogos }}</span>
+                  </div>
+                  <span style="font-family:var(--mono); font-size:0.78rem; opacity:0.7;">Ligas do Brasil</span>
+                </div>
+                <p style="font-size:0.85rem; color:rgba(12,14,10,0.6); margin:0.5rem 0 0; line-height:1.4;">{{ w.reformaDet }}</p>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <p style="font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.55; max-width:60ch; margin:clamp(2rem,4vw,3rem) 0 0; color:rgba(12,14,10,0.78);">
+        A mesma moldura serve os dois: <strong>46 semanas do fim de janeiro ao começo de dezembro</strong>. Nenhum clube fica sem jogar em abril. <strong>A elite é quem mais ganha</strong> — menos jogos, menos voos, mais tempo de treino: é reforma <em>para</em> a elite, não contra ela.
+      </p>
+    </div>
+  </section>
+
+  <!-- GIGANTES -->
+  <section id="gigantes" style="background:var(--ink); color:var(--paper); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 1.25rem; color:var(--gold);">05 — Gigantes adormecidos</p>
+      <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.9rem,5vw,3.5rem); line-height:1; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1rem; max-width:20ch;">A torcida já sustenta esses clubes. Falta o palco.</h2>
+      <p style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; text-transform:uppercase; opacity:0.6; margin:0 0 clamp(2rem,4vw,3rem);">Média de público — estimativa 2024 · cada célula = 1.000 pessoas</p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1px; background:rgba(244,239,227,0.14); border:1px solid rgba(244,239,227,0.14);">
+        <sc-for list="{{ giants }}" as="g" hint-placeholder-count="9">
+          <figure style="background:var(--ink); margin:0; padding:clamp(1.5rem,2.5vw,1.85rem); display:flex; flex-direction:column; gap:1.15rem;">
+            <figcaption style="display:flex; align-items:baseline; gap:8px;">
+              <span style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:700; font-size:clamp(1.15rem,2.2vw,1.5rem); text-transform:uppercase; letter-spacing:-0.01em;">{{ g.nome }}</span>
+              <span style="font-family:var(--mono); font-size:0.68rem; opacity:0.5;">{{ g.estado }}</span>
+            </figcaption>
+            <div aria-hidden="true" style="display:grid; grid-template-columns:repeat(8,1fr); gap:4px;">
+              <sc-for list="{{ g.cells }}" as="cell" hint-placeholder-count="40">
+                <span style="aspect-ratio:1; background:{{ cell.bg }};"></span>
+              </sc-for>
+            </div>
+            <div style="margin-top:auto;">
+              <span style="font-family:'Archivo',sans-serif; font-weight:900; font-size:clamp(1.4rem,2.6vw,1.85rem); font-variant-numeric:tabular-nums;">{{ g.media }}</span>
+              <span style="font-family:var(--mono); font-size:0.66rem; letter-spacing:0.05em; opacity:0.55;"> por jogo</span>
+              <span style="display:block; font-family:var(--mono); font-size:0.62rem; letter-spacing:0.05em; text-transform:uppercase; opacity:0.5; margin-top:3px;">{{ g.divisao }} hoje</span>
+            </div>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVELACAO -->
+  <section style="background:var(--paper); color:var(--ink); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 1.25rem; color:var(--green-deep);">06 — De onde vieram os ídolos</p>
+      <h2 style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.9rem,5vw,3.5rem); line-height:1; letter-spacing:-0.02em; text-transform:uppercase; margin:0 0 1rem; max-width:20ch;">Fortalecer o interior amplia a rede de captação</h2>
+      <p style="font-size:clamp(1rem,1.5vw,1.2rem); line-height:1.5; max-width:56ch; color:rgba(12,14,10,0.72); margin:0 0 clamp(2rem,4vw,3rem);">
+        Os últimos brasileiros que bateram europeus em mata-mata de Copa vieram daqui. Faz 24 anos.
+      </p>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1px; background:rgba(12,14,10,0.14); border:1px solid rgba(12,14,10,0.14);">
+        <sc-for list="{{ revelation }}" as="r" hint-placeholder-count="6">
+          <figure style="background:var(--paper); margin:0; padding:clamp(1.5rem,2.5vw,2rem); display:flex; flex-direction:column; gap:0.5rem; min-height:170px;">
+            <span style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.06em; color:var(--green-deep);">🏆 {{ r.cups }}</span>
+            <span style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.5rem,3vw,2.1rem); text-transform:uppercase; line-height:0.95; letter-spacing:-0.01em; margin-top:auto;">{{ r.jogador }}</span>
+            <span style="font-size:0.9rem; color:rgba(12,14,10,0.65); line-height:1.4;">Revelado por {{ r.clube }} <span style="opacity:0.6;">({{ r.estado }})</span></span>
+          </figure>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO TEASER + TILES -->
+  <section id="manifesto" style="background:var(--blue); color:var(--paper); padding:clamp(3.5rem,8vw,7rem) clamp(1.25rem,4vw,3.5rem);">
+    <div style="max-width:1180px; margin:0 auto;">
+      <p style="font-family:var(--mono); font-size:0.78rem; letter-spacing:0.24em; text-transform:uppercase; margin:0 0 1.5rem; color:var(--gold);">07 — O manifesto</p>
+      <p style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:700; font-size:clamp(1.6rem,4vw,3rem); line-height:1.1; letter-spacing:-0.02em; margin:0 0 clamp(2rem,4vw,3rem); max-width:24ch; text-wrap:balance;">
+        A próxima reforma tem que ser de escala, não de calendário.
+      </p>
+      <a href="#topo" style="font-family:var(--mono); font-size:0.85rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--blue); background:var(--gold); padding:15px 26px; text-decoration:none; font-weight:700; display:inline-block; margin-bottom:clamp(2.5rem,5vw,4rem); transition:transform 120ms ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">Leia o manifesto completo →</a>
+      <nav aria-label="Explorar" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1px; background:rgba(244,239,227,0.2); border:1px solid rgba(244,239,227,0.2);">
+        <sc-for list="{{ tiles }}" as="t" hint-placeholder-count="3">
+          <a href="#topo" style="background:var(--blue); padding:clamp(1.5rem,2.5vw,2rem); text-decoration:none; color:var(--paper); display:flex; flex-direction:column; gap:0.4rem; transition:background 140ms ease;" onmouseover="this.style.background='#08388a'" onmouseout="this.style.background='#0A46B0'">
+            <span style="font-family:'Archivo Expanded','Archivo',sans-serif; font-weight:800; font-size:clamp(1.2rem,2.5vw,1.6rem); text-transform:uppercase; letter-spacing:-0.01em;">{{ t.label }}</span>
+            <span style="font-family:var(--mono); font-size:0.72rem; letter-spacing:0.04em; opacity:0.72;">{{ t.sub }}</span>
+          </a>
+        </sc-for>
+      </nav>
+    </div>
+  </section>
+
+  <footer style="background:var(--ink); color:rgba(244,239,227,0.6); padding:2.5rem clamp(1.25rem,4vw,3.5rem); font-family:var(--mono); font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;">
+    <div style="max-width:1180px; margin:0 auto;">Ligas do Brasil · 2026</div>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const countries = [
+      { nome: 'Brasil',   flag: '🇧🇷', area: '8,5M km²', pop: '214M', elite: '20' },
+      { nome: 'Portugal', flag: '🇵🇹', area: '92k km²',  pop: '10M',  elite: '18' },
+    ];
+
+    const analogies = [
+      { liga: 'Liga Nordestina',   regiaoPop: '54M', pais: 'Itália',        flag: '🇮🇹', paisPop: '59M' },
+      { liga: 'Liga Paulista',     regiaoPop: '44M', pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M' },
+      { liga: 'Liga Central',      regiaoPop: '37M', pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M' },
+      { liga: 'Liga Sulista',      regiaoPop: '30M', pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M' },
+      { liga: 'Liga Rio-Capixaba', regiaoPop: '20M', pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M' },
+      { liga: 'Liga Amazônica',    regiaoPop: '18M', pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M' },
+    ];
+
+    const metrics = [
+      { value: '216',   label: 'Clubes ativos' },
+      { value: '63',    label: 'Teto de jogos por temporada' },
+      { value: '10',    label: 'Meses de calendário garantido' },
+      { value: '0',     label: 'Clubes desempregados em abril' },
+      { value: '>50%',  label: 'Redução de voos na fase regular' },
+    ];
+
+    const wmax = 75;
+    const workload = [
+      {
+        label: 'Elite finalista', delta: '−16%', deltaColor: '#046B38',
+        atualClube: 'Botafogo 2024', atualJogos: 75, atualPct: (75 / wmax * 100).toFixed(1),
+        atualDet: 'Carioca + Brasileirão + Copa do Brasil + Libertadores',
+        reformaJogos: 63, reformaPct: (63 / wmax * 100).toFixed(1),
+        reformaDet: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores',
+      },
+      {
+        label: 'Base', delta: '+169%', deltaColor: '#046B38',
+        atualClube: 'Madureira 2024', atualJogos: 13, atualPct: (13 / wmax * 100).toFixed(1),
+        atualDet: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio',
+        reformaJogos: 35, reformaPct: (35 / wmax * 100).toFixed(1),
+        reformaDet: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses',
+      },
+    ];
+
+    const WAFFLE_CELLS = 40, WAFFLE_UNIT = 1000;
+    const giantsRaw = [
+      ['Remo', 'PA', 32000, 'Série B'],
+      ['Paysandu', 'PA', 30000, 'Série B'],
+      ['Sport', 'PE', 28000, 'Série B'],
+      ['Santa Cruz', 'PE', 22000, 'Série D'],
+      ['Coritiba', 'PR', 20000, 'Série B'],
+      ['Goiás', 'GO', 18000, 'Série B'],
+      ['Náutico', 'PE', 17000, 'Série C'],
+      ['Vila Nova', 'GO', 14000, 'Série B'],
+      ['América-RN', 'RN', 8000, 'Série C'],
+    ];
+    const giants = giantsRaw.map(([nome, estado, media, divisao]) => {
+      const filled = Math.round(media / WAFFLE_UNIT);
+      const cells = Array.from({ length: WAFFLE_CELLS }, (_, i) => ({
+        bg: i < filled ? '#FFCB05' : 'rgba(244,239,227,0.1)',
+      }));
+      return { nome, estado, divisao, media: media.toLocaleString('pt-BR'), cells };
+    });
+
+    const revelation = [
+      { jogador: 'Romário',        clube: 'Olaria',                    estado: 'RJ', cups: '1994' },
+      { jogador: 'Ronaldo',        clube: 'São Cristóvão',             estado: 'RJ', cups: '1994, 2002' },
+      { jogador: 'Rivaldo',        clube: 'Santa Cruz',                estado: 'CE', cups: '2002' },
+      { jogador: 'Lúcio',          clube: 'Guará',                     estado: 'DF', cups: '2002' },
+      { jogador: 'Cafu',           clube: 'Itaquaquecetuba',           estado: 'SP', cups: '1994, 2002' },
+      { jogador: 'Roberto Carlos', clube: 'União São João de Araras',  estado: 'SP', cups: '2002' },
+    ];
+
+    const tiles = [
+      { label: 'Ligas Regionais', sub: '6 ligas, 216 clubes' },
+      { label: 'Calendário',      sub: '46 semanas por arquétipo' },
+      { label: 'Copas Nacionais', sub: 'Campeões + Brasil' },
+    ];
+
+    return { countries, analogies, metrics, workload, giants, revelation, tiles };
+  }
+}
+</script>
+</body>
+</html>

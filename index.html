@@ -6,6 +6,8 @@
   <title>Ligas do Brasil · O problema não é o calendário. É a escala.</title>
   <meta name="description" content="Proposta de reforma estrutural do futebol brasileiro: 216 clubes profissionais, 6 ligas regionais, Copa dos Campeões.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/layers.css">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -14,170 +16,236 @@
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/view-transitions.css">
   <link rel="stylesheet" href="assets/css/home/hero.css">
-  <link rel="stylesheet" href="assets/css/home/analogy-table.css">
   <link rel="stylesheet" href="assets/css/home/escala.css">
+  <link rel="stylesheet" href="assets/css/home/analogy-table.css">
   <link rel="stylesheet" href="assets/css/home/metric-cards.css">
   <link rel="stylesheet" href="assets/css/home/workload-chart.css">
   <link rel="stylesheet" href="assets/css/home/sleeping-giants.css">
   <link rel="stylesheet" href="assets/css/home/revelation-clubs.css">
   <link rel="stylesheet" href="assets/css/home/manifesto-teaser.css">
-  <link rel="stylesheet" href="assets/css/home/nav-tiles.css">
 
   <link rel="preload" as="fetch" href="data/season-default.json" crossorigin>
   <link rel="expect" href="#page-ready" blocking="render">
 </head>
 <body>
   <header class="site-nav">
-    <a class="site-nav__brand" href="./">Ligas do Brasil</a>
-    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
     <nav>
       <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
         <li><a href="./">Início</a></li>
         <li><a href="manifesto">Manifesto</a></li>
-        <li><a href="ligas">Ligas Regionais</a></li>
+        <li><a href="ligas">Ligas</a></li>
         <li><a href="timeline">Calendário</a></li>
-        <li><a href="copa">Copas Nacionais</a></li>
+        <li><a href="copa">Copas</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="page-ready">
-    <section class="hero">
-      <div class="hero__content">
-        <p class="hero__eyebrow">
-          <svg viewBox="0 0 26 30" aria-hidden="true"><polygon points="13,0 26,7.5 26,22.5 13,30 0,22.5 0,7.5" fill="currentColor"/></svg>
-          Manifesto · 2026
+    <!-- HERO -->
+    <section class="act act--ink hero" id="topo">
+      <div aria-hidden="true" class="hero__pitch">
+        <svg viewBox="0 0 300 190" fill="none">
+          <rect x="4" y="4" width="292" height="182" stroke="#00A85A" stroke-width="2.5"/>
+          <line x1="150" y1="4" x2="150" y2="186" stroke="#00A85A" stroke-width="2.5"/>
+          <circle cx="150" cy="95" r="30" stroke="#FFCB05" stroke-width="2.5"/>
+          <circle cx="150" cy="95" r="3.5" fill="#FFCB05"/>
+          <rect x="4" y="47" width="46" height="96" stroke="#00A85A" stroke-width="2.5"/>
+          <rect x="4" y="72" width="18" height="46" stroke="#00A85A" stroke-width="2.5"/>
+          <rect x="250" y="47" width="46" height="96" stroke="#00A85A" stroke-width="2.5"/>
+          <rect x="278" y="72" width="18" height="46" stroke="#00A85A" stroke-width="2.5"/>
+          <circle cx="35" cy="95" r="3" fill="#00A85A"/>
+          <circle cx="265" cy="95" r="3" fill="#00A85A"/>
+        </svg>
+      </div>
+      <div class="act__inner hero__content">
+        <p class="eyebrow eyebrow--gold">
+          <span class="eyebrow__lead" aria-hidden="true"></span>Manifesto · 2026
         </p>
         <h1 class="hero__pullquote">
-          O problema não é o calendário.
-          <span class="hero__pullquote--accent">É a escala.</span>
+          O problema não é o calendário. <span class="hero__pullquote--accent">É a escala.</span>
         </h1>
-        <hr class="hero__rule">
-        <p class="hero__thesis">
-          O Brasil, com dimensões continentais, promove menos clubes ao topo do futebol
-          nacional do que Portugal. Esta proposta corrige a arquitetura antes de tocar no calendário.
-        </p>
-        <p class="hero__cta">
-          <a href="manifesto">Leia o manifesto completo →</a>
+        <div class="hero__foot">
+          <p class="hero__thesis">
+            O Brasil, com dimensões continentais, promove menos clubes ao topo do futebol
+            nacional do que Portugal. Esta proposta corrige a arquitetura antes de tocar no calendário.
+          </p>
+          <a class="btn btn--gold" href="manifesto">Leia o manifesto completo →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 01 ESCALA -->
+    <section class="act act--green escala" id="escala" aria-labelledby="escala-heading">
+      <div class="act__inner">
+        <p class="section-index">01 — Escala continental</p>
+        <h2 id="escala-heading" class="visually-hidden">Escala continental</h2>
+        <div class="escala__row">
+          <figure class="escala__country">
+            <figcaption><span aria-hidden="true">🇧🇷</span>Brasil</figcaption>
+            <dl>
+              <div class="escala__stat"><dt>Área</dt><dd>8,5M km²</dd></div>
+              <div class="escala__stat"><dt>População</dt><dd>214M</dd></div>
+              <div class="escala__stat escala__stat--big"><dt>Clubes na elite</dt><dd>20</dd></div>
+            </dl>
+          </figure>
+          <figure class="escala__country">
+            <figcaption><span aria-hidden="true">🇵🇹</span>Portugal</figcaption>
+            <dl>
+              <div class="escala__stat"><dt>Área</dt><dd>92k km²</dd></div>
+              <div class="escala__stat"><dt>População</dt><dd>10M</dd></div>
+              <div class="escala__stat escala__stat--big"><dt>Clubes na elite</dt><dd>18</dd></div>
+            </dl>
+          </figure>
+        </div>
+        <p class="escala__punchline">
+          Brasil promove <strong class="escala__invert">2 clubes a mais</strong> que Portugal.
+          Em um país <strong class="escala__underline">92× maior</strong> em área e
+          <strong class="escala__underline">21× maior</strong> em população.
         </p>
       </div>
-      <aside class="hero__mark" aria-hidden="true">
-        <svg viewBox="0 0 182 105" role="img">
-          <title>Seis ligas regionais</title>
-          <polygon points="26,0 52,15 52,45 26,60 0,45 0,15"          fill="var(--liga-nordestina)"/>
-          <polygon points="78,0 104,15 104,45 78,60 52,45 52,15"      fill="var(--liga-paulista)"/>
-          <polygon points="130,0 156,15 156,45 130,60 104,45 104,15"  fill="var(--liga-central)"/>
-          <polygon points="52,45 78,60 78,90 52,105 26,90 26,60"      fill="var(--liga-sulista)"/>
-          <polygon points="104,45 130,60 130,90 104,105 78,90 78,60"  fill="var(--liga-rio)"/>
-          <polygon points="156,45 182,60 182,90 156,105 130,90 130,60" fill="var(--liga-amazonica)"/>
-        </svg>
-      </aside>
     </section>
 
-    <section class="escala" aria-labelledby="escala-heading">
-      <h2 id="escala-heading" class="visually-hidden">Escala continental</h2>
-      <div class="escala__row">
-        <figure class="escala__country">
-          <figcaption>🇧🇷 Brasil</figcaption>
-          <dl>
-            <div><dt>Área</dt><dd>8,5M km²</dd></div>
-            <div><dt>População</dt><dd>214M</dd></div>
-            <div><dt>Clubes na elite</dt><dd>20</dd></div>
-          </dl>
-        </figure>
-        <figure class="escala__country">
-          <figcaption>🇵🇹 Portugal</figcaption>
-          <dl>
-            <div><dt>Área</dt><dd>92k km²</dd></div>
-            <div><dt>População</dt><dd>10M</dd></div>
-            <div><dt>Clubes na elite</dt><dd>18</dd></div>
-          </dl>
-        </figure>
+    <!-- 02 ANALOGIA -->
+    <section class="act act--paper analogy" id="analogia" aria-labelledby="analogy-heading">
+      <div class="act__inner">
+        <p class="section-index section-index--deep">02 — Cada liga tem escala de país</p>
+        <h2 id="analogy-heading" class="analogy__heading">6 ligas regionais, 6 países</h2>
+        <p class="analogy__intro">
+          A proposta agrupa os 27 estados em <strong>6 ligas regionais</strong>. Cada uma,
+          sozinha, tem população comparável à de um país europeu inteiro — que sustenta suas
+          próprias divisões nacionais.
+        </p>
+        <div class="analogy__table">
+          <div class="analogy__head">
+            <span>Liga regional</span>
+            <span class="ar">Pop. região</span>
+            <span>País equivalente</span>
+            <span class="ar">Pop. país</span>
+          </div>
+          <div id="analogy-rows"></div>
+        </div>
       </div>
-      <p class="escala__punchline">
-        Brasil promove <strong>2 clubes a mais</strong> que Portugal.
-        Em um país <strong>92× maior</strong> em área e <strong>21× maior</strong> em população.
-      </p>
     </section>
 
-    <section class="analogy" aria-labelledby="analogy-heading">
-      <h2 id="analogy-heading">Cada liga tem escala de país</h2>
-      <p class="analogy__intro">
-        A proposta agrupa os 27 estados em <strong>6 ligas regionais</strong>. Cada uma,
-        sozinha, tem população comparável à de um país europeu inteiro — que sustenta suas
-        próprias divisões nacionais.
-      </p>
-      <table class="analogy__table">
-        <thead>
-          <tr>
-            <th scope="col">Liga regional</th>
-            <th scope="col">Pop. região</th>
-            <th scope="col">País equivalente</th>
-            <th scope="col">Pop. país</th>
-          </tr>
-        </thead>
-        <tbody id="analogy-rows"></tbody>
-      </table>
+    <!-- 03 IMPACTO -->
+    <section class="act act--ink metrics" id="impacto" aria-labelledby="metrics-heading">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">03 — O impacto da nova arquitetura</p>
+        <h2 id="metrics-heading" class="visually-hidden">O impacto da nova arquitetura</h2>
+        <ul class="metric-cards" role="list">
+          <li class="metric-card">
+            <span class="metric-card__value" data-metric="totalClubes"></span>
+            <span class="metric-card__label">Clubes ativos</span>
+          </li>
+          <li class="metric-card">
+            <span class="metric-card__value" data-metric="tetoJogos"></span>
+            <span class="metric-card__label">Teto de jogos por temporada</span>
+          </li>
+          <li class="metric-card">
+            <span class="metric-card__value" data-metric="mesesGarantidos"></span>
+            <span class="metric-card__label">Meses de calendário garantido</span>
+          </li>
+          <li class="metric-card">
+            <span class="metric-card__value" data-metric="desempregadosEmAbril"></span>
+            <span class="metric-card__label">Clubes desempregados em abril</span>
+          </li>
+          <li class="metric-card">
+            <span class="metric-card__value" data-metric="reducaoVoos"></span>
+            <span class="metric-card__label">Redução de voos na fase regular</span>
+          </li>
+        </ul>
+      </div>
     </section>
 
-    <section class="metrics" aria-labelledby="metrics-heading">
-      <h2 id="metrics-heading">O impacto da nova arquitetura</h2>
-      <ul class="metric-cards" role="list">
-        <li class="metric-card"><span class="metric-card__value" data-metric="totalClubes"></span><span class="metric-card__label">Clubes ativos</span></li>
-        <li class="metric-card"><span class="metric-card__value" data-metric="tetoJogos"></span><span class="metric-card__label">Teto de jogos por temporada</span></li>
-        <li class="metric-card"><span class="metric-card__value" data-metric="mesesGarantidos"></span><span class="metric-card__label">Meses de calendário garantido</span></li>
-        <li class="metric-card"><span class="metric-card__value" data-metric="desempregadosEmAbril"></span><span class="metric-card__label">Clubes desempregados em abril</span></li>
-        <li class="metric-card"><span class="metric-card__value" data-metric="reducaoVoos"></span><span class="metric-card__label">Redução de voos na fase regular</span></li>
-      </ul>
+    <!-- 04 JOGOS -->
+    <section class="act act--paper workload" id="jogos" aria-labelledby="workload-heading">
+      <div class="act__inner">
+        <p class="section-index section-index--deep">04 — Jogos por temporada</p>
+        <h2 id="workload-heading" class="workload__heading">Menos sobrecarga no topo, mais palco na base</h2>
+        <p class="workload__legend">
+          <span class="workload__key"><span class="workload__swatch workload__swatch--current"></span>Modelo atual</span>
+          <span class="workload__key"><span class="workload__swatch workload__swatch--reform"></span>Ligas do Brasil</span>
+        </p>
+        <div class="workload__chart" id="workload-chart"></div>
+        <p class="workload__note">
+          A mesma moldura serve os dois: <strong>46 semanas do fim de janeiro ao começo de dezembro</strong>.
+          Nenhum clube fica sem jogar em abril. <strong>A elite é quem mais ganha</strong> — menos jogos,
+          menos voos, mais tempo de treino: é reforma <em>para</em> a elite, não contra ela.
+        </p>
+      </div>
     </section>
 
-    <section class="workload" aria-labelledby="workload-heading">
-      <h2 id="workload-heading">Jogos por temporada</h2>
-      <p class="workload__caption">
-        Do topo à base: <strong>menos sobrecarga para os grandes, mais palco para os pequenos.</strong>
-      </p>
-      <div class="workload__chart" id="workload-chart"></div>
-      <p class="workload__note">
-        A mesma moldura serve os dois: <strong>46 semanas do fim de janeiro ao começo de dezembro, com 34 rodadas de Liga Regional intercaladas com pausas FIFA e finais em novembro e dezembro.</strong>
-        Nenhum clube fica sem jogar em abril, e o Elite finalista ainda ganha um fim-de-semana de descanso na reta final.
-        <strong>A elite é quem mais ganha</strong> — menos jogos, menos voos, mais tempo de treino: é reforma <em>para</em> a elite, não contra ela.
-      </p>
-      <p class="workload__legend"><span class="dot dot--current"></span> Modelo atual · <span class="dot dot--reform"></span> Ligas do Brasil</p>
+    <!-- 05 GIGANTES -->
+    <section class="act act--ink giants" id="gigantes" aria-labelledby="giants-heading">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">05 — Gigantes adormecidos</p>
+        <h2 id="giants-heading" class="giants__heading">A torcida já sustenta esses clubes. Falta o palco.</h2>
+        <p class="giants__caveat">
+          Média de público — estimativa 2024 · cada célula = 1.000 pessoas
+        </p>
+        <ul class="giants__row" role="list" id="giants-row"></ul>
+      </div>
     </section>
 
-    <section class="giants" aria-labelledby="giants-heading">
-      <h2 id="giants-heading">Gigantes adormecidos</h2>
-      <p class="giants__tagline">A torcida já sustenta esses clubes. Falta o palco.</p>
-      <ul class="giants__row" role="list" id="giants-row"></ul>
-      <p class="giants__caveat">Média de público — estimativa 2024.</p>
+    <!-- 06 IDOLOS -->
+    <section class="act act--paper revelation" id="idolos" aria-labelledby="revelation-heading">
+      <div class="act__inner">
+        <p class="section-index section-index--deep">06 — De onde vieram os ídolos</p>
+        <h2 id="revelation-heading" class="revelation__heading">Fortalecer o interior amplia a rede de captação</h2>
+        <p class="revelation__intro">
+          Os últimos brasileiros que bateram europeus em mata-mata de Copa vieram daqui. Faz 24 anos.
+        </p>
+        <ul class="revelation__row" role="list" id="revelation-row"></ul>
+      </div>
     </section>
 
-    <section class="revelation" aria-labelledby="revelation-heading">
-      <h2 id="revelation-heading">De onde vieram os ídolos</h2>
-      <p class="revelation__tagline">Fortalecer o interior não é nostalgia; é ampliar a rede de captação.</p>
-      <p class="revelation__subtagline">Os últimos brasileiros que bateram europeus em mata-mata de Copa vieram daqui. Faz 24 anos.</p>
-      <ul class="revelation__row" role="list" id="revelation-row"></ul>
+    <!-- 07 MANIFESTO TEASER -->
+    <section class="act act--blue teaser" id="manifesto" aria-labelledby="teaser-heading">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">07 — O manifesto</p>
+        <h2 id="teaser-heading" class="teaser__quote">
+          A próxima reforma tem que ser de escala, não de calendário.
+        </h2>
+        <a class="btn btn--gold" href="manifesto">Leia o manifesto completo →</a>
+        <nav aria-label="Explorar" class="tiles">
+          <a class="tile" href="ligas">
+            <span class="tile__label">Ligas Regionais</span>
+            <span class="tile__sub">6 ligas, 216 clubes</span>
+          </a>
+          <a class="tile" href="timeline">
+            <span class="tile__label">Calendário</span>
+            <span class="tile__sub">46 semanas por arquétipo</span>
+          </a>
+          <a class="tile" href="copa">
+            <span class="tile__label">Copas Nacionais</span>
+            <span class="tile__sub">Campeões + Brasil</span>
+          </a>
+        </nav>
+      </div>
     </section>
-
-    <section class="teaser" aria-labelledby="teaser-heading">
-      <h2 id="teaser-heading">O manifesto</h2>
-      <p class="teaser__body">
-        Este site é uma proposta desenhada em detalhe — e um argumento. Se você chegou até aqui,
-        vale ler o manifesto inteiro — a história de por que a próxima reforma tem
-        que ser de escala, não de calendário.
-      </p>
-      <p><a class="teaser__cta" href="manifesto">Leia o manifesto completo →</a></p>
-    </section>
-
-    <nav aria-label="Explorar" class="tiles">
-      <a class="tile" href="ligas"><span class="tile__label">Ligas Regionais</span><span class="tile__sub">6 ligas, 216 clubes</span></a>
-      <a class="tile" href="timeline"><span class="tile__label">Calendário</span><span class="tile__sub">46 semanas por arquétipo</span></a>
-      <a class="tile" href="copa"><span class="tile__label">Copas Nacionais</span><span class="tile__sub">Campeões + Brasil</span></a>
-    </nav>
   </main>
 
   <footer>
-    <p>Ligas do Brasil · 2026</p>
+    <div>Ligas do Brasil · 2026</div>
   </footer>
 
   <script type="module" src="assets/js/nav.js"></script>

@@ -1,22 +1,6 @@
 /**
- * Web fonts.
- * - Gabarito (variable weight 400-900): body text, UI.
- * - Brasilero: display face para headings.
- * font-display: swap para renderização progressiva.
+ * Google Fonts — Archivo (body/UI), Archivo Expanded (display),
+ * Space Mono (eyebrows/labels/indices/nav).
+ * font-display: swap for progressive rendering.
  */
-@font-face {
-  font-family: 'Gabarito';
-  src: url('/assets/fonts/Gabarito-Variable.ttf') format('truetype-variations'),
-       url('/assets/fonts/Gabarito-Variable.ttf') format('truetype');
-  font-weight: 400 900;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Brasilero';
-  src: url('/assets/fonts/Brasilero.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400..900;1,400..600&family=Archivo+Expanded:wght@600..900&family=Space+Mono:wght@400;700&display=swap');

@@ -6,6 +6,8 @@
   <title>Copas Nacionais | Ligas do Brasil</title>
   <meta name="description" content="Copa dos Campeões e Copa do Brasil na proposta Ligas do Brasil.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/layers.css">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -13,43 +15,59 @@
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/view-transitions.css">
-  <link rel="stylesheet" href="assets/css/ligas.css">
   <link rel="stylesheet" href="assets/css/copa.css">
-  <link rel="stylesheet" href="assets/css/components/tabs.css">
 
   <link rel="expect" href="#page-ready" blocking="render">
 </head>
 <body>
   <header class="site-nav">
-    <a class="site-nav__brand" href="./">Ligas do Brasil</a>
-    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
     <nav>
       <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
         <li><a href="./">Início</a></li>
         <li><a href="manifesto">Manifesto</a></li>
-        <li><a href="ligas">Ligas Regionais</a></li>
+        <li><a href="ligas">Ligas</a></li>
         <li><a href="timeline">Calendário</a></li>
-        <li><a href="copa">Copas Nacionais</a></li>
+        <li><a href="copa">Copas</a></li>
       </ul>
     </nav>
   </header>
 
-  <main id="page-ready">
-    <section class="copa">
-      <h1>Copas Nacionais</h1>
-      <nav aria-label="Escolher copa">
-        <ul class="tabs" role="tablist" id="copa-tabs">
-          <li><button role="tab" data-key="campeoes" aria-selected="true"  tabindex="0"  class="tabs__tab">Copa dos Campeões</button></li>
-          <li><button role="tab" data-key="brasil"   aria-selected="false" tabindex="-1" class="tabs__tab">Copa do Brasil</button></li>
-          <li><button role="tab" data-key="conmebol" aria-selected="false" tabindex="-1" class="tabs__tab">Vagas Conmebol</button></li>
-        </ul>
-      </nav>
-      <section id="copa-detalhe" aria-live="polite"></section>
+  <main id="page-ready" class="copa">
+    <section class="act act--ink cop-title">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">Dois mata-matas nacionais</p>
+        <h1 class="cop-title__h1">Copas Nacionais</h1>
+        <div class="cop-tabs" role="tablist" id="copa-tabs"></div>
+        <div class="cop-title__spacer"></div>
+      </div>
+    </section>
+
+    <section class="act act--paper cop-content">
+      <div class="act__inner" id="copa-detalhe"></div>
     </section>
   </main>
 
   <footer>
-    <p>Ligas do Brasil · 2026</p>
+    <div>Ligas do Brasil · 2026</div>
   </footer>
 
   <script type="module" src="assets/js/nav.js"></script>

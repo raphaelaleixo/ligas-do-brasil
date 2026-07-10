@@ -1,116 +1,120 @@
 import { loadSeason } from '../season.js';
-import { wireTabs } from '../components/tabs.js';
 
-// Pop figures: IBGE 2022 (regiões) / UN 2023 (países).
-const ANALOG = {
-  'Liga Nordestina':   { pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', regiaoPop: '54M' },
-  'Liga Paulista':     { pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', regiaoPop: '44M' },
-  'Liga Central':      { pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', regiaoPop: '37M' },
-  'Liga Sulista':      { pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', regiaoPop: '30M' },
-  'Liga Rio-Capixaba': { pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', regiaoPop: '20M' },
-  'Liga Amazônica':    { pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M', regiaoPop: '18M' },
-};
+const LEAGUES = [
+  { nome: 'Liga Nordestina',   regiaoPop: '54M', pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', quota: 10 },
+  { nome: 'Liga Paulista',     regiaoPop: '44M', pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', quota: 10 },
+  { nome: 'Liga Central',      regiaoPop: '37M', pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', quota: 8 },
+  { nome: 'Liga Sulista',      regiaoPop: '30M', pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', quota: 8 },
+  { nome: 'Liga Rio-Capixaba', regiaoPop: '20M', pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', quota: 8 },
+  { nome: 'Liga Amazônica',    regiaoPop: '18M', pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M', quota: 4 },
+];
 
-const CAMPEOES_QUOTAS = {
-  'Liga Nordestina': 10, 'Liga Paulista': 10,
-  'Liga Rio-Capixaba': 8, 'Liga Sulista': 8, 'Liga Central': 8,
-  'Liga Amazônica': 4,
-};
-
-function slug(nome) { return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/g, ''); }
-
-function renderTabs(season) {
-  const tabsEl = document.getElementById('ligas-tabs');
-  tabsEl.innerHTML = season.ligasRegionais.map((l) =>
-    `<li><button role="tab" data-key="${slug(l.nome)}" aria-selected="false" tabindex="-1"
-      class="tabs__tab">${l.nome}</button></li>`
-  ).join('');
-  tabsEl.setAttribute('role', 'tablist');
+function slug(nome) {
+  return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/g, '');
 }
 
-function renderLiga(season, key) {
-  const liga = season.ligasRegionais.find((l) => slug(l.nome) === key);
-  const el = document.getElementById('liga-detalhe');
+const tabsEl    = document.getElementById('ligas-tabs');
+const nameEl    = document.getElementById('lig-name');
+const rowsEl    = document.getElementById('lig-rows');
+const tableEl   = document.getElementById('lig-table');
+const loadingEl = document.getElementById('lig-loading');
+const metaEl    = document.getElementById('lig-meta');
+const seedEl    = document.getElementById('lig-seed');
 
-  // Serie A clubs from this liga, ordered by prior-year ranking (Year-0 seeding
-  // by ranking_forca desc, tiebreak by name). This is structural — not simulated
-  // results.
-  const clubes = season.clubes
-    .filter((c) => c.liga_regional === liga.nome && c.divisao === 'A')
-    .slice()
-    .sort((a, b) => {
-      if (b.ranking_forca !== a.ranking_forca) return b.ranking_forca - a.ranking_forca;
-      return a.nome.localeCompare(b.nome);
-    });
+let sel = 0;
+let season = null;
 
-  const quota = CAMPEOES_QUOTAS[liga.nome];
-  const analog = ANALOG[liga.nome];
-  const total = clubes.length;
+function renderTabs() {
+  tabsEl.innerHTML = LEAGUES.map((l, i) => `
+    <button type="button" role="tab" data-idx="${i}"
+      class="lig-tab" aria-selected="${i === sel}">${l.nome.replace('Liga ', '')}</button>
+  `).join('');
+}
 
-  const listItems = clubes.map((c, i) => {
-    const pos = i + 1;
-    let badge = '';
-    let zona = '';
-    if (pos <= quota) {
-      badge = '<span class="clube__badge clube__badge--cc">🌎 Copa dos Campeões</span>';
-      zona = 'campeoes';
-    } else if (pos >= total - 2) {
-      badge = '<span class="clube__badge clube__badge--reb">⬇️ Rebaixamento</span>';
-      zona = 'rebaixamento';
-    }
-    return `<li class="clube" data-zona="${zona}">
-      <span class="clube__pos">${pos}</span>
-      <span class="clube__nome">${c.nome}</span>
-      <span class="clube__estado">${c.estado ?? ''}</span>
-      ${badge}
-    </li>`;
-  }).join('');
+tabsEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.lig-tab');
+  if (!btn) return;
+  sel = Number(btn.dataset.idx);
+  renderTabs();
+  renderContent();
+  const url = new URL(location.href);
+  url.hash = `liga=${slug(LEAGUES[sel].nome)}`;
+  history.replaceState(null, '', url);
+});
 
-  el.innerHTML = `
-    <div class="liga-layout">
-      <section class="liga-clubs" aria-labelledby="serieA-heading">
-        <h2 id="serieA-heading">Série A · ${total} clubes</h2>
-        <p class="liga-clubs__caveat">
-          Ordenados por ranking da temporada anterior. Cores de zona são estruturais —
-          esta é a moldura da reforma, não um resultado simulado.
-        </p>
-        <ol class="clubes">${listItems}</ol>
-      </section>
+function renderContent() {
+  const meta = LEAGUES[sel];
+  nameEl.textContent = meta.nome;
 
-      <aside class="liga-meta">
-        <div class="liga-meta__block">
-          <div class="liga-meta__label">População da região</div>
-          <div class="liga-meta__value">${analog.regiaoPop} habitantes</div>
-        </div>
-        <div class="liga-meta__block">
-          <div class="liga-meta__label">Equivalente europeu</div>
-          <div class="liga-meta__value">${analog.flag} ${analog.pais}</div>
-          <div class="liga-meta__hint">${analog.paisPop} habitantes — país que sustenta sua própria liga nacional.</div>
-        </div>
-        <div class="liga-meta__block liga-meta__block--accent">
-          <div class="liga-meta__label">Vagas na Copa dos Campeões</div>
-          <div class="liga-meta__value">${quota}</div>
-        </div>
-        <div class="liga-meta__block">
-          <div class="liga-meta__label">Vaga garantida na Sul-Americana</div>
-          <div class="liga-meta__value">1 <span class="liga-meta__hint">para o melhor clube não classificado à Libertadores</span></div>
-        </div>
-        <div class="liga-meta__block">
-          <div class="liga-meta__label">Série B</div>
-          <div class="liga-meta__value">18 clubes</div>
-          <div class="liga-meta__hint">Também disputam 34 rodadas em pontos corridos ao longo dos mesmos 10 meses. Um lugar no calendário nacional para cada um.</div>
-        </div>
-      </aside>
+  // Meta strip
+  metaEl.innerHTML = `
+    <div class="lig-meta__block">
+      <div class="lig-meta__label">População da região</div>
+      <div class="lig-meta__value">${meta.regiaoPop} <span class="lig-meta__unit">habitantes</span></div>
+    </div>
+    <div class="lig-meta__block">
+      <div class="lig-meta__label">Equivalente europeu</div>
+      <div class="lig-meta__value"><span aria-hidden="true">${meta.flag}</span>${meta.pais}</div>
+      <div class="lig-meta__hint">${meta.paisPop} habitantes — país que sustenta sua própria liga nacional.</div>
+    </div>
+    <div class="lig-meta__block lig-meta__block--accent">
+      <div class="lig-meta__label">Vagas na Copa dos Campeões</div>
+      <div class="lig-meta__value">${meta.quota}</div>
+    </div>
+    <div class="lig-meta__block">
+      <div class="lig-meta__label">Vaga na Sul-Americana</div>
+      <div class="lig-meta__value">1</div>
+      <div class="lig-meta__hint">para o melhor clube não classificado à Libertadores.</div>
+    </div>
+    <div class="lig-meta__block">
+      <div class="lig-meta__label">Série B</div>
+      <div class="lig-meta__value">18 <span class="lig-meta__unit">clubes</span></div>
+      <div class="lig-meta__hint">Também disputam 34 rodadas em pontos corridos, nos mesmos 10 meses. Um lugar no calendário para cada um.</div>
     </div>
   `;
 
-  const url = new URL(location.href); url.hash = `liga=${key}`; history.replaceState(null, '', url);
+  if (!season) return;
+  const liga = season.ligasRegionais.find((l) => l.nome === meta.nome);
+  if (!liga) return;
+
+  const cc  = new Set(liga.qualificadosCampeoes || []);
+  const reb = new Set(liga.rebaixados || []);
+
+  rowsEl.innerHTML = liga.tabelaA.map((t) => {
+    const zone = cc.has(t.id) ? 'cc' : reb.has(t.id) ? 'reb' : '';
+    const sg  = (t.saldoGols > 0 ? '+' : '') + t.saldoGols;
+    return `
+      <tr class="lig-row" data-zone="${zone}">
+        <td class="lig-td--pos"><span>${t.posicao}</span></td>
+        <td class="lig-td--name">${t.nome}</td>
+        <td class="lig-td--num">${t.jogos}</td>
+        <td class="lig-td--num">${t.vitorias}</td>
+        <td class="lig-td--num">${t.empates}</td>
+        <td class="lig-td--num">${t.derrotas}</td>
+        <td class="lig-td--num">${t.golsPro}</td>
+        <td class="lig-td--num">${t.golsContra}</td>
+        <td class="lig-td--num-strong">${sg}</td>
+        <td class="lig-td--pts">${t.pontos}</td>
+      </tr>
+    `;
+  }).join('');
+
+  loadingEl.hidden = true;
+  tableEl.hidden = false;
 }
 
-const season = await loadSeason();
-renderTabs(season);
-const tabsEl = document.getElementById('ligas-tabs');
-tabsEl.addEventListener('tab-change', (e) => renderLiga(season, e.detail.key));
-const hashKey = new URLSearchParams(location.hash.slice(1)).get('liga');
-const defaultKey = hashKey ?? slug(season.ligasRegionais[0].nome);
-wireTabs(tabsEl, { defaultKey });
+// Initial hash → tab
+const hashLiga = new URLSearchParams(location.hash.slice(1)).get('liga');
+if (hashLiga) {
+  const idx = LEAGUES.findIndex((l) => slug(l.nome) === hashLiga);
+  if (idx >= 0) sel = idx;
+}
+
+renderTabs();
+renderContent();
+
+loadSeason().then((s) => {
+  season = s;
+  if (seedEl) seedEl.textContent = s.seed;
+  renderContent();
+});

@@ -1,7 +1,5 @@
 import { loadSeason } from '../season.js';
 
-// Population figures: IBGE 2022 Census (Brazil regions) / UN 2023 (Europe).
-// Each Brazilian regional league is roughly the size of a European country.
 const ANALOGIES = [
   { liga: 'Liga Nordestina',    regiaoPop: '54M', pais: 'Itália',         flag: '🇮🇹', paisPop: '59M' },
   { liga: 'Liga Paulista',      regiaoPop: '44M', pais: 'Inglaterra',     flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M' },
@@ -12,16 +10,16 @@ const ANALOGIES = [
 ];
 
 function renderAnalogy() {
-  const tbody = document.getElementById('analogy-rows');
-  if (!tbody) return;
-  tbody.innerHTML = ANALOGIES.map(a =>
-    `<tr>
-      <td>${a.liga}</td>
-      <td class="analogy__pop">${a.regiaoPop}</td>
-      <td><span class="analogy__flag" aria-hidden="true">${a.flag}</span> ${a.pais}</td>
-      <td class="analogy__pop">${a.paisPop}</td>
-    </tr>`
-  ).join('');
+  const host = document.getElementById('analogy-rows');
+  if (!host) return;
+  host.innerHTML = ANALOGIES.map(a => `
+    <div class="analogy__row">
+      <span class="analogy__liga">${a.liga}</span>
+      <span class="analogy__pop">${a.regiaoPop}</span>
+      <span class="analogy__country"><span class="analogy__country-flag" aria-hidden="true">${a.flag}</span>${a.pais}</span>
+      <span class="analogy__pop--secondary">${a.paisPop}</span>
+    </div>
+  `).join('');
 }
 
 function renderMetrics(season) {
@@ -34,84 +32,100 @@ function renderMetrics(season) {
 const WORKLOAD_COMPARISONS = [
   {
     label: 'Elite finalista',
-    modeloAtual: { clube: 'Botafogo 2024', jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
-    reforma:     { clube: 'Ligas do Brasil',    jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
     delta: '−16%',
+    atual:   { clube: 'Botafogo 2024', jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
+    reforma: { clube: 'Ligas do Brasil', jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
   },
   {
     label: 'Base',
-    modeloAtual: { clube: 'Madureira 2024', jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
-    reforma:     { clube: 'Ligas do Brasil',    jogos: 35, det: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses' },
     delta: '+169%',
+    atual:   { clube: 'Madureira 2024', jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
+    reforma: { clube: 'Ligas do Brasil', jogos: 35, det: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses' },
   },
 ];
 
 function renderWorkload() {
   const el = document.getElementById('workload-chart');
   if (!el) return;
-  const maxVal = Math.max(...WORKLOAD_COMPARISONS.flatMap(c => [c.modeloAtual.jogos, c.reforma.jogos]));
-  el.innerHTML = WORKLOAD_COMPARISONS.map((c) => `
+  const maxVal = Math.max(
+    ...WORKLOAD_COMPARISONS.flatMap(c => [c.atual.jogos, c.reforma.jogos])
+  );
+  el.innerHTML = WORKLOAD_COMPARISONS.map(c => `
     <div class="workload__row">
-      <div class="workload__label">
-        ${c.label}
-        <span class="workload__delta" data-sign="${c.delta.startsWith('+') ? 'plus' : 'minus'}">${c.delta}</span>
+      <div class="workload__row-head">
+        <span class="workload__label">${c.label}</span>
+        <span class="workload__delta">${c.delta}</span>
       </div>
       <div class="workload__bars">
-        <div class="workload__bar" data-set="current" style="--w:${(c.modeloAtual.jogos / maxVal * 100).toFixed(1)}">
-          <span class="workload__value"><strong>${c.modeloAtual.jogos}</strong> ${c.modeloAtual.clube}</span>
+        <div class="workload__bar-row">
+          <div class="workload__bar-line">
+            <div class="workload__bar workload__bar--current" style="--w:${(c.atual.jogos / maxVal * 100).toFixed(1)}%">
+              <span class="workload__bar-value">${c.atual.jogos}</span>
+            </div>
+            <span class="workload__bar-tag">${c.atual.clube}</span>
+          </div>
+          <p class="workload__bar-detail">${c.atual.det}</p>
         </div>
-        <p class="workload__breakdown">${c.modeloAtual.det}</p>
-        <div class="workload__bar" data-set="reform"  style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}">
-          <span class="workload__value"><strong>${c.reforma.jogos}</strong> ${c.reforma.clube}</span>
+        <div class="workload__bar-row">
+          <div class="workload__bar-line">
+            <div class="workload__bar workload__bar--reform" style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}%">
+              <span class="workload__bar-value">${c.reforma.jogos}</span>
+            </div>
+            <span class="workload__bar-tag">${c.reforma.clube}</span>
+          </div>
+          <p class="workload__bar-detail">${c.reforma.det}</p>
         </div>
-        <p class="workload__breakdown">${c.reforma.det}</p>
       </div>
-    </div>`).join('');
+    </div>
+  `).join('');
 }
 
-// Cores por clube (mantel principal — a segunda cor eventualmente vai virar acento).
-// Vitória removido (está na Série A hoje); Paraná removido (média de 6k não sustenta o argumento).
 const SLEEPING_GIANTS = [
-  { nome: 'Remo',       estado: 'PA', mediaPublico: 32000, divisaoAtual: 'Série B', cor: '#003c72' },
-  { nome: 'Paysandu',   estado: 'PA', mediaPublico: 30000, divisaoAtual: 'Série B', cor: '#0a5aa8' },
-  { nome: 'Sport',      estado: 'PE', mediaPublico: 28000, divisaoAtual: 'Série B', cor: '#c8102e' },
-  { nome: 'Santa Cruz', estado: 'PE', mediaPublico: 22000, divisaoAtual: 'Série D', cor: '#e21f26' },
-  { nome: 'Coritiba',   estado: 'PR', mediaPublico: 20000, divisaoAtual: 'Série B', cor: '#006747' },
-  { nome: 'Goiás',      estado: 'GO', mediaPublico: 18000, divisaoAtual: 'Série B', cor: '#00743f' },
-  { nome: 'Náutico',    estado: 'PE', mediaPublico: 17000, divisaoAtual: 'Série C', cor: '#d81e26' },
-  { nome: 'Vila Nova',  estado: 'GO', mediaPublico: 14000, divisaoAtual: 'Série B', cor: '#d51e1e' },
-  { nome: 'América-RN', estado: 'RN', mediaPublico:  8000, divisaoAtual: 'Série C', cor: '#106e46' },
+  { nome: 'Remo',       estado: 'PA', mediaPublico: 32000, divisaoAtual: 'Série B' },
+  { nome: 'Paysandu',   estado: 'PA', mediaPublico: 30000, divisaoAtual: 'Série B' },
+  { nome: 'Sport',      estado: 'PE', mediaPublico: 28000, divisaoAtual: 'Série B' },
+  { nome: 'Santa Cruz', estado: 'PE', mediaPublico: 22000, divisaoAtual: 'Série D' },
+  { nome: 'Coritiba',   estado: 'PR', mediaPublico: 20000, divisaoAtual: 'Série B' },
+  { nome: 'Goiás',      estado: 'GO', mediaPublico: 18000, divisaoAtual: 'Série B' },
+  { nome: 'Náutico',    estado: 'PE', mediaPublico: 17000, divisaoAtual: 'Série C' },
+  { nome: 'Vila Nova',  estado: 'GO', mediaPublico: 14000, divisaoAtual: 'Série B' },
+  { nome: 'América-RN', estado: 'RN', mediaPublico:  8000, divisaoAtual: 'Série C' },
 ];
 
-// Waffle chart: max = 40k, grid 5×8 = 40 células. Cada célula = 1k pessoas.
-const WAFFLE_MAX = 40000;
+// Waffle chart: 40 cells (5 rows × 8 cols), each cell = 1000 people. Max 40k.
 const WAFFLE_CELLS = 40;
+const WAFFLE_UNIT = 1000;
 
 function renderSleepingGiants() {
   const el = document.getElementById('giants-row');
   if (!el) return;
   el.innerHTML = SLEEPING_GIANTS.map(g => {
-    const filled = Math.round(g.mediaPublico / (WAFFLE_MAX / WAFFLE_CELLS));
+    const filled = Math.round(g.mediaPublico / WAFFLE_UNIT);
     const cells = Array.from({ length: WAFFLE_CELLS }, (_, i) =>
       `<span class="giants__cell"${i < filled ? ' data-filled' : ''}></span>`
     ).join('');
     return `
-    <li><figure class="giants__card" style="--club-color: ${g.cor};">
-      <figcaption>${g.nome} <span class="giants__meta">${g.estado}</span></figcaption>
-      <div class="giants__waffle" aria-hidden="true">${cells}</div>
-      <div class="giants__attendance">${g.mediaPublico.toLocaleString('pt-BR')} <small>por jogo</small></div>
-      <div class="giants__meta">${g.divisaoAtual} hoje</div>
-    </figure></li>`;
+      <li><figure class="giants__card">
+        <figcaption>
+          <span class="giants__name">${g.nome}</span>
+          <span class="giants__meta">${g.estado}</span>
+        </figcaption>
+        <div class="giants__waffle" aria-hidden="true">${cells}</div>
+        <div class="giants__foot">
+          <span class="giants__attendance">${g.mediaPublico.toLocaleString('pt-BR')}<small> por jogo</small></span>
+          <span class="giants__division">${g.divisaoAtual} hoje</span>
+        </div>
+      </figure></li>`;
   }).join('');
 }
 
 const REVELATION = [
-  { jogador: 'Romário',        clubeRevelador: 'Olaria',                     estado: 'RJ', liga: 'Liga Rio-Capixaba',    copasVencidas: [1994] },
-  { jogador: 'Ronaldo',        clubeRevelador: 'São Cristóvão',              estado: 'RJ', liga: 'Liga Rio-Capixaba',    copasVencidas: [1994, 2002] },
-  { jogador: 'Rivaldo',        clubeRevelador: 'Santa Cruz',                 estado: 'CE', liga: 'Liga Nordestina',              copasVencidas: [2002] },
-  { jogador: 'Lúcio',          clubeRevelador: 'Guará',                      estado: 'DF', liga: 'Liga Central',  copasVencidas: [2002] },
-  { jogador: 'Cafu',           clubeRevelador: 'Itaquaquecetuba',            estado: 'SP', liga: 'Liga Paulista',              copasVencidas: [1994, 2002] },
-  { jogador: 'Roberto Carlos', clubeRevelador: 'União São João de Araras',   estado: 'SP', liga: 'Liga Paulista',              copasVencidas: [2002] },
+  { jogador: 'Romário',        clubeRevelador: 'Olaria',                     estado: 'RJ', copasVencidas: [1994] },
+  { jogador: 'Ronaldo',        clubeRevelador: 'São Cristóvão',              estado: 'RJ', copasVencidas: [1994, 2002] },
+  { jogador: 'Rivaldo',        clubeRevelador: 'Santa Cruz',                 estado: 'CE', copasVencidas: [2002] },
+  { jogador: 'Lúcio',          clubeRevelador: 'Guará',                      estado: 'DF', copasVencidas: [2002] },
+  { jogador: 'Cafu',           clubeRevelador: 'Itaquaquecetuba',            estado: 'SP', copasVencidas: [1994, 2002] },
+  { jogador: 'Roberto Carlos', clubeRevelador: 'União São João de Araras',   estado: 'SP', copasVencidas: [2002] },
 ];
 
 function renderRevelation() {
@@ -119,9 +133,9 @@ function renderRevelation() {
   if (!el) return;
   el.innerHTML = REVELATION.map(r => `
     <li><figure class="revelation__card">
-      <div class="revelation__player">${r.jogador}</div>
-      <div class="revelation__club">Revelado por ${r.clubeRevelador} (${r.estado})</div>
-      <div class="revelation__cups">🏆 ${r.copasVencidas.join(', ')}</div>
+      <span class="revelation__cups">🏆 ${r.copasVencidas.join(', ')}</span>
+      <span class="revelation__player">${r.jogador}</span>
+      <span class="revelation__club">Revelado por ${r.clubeRevelador} <span class="revelation__club-state">(${r.estado})</span></span>
     </figure></li>
   `).join('');
 }

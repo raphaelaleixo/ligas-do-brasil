@@ -6,6 +6,8 @@
   <title>O Manifesto | Ligas do Brasil</title>
   <meta name="description" content="Manifesto: por que a próxima reforma do futebol brasileiro tem que ser de escala, não de calendário.">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
   <link rel="stylesheet" href="assets/css/layers.css">
   <link rel="stylesheet" href="assets/css/tokens.css">
@@ -19,183 +21,145 @@
 </head>
 <body>
   <header class="site-nav">
-    <a class="site-nav__brand" href="./">Ligas do Brasil</a>
-    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu">☰</button>
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="1" width="24" height="16" stroke="#00A85A" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#00A85A" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#FFCB05" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
     <nav>
       <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
         <li><a href="./">Início</a></li>
         <li><a href="manifesto">Manifesto</a></li>
-        <li><a href="ligas">Ligas Regionais</a></li>
+        <li><a href="ligas">Ligas</a></li>
         <li><a href="timeline">Calendário</a></li>
-        <li><a href="copa">Copas Nacionais</a></li>
+        <li><a href="copa">Copas</a></li>
       </ul>
     </nav>
   </header>
 
   <main id="page-ready">
-    <article class="manifesto">
-      <header class="manifesto__header">
-        <p class="manifesto__eyebrow">Manifesto · 2026</p>
-        <h1>O futebol brasileiro precisa de uma nova arquitetura, não apenas de um novo calendário.</h1>
-        <p class="manifesto__lede">
+    <!-- HERO -->
+    <section class="act act--ink act--text mf-hero">
+      <div class="act__inner">
+        <p class="eyebrow eyebrow--gold">
+          <span class="eyebrow__lead" aria-hidden="true"></span>Manifesto · 2026
+        </p>
+        <h1 class="mf-hero__title">
+          O futebol brasileiro precisa de uma nova arquitetura, não apenas de um novo calendário.
+        </h1>
+        <p class="mf-hero__lede">
           O problema não é o calendário. É a escala.
         </p>
-      </header>
+      </div>
+    </section>
 
-      <section aria-labelledby="m-1">
-        <h2 id="m-1">Um funil excessivamente estreito</h2>
-        <p>
-          O Brasil promove 20 clubes à sua elite nacional. Portugal, um país 92 vezes menor em
-          área e 21 vezes menor em população, promove 18. Em uma potência futebolística de
-          dimensão continental, essa proximidade de números é um desperdício estrutural.
-        </p>
-        <p>
-          A cada temporada, dezenas de clubes do interior encerram suas atividades após os estaduais
-          e passam o resto do ano sem calendário. É o <strong>apagão do interior</strong>: sem
-          calendário regular, eles perdem patrocínios, fecham estádios, reduzem a base e demitem
-          profissionais. Esse processo enfraquece todo o ecossistema que forma atletas e sustenta
-          os mercados locais.
-        </p>
-      </section>
+    <!-- ARTICLE -->
+    <article class="act act--paper manifesto">
+      <div class="act__inner manifesto__inner">
 
-      <section aria-labelledby="m-2">
-        <h2 id="m-2">Uma nova arquitetura</h2>
-        <p>
-          A proposta substitui os Campeonatos Estaduais e o Brasileirão por <strong>seis Ligas
-          Regionais</strong> — cada uma com 18 clubes na Série A e 18 na Série B, disputadas em
-          pontos corridos ao longo de 10 meses.
-        </p>
-        <ul>
-          <li>Liga Paulista (SP)</li>
-          <li>Liga Nordestina (9 estados)</li>
-          <li>Liga Sulista (RS, SC, PR)</li>
-          <li>Liga Central (MG + Centro-Oeste)</li>
-          <li>Liga Rio-Capixaba (RJ, ES)</li>
-          <li>Liga Amazônica (7 estados do Norte)</li>
-        </ul>
-        <p>
-          Cada liga regional tem escala populacional de um país europeu inteiro: Nordestina rivaliza
-          com a Itália, Paulista com a Inglaterra, Central com a Espanha, Amazônica com Portugal. A Copa dos
-          Campeões Regionais — 48 clubes, 12 grupos, mata-mata nacional culminando em final única
-          — decide o campeão brasileiro em formato de Libertadores. A Copa do Brasil, com 216 clubes
-          da base ao topo, é a FA Cup.
-        </p>
-      </section>
+        <section class="manifesto__section">
+          <p class="manifesto__index">01</p>
+          <h2>Um funil excessivamente estreito</h2>
+          <p>O Brasil promove 20 clubes à sua elite nacional. Portugal, um país 92 vezes menor em área e 21 vezes menor em população, promove 18. Em uma potência futebolística de dimensão continental, essa proximidade de números é um desperdício estrutural.</p>
+          <p>A cada temporada, dezenas de clubes do interior encerram suas atividades após os estaduais e passam o resto do ano sem calendário. É o <strong>apagão do interior</strong>: sem calendário regular, eles perdem patrocínios, fecham estádios, reduzem a base e demitem profissionais. Esse processo enfraquece todo o ecossistema que forma atletas e sustenta os mercados locais.</p>
+        </section>
 
-      <section aria-labelledby="m-3">
-        <h2 id="m-3">Um laboratório que oxigenava o futebol nacional</h2>
-        <p>
-          Fortalecer o interior não é nostalgia; é ampliar a rede de captação. Romário veio do Olaria,
-          Ronaldo do São Cristóvão, Rivaldo do Santa Cruz, Lúcio do Guará. As últimas duas Copas do Mundo
-          que o Brasil ganhou foram jogadas por talentos revelados em clubes que hoje mal existem no
-          calendário nacional.
-        </p>
-        <p>
-          A escassez de novos craques e a perda de identidade da Amarelinha são reflexos — entre outras
-          causas — de uma arquitetura que deixou de irrigar sua base.
-        </p>
-      </section>
+        <section class="manifesto__section">
+          <p class="manifesto__index">02</p>
+          <h2>Uma nova arquitetura</h2>
+          <p>A proposta substitui os Campeonatos Estaduais e o Brasileirão por <strong>seis Ligas Regionais</strong> — cada uma com 18 clubes na Série A e 18 na Série B, disputadas em pontos corridos ao longo de 10 meses.</p>
+          <ul class="manifesto__ligas" role="list">
+            <li><span class="manifesto__liga-dot" style="background:var(--green)"></span>Liga Paulista <span class="manifesto__liga-note">(SP)</span></li>
+            <li><span class="manifesto__liga-dot" style="background:var(--gold)"></span>Liga Nordestina <span class="manifesto__liga-note">(9 estados)</span></li>
+            <li><span class="manifesto__liga-dot" style="background:var(--blue)"></span>Liga Sulista <span class="manifesto__liga-note">(RS, SC, PR)</span></li>
+            <li><span class="manifesto__liga-dot" style="background:var(--green-deep)"></span>Liga Central <span class="manifesto__liga-note">(MG + Centro-Oeste)</span></li>
+            <li><span class="manifesto__liga-dot" style="background:var(--terra)"></span>Liga Rio-Capixaba <span class="manifesto__liga-note">(RJ, ES)</span></li>
+            <li><span class="manifesto__liga-dot" style="background:var(--green)"></span>Liga Amazônica <span class="manifesto__liga-note">(7 estados do Norte)</span></li>
+          </ul>
+          <p>Cada liga regional tem escala populacional de um país europeu inteiro: Nordestina rivaliza com a Itália, Paulista com a Inglaterra, Central com a Espanha, Amazônica com Portugal. A Copa dos Campeões Regionais — 48 clubes, 12 grupos, mata-mata nacional culminando em final única — decide o campeão brasileiro em formato de Libertadores. A Copa do Brasil, com 216 clubes da base ao topo, é a FA Cup.</p>
+        </section>
 
-      <section aria-labelledby="m-4">
-        <h2 id="m-4">Menos jogos, menos voos, mais futebol</h2>
-        <p>
-          O <strong>Botafogo campeão em 2024</strong> jogou <strong>75 partidas</strong> — o
-          time que mais entrou em campo no mundo inteiro naquele ano. O <strong>Flamengo em 2025</strong>
-          chegou a <strong>78</strong>, sete delas no novo Mundial de Clubes da FIFA. E nenhum dos
-          dois chegou à final da Copa do Brasil: com o formato atual de mata-mata em jogo de ida e
-          volta, um finalista das quatro competições passaria dos <strong>80 jogos</strong> sem esforço.
-          Na reforma, o teto é <strong>63 jogos</strong> — mesmo para um finalista que dispute todas
-          as competições. A fase regular reduz em <strong>mais de 50%</strong> os voos interestaduais,
-          porque as Ligas Regionais são intra-região.
-        </p>
-        <p>
-          O <strong>Madureira</strong>, do Rio, jogou apenas <strong>13 partidas em 2024</strong> —
-          11 no Campeonato Carioca (Taça Guanabara) e 2 na Copa Rio, eliminado nas oitavas de final
-          pelo Bonsucesso. Todas concentradas entre janeiro e abril. Na reforma, um clube desse porte
-          joga <strong>35 partidas espalhadas ao longo de 10 meses</strong>. Zero clubes desempregados
-          em abril.
-        </p>
-      </section>
+        <section class="manifesto__section">
+          <p class="manifesto__index">03</p>
+          <h2>Um laboratório que oxigenava o futebol nacional</h2>
+          <p>Fortalecer o interior não é nostalgia; é ampliar a rede de captação. Romário veio do Olaria, Ronaldo do São Cristóvão, Rivaldo do Santa Cruz, Lúcio do Guará. As últimas duas Copas do Mundo que o Brasil ganhou foram jogadas por talentos revelados em clubes que hoje mal existem no calendário nacional.</p>
+          <p>A escassez de novos craques e a perda de identidade da Amarelinha são reflexos — entre outras causas — de uma arquitetura que deixou de irrigar sua base.</p>
+        </section>
 
-      <section aria-labelledby="m-objecoes">
-        <h2 id="m-objecoes">Três objeções previsíveis</h2>
+        <blockquote class="manifesto__pullquote">
+          <p>Na reforma, o teto é <span class="manifesto__pull-accent">63 jogos</span> — mesmo para um finalista que dispute todas as competições.</p>
+        </blockquote>
 
-        <h3 class="manifesto__objecao">"O Brasileirão vai perder importância."</h3>
-        <p>
-          A grandeza migra — mas se redistribui em duas camadas com papéis mais claros. A
-          <strong>rotina do Brasileirão</strong> (rodada semanal, tabela contínua, torcedor
-          grudado no seu clube) migra para as <strong>Ligas Regionais</strong>. É onde o dia-a-dia
-          do torcedor acontece: clube local, rivais históricos, estádio cheio, 34 rodadas em
-          pontos corridos ao longo de 10 meses.
-        </p>
-        <p>
-          A <strong>decisão do título nacional</strong> migra para a <strong>Copa dos
-          Campeões</strong> — que herda o papel do Brasileirão em formato análogo ao da
-          Libertadores: mata-mata concentrado, 48 clubes de todas as regiões, campeão decidido em campo. O Brasileirão
-          como pontos corridos nacional deixa de existir; o <em>papel</em> que ele ocupava
-          (definir o melhor do Brasil) é herdado por um formato mais próximo do pico continental.
-          A grandeza não desaparece — ela ganha duas casas em vez de uma.
-        </p>
+        <section class="manifesto__section">
+          <p class="manifesto__index">04</p>
+          <h2>Menos jogos, menos voos, mais futebol</h2>
+          <p>O <strong>Botafogo campeão em 2024</strong> jogou <strong>75 partidas</strong> — o time que mais entrou em campo no mundo inteiro naquele ano. O <strong>Flamengo em 2025</strong> chegou a <strong>78</strong>, sete delas no novo Mundial de Clubes da FIFA. E nenhum dos dois chegou à final da Copa do Brasil: com o formato atual de mata-mata em jogo de ida e volta, um finalista das quatro competições passaria dos <strong>80 jogos</strong> sem esforço. Na reforma, o teto é <strong>63 jogos</strong> — mesmo para um finalista que dispute todas as competições. A fase regular reduz em <strong>mais de 50%</strong> os voos interestaduais, porque as Ligas Regionais são intra-região.</p>
+          <p>O <strong>Madureira</strong>, do Rio, jogou apenas <strong>13 partidas em 2024</strong> — 11 no Campeonato Carioca (Taça Guanabara) e 2 na Copa Rio, eliminado nas oitavas de final pelo Bonsucesso. Todas concentradas entre janeiro e abril. Na reforma, um clube desse porte joga <strong>35 partidas espalhadas ao longo de 10 meses</strong>. Zero clubes desempregados em abril.</p>
+        </section>
 
-        <h3 class="manifesto__objecao">"Ligas regionais criam disparidade técnica."</h3>
-        <p>
-          A disparidade não desaparece — vai continuar existindo Grêmio × Chapecoense-B ou
-          Palmeiras × Ituano. Mas ela muda de natureza: agora enche o Beira-Rio ou o Allianz,
-          dura 90 minutos de rivalidade regional real, e ninguém precisa pegar avião. Disparidade
-          intra-regional custa menos e vale mais que disparidade interestadual esvaziada. E os
-          clássicos regionais — <strong>Grêmio × Internacional, Atlético-MG × Cruzeiro,
-          Fortaleza × Bahia</strong> — voltam ao centro do calendário.
-        </p>
-        <p>
-          Há ainda um efeito de segunda ordem que o modelo atual impede: com calendário estável
-          de 10 meses, patrocínio local recorrente e público garantido, clubes como a Chapecoense
-          passam a ter condições para crescer que hoje simplesmente não têm. Três meses de
-          estadual e o resto do ano fechado inviabilizam qualquer projeto de longo prazo. A
-          expectativa é que <strong>a própria disparidade diminua ao longo do tempo</strong>.
-          E a Copa dos Campeões redistribui, no mata-mata nacional, a chance de disputar em pé
-          de igualdade — o que o Brasileirão fingia oferecer.
-        </p>
+        <section class="manifesto__section">
+          <p class="manifesto__index">05</p>
+          <h2>Três objeções previsíveis</h2>
 
-        <h3 class="manifesto__objecao">"Os clubes grandes vão resistir."</h3>
-        <p>
-          Vão? A elite é a <strong>maior interessada</strong> em um teto de 63 jogos por
-          ano. Botafogo jogou 75 em 2024, Flamengo 78 em 2025 — em ambos os casos o esgotamento
-          físico foi tema recorrente nas competições que mais importavam. A proposta dá aos
-          gigantes o que eles mais precisam: menos jogos, mais treino, menos voos.
-        </p>
-        <p>
-          O contra-argumento honesto é econômico: menos jogos significa menos inventário de TV.
-          Os 380 jogos anuais do Brasileirão são uma máquina de receita, mesmo os esvaziados.
-          Verdade parcial. O que a matemática crua ignora: <strong>cada jogo vale mais quando
-          importa</strong>. Grêmio × Cuiabá com estádio vazio vale menos ao pacote de TV do que
-          Grêmio × Internacional com Beira-Rio lotado; o mata-mata da Copa dos Campeões concentra
-          audiência que hoje se dilui em 38 rodadas. E há uma segunda face: calendário previsível
-          de 10 meses cria condições para <strong>SAFs, investimento estrangeiro e patrocínios
-          plurianuais</strong>. O Brasileirão inflado é receita imediata; a arquitetura reformada
-          é ativo de longo prazo. É uma reforma <em>para</em> a elite, não <em>contra</em> ela.
-        </p>
-      </section>
+          <div class="manifesto__objecao">
+            <p class="manifesto__objecao-quote">"O Brasileirão vai perder importância."</p>
+            <p>A grandeza migra — mas se redistribui em duas camadas com papéis mais claros. A <strong>rotina do Brasileirão</strong> (rodada semanal, tabela contínua, torcedor grudado no seu clube) migra para as <strong>Ligas Regionais</strong>. É onde o dia-a-dia do torcedor acontece: clube local, rivais históricos, estádio cheio, 34 rodadas em pontos corridos ao longo de 10 meses.</p>
+            <p>A <strong>decisão do título nacional</strong> migra para a <strong>Copa dos Campeões</strong> — que herda o papel do Brasileirão em formato análogo ao da Libertadores: mata-mata concentrado, 48 clubes de todas as regiões, campeão decidido em campo. O Brasileirão como pontos corridos nacional deixa de existir; o <em>papel</em> que ele ocupava (definir o melhor do Brasil) é herdado por um formato mais próximo do pico continental. A grandeza não desaparece — ela ganha duas casas em vez de uma.</p>
+          </div>
 
-      <section aria-labelledby="m-5">
-        <h2 id="m-5">Uma reforma de escala, não de calendário</h2>
-        <p>
-          As principais tentativas de reforma nos últimos anos giraram em torno do calendário —
-          e, cada vez mais, no sentido de <strong>eliminar os estaduais</strong> para entregar
-          o ano inteiro ao Brasileirão-padrão-europeu. É o erro exato oposto do que a
-          arquitetura pede: não é o futebol regional que sobra, é o topo que ficou concentrado demais.
-          Apagar os estaduais é apagar o dia-a-dia do torcedor no seu clube local. Existem
-          discussões sobre escala — SAFs, ligas independentes — mas raramente ganham tração.
-          Nenhuma proposta com apoio real ataca a própria arquitetura.
-        </p>
-        <p>
-          Esta proposta não parte do calendário. Parte da forma. O calendário vem depois — e resolve por si só.
-        </p>
-      </section>
+          <div class="manifesto__objecao">
+            <p class="manifesto__objecao-quote">"Ligas regionais criam disparidade técnica."</p>
+            <p>A disparidade não desaparece — vai continuar existindo Grêmio × Chapecoense-B ou Palmeiras × Ituano. Mas ela muda de natureza: agora enche o Beira-Rio ou o Allianz, dura 90 minutos de rivalidade regional real, e ninguém precisa pegar avião. Disparidade intra-regional custa menos e vale mais que disparidade interestadual esvaziada. E os clássicos regionais — <strong>Grêmio × Internacional, Atlético-MG × Cruzeiro, Fortaleza × Bahia</strong> — voltam ao centro do calendário.</p>
+            <p>Há ainda um efeito de segunda ordem que o modelo atual impede: com calendário estável de 10 meses, patrocínio local recorrente e público garantido, clubes como a Chapecoense passam a ter condições para crescer que hoje simplesmente não têm. Três meses de estadual e o resto do ano fechado inviabilizam qualquer projeto de longo prazo. A expectativa é que <strong>a própria disparidade diminua ao longo do tempo</strong>. E a Copa dos Campeões redistribui, no mata-mata nacional, a chance de disputar em pé de igualdade — o que o Brasileirão fingia oferecer.</p>
+          </div>
+
+          <div class="manifesto__objecao">
+            <p class="manifesto__objecao-quote">"Os clubes grandes vão resistir."</p>
+            <p>Vão? A elite é a <strong>maior interessada</strong> em um teto de 63 jogos por ano. Botafogo jogou 75 em 2024, Flamengo 78 em 2025 — em ambos os casos o esgotamento físico foi tema recorrente nas competições que mais importavam. A proposta dá aos gigantes o que eles mais precisam: menos jogos, mais treino, menos voos.</p>
+            <p>O contra-argumento honesto é econômico: menos jogos significa menos inventário de TV. Os 380 jogos anuais do Brasileirão são uma máquina de receita, mesmo os esvaziados. Verdade parcial. O que a matemática crua ignora: <strong>cada jogo vale mais quando importa</strong>. Grêmio × Cuiabá com estádio vazio vale menos ao pacote de TV do que Grêmio × Internacional com Beira-Rio lotado; o mata-mata da Copa dos Campeões concentra audiência que hoje se dilui em 38 rodadas. E há uma segunda face: calendário previsível de 10 meses cria condições para <strong>SAFs, investimento estrangeiro e patrocínios plurianuais</strong>. O Brasileirão inflado é receita imediata; a arquitetura reformada é ativo de longo prazo. É uma reforma <em>para</em> a elite, não <em>contra</em> ela.</p>
+          </div>
+        </section>
+
+        <section class="manifesto__section">
+          <p class="manifesto__index">06</p>
+          <h2>Uma reforma de escala, não de calendário</h2>
+          <p>As principais tentativas de reforma nos últimos anos giraram em torno do calendário — e, cada vez mais, no sentido de <strong>eliminar os estaduais</strong> para entregar o ano inteiro ao Brasileirão-padrão-europeu. É o erro exato oposto do que a arquitetura pede: não é o futebol regional que sobra, é o topo que ficou concentrado demais. Apagar os estaduais é apagar o dia-a-dia do torcedor no seu clube local. Existem discussões sobre escala — SAFs, ligas independentes — mas raramente ganham tração. Nenhuma proposta com apoio real ataca a própria arquitetura.</p>
+        </section>
+
+      </div>
     </article>
+
+    <!-- FINALE -->
+    <section class="act act--ink act--text mf-finale">
+      <div class="act__inner">
+        <p class="section-index section-index--gold">A tese</p>
+        <p class="mf-finale__quote">
+          Esta proposta não parte do calendário. Parte da <span class="mf-finale__accent">forma</span>. O calendário vem depois — e resolve por si só.
+        </p>
+        <nav aria-label="Explorar" class="mf-finale__nav">
+          <a class="btn btn--gold" href="ligas">Ver as ligas →</a>
+          <a class="btn btn--outline-paper" href="copa">As copas nacionais →</a>
+        </nav>
+      </div>
+    </section>
   </main>
 
   <footer>
-    <p>Ligas do Brasil · 2026</p>
+    <div>Ligas do Brasil · 2026</div>
   </footer>
 
   <script type="module" src="assets/js/nav.js"></script>

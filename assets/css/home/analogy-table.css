@@ -1,13 +1,74 @@
 @layer components {
   @scope (.analogy) {
-    :scope { border-block-start: 1px solid var(--color-hairline); padding-block-start: var(--space-5); }
-    h2 { font-size: var(--step-2); margin-block-end: var(--space-4); }
-    .analogy__table { border-collapse: collapse; inline-size: 100%; font-family: var(--font-sans); font-size: var(--step-0); }
-    th, td { text-align: start; padding: var(--space-3) var(--space-2); border-block-end: 1px solid var(--color-hairline); }
-    th { font-weight: 600; color: var(--color-muted); font-size: var(--step--1); text-transform: uppercase; letter-spacing: 0.05em; }
-    tbody tr:hover { background: color-mix(in oklab, var(--color-accent) 6%, transparent); }
-    td.analogy__pop { color: var(--color-muted); font-variant-numeric: tabular-nums; text-align: end; }
-    .analogy__flag { font-size: 1.15em; margin-inline-end: 0.15em; }
-    .analogy__intro { color: var(--color-muted); max-inline-size: 60ch; margin-block-end: var(--space-4); }
+    .analogy__heading {
+      font-size: clamp(1.9rem, 5vw, 3.5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin: 0 0 1.5rem;
+      max-inline-size: 18ch;
+    }
+    .analogy__intro {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.5;
+      max-inline-size: 52ch;
+      color: rgba(12, 14, 10, 0.72);
+      margin: 0 0 clamp(2rem, 4vw, 3rem);
+    }
+
+    .analogy__table {
+      display: flex;
+      flex-direction: column;
+    }
+    .analogy__head {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1.6fr 1fr;
+      gap: 1rem;
+      padding-block-end: 0.75rem;
+      border-block-end: 2px solid var(--ink);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    .analogy__head .ar { text-align: end; }
+
+    .analogy__row {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr 1.6fr 1fr;
+      gap: 1rem;
+      align-items: center;
+      padding-block: 1.15rem;
+      border-block-end: 1px solid rgba(12, 14, 10, 0.14);
+    }
+    .analogy__liga {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.05rem, 2vw, 1.4rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+    }
+    .analogy__pop {
+      text-align: end;
+      font-weight: 800;
+      font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+      font-variant-numeric: tabular-nums;
+    }
+    .analogy__country {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+    }
+    .analogy__country-flag { font-size: 1.3em; }
+    .analogy__pop--secondary {
+      text-align: end;
+      font-weight: 600;
+      font-size: clamp(1rem, 2vw, 1.4rem);
+      font-variant-numeric: tabular-nums;
+      color: rgba(12, 14, 10, 0.55);
+    }
   }
 }
