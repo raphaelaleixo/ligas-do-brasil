@@ -3,22 +3,102 @@
     display: grid;
     gap: var(--space-6);
     grid-template-columns: minmax(0, 1fr);
+    min-block-size: min(85dvb, 44rem);
+    align-content: center;
+    padding-block: var(--space-6);
   }
   @container (inline-size >= 900px) {
-    .hero { grid-template-columns: 1fr 1fr; align-items: center; }
+    .hero {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: center;
+      gap: var(--space-8);
+    }
   }
-  .hero__pullquote {
-    font-family: var(--font-serif);
-    font-size: var(--step-5);
-    line-height: 1.05;
-    text-wrap: balance;
-    max-inline-size: 18ch;
+
+  .hero__content {
+    display: grid;
+    gap: 0;
+    align-content: start;
+  }
+
+  .hero__eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--step--1);
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin: 0 0 var(--space-5);
+  }
+  .hero__eyebrow svg {
+    inline-size: 1em;
+    block-size: 1em;
     color: var(--color-accent);
-    font-weight: 600;
-    letter-spacing: -0.02em;
   }
+
+  .hero__pullquote {
+    font-family: var(--font-display);
+    font-size: var(--step-6);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--color-fg);
+    font-weight: 400;
+    text-wrap: balance;
+    max-inline-size: 14ch;
+    margin: 0;
+  }
+  .hero__pullquote--accent { color: var(--color-accent); }
+
+  .hero__rule {
+    inline-size: 4rem;
+    block-size: 3px;
+    background: var(--color-accent);
+    border: 0;
+    margin: var(--space-5) 0 0;
+  }
+
   .hero__thesis {
+    font-family: var(--font-sans);
     font-size: var(--step-1);
     color: var(--color-muted);
+    max-inline-size: 42ch;
+    line-height: 1.5;
+    margin: var(--space-4) 0 0;
+  }
+
+  .hero__cta {
+    font-family: var(--font-sans);
+    font-size: var(--step-0);
+    margin: var(--space-5) 0 0;
+  }
+  .hero__cta a {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 700;
+    border-block-end: 2px solid transparent;
+    padding-block-end: 2px;
+    transition: border-color 120ms ease;
+  }
+  .hero__cta a:hover { border-block-end-color: var(--color-accent); }
+
+  .hero__mark {
+    display: grid;
+    place-items: center;
+    margin: 0 auto;
+    inline-size: min(100%, 24rem);
+  }
+  .hero__mark svg {
+    inline-size: 100%;
+    height: auto;
+    display: block;
+  }
+  /* Contorno sutil entre hexes pra separar cores adjacentes */
+  .hero__mark polygon {
+    stroke: var(--color-bg);
+    stroke-width: 2;
+    stroke-linejoin: round;
   }
 }
