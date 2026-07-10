@@ -229,7 +229,51 @@
       .round__formato { grid-column: 1 / -1; }
     }
 
-    /* Copa do Brasil funnel */
+    /* Copa do Brasil Sankey */
+    .cb-sankey-wrap {
+      overflow-x: auto;
+      padding-block: var(--space-4) var(--space-3);
+      margin-block: var(--space-4);
+    }
+    .cb-sankey {
+      inline-size: 100%;
+      min-inline-size: 900px;
+      block-size: auto;
+      color: var(--color-fg);
+      overflow: visible;
+      --src-serieb: var(--color-accent);
+      --src-seriea: var(--color-badge-sulamericana);
+      --src-elite:  var(--color-badge-campeoes);
+      --phase-node: color-mix(in oklab, var(--color-fg) 75%, transparent);
+      --phase-final: var(--color-accent);
+      --phase-flow: color-mix(in oklab, var(--color-accent) 70%, var(--color-badge-sulamericana));
+      --elim: var(--color-muted);
+    }
+    .cb-sankey__label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 700;
+      fill: currentColor;
+    }
+    .cb-sankey__meta {
+      font-family: var(--font-sans);
+      font-size: 10px;
+      fill: currentColor;
+      opacity: 0.65;
+    }
+    .cb-sankey__legend {
+      list-style: none;
+      padding: 0;
+      margin: var(--space-4) 0 0;
+      display: grid;
+      gap: var(--space-2);
+      font-size: var(--step--1);
+      color: var(--color-muted);
+    }
+    .cb-sankey__legend li { display: grid; grid-template-columns: 8rem 1fr; gap: var(--space-3); align-items: baseline; }
+    .cb-sankey__legend strong { color: var(--color-fg); font-weight: 700; }
+
+    /* (funil-list antigo removido) */
     .funil {
       list-style: none;
       padding: 0;
