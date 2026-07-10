@@ -9,12 +9,29 @@
     }
     .giants__card {
       scroll-snap-align: start;
-      display: grid; gap: var(--space-2);
+      display: grid; gap: var(--space-3);
       padding: var(--space-4); border: 1px solid var(--color-hairline); border-radius: var(--radius);
       font-family: var(--font-sans);
     }
     .giants__card figcaption { font-size: var(--step-1); font-weight: 700; }
-    .giants__attendance { font-size: var(--step-3); font-variant-numeric: tabular-nums; color: var(--color-accent); }
+    .giants__attendance { font-size: var(--step-2); font-variant-numeric: tabular-nums; color: var(--club-color, var(--color-accent)); font-weight: 700; }
     .giants__meta { color: var(--color-muted); font-size: var(--step--1); }
+
+    /* Waffle chart — 5 colunas × 8 linhas = 40 células, cada uma = 1.000 pessoas.
+       Max representado = 40.000 (referência: os maiores estádios do Brasil). */
+    .giants__waffle {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 3px;
+      aspect-ratio: 5 / 8;
+      inline-size: 4.5rem;
+    }
+    .giants__cell {
+      background: color-mix(in oklab, var(--color-hairline) 90%, transparent);
+      border-radius: 1px;
+    }
+    .giants__cell[data-filled] {
+      background: var(--club-color, var(--color-accent));
+    }
   }
 }

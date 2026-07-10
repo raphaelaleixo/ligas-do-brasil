@@ -69,30 +69,40 @@ function renderWorkload() {
     </div>`).join('');
 }
 
+// Cores por clube (mantel principal — a segunda cor eventualmente vai virar acento).
+// Vitória removido (está na Série A hoje); Paraná removido (média de 6k não sustenta o argumento).
 const SLEEPING_GIANTS = [
-  { nome: 'Sport',      estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 28000, divisaoAtual: 'Série B' },
-  { nome: 'Náutico',    estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 17000, divisaoAtual: 'Série C' },
-  { nome: 'Santa Cruz', estado: 'PE', liga: 'Liga Nordestina',              mediaPublico: 22000, divisaoAtual: 'Série D' },
-  { nome: 'Vitória',    estado: 'BA', liga: 'Liga Nordestina',              mediaPublico: 25000, divisaoAtual: 'Série A' },
-  { nome: 'América-RN', estado: 'RN', liga: 'Liga Nordestina',              mediaPublico: 8000,  divisaoAtual: 'Série C' },
-  { nome: 'Remo',       estado: 'PA', liga: 'Liga Amazônica',                 mediaPublico: 32000, divisaoAtual: 'Série B' },
-  { nome: 'Paysandu',   estado: 'PA', liga: 'Liga Amazônica',                 mediaPublico: 30000, divisaoAtual: 'Série B' },
-  { nome: 'Goiás',      estado: 'GO', liga: 'Liga Central',  mediaPublico: 18000, divisaoAtual: 'Série B' },
-  { nome: 'Vila Nova',  estado: 'GO', liga: 'Liga Central',  mediaPublico: 14000, divisaoAtual: 'Série B' },
-  { nome: 'Coritiba',   estado: 'PR', liga: 'Liga Sulista',               mediaPublico: 20000, divisaoAtual: 'Série B' },
-  { nome: 'Paraná',     estado: 'PR', liga: 'Liga Sulista',               mediaPublico: 6000,  divisaoAtual: 'Série D' },
+  { nome: 'Remo',       estado: 'PA', mediaPublico: 32000, divisaoAtual: 'Série B', cor: '#003c72' },
+  { nome: 'Paysandu',   estado: 'PA', mediaPublico: 30000, divisaoAtual: 'Série B', cor: '#0a5aa8' },
+  { nome: 'Sport',      estado: 'PE', mediaPublico: 28000, divisaoAtual: 'Série B', cor: '#c8102e' },
+  { nome: 'Santa Cruz', estado: 'PE', mediaPublico: 22000, divisaoAtual: 'Série D', cor: '#e21f26' },
+  { nome: 'Coritiba',   estado: 'PR', mediaPublico: 20000, divisaoAtual: 'Série B', cor: '#006747' },
+  { nome: 'Goiás',      estado: 'GO', mediaPublico: 18000, divisaoAtual: 'Série B', cor: '#00743f' },
+  { nome: 'Náutico',    estado: 'PE', mediaPublico: 17000, divisaoAtual: 'Série C', cor: '#d81e26' },
+  { nome: 'Vila Nova',  estado: 'GO', mediaPublico: 14000, divisaoAtual: 'Série B', cor: '#d51e1e' },
+  { nome: 'América-RN', estado: 'RN', mediaPublico:  8000, divisaoAtual: 'Série C', cor: '#106e46' },
 ];
+
+// Waffle chart: max = 40k, grid 5×8 = 40 células. Cada célula = 1k pessoas.
+const WAFFLE_MAX = 40000;
+const WAFFLE_CELLS = 40;
 
 function renderSleepingGiants() {
   const el = document.getElementById('giants-row');
   if (!el) return;
-  el.innerHTML = SLEEPING_GIANTS.map(g => `
-    <li><figure class="giants__card">
+  el.innerHTML = SLEEPING_GIANTS.map(g => {
+    const filled = Math.round(g.mediaPublico / (WAFFLE_MAX / WAFFLE_CELLS));
+    const cells = Array.from({ length: WAFFLE_CELLS }, (_, i) =>
+      `<span class="giants__cell"${i < filled ? ' data-filled' : ''}></span>`
+    ).join('');
+    return `
+    <li><figure class="giants__card" style="--club-color: ${g.cor};">
       <figcaption>${g.nome} <span class="giants__meta">${g.estado}</span></figcaption>
+      <div class="giants__waffle" aria-hidden="true">${cells}</div>
       <div class="giants__attendance">${g.mediaPublico.toLocaleString('pt-BR')} <small>por jogo</small></div>
       <div class="giants__meta">${g.divisaoAtual} hoje</div>
-    </figure></li>
-  `).join('');
+    </figure></li>`;
+  }).join('');
 }
 
 const REVELATION = [
