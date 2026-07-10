@@ -256,6 +256,102 @@ function renderCbSankey() {
   `;
 }
 
+/**
+ * Sankey vertical — versão pra telas estreitas (< 640px).
+ * Cada fase é um trapézio que estreita de entrada→sobreviventes. Sources
+ * (Série B, Série A, Conmebol) aparecem como labels de "merger" antes das
+ * fases que juntam. Fluxo desce, tudo centralizado.
+ */
+function renderCbSankeyVertical() {
+  const S = 1.5;
+  const W = 300;
+  const CX = W / 2;
+  const PHASE_H = 62;
+  const FLOW_H = 22;
+  const MERGE_H = 30;
+  const SRC_HDR = 24;
+  const RD16_H = 34;
+
+  let y = 8;
+  const srcSB_y = y; y += SRC_HDR;
+  const preY = y; y += PHASE_H;
+  const flow1_y = y; y += FLOW_H;
+  const merge1_y = y; y += MERGE_H;
+  const f1Y = y; y += PHASE_H;
+  const flow2_y = y; y += FLOW_H;
+  const f2Y = y; y += PHASE_H;
+  const flow3_y = y; y += FLOW_H;
+  const f3Y = y; y += PHASE_H;
+  const flow4_y = y; y += FLOW_H;
+  const merge2_y = y; y += MERGE_H;
+  const rd16Y = y; y += RD16_H;
+  const H = y + 10;
+
+  const P_TOP = 108 * S, P_BOT = 55 * S;
+  const F1_TOP = 150 * S, F1_BOT = 75 * S;
+  const F2_TOP = 75 * S, F2_BOT = 38 * S;
+  const F3_TOP = 38 * S, F3_BOT = 19 * S;
+  const RD16_W = 32 * S;
+  const SB_W = 108 * S;
+
+  const trap = (yTop, yBot, wTop, wBot) => {
+    const halfT = wTop / 2, halfB = wBot / 2;
+    return `M ${CX - halfT} ${yTop}
+            L ${CX + halfT} ${yTop}
+            L ${CX + halfB} ${yBot}
+            L ${CX - halfB} ${yBot} Z`;
+  };
+  const flow = (yTop, yBot, width) => {
+    const half = width / 2;
+    return `M ${CX - half} ${yTop} L ${CX + half} ${yTop}
+            L ${CX + half} ${yBot} L ${CX - half} ${yBot} Z`;
+  };
+
+  return `
+    <svg viewBox="0 0 ${W} ${H}" class="cb-sankey-v" role="img" preserveAspectRatio="xMidYMid meet">
+      <title>Funil da Copa do Brasil (vertical)</title>
+
+      <rect x="${CX - SB_W/2}" y="${srcSB_y + 2}" width="${SB_W}" height="4" fill="var(--src-serieb)" rx="2"/>
+      <text x="${CX}" y="${srcSB_y + 20}" text-anchor="middle" class="cb-sankey-v__source">Série B · 108 clubes</text>
+
+      <path d="${trap(preY, preY + PHASE_H, P_TOP, P_BOT)}" fill="var(--src-serieb)" fill-opacity="0.3"/>
+      <text x="${CX}" y="${preY + PHASE_H/2 - 4}" text-anchor="middle" class="cb-sankey-v__label">Preliminar</text>
+      <text x="${CX}" y="${preY + PHASE_H/2 + 12}" text-anchor="middle" class="cb-sankey-v__meta">108→55 · <tspan class="cb-sankey__meta--dim">−53</tspan> · <tspan class="cb-sankey__bye">🎟 2</tspan></text>
+
+      <path d="${flow(preY + PHASE_H, flow1_y + FLOW_H, P_BOT)}" fill="var(--src-serieb)" fill-opacity="0.3"/>
+
+      <text x="${CX}" y="${merge1_y + 18}" text-anchor="middle" class="cb-sankey-v__source"><tspan fill="var(--src-seriea)">+ Série A</tspan> · 95 clubes</text>
+
+      <path d="${trap(merge1_y + MERGE_H - 4, f1Y, P_BOT, F1_TOP)}" fill="var(--src-seriea)" fill-opacity="0.28"/>
+
+      <path d="${trap(f1Y, f1Y + PHASE_H, F1_TOP, F1_BOT)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
+      <text x="${CX}" y="${f1Y + PHASE_H/2 - 4}" text-anchor="middle" class="cb-sankey-v__label">1ª Fase</text>
+      <text x="${CX}" y="${f1Y + PHASE_H/2 + 12}" text-anchor="middle" class="cb-sankey-v__meta">150→75 · <tspan class="cb-sankey__meta--dim">−75</tspan> · <tspan class="cb-sankey__bye">🎟 1</tspan></text>
+
+      <path d="${flow(f1Y + PHASE_H, flow2_y + FLOW_H, F1_BOT)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
+
+      <path d="${trap(f2Y, f2Y + PHASE_H, F2_TOP, F2_BOT)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
+      <text x="${CX}" y="${f2Y + PHASE_H/2 - 4}" text-anchor="middle" class="cb-sankey-v__label">2ª Fase</text>
+      <text x="${CX}" y="${f2Y + PHASE_H/2 + 12}" text-anchor="middle" class="cb-sankey-v__meta">75→38 · <tspan class="cb-sankey__meta--dim">−37</tspan> · <tspan class="cb-sankey__bye">🎟 1</tspan></text>
+
+      <path d="${flow(f2Y + PHASE_H, flow3_y + FLOW_H, F2_BOT)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
+
+      <path d="${trap(f3Y, f3Y + PHASE_H, F3_TOP, F3_BOT)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
+      <text x="${CX}" y="${f3Y + PHASE_H/2 - 4}" text-anchor="middle" class="cb-sankey-v__label">3ª Fase</text>
+      <text x="${CX}" y="${f3Y + PHASE_H/2 + 12}" text-anchor="middle" class="cb-sankey-v__meta">38→19 · <tspan class="cb-sankey__meta--dim">−19</tspan></text>
+
+      <path d="${flow(f3Y + PHASE_H, flow4_y + FLOW_H, F3_BOT)}" fill="var(--phase-flow)" fill-opacity="0.32"/>
+
+      <text x="${CX}" y="${merge2_y + 18}" text-anchor="middle" class="cb-sankey-v__source"><tspan fill="var(--src-elite)">+ Conmebol</tspan> · 13 clubes <tspan opacity="0.65">(7 Lib + 6 Sul-Am)</tspan></text>
+
+      <path d="${trap(merge2_y + MERGE_H - 4, rd16Y, F3_BOT, RD16_W)}" fill="var(--src-elite)" fill-opacity="0.32"/>
+
+      <rect x="${CX - RD16_W/2}" y="${rd16Y}" width="${RD16_W}" height="${RD16_H - 4}" fill="var(--phase-final)"/>
+      <text x="${CX}" y="${rd16Y + (RD16_H-4)/2 + 4}" text-anchor="middle" class="cb-sankey-v__label" fill="var(--color-bg)">16-avos · 32</text>
+    </svg>
+  `;
+}
+
 function renderCampeoes() {
   const el = document.getElementById('copa-detalhe');
   el.innerHTML = `
