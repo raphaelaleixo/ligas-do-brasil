@@ -440,6 +440,7 @@ function renderBrasil() {
       </p>
       <div class="cb-sankey-wrap">
         ${renderCbSankey()}
+        ${renderCbSankeyVertical()}
       </div>
       <ol class="cb-sankey__legend">
         ${CB_FUNIL.map(s => `

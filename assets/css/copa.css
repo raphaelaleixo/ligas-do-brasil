@@ -235,14 +235,7 @@
       padding-block: var(--space-4) var(--space-3);
       margin-block: var(--space-4);
       container-type: inline-size;
-    }
-    .cb-sankey {
-      inline-size: 100%;
-      /* min só entra em telas muito estreitas — senão o texto do SVG fica micro */
-      min-inline-size: min(100%, 32rem);
-      block-size: auto;
-      color: var(--color-fg);
-      overflow: visible;
+      /* Compartilha as cores entre horizontal e vertical */
       --src-serieb: var(--color-accent);
       --src-seriea: var(--color-badge-sulamericana);
       --src-elite:  var(--color-badge-campeoes);
@@ -251,9 +244,25 @@
       --phase-flow: color-mix(in oklab, var(--color-accent) 70%, var(--color-badge-sulamericana));
       --elim: var(--color-muted);
     }
-    /* Em containers largos, respeita um mínimo maior pra não perder detalhe */
-    @container (inline-size >= 700px) {
-      .cb-sankey { min-inline-size: min(100%, 56rem); }
+    .cb-sankey {
+      inline-size: 100%;
+      min-inline-size: min(100%, 56rem);
+      block-size: auto;
+      color: var(--color-fg);
+      overflow: visible;
+    }
+    .cb-sankey-v {
+      display: none;
+      inline-size: 100%;
+      max-inline-size: 22rem;
+      block-size: auto;
+      color: var(--color-fg);
+      margin-inline: auto;
+    }
+    /* Em telas estreitas, esconde o horizontal (que estouraria) e mostra o vertical */
+    @container (inline-size < 640px) {
+      .cb-sankey { display: none; }
+      .cb-sankey-v { display: block; }
     }
     .cb-sankey__label {
       font-family: var(--font-sans);
@@ -277,6 +286,10 @@
       font-weight: 700;
       fill: var(--color-badge-campeoes);
     }
+    /* Vertical labels (mesma tipografia mas fills próprias) */
+    .cb-sankey-v__label { font-family: var(--font-sans); font-size: 12px; font-weight: 700; fill: currentColor; }
+    .cb-sankey-v__meta  { font-family: var(--font-sans); font-size: 10px; fill: currentColor; opacity: 0.7; }
+    .cb-sankey-v__source { font-family: var(--font-sans); font-size: 11px; font-weight: 700; fill: currentColor; }
     .cb-sankey__legend {
       list-style: none;
       padding: 0;
