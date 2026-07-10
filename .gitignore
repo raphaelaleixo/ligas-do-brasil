@@ -1,4 +1,4 @@
 node_modules
-data/season-*.json
+# baked JSON entra no git p/ Pages deploy
 .DS_Store
 coverage
