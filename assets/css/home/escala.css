@@ -1,27 +1,25 @@
 @layer components {
   @scope (.escala) {
+    /* Lighter tint of --green just for this section — improves contrast with
+       black text without shifting the site-wide brand green. */
+    :scope { background: #3AC97A; }
+
     .escala__row {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: clamp(1.5rem, 3vw, 2.5rem);
-      margin-block-end: clamp(2.5rem, 5vw, 4rem);
     }
 
     .escala__country {
       margin: 0;
-      border-block-start: 3px solid var(--ink);
       padding-block-start: 1.25rem;
     }
     .escala__country figcaption {
       font-family: var(--font-display);
       font-weight: normal;
       font-size: clamp(1.5rem, 3vw, 2.1rem);
-      text-transform: uppercase;
       letter-spacing: -0.01em;
       margin-block-end: 1.25rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     .escala__country dl {
@@ -52,28 +50,27 @@
       font-variant-numeric: tabular-nums;
     }
     .escala__stat--big dd {
-      font-family: var(--font-display);
-      font-weight: normal;
+      font-family: var(--font-sans);
+      font-weight: 700;
       font-size: 2.4rem;
       line-height: 1;
     }
 
     .escala__punchline {
-      font-size: clamp(1.4rem, 3.5vw, 2.4rem);
-      font-weight: 600;
-      line-height: 1.25;
-      max-inline-size: 22ch;
-      margin: 0;
+      font-family: var(--font-display);
+      font-weight: normal;
+      font-size: clamp(1.6rem, 4vw, 2.75rem);
+      line-height: 1.2;
+      max-inline-size: 42ch;
+      margin-inline: auto;
+      margin-block: 0 clamp(2.5rem, 5vw, 4rem);
+      text-align: center;
       text-wrap: balance;
     }
     .escala__invert {
       background: var(--ink);
       color: var(--green);
       padding: 0 8px;
-    }
-    .escala__underline {
-      text-decoration: underline;
-      text-decoration-thickness: 3px;
     }
   }
 }
