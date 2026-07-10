@@ -29,9 +29,9 @@
 
     .hero__pullquote {
       font-family: var(--font-display);
-      font-weight: 900;
-      font-size: clamp(3rem, 10vw, 9rem);
-      line-height: 0.9;
+      font-weight: normal;
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      line-height: 1;
       letter-spacing: -0.03em;
       text-transform: uppercase;
       margin: 0;
@@ -42,8 +42,8 @@
 
     .hero__foot {
       display: grid;
-      gap: clamp(1.5rem, 3vw, 2.5rem);
-      margin-block-start: clamp(2rem, 5vw, 3.5rem);
+      gap: clamp(1.25rem, 2.5vw, 2rem);
+      margin-block-start: clamp(1rem, 2vw, 1.5rem);
       max-inline-size: 640px;
     }
 

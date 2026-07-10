@@ -4,7 +4,7 @@
     :scope { padding-block: clamp(2.75rem, 6vw, 5rem) 0; }
     .cop-title__h1 {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: clamp(2.4rem, 7vw, 5.5rem);
       line-height: 0.9;
       letter-spacing: -0.03em;
@@ -53,7 +53,7 @@
     /* Shared type roles */
     .cop-h2 {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1.8rem, 4.5vw, 3.25rem);
       line-height: 1;
       letter-spacing: -0.02em;
@@ -63,7 +63,7 @@
     }
     .cop-h3 {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1.4rem, 3vw, 2.1rem);
       text-transform: uppercase;
       letter-spacing: -0.01em;
@@ -71,7 +71,7 @@
     }
     .cop-h4 {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: 1.1rem;
       text-transform: uppercase;
       letter-spacing: -0.01em;
@@ -137,7 +137,7 @@
     }
     .cop-quota__value {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: 2.5rem;
       line-height: 1;
     }
@@ -311,7 +311,7 @@
     .cop-ko-row--final { background: var(--ink); color: var(--paper); }
     .cop-ko-row__rodada {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1.1rem, 2.2vw, 1.5rem);
       text-transform: uppercase;
     }
@@ -364,7 +364,7 @@
     }
     .cop-funnel__fase {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1rem, 2vw, 1.35rem);
       text-transform: uppercase;
     }
@@ -416,7 +416,7 @@
     }
     .cop-funnel__final-label {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: clamp(1.2rem, 2.5vw, 1.75rem);
       text-transform: uppercase;
     }
@@ -498,7 +498,7 @@
     }
     .cop-vaga-list__title {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1.3rem, 2.5vw, 1.75rem);
       text-transform: uppercase;
       letter-spacing: -0.01em;

@@ -22,7 +22,7 @@
 
     .metric-card__value {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: clamp(3rem, 6vw, 4.75rem);
       line-height: 0.85;
       color: var(--green);

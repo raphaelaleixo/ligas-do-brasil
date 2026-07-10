@@ -6,7 +6,7 @@
     }
     .cal-title__h1 {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: clamp(2.4rem, 7vw, 5.5rem);
       line-height: 0.9;
       letter-spacing: -0.03em;
@@ -75,7 +75,7 @@
     }
     .arch-head__title {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1.6rem, 4vw, 2.75rem);
       line-height: 1;
       letter-spacing: -0.02em;
@@ -121,7 +121,7 @@
     .arch-counter--reform .arch-counter__label { color: rgba(12, 14, 10, 0.7); }
     .arch-counter__value {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: 2.1rem;
       line-height: 1;
     }

@@ -6,6 +6,10 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     scroll-behavior: smooth;
+    /* Never synthesize weight/style — Caprasimo is single-weight; requesting
+       800/900 must not trigger a fake bold. DM Sans/Space Mono ship their own
+       real weights, so nothing else is affected. */
+    font-synthesis: none;
   }
 
   body {
@@ -21,16 +25,18 @@
     color: var(--ink);
   }
 
-  /* Display type — Archivo Expanded, tight tracking, uppercase-friendly.
-     Per-component CSS overrides size/case as needed. */
+  /* Display type — Caprasimo, single weight, warm wedge-serif poster face.
+     Do not set a bold font-weight (browsers would synthesize a fake bold).
+     Font-synthesis disabled on html so no fake weight/style ever creeps in. */
   :where(h1, h2, h3, h4) {
     font-family: var(--font-display);
-    font-weight: 800;
+    font-weight: normal;
+    font-synthesis: none;
     line-height: 1.05;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     text-wrap: balance;
   }
-  h1 { font-size: var(--step-6); line-height: 0.95; letter-spacing: -0.03em; }
+  h1 { font-size: var(--step-6); line-height: 0.95; letter-spacing: -0.01em; }
   h2 { font-size: var(--step-4); }
   h3 { font-size: var(--step-2); }
   h4 { font-size: var(--step-1); }
@@ -80,5 +86,33 @@
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
     border: 0;
+  }
+}
+
+@layer utilities {
+  /* PREVIEW: lowercase headings (opt out of uppercase on every display-font
+     surface). Mono eyebrows/labels/tabs keep their uppercase because they're
+     semantic UI cues, not headings. Toggle by deleting this block. */
+  :where(h1, h2, h3, h4),
+  .hero__pullquote,
+  .escala__country figcaption,
+  .escala__stat--big dd,
+  .analogy__liga, .analogy__heading,
+  .workload__label, .workload__heading,
+  .giants__name, .giants__heading,
+  .revelation__player, .revelation__heading,
+  .teaser__quote,
+  .tile__label,
+  .cop-title__h1, .lig-title__h1, .cal-title__h1,
+  .cop-h2, .cop-h3, .cop-h4,
+  .cop-vaga-list__title,
+  .cop-ko-row__rodada, .cop-funnel__fase, .cop-funnel__final-label,
+  .lig-head__h2,
+  .arch-head__title,
+  .mf-hero__title, .mf-hero__lede, .mf-finale__quote,
+  .manifesto__section h2, .manifesto__pullquote p,
+  .metric-card__value,
+  .escala__punchline {
+    text-transform: none;
   }
 }

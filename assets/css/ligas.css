@@ -6,7 +6,7 @@
     }
     .lig-title__h1 {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: clamp(2.4rem, 7vw, 5.5rem);
       line-height: 0.9;
       letter-spacing: -0.03em;
@@ -204,7 +204,7 @@
     .lig-meta__block--accent .lig-meta__label { color: rgba(12, 14, 10, 0.7); }
     .lig-meta__value {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: 1.75rem;
       line-height: 1;
       display: flex;
@@ -212,7 +212,6 @@
       gap: 8px;
     }
     .lig-meta__block--accent .lig-meta__value {
-      font-weight: 900;
       font-size: 2.75rem;
     }
     .lig-meta__unit {

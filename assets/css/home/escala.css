@@ -14,7 +14,7 @@
     }
     .escala__country figcaption {
       font-family: var(--font-display);
-      font-weight: 800;
+      font-weight: normal;
       font-size: clamp(1.5rem, 3vw, 2.1rem);
       text-transform: uppercase;
       letter-spacing: -0.01em;
@@ -53,7 +53,7 @@
     }
     .escala__stat--big dd {
       font-family: var(--font-display);
-      font-weight: 900;
+      font-weight: normal;
       font-size: 2.4rem;
       line-height: 1;
     }
