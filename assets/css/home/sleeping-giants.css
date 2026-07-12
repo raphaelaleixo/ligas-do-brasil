@@ -19,13 +19,18 @@
 
     .giants__row {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1px;
       background: rgba(244, 239, 227, 0.14);
       border: 1px solid rgba(244, 239, 227, 0.14);
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+    @media (min-width: 640px) {
+      .giants__row {
+        grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      }
     }
 
     .giants__card {
@@ -35,11 +40,14 @@
       display: flex;
       flex-direction: column;
       gap: 1.15rem;
+      min-inline-size: 0;
+      block-size: 100%;
     }
     .giants__card figcaption {
       display: flex;
       align-items: baseline;
       gap: 8px;
+      min-inline-size: 0;
     }
     .giants__name {
       font-family: var(--font-display);
@@ -47,21 +55,29 @@
       font-size: clamp(1.15rem, 2.2vw, 1.5rem);
       text-transform: uppercase;
       letter-spacing: -0.01em;
+      min-inline-size: 0;
+      flex: 1 1 auto;
+      overflow-wrap: break-word;
     }
     .giants__meta {
       font-family: var(--font-mono);
       font-size: 0.68rem;
       opacity: 0.5;
+      flex: 0 0 auto;
     }
 
     .giants__waffle {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-rows: repeat(5, minmax(0, 1fr));
       gap: 4px;
+      aspect-ratio: 8 / 5;
+      min-inline-size: 0;
     }
     .giants__cell {
-      aspect-ratio: 1;
-      background: rgba(244, 239, 227, 0.1);
+      background: rgba(244, 239, 227, 0.22);
+      min-block-size: 0;
+      min-inline-size: 0;
     }
     .giants__cell[data-filled] {
       background: var(--gold);

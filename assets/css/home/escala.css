@@ -1,8 +1,7 @@
 @layer components {
   @scope (.escala) {
-    /* Lighter tint of --green just for this section — improves contrast with
-       black text without shifting the site-wide brand green. */
-    :scope { background: #3AC97A; }
+    /* Flip to light text on the darker brand green — cream on Brasil green. */
+    :scope { color: var(--paper); }
 
     .escala__row {
       display: grid;
@@ -30,17 +29,19 @@
     .escala__stat {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      border-block-end: 1px solid rgba(12, 14, 10, 0.2);
+      align-items: start;
+      border-block-end: 1px solid rgba(244, 239, 227, 0.24);
       padding-block-end: 0.5rem;
     }
+    .escala__stat dt { padding-block-start: 0.15em; }
     .escala__stat:last-child { border-block-end: 0; padding-block-end: 0; }
     .escala__stat dt {
       font-family: var(--font-mono);
       font-size: 0.72rem;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      opacity: 0.7;
+      color: var(--paper);
       margin: 0;
     }
     .escala__stat dd {

@@ -1,12 +1,12 @@
 import { loadSeason } from '../season.js';
 
 const ANALOGIES = [
-  { liga: 'Liga Nordestina',    regiaoPop: '54M', pais: 'Itália',         flag: '🇮🇹', paisPop: '59M' },
-  { liga: 'Liga Paulista',      regiaoPop: '44M', pais: 'Inglaterra',     flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M' },
-  { liga: 'Liga Central',       regiaoPop: '37M', pais: 'Espanha',        flag: '🇪🇸', paisPop: '48M' },
-  { liga: 'Liga Sulista',       regiaoPop: '30M', pais: 'Ucrânia',        flag: '🇺🇦', paisPop: '32M' },
-  { liga: 'Liga Rio-Capixaba',  regiaoPop: '20M', pais: 'Países Baixos',  flag: '🇳🇱', paisPop: '18M' },
-  { liga: 'Liga Amazônica',     regiaoPop: '18M', pais: 'Portugal',       flag: '🇵🇹', paisPop: '10M' },
+  { liga: 'Nordestina',    regiaoPop: '54M', pais: 'Itália',         paisPop: '59M' },
+  { liga: 'Paulista',      regiaoPop: '44M', pais: 'Inglaterra',     paisPop: '57M' },
+  { liga: 'Central',       regiaoPop: '37M', pais: 'Espanha',        paisPop: '48M' },
+  { liga: 'Sulista',       regiaoPop: '30M', pais: 'Ucrânia',        paisPop: '32M' },
+  { liga: 'Rio-Capixaba',  regiaoPop: '20M', pais: 'Países Baixos',  paisPop: '18M' },
+  { liga: 'Amazônica',     regiaoPop: '18M', pais: 'Portugal',       paisPop: '10M' },
 ];
 
 function renderAnalogy() {
@@ -16,7 +16,7 @@ function renderAnalogy() {
     <div class="analogy__row">
       <span class="analogy__liga">${a.liga}</span>
       <span class="analogy__pop">${a.regiaoPop}</span>
-      <span class="analogy__country"><span class="analogy__country-flag" aria-hidden="true">${a.flag}</span>${a.pais}</span>
+      <span class="analogy__country">${a.pais}</span>
       <span class="analogy__pop--secondary">${a.paisPop}</span>
     </div>
   `).join('');
@@ -31,16 +31,18 @@ function renderMetrics(season) {
 
 const WORKLOAD_COMPARISONS = [
   {
-    label: 'Elite finalista',
+    label: 'Clubes com calendário cheio',
+    subtitle: 'Números atuais baseados no Botafogo 2024 — Campeão Brasileiro e da Libertadores.',
     delta: '−16%',
-    atual:   { clube: 'Botafogo 2024', jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
-    reforma: { clube: 'Ligas do Brasil', jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
+    atual:   { jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
+    reforma: { jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
   },
   {
-    label: 'Base',
+    label: 'Clubes com pouca agenda',
+    subtitle: 'Números atuais baseados no Madureira 2024 — jogando apenas o estadual.',
     delta: '+169%',
-    atual:   { clube: 'Madureira 2024', jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
-    reforma: { clube: 'Ligas do Brasil', jogos: 35, det: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses' },
+    atual:   { jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
+    reforma: { jogos: 35, det: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses' },
   },
 ];
 
@@ -56,22 +58,17 @@ function renderWorkload() {
         <span class="workload__label">${c.label}</span>
         <span class="workload__delta">${c.delta}</span>
       </div>
+      <p class="workload__subtitle">${c.subtitle}</p>
       <div class="workload__bars">
         <div class="workload__bar-row">
-          <div class="workload__bar-line">
-            <div class="workload__bar workload__bar--current" style="--w:${(c.atual.jogos / maxVal * 100).toFixed(1)}%">
-              <span class="workload__bar-value">${c.atual.jogos}</span>
-            </div>
-            <span class="workload__bar-tag">${c.atual.clube}</span>
+          <div class="workload__bar workload__bar--current" style="--w:${(c.atual.jogos / maxVal * 100).toFixed(1)}%">
+            <span class="workload__bar-value">${c.atual.jogos}<small> jogos</small></span>
           </div>
           <p class="workload__bar-detail">${c.atual.det}</p>
         </div>
         <div class="workload__bar-row">
-          <div class="workload__bar-line">
-            <div class="workload__bar workload__bar--reform" style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}%">
-              <span class="workload__bar-value">${c.reforma.jogos}</span>
-            </div>
-            <span class="workload__bar-tag">${c.reforma.clube}</span>
+          <div class="workload__bar workload__bar--reform" style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}%">
+            <span class="workload__bar-value">${c.reforma.jogos}<small> jogos</small></span>
           </div>
           <p class="workload__bar-detail">${c.reforma.det}</p>
         </div>
@@ -85,7 +82,6 @@ const SLEEPING_GIANTS = [
   { nome: 'Paysandu',   estado: 'PA', mediaPublico: 30000, divisaoAtual: 'Série B' },
   { nome: 'Sport',      estado: 'PE', mediaPublico: 28000, divisaoAtual: 'Série B' },
   { nome: 'Santa Cruz', estado: 'PE', mediaPublico: 22000, divisaoAtual: 'Série D' },
-  { nome: 'Coritiba',   estado: 'PR', mediaPublico: 20000, divisaoAtual: 'Série B' },
   { nome: 'Goiás',      estado: 'GO', mediaPublico: 18000, divisaoAtual: 'Série B' },
   { nome: 'Náutico',    estado: 'PE', mediaPublico: 17000, divisaoAtual: 'Série C' },
   { nome: 'Vila Nova',  estado: 'GO', mediaPublico: 14000, divisaoAtual: 'Série B' },
@@ -135,7 +131,7 @@ function renderRevelation() {
     <li><figure class="revelation__card">
       <span class="revelation__cups">🏆 ${r.copasVencidas.join(', ')}</span>
       <span class="revelation__player">${r.jogador}</span>
-      <span class="revelation__club">Revelado por ${r.clubeRevelador} <span class="revelation__club-state">(${r.estado})</span></span>
+      <span class="revelation__club">${r.clubeRevelador} <span class="revelation__club-state">(${r.estado})</span></span>
     </figure></li>
   `).join('');
 }

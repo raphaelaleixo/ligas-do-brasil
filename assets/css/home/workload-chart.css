@@ -47,7 +47,7 @@
       align-items: baseline;
       justify-content: space-between;
       gap: 1rem;
-      margin-block-end: 1.25rem;
+      margin-block-end: 0.35rem;
       flex-wrap: wrap;
     }
     .workload__label {
@@ -64,6 +64,14 @@
       color: var(--green-deep);
     }
 
+    .workload__subtitle {
+      font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+      line-height: 1.4;
+      color: rgba(12, 14, 10, 0.65);
+      margin: 0 0 1.5rem;
+      max-inline-size: 60ch;
+    }
+
     .workload__bars {
       display: grid;
       gap: 0.9rem;
@@ -71,11 +79,6 @@
     .workload__bar-row {
       display: grid;
       gap: 0.5rem;
-    }
-    .workload__bar-line {
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
     .workload__bar {
       block-size: 38px;
@@ -92,10 +95,11 @@
       font-size: 1.35rem;
       color: var(--paper);
     }
-    .workload__bar-tag {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      opacity: 0.7;
+    .workload__bar-value small {
+      font-weight: 800;
+      font-size: 0.85rem;
+      letter-spacing: 0.02em;
+      opacity: 0.95;
     }
     .workload__bar-detail {
       font-size: 0.85rem;

@@ -2,13 +2,18 @@
   @scope (.metrics) {
     .metric-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 1px;
       background: rgba(244, 239, 227, 0.14);
       border: 1px solid rgba(244, 239, 227, 0.14);
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+    @media (min-width: 640px) {
+      .metric-cards {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
     }
 
     .metric-card {
