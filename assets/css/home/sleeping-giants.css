@@ -16,6 +16,14 @@
       opacity: 0.6;
       margin: 0 0 clamp(2rem, 4vw, 3rem);
     }
+    .giants__caveat a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: currentColor;
+      text-underline-offset: 3px;
+      transition: text-decoration-thickness 120ms ease;
+    }
+    .giants__caveat a:hover { text-decoration-thickness: 2px; }
 
     .giants__row {
       display: grid;
