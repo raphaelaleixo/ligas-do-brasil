@@ -39,6 +39,10 @@ function renderLegend() {
     <span class="cal-legend__item">
       <span class="cal-legend__swatch" data-comp="final"></span>Final (destaque)
     </span>
+    <p class="cal-legend__note">
+      Na <strong>Copa dos Campeões</strong>, cada clube joga 3 rodadas de grupo + 3 rodadas cruzadas (contra clubes do mesmo pote em outros grupos) antes do 16-avos.
+      A <strong>Copa do Brasil</strong> começa pela Preliminar, disputada só pela Série B; a Série A entra na 1ª Fase.
+    </p>
   `;
   // Apply the same background rules as the grid slots to the legend swatches
   for (const s of legendEl.querySelectorAll('.cal-legend__swatch')) {

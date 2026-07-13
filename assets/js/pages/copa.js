@@ -314,7 +314,7 @@ function renderBrasil() {
       <div>
         <h3 class="cop-h3">Vagas Conmebol: 13 clubes direto ao 16-avos</h3>
         <p class="cop-p">
-          Os <strong>13 clubes que disputaram Conmebol no ano anterior</strong> — 7 da Libertadores e 6 da Sul-Americana — entram direto no <strong>16-avos</strong>. Três razões: não atropelar clubes da base nas rodadas iniciais, reservar o mata-mata pesado para quando as diferenças de nível pesam de verdade, e aliviar o calendário de quem já teve semana dobrada por meses.
+          Os <strong>13 clubes da Série A que disputaram Conmebol no ano anterior</strong> — 7 da Libertadores e 6 da Sul-Americana — entram direto no <strong>16-avos</strong>. Três razões: não atropelar clubes da base nas rodadas iniciais, reservar o mata-mata pesado para quando as diferenças de nível pesam de verdade, e aliviar o calendário de quem já teve semana dobrada por meses.
         </p>
       </div>
 

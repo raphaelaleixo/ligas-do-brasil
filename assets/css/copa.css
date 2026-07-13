@@ -9,6 +9,13 @@
       line-height: 0.9;
       letter-spacing: -0.03em;
       text-transform: uppercase;
+      margin: 0 0 1.25rem;
+    }
+    .cop-title__intro {
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      line-height: 1.5;
+      max-inline-size: 62ch;
+      color: rgba(244, 239, 227, 0.75);
       margin: 0 0 2rem;
     }
     .cop-title__spacer { block-size: clamp(2rem, 5vw, 3.5rem); }

@@ -32,7 +32,7 @@ function renderMetrics(season) {
 const WORKLOAD_COMPARISONS = [
   {
     label: 'Clubes com calendário cheio',
-    subtitle: 'Números atuais baseados no Botafogo 2024 — Campeão Brasileiro e da Libertadores.',
+    subtitle: 'Botafogo 2024 — campeão brasileiro e da Libertadores.',
     delta: '−16%',
     atual:   { jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
     reforma: { jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
@@ -118,7 +118,7 @@ function renderSleepingGiants() {
 const REVELATION = [
   { jogador: 'Romário',        clubeRevelador: 'Olaria',                     estado: 'RJ', copasVencidas: [1994] },
   { jogador: 'Ronaldo',        clubeRevelador: 'São Cristóvão',              estado: 'RJ', copasVencidas: [1994, 2002] },
-  { jogador: 'Rivaldo',        clubeRevelador: 'Santa Cruz',                 estado: 'CE', copasVencidas: [2002] },
+  { jogador: 'Rivaldo',        clubeRevelador: 'Mogi Mirim',                 estado: 'SP', copasVencidas: [2002] },
   { jogador: 'Lúcio',          clubeRevelador: 'Guará',                      estado: 'DF', copasVencidas: [2002] },
   { jogador: 'Cafu',           clubeRevelador: 'Itaquaquecetuba',            estado: 'SP', copasVencidas: [1994, 2002] },
   { jogador: 'Roberto Carlos', clubeRevelador: 'União São João de Araras',   estado: 'SP', copasVencidas: [2002] },

@@ -155,6 +155,15 @@
       block-size: 13px;
       display: inline-block;
     }
+    .cal-legend__note {
+      flex-basis: 100%;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(12, 14, 10, 0.7);
+      max-inline-size: 68ch;
+      margin: 0.5rem 0 0;
+    }
+    .cal-legend__note strong { color: var(--ink); font-weight: 700; }
 
     /* Grid */
     .cal-grid {
