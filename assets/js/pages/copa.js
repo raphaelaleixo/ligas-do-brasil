@@ -56,7 +56,7 @@ const CB_KO = [
   { rodada: 'Oitavas', clubes: 16, formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Quartas', clubes: 8,  formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Semis',   clubes: 4,  formato: 'Ida e volta', detalhe: '' },
-  { rodada: 'Final',   clubes: 2,  formato: 'Ida e volta', detalhe: 'Sábado 9 nov — encerra o ciclo dos mata-matas nacionais antes das finais continentais.' },
+  { rodada: 'Final',   clubes: 2,  formato: 'Jogo único',  detalhe: 'Sábado 9 nov — encerra o ciclo dos mata-matas nacionais antes das finais continentais.' },
 ];
 
 const CB_PHASES = [
