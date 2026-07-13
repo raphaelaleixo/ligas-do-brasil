@@ -78,14 +78,10 @@ function renderWorkload() {
 }
 
 const SLEEPING_GIANTS = [
-  { nome: 'Remo',       estado: 'PA', mediaPublico: 32000, divisaoAtual: 'Série B' },
-  { nome: 'Paysandu',   estado: 'PA', mediaPublico: 30000, divisaoAtual: 'Série B' },
-  { nome: 'Sport',      estado: 'PE', mediaPublico: 28000, divisaoAtual: 'Série B' },
   { nome: 'Santa Cruz', estado: 'PE', mediaPublico: 22000, divisaoAtual: 'Série D' },
-  { nome: 'Goiás',      estado: 'GO', mediaPublico: 18000, divisaoAtual: 'Série B' },
-  { nome: 'Náutico',    estado: 'PE', mediaPublico: 17000, divisaoAtual: 'Série C' },
-  { nome: 'Vila Nova',  estado: 'GO', mediaPublico: 14000, divisaoAtual: 'Série B' },
-  { nome: 'América-RN', estado: 'RN', mediaPublico:  8000, divisaoAtual: 'Série C' },
+  { nome: 'Sport',      estado: 'PE', mediaPublico: 16000, divisaoAtual: 'Série B' },
+  { nome: 'Remo',       estado: 'PA', mediaPublico: 14000, divisaoAtual: 'Série C' },
+  { nome: 'Paysandu',   estado: 'PA', mediaPublico: 10000, divisaoAtual: 'Série B' },
 ];
 
 // Waffle chart: 40 cells (5 rows × 8 cols), each cell = 1000 people. Max 40k.
@@ -109,7 +105,7 @@ function renderSleepingGiants() {
         <div class="giants__waffle" aria-hidden="true">${cells}</div>
         <div class="giants__foot">
           <span class="giants__attendance">${g.mediaPublico.toLocaleString('pt-BR')}<small> por jogo</small></span>
-          <span class="giants__division">${g.divisaoAtual} hoje</span>
+          <span class="giants__division">${g.divisaoAtual} em 2024</span>
         </div>
       </figure></li>`;
   }).join('');
