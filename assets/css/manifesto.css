@@ -83,8 +83,6 @@
       align-items: center;
       gap: 11px;
       padding: 0.9rem 1.1rem;
-      font-weight: 600;
-      font-size: 1.02rem;
     }
     .manifesto__liga-dot {
       inline-size: 12px;
@@ -92,14 +90,27 @@
       flex: 0 0 auto;
       display: inline-block;
     }
+    .manifesto__liga-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-inline-size: 0;
+    }
+    .manifesto__liga-name {
+      font-weight: 600;
+      font-size: 1.02rem;
+      line-height: 1.2;
+    }
     .manifesto__liga-note {
       color: rgba(12, 14, 10, 0.5);
       font-weight: 400;
+      font-size: 0.82rem;
+      line-height: 1.2;
     }
 
     /* Pull-quote (green rule) */
     .manifesto__pullquote {
-      margin: 0;
+      margin: 0 0 clamp(2rem, 4vw, 3rem);
       border-inline-start: 5px solid var(--green);
       padding: 0.25rem 0 0.25rem clamp(1.25rem, 3vw, 2rem);
     }
@@ -121,14 +132,13 @@
       margin-block-end: 2.5rem;
     }
     .manifesto__objecao:last-child { margin-block-end: 0; }
-    .manifesto__objecao-quote {
-      font-family: var(--font-sans);
-      font-style: italic;
-      font-weight: 600;
-      font-size: clamp(1.25rem, 2.6vw, 1.7rem);
-      line-height: 1.25;
+    .manifesto__objecao .manifesto__objecao-quote {
+      font-family: var(--font-display);
+      font-weight: normal;
+      font-size: clamp(1.4rem, 2.8vw, 1.95rem);
+      line-height: 1.15;
       color: var(--terra);
-      margin: 0 0 1.35rem;
+      margin: 0 0 1.5rem;
     }
 
     ::selection {

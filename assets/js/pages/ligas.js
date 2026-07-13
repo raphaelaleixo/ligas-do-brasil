@@ -1,13 +1,139 @@
 import { loadSeason } from '../season.js';
 
+// potes = vagas fixas por pote [P1, P2, P3, P4]
+// extras = vagas extras rotativas entre {P1,P3} e {P2,P4} (só Nordestina e Paulista)
 const LEAGUES = [
-  { nome: 'Liga Nordestina',   regiaoPop: '54M', pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', quota: 10 },
-  { nome: 'Liga Paulista',     regiaoPop: '44M', pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', quota: 10 },
-  { nome: 'Liga Central',      regiaoPop: '37M', pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', quota: 8 },
-  { nome: 'Liga Sulista',      regiaoPop: '30M', pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', quota: 8 },
-  { nome: 'Liga Rio-Capixaba', regiaoPop: '20M', pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', quota: 8 },
-  { nome: 'Liga Amazônica',    regiaoPop: '18M', pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M', quota: 4 },
+  { nome: 'Liga Nordestina',   regiaoPop: '54M', pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', quota: 10, potes: [2, 2, 2, 2], extras: 2 },
+  { nome: 'Liga Paulista',     regiaoPop: '44M', pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', quota: 10, potes: [2, 2, 2, 2], extras: 2 },
+  { nome: 'Liga Central',      regiaoPop: '37M', pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
+  { nome: 'Liga Sulista',      regiaoPop: '30M', pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
+  { nome: 'Liga Rio-Capixaba', regiaoPop: '20M', pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
+  { nome: 'Liga Amazônica',    regiaoPop: '18M', pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M', quota: 4,  potes: [1, 1, 1, 1], extras: 0 },
 ];
+
+// Cidade-sede de cada clube. Chave = nome exato do clube no data.
+// Fonte: melhor esforço; alguns clubes menos conhecidos podem precisar de revisão.
+const CITIES = {
+  // Liga Paulista
+  'Botafogo-SP': 'Ribeirão Preto',
+  'Corinthians': 'São Paulo',
+  'Ferroviária': 'Araraquara',
+  'Guarani': 'Campinas',
+  'Inter de Limeira': 'Limeira',
+  'Ituano': 'Itu',
+  'Mirassol': 'Mirassol',
+  'Novorizontino': 'Novo Horizonte',
+  'Palmeiras': 'São Paulo',
+  'Ponte Preta': 'Campinas',
+  'Portuguesa': 'São Paulo',
+  'Red Bull Bragantino': 'Bragança Paulista',
+  'Santo André': 'Santo André',
+  'Santos': 'Santos',
+  'São Bernardo': 'São Bernardo do Campo',
+  'São Paulo': 'São Paulo',
+  'XV de Piracicaba': 'Piracicaba',
+  'Água Santa': 'Diadema',
+
+  // Liga Rio-Capixaba
+  'America': 'Rio de Janeiro',
+  'Americano': 'Campos dos Goytacazes',
+  'Audax-RJ': 'Saquarema',
+  'Bangu': 'Rio de Janeiro',
+  'Boavista': 'Saquarema',
+  'Botafogo': 'Rio de Janeiro',
+  'Desportiva Ferroviária': 'Cariacica',
+  'Flamengo': 'Rio de Janeiro',
+  'Fluminense': 'Rio de Janeiro',
+  'Friburguense': 'Nova Friburgo',
+  'Goytacaz': 'Campos dos Goytacazes',
+  'Madureira': 'Rio de Janeiro',
+  'Nova Iguaçu': 'Nova Iguaçu',
+  'Porto Vitória': 'Vitória',
+  'Real Noroeste': 'Águia Branca',
+  'Rio Branco-ES': 'Vitória',
+  'Vasco da Gama': 'Rio de Janeiro',
+  'Volta Redonda': 'Volta Redonda',
+
+  // Liga Nordestina
+  'ABC': 'Natal',
+  'América-RN': 'Natal',
+  'Bahia': 'Salvador',
+  'Botafogo-PB': 'João Pessoa',
+  'CRB': 'Maceió',
+  'CSA': 'Maceió',
+  'Ceará': 'Fortaleza',
+  'Confiança': 'Aracaju',
+  'Fortaleza': 'Fortaleza',
+  'Juazeirense': 'Juazeiro',
+  'Moto Club': 'São Luís',
+  'Náutico': 'Recife',
+  'River-PI': 'Teresina',
+  'Sampaio Corrêa': 'São Luís',
+  'Santa Cruz': 'Recife',
+  'Sport Recife': 'Recife',
+  'Treze': 'Campina Grande',
+  'Vitória': 'Salvador',
+
+  // Liga Sulista
+  'Athletico-Paranaense': 'Curitiba',
+  'Avaí': 'Florianópolis',
+  'Brasil de Pelotas': 'Pelotas',
+  'Brusque': 'Brusque',
+  'Cascavel': 'Cascavel',
+  'Caxias': 'Caxias do Sul',
+  'Chapecoense': 'Chapecó',
+  'Coritiba': 'Curitiba',
+  'Criciúma': 'Criciúma',
+  'Figueirense': 'Florianópolis',
+  'Grêmio': 'Porto Alegre',
+  'Internacional': 'Porto Alegre',
+  'Joinville': 'Joinville',
+  'Juventude': 'Caxias do Sul',
+  'Londrina': 'Londrina',
+  'Maringá': 'Maringá',
+  'Operário-PR': 'Ponta Grossa',
+  'Ypiranga de Erechim': 'Erechim',
+
+  // Liga Central
+  'América-MG': 'Belo Horizonte',
+  'Anápolis': 'Anápolis',
+  'Aparecidense': 'Aparecida de Goiânia',
+  'Athletic Club': 'São João del-Rei',
+  'Atlético-GO': 'Goiânia',
+  'Atlético-MG': 'Belo Horizonte',
+  'Brasiliense': 'Taguatinga',
+  'Cruzeiro': 'Belo Horizonte',
+  'Cuiabá': 'Cuiabá',
+  'Gama': 'Brasília',
+  'Goiás': 'Goiânia',
+  'Ipatinga': 'Ipatinga',
+  'Luverdense': 'Lucas do Rio Verde',
+  'Operário-MS': 'Campo Grande',
+  'Tombense': 'Tombos',
+  'Uberlândia': 'Uberlândia',
+  'Vila Nova-GO': 'Goiânia',
+  'Villa Nova-MG': 'Nova Lima',
+
+  // Liga Amazônica
+  'Amazonas FC': 'Manaus',
+  'Capital-TO': 'Palmas',
+  'Castanhal': 'Castanhal',
+  'Galvez': 'Rio Branco',
+  'Manaus FC': 'Manaus',
+  'Nacional-AM': 'Manaus',
+  'Paysandu': 'Belém',
+  'Porto Velho': 'Porto Velho',
+  'Real Ariquemes': 'Ariquemes',
+  'Remo': 'Belém',
+  'Rio Branco-AC': 'Rio Branco',
+  'São Raimundo-AM': 'Manaus',
+  'São Raimundo-RR': 'Boa Vista',
+  'Tocantinópolis': 'Tocantinópolis',
+  'Trem': 'Macapá',
+  'Tuna Luso': 'Belém',
+  'Ypiranga-AP': 'Macapá',
+  'Águia de Marabá': 'Marabá',
+};
 
 function slug(nome) {
   return nome.toLowerCase().replace(/\W+/g, '-').replace(/^-|-$/g, '');
@@ -16,7 +142,7 @@ function slug(nome) {
 const tabsEl    = document.getElementById('ligas-tabs');
 const nameEl    = document.getElementById('lig-name');
 const rowsEl    = document.getElementById('lig-rows');
-const tableEl   = document.getElementById('lig-table');
+const clubsEl   = document.getElementById('lig-clubs-wrap');
 const loadingEl = document.getElementById('lig-loading');
 const metaEl    = document.getElementById('lig-meta');
 const seedEl    = document.getElementById('lig-seed');
@@ -74,33 +200,80 @@ function renderContent() {
   `;
 
   if (!season) return;
-  const liga = season.ligasRegionais.find((l) => l.nome === meta.nome);
-  if (!liga) return;
 
-  const cc  = new Set(liga.qualificadosCampeoes || []);
-  const reb = new Set(liga.rebaixados || []);
+  // Ordena pelo ranking estrutural do clube — mesma base do sorteio da Copa
+  // dos Campeões (potes ordenados por força). Não usa a tabela simulada.
+  const clubs = season.clubes
+    .filter((c) => c.liga_regional === meta.nome && c.divisao === 'A')
+    .slice()
+    .sort((a, b) => {
+      if (b.ranking_forca !== a.ranking_forca) return b.ranking_forca - a.ranking_forca;
+      return a.nome.localeCompare(b.nome);
+    });
 
-  rowsEl.innerHTML = liga.tabelaA.map((t) => {
-    const zone = cc.has(t.id) ? 'cc' : reb.has(t.id) ? 'reb' : '';
-    const sg  = (t.saldoGols > 0 ? '+' : '') + t.saldoGols;
+  const quota = meta.quota;
+  const total = clubs.length;
+
+  // Cada posição qualificada ganha uma etiqueta de pote.
+  //
+  // Ligas sem extras (potes=[2,2,2,2] × 4 potes; potes=[1,1,1,1] × 4 potes):
+  //   pos → pote determinístico pela ordem cumulativa.
+  //
+  // Ligas com extras (Nordestina/Paulista com [2,2,2,2] + 2 extras):
+  //   Os 2 extras rotacionam entre {P1,P3} e {P2,P4} a cada ano. Ao ordenar
+  //   por força, isso deixa duas posições ambíguas:
+  //     - pos 3 pode ser P1 (3ª cabeça de chave num ano) ou P2 (1ª de P2 no outro)
+  //     - pos 8 pode ser P3 (3ª de P3) ou P4 (1ª de P4)
+  //   As demais são fixas: 1-2 sempre P1, 4-5 sempre P2, 6-7 sempre P3, 9-10 sempre P4.
+  const potBadge = (pos) => {
+    if (pos > quota) return null;
+    if (meta.extras === 0) {
+      let cursor = 0;
+      for (let p = 0; p < 4; p++) {
+        cursor += meta.potes[p];
+        if (pos <= cursor) return { potes: [p + 1] };
+      }
+    }
+    // Nordestina/Paulista pattern (10 vagas, extras=2)
+    if (pos <= 2) return { potes: [1] };
+    if (pos === 3) return { potes: [1, 2] };
+    if (pos <= 5) return { potes: [2] };
+    if (pos <= 7) return { potes: [3] };
+    if (pos === 8) return { potes: [3, 4] };
+    return { potes: [4] };
+  };
+
+  const badgeText = (potes) => {
+    if (potes.length === 1) {
+      return potes[0] === 1 ? 'Pote 1 · Cabeça de chave' : `Pote ${potes[0]}`;
+    }
+    return potes.map((p) => `Pote ${p}`).join(' ou ');
+  };
+
+  rowsEl.innerHTML = clubs.map((c, i) => {
+    const pos = i + 1;
+    const zone = pos <= quota ? 'cc' : pos > total - 3 ? 'reb' : '';
+    const cidade = CITIES[c.nome];
+    const loc = cidade ? `${cidade} · ${c.estado}` : c.estado;
+    const badge = potBadge(pos);
+    const badgeHtml = !badge ? '' :
+      badge.potes.length === 1
+        ? `<span class="lig-club__pote" data-pote="${badge.potes[0]}">${badgeText(badge.potes)}</span>`
+        : `<span class="lig-club__pote lig-club__pote--rotativo" data-potes="${badge.potes.join('-')}" title="Extra rotativo — muda de pote a cada ano">${badgeText(badge.potes)}</span>`;
     return `
-      <tr class="lig-row" data-zone="${zone}">
-        <td class="lig-td--pos"><span>${t.posicao}</span></td>
-        <td class="lig-td--name">${t.nome}</td>
-        <td class="lig-td--num">${t.jogos}</td>
-        <td class="lig-td--num">${t.vitorias}</td>
-        <td class="lig-td--num">${t.empates}</td>
-        <td class="lig-td--num">${t.derrotas}</td>
-        <td class="lig-td--num">${t.golsPro}</td>
-        <td class="lig-td--num">${t.golsContra}</td>
-        <td class="lig-td--num-strong">${sg}</td>
-        <td class="lig-td--pts">${t.pontos}</td>
-      </tr>
+      <li class="lig-club" data-zone="${zone}">
+        <span class="lig-club__pos">${pos}</span>
+        <span class="lig-club__body">
+          <span class="lig-club__name">${c.nome}</span>
+          <span class="lig-club__loc">${loc}</span>
+        </span>
+        ${badgeHtml}
+      </li>
     `;
   }).join('');
 
   loadingEl.hidden = true;
-  tableEl.hidden = false;
+  clubsEl.hidden = false;
 }
 
 // Initial hash → tab

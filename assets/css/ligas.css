@@ -106,9 +106,6 @@
     .lig-head__swatch--cc  { background: var(--green); }
     .lig-head__swatch--reb { background: var(--terra); }
 
-    .lig-table-wrap {
-      overflow-x: auto;
-    }
     .lig-loading {
       font-family: var(--font-mono);
       font-size: 0.85rem;
@@ -117,67 +114,71 @@
       margin: 0;
     }
 
-    .lig-table {
-      inline-size: 100%;
-      border-collapse: collapse;
-      font-variant-numeric: tabular-nums;
-      min-inline-size: 560px;
-    }
-    .lig-th {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: rgba(12, 14, 10, 0.5);
-      font-weight: 400;
-      padding-block: 0 12px;
-      padding-inline: 8px;
-      text-align: center;
-    }
-    .lig-th--pos  { text-align: start; padding-inline-start: 16px; }
-    .lig-th--name { text-align: start; }
-    .lig-th--pts  { text-align: end;   padding-inline-end: 16px; }
-
-    .lig-row { border-block-start: 1px solid rgba(12, 14, 10, 0.1); }
-    .lig-row[data-zone="cc"]  { background: rgba(0, 168, 90, 0.09); }
-    .lig-row[data-zone="reb"] { background: rgba(216, 85, 47, 0.08); }
-    .lig-row td { padding: 12px 8px; }
-    .lig-row .lig-td--pos {
+    /* Lista simples de clubes (estilo alinhado com os cards da página Copas) */
+    .lig-clubs {
+      list-style: none;
+      margin: 0;
       padding: 0;
-      border-inline-start: 4px solid transparent;
+      display: grid;
+      gap: 1px;
+      background: rgba(12, 14, 10, 0.12);
+      border: 1px solid rgba(12, 14, 10, 0.12);
     }
-    .lig-row[data-zone="cc"]  .lig-td--pos { border-inline-start-color: var(--green); }
-    .lig-row[data-zone="reb"] .lig-td--pos { border-inline-start-color: var(--terra); }
-    .lig-td--pos span {
-      display: block;
-      padding: 12px 8px 12px 12px;
+    .lig-club {
+      background: var(--paper);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0.85rem 1.1rem;
+      border-inline-start: 3px solid transparent;
+    }
+    .lig-club[data-zone="cc"]  { border-inline-start-color: var(--green); }
+    .lig-club[data-zone="reb"] { border-inline-start-color: var(--terra); }
+
+    .lig-club__pos {
+      flex: 0 0 auto;
+      inline-size: 28px;
+      block-size: 28px;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-sans);
       font-weight: 800;
-      font-size: 1.05rem;
-      color: rgba(12, 14, 10, 0.4);
+      font-size: 0.9rem;
+      background: rgba(12, 14, 10, 0.08);
+      color: rgba(12, 14, 10, 0.5);
+      font-variant-numeric: tabular-nums;
     }
-    .lig-row[data-zone="cc"]  .lig-td--pos span { color: var(--green-deep); }
-    .lig-row[data-zone="reb"] .lig-td--pos span { color: var(--terra); }
-    .lig-td--name {
-      font-weight: 600;
-      font-size: clamp(0.9rem, 1.5vw, 1.05rem);
-      white-space: nowrap;
-      text-align: start;
+    .lig-club[data-zone="cc"]  .lig-club__pos { background: var(--green);  color: var(--paper); }
+    .lig-club[data-zone="reb"] .lig-club__pos { background: var(--terra);  color: var(--paper); }
+
+    .lig-club__body {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-inline-size: 0;
     }
-    .lig-td--num {
-      text-align: center;
-      font-weight: 500;
-      color: rgba(12, 14, 10, 0.65);
+    .lig-club__name {
+      font-weight: 700;
+      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+      line-height: 1.2;
     }
-    .lig-td--num-strong {
-      text-align: center;
-      font-weight: 600;
-      color: var(--ink);
+    .lig-club__loc {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.55);
+      line-height: 1.2;
     }
-    .lig-td--pts {
-      text-align: end;
-      padding-inline: 8px 16px !important;
-      font-weight: 900;
-      font-size: 1.15rem;
+    .lig-club__pote {
+      margin-inline-start: auto;
+      flex: 0 0 auto;
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.7);
     }
 
     /* Meta strip — 5-up hairline grid */
@@ -225,6 +226,54 @@
       line-height: 1.4;
       color: rgba(12, 14, 10, 0.6);
       margin-block-start: 0.4rem;
+    }
+
+    /* Vagas: mini-grid mostrando 4 potes + extras rotativos hachurados */
+    .lig-vagas-block { display: flex; flex-direction: column; }
+    .lig-vagas {
+      list-style: none;
+      margin: 0.75rem 0 0;
+      padding: 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+    .lig-vagas__row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+    .lig-vagas__label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.75);
+    }
+    .lig-vagas__dots {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lig-vagas__dot {
+      inline-size: 14px;
+      block-size: 14px;
+      background: var(--ink);
+      display: inline-block;
+    }
+    .lig-vagas__dot--extra {
+      background: repeating-linear-gradient(45deg,
+        var(--ink) 0 2px,
+        transparent 2px 4px);
+      outline: 1.5px solid var(--ink);
+      outline-offset: -1.5px;
+    }
+    .lig-vagas__note {
+      font-size: 0.72rem;
+      line-height: 1.4;
+      color: rgba(12, 14, 10, 0.7);
+      margin-block-start: 0.6rem;
+      margin-block-end: 0;
     }
   }
 }

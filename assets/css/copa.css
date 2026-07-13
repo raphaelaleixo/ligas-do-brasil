@@ -328,111 +328,87 @@
       opacity: 0.85;
     }
 
-    /* Funnel (Copa do Brasil) */
-    .cop-funnel-legend {
-      display: flex;
-      gap: 1.25rem;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin: 0 0 1.5rem;
-      flex-wrap: wrap;
-    }
-    .cop-funnel-legend span {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .cop-funnel-legend span::before {
-      content: '';
-      inline-size: 12px;
-      block-size: 12px;
-      display: inline-block;
-    }
-    .cop-funnel-legend .cop-funnel-legend--surv::before { background: var(--green); }
-    .cop-funnel-legend .cop-funnel-legend--elim::before { background: var(--terra); }
+    /* Copa do Brasil — rodada a rodada, um quadrado por clube */
+    .cb-phases { display: grid; gap: clamp(1.5rem, 3vw, 2.25rem); }
 
-    .cop-funnel { display: grid; gap: 1.1rem; }
-    .cop-funnel__row-head {
+    .cb-phase {
+      border-block-start: 1px solid rgba(12, 14, 10, 0.14);
+      padding-block-start: clamp(1.1rem, 2vw, 1.5rem);
+    }
+    .cb-phase:first-child {
+      border-block-start: none;
+      padding-block-start: 0;
+    }
+    .cb-phase__head {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 1rem;
-      margin-block-end: 0.4rem;
+      margin-block-end: 0.5rem;
       flex-wrap: wrap;
     }
-    .cop-funnel__fase {
+    .cb-phase__label {
       font-family: var(--font-display);
       font-weight: normal;
       font-size: clamp(1rem, 2vw, 1.35rem);
       text-transform: uppercase;
     }
-    .cop-funnel__meta {
+    .cb-phase__meta {
       font-family: var(--font-mono);
       font-size: 0.72rem;
       letter-spacing: 0.03em;
       color: rgba(12, 14, 10, 0.6);
     }
-    .cop-funnel__body {
+    .cb-phase__legend {
       display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .cop-funnel__bar {
-      block-size: 32px;
-      inline-size: var(--w, 50%);
-      min-inline-size: 60px;
-      display: flex;
-      overflow: hidden;
-    }
-    .cop-funnel__bar-surv { background: var(--green); }
-    .cop-funnel__bar-elim { background: var(--terra); }
-    .cop-funnel__bye {
+      gap: 1rem 1.25rem;
+      flex-wrap: wrap;
       font-family: var(--font-mono);
-      font-size: 0.64rem;
+      font-size: 0.66rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      font-weight: 700;
-      background: var(--gold);
-      color: var(--ink);
-      padding: 3px 8px;
-      white-space: nowrap;
+      color: rgba(12, 14, 10, 0.72);
+      margin-block-end: 0.85rem;
     }
-    .cop-funnel__origem {
-      font-size: 0.82rem;
-      line-height: 1.4;
+    .cb-legend__item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .cb-phase__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, 16px);
+      gap: 4px;
+      margin-block-end: 0.75rem;
+    }
+    .cb-phase__origem {
+      font-size: 0.85rem;
+      line-height: 1.45;
       color: rgba(12, 14, 10, 0.6);
-      margin: 0.5rem 0 0;
+      margin: 0;
       max-inline-size: 64ch;
     }
-    .cop-funnel__final {
-      border-block-start: 3px solid var(--ink);
-      padding-block-start: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
+
+    .cb-square {
+      inline-size: 16px;
+      block-size: 16px;
+      display: inline-block;
+      position: relative;
     }
-    .cop-funnel__final-label {
-      font-family: var(--font-display);
-      font-weight: normal;
-      font-size: clamp(1.2rem, 2.5vw, 1.75rem);
-      text-transform: uppercase;
+    .cb-square--survivor { background: var(--blue); }
+    .cb-square--seriea   { background: var(--green); }
+    .cb-square--serieb   { background: var(--terra); }
+    .cb-square--conmebol { background: var(--gold); }
+    .cb-square--star::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: var(--paper);
+      -webkit-mask: center / 62% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18.2 5.8 22l1.7-7.2L2 10l7.1-1.1z'/%3E%3C/svg%3E");
+              mask: center / 62% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2l2.9 6.9L22 10l-5.5 4.8L18.2 22 12 18.2 5.8 22l1.7-7.2L2 10l7.1-1.1z'/%3E%3C/svg%3E");
     }
-    .cop-funnel__final-bar {
-      block-size: 32px;
-      inline-size: 21.3%;
-      min-inline-size: 60px;
-      background: var(--ink);
-    }
-    .cop-funnel__final-meta {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: rgba(12, 14, 10, 0.6);
-    }
+    /* Legend swatches sit inline so they don't inherit the grid sizing */
+    .cb-legend__item .cb-square { inline-size: 12px; block-size: 12px; }
 
     /* Byes callout */
     .cop-byes {

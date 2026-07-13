@@ -32,6 +32,12 @@
         grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
       }
     }
+    /* 8 clubes cabem em 4×2 sem sobrar bloco vazio a partir de ~960px */
+    @media (min-width: 960px) {
+      .giants__row {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
 
     .giants__card {
       background: var(--ink);

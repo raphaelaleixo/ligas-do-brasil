@@ -26,6 +26,12 @@
       padding: 0;
       list-style: none;
     }
+    /* 6 jogadores cabem em 3×2 sem sobrar bloco vazio a partir de ~960px */
+    @media (min-width: 960px) {
+      .revelation__row {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
 
     .revelation__card {
       background: var(--paper);

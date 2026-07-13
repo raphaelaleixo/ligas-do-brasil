@@ -10,7 +10,7 @@ const exampleEl  = document.getElementById('arch-example');
 const legendEl   = document.getElementById('cal-legend');
 const gridEl     = document.getElementById('cal-grid');
 
-const ARCH_ORDER = ['elite-finalista', 'sul-americana', 'regional-a', 'serie-b'];
+const ARCH_ORDER = ['copas-nacionais-e-internacionais', 'ligas-e-copas-nacionais', 'calendario-regional'];
 
 const LEGEND = [
   { key: 'liga_regional',          label: 'Liga Regional' },
@@ -21,7 +21,7 @@ const LEGEND = [
   { key: 'fifa_pause',             label: 'Data FIFA' },
 ];
 
-let sel = 'elite-finalista';
+let sel = 'copas-nacionais-e-internacionais';
 
 function renderTabs() {
   tabsEl.innerHTML = ARCH_ORDER.map((k) => `

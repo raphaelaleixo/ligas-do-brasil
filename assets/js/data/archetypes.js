@@ -111,60 +111,51 @@ const SUL_AM_ARCHETYPE = buildWeekMap([
 ]);
 
 // Regional Serie A: no continental, Copa Brasil base pool (1ª → 2ª → 3ª, out)
+// Clube regional: 34 Liga Regional + 1 Preliminar Copa do Brasil (eliminado no 1º jogo).
+// Total ≈ 35 jogos, mesmo número usado no card do Madureira no gráfico da home.
 const REGIONAL_A = buildWeekMap([
-  { week: 6, key: 'copa_brasil', label: 'Copa do Brasil · 1ª Fase' },
-  { week: 9, key: 'copa_brasil', label: 'Copa do Brasil · 2ª Fase' },
-  { week: 12, key: 'copa_brasil', label: 'Copa do Brasil · 3ª Fase (eliminado)' },
-]);
-
-// Serie B: 34 weekends of Regional B + Preliminar Copa do Brasil (eliminated)
-const SERIE_B = buildWeekMap([
   { week: 3, key: 'copa_brasil', label: 'Copa do Brasil · Preliminar (eliminado)' },
 ]);
 
+// Só ligas + copas nacionais: Copa dos Campeões (finalista) + Copa do Brasil (via bypass Conmebol
+// se qualificado, ou pelo funil). Sem competição continental.
+const NATIONAL_ONLY = buildWeekMap([
+  ...CC_GRUPOS.map((w, i) => ({ week: w, key: 'copa_campeoes', label: `Copa dos Campeões · ${i < 3 ? 'grupo' : 'cruzada'} R${(i % 3) + 1}` })),
+  ...CC_KO_MIDWEEKS.map((w, i) => ({ week: w, key: 'copa_campeoes', label: `Copa dos Campeões · ${CC_KO_LABELS[i]}` })),
+  ...CB_KO_MIDWEEKS.map((w, i) => ({ week: w, key: 'copa_brasil', label: `Copa do Brasil · ${CB_KO_LABELS[i]}` })),
+]);
+
 export const ARCHETYPES = {
-  'elite-finalista': {
-    slug: 'elite-finalista',
-    label: 'Elite finalista',
-    subtitle: 'Copa dos Campeões finalista + Libertadores + Copa do Brasil finalista',
+  'copas-nacionais-e-internacionais': {
+    slug: 'copas-nacionais-e-internacionais',
+    label: 'Copas nacionais e internacionais',
+    subtitle: 'Liga Regional + Copa dos Campeões + Copa do Brasil + Libertadores. O clube que joga tudo.',
     totalGames: 63,
     comparacao: { atual: 75, delta: '−16%' },
-    exemplos: 'Botafogo em 2024 (75 jogos)',
+    exemplos: 'Botafogo em 2024 — campeão brasileiro e da Libertadores (75 jogos).',
     mdsMap: ELITE_FINALISTA,
     hasLigaRegional: true,
-    // Weekend finals this archetype reaches
     weekendFinals: ['liga_regional', 'copa_brasil', 'copa_campeoes', 'libertadores'],
   },
-  'sul-americana': {
-    slug: 'sul-americana',
-    label: 'Vaga Sul-Americana',
-    subtitle: 'Regional Série A · Copa dos Campeões grupos · Copa do Brasil (bypass) · Sul-Americana finalista',
-    totalGames: 56,
-    comparacao: { atual: 65, delta: '−14%' },
-    exemplos: 'Cruzeiro em 2024 (finalista da Sul-Americana)',
-    mdsMap: SUL_AM_ARCHETYPE,
+  'ligas-e-copas-nacionais': {
+    slug: 'ligas-e-copas-nacionais',
+    label: 'Ligas e copas nacionais',
+    subtitle: 'Liga Regional + Copa dos Campeões + Copa do Brasil. Sem competição continental.',
+    totalGames: 50,
+    comparacao: { atual: 60, delta: '−17%' },
+    exemplos: 'Clube que se qualifica à Copa dos Campeões mas fica fora do continental.',
+    mdsMap: NATIONAL_ONLY,
     hasLigaRegional: true,
-    weekendFinals: ['liga_regional', 'sul_americana'],
+    weekendFinals: ['liga_regional', 'copa_brasil', 'copa_campeoes'],
   },
-  'regional-a': {
-    slug: 'regional-a',
-    label: 'Regional Série A',
-    subtitle: 'Regional Série A · Copa do Brasil pelo funil da base · sem competição continental',
-    totalGames: 37,
-    comparacao: { atual: 55, delta: '−33%' },
-    exemplos: 'Meio de tabela da Liga Regional',
-    mdsMap: REGIONAL_A,
-    hasLigaRegional: true,
-    weekendFinals: ['liga_regional'],
-  },
-  'serie-b': {
-    slug: 'serie-b',
-    label: 'Série B',
-    subtitle: 'Regional Série B · Copa do Brasil Preliminar · calendário espalhado por 10 meses',
+  'calendario-regional': {
+    slug: 'calendario-regional',
+    label: 'Calendário regional',
+    subtitle: 'Liga Regional + Copa do Brasil pelo funil da base. Sem competição nacional ou continental.',
     totalGames: 35,
     comparacao: { atual: 13, delta: '+169%' },
-    exemplos: 'Madureira em 2024 jogou 13 partidas em 3 meses. Aqui, 35 espalhados em 10.',
-    mdsMap: SERIE_B,
+    exemplos: 'Madureira em 2024 — 13 partidas, todas entre janeiro e abril.',
+    mdsMap: REGIONAL_A,
     hasLigaRegional: true,
     weekendFinals: ['liga_regional'],
   },

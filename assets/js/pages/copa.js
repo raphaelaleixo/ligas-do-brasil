@@ -7,12 +7,12 @@ const TABS = [
 ];
 
 const QUOTAS = [
-  { liga: 'Liga Nordestina',   vagas: 10, flag: '🇮🇹' },
-  { liga: 'Liga Paulista',     vagas: 10, flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-  { liga: 'Liga Central',      vagas: 8,  flag: '🇪🇸' },
-  { liga: 'Liga Sulista',      vagas: 8,  flag: '🇺🇦' },
-  { liga: 'Liga Rio-Capixaba', vagas: 8,  flag: '🇳🇱' },
-  { liga: 'Liga Amazônica',    vagas: 4,  flag: '🇵🇹' },
+  { liga: 'Liga Nordestina',   vagas: 10 },
+  { liga: 'Liga Paulista',     vagas: 10 },
+  { liga: 'Liga Central',      vagas: 8  },
+  { liga: 'Liga Sulista',      vagas: 8  },
+  { liga: 'Liga Rio-Capixaba', vagas: 8  },
+  { liga: 'Liga Amazônica',    vagas: 4  },
 ];
 
 const POTES = [
@@ -52,18 +52,49 @@ const CC_KO = [
 ];
 
 const CB_KO = [
-  { rodada: '16-avos', clubes: 32, formato: 'Ida e volta', detalhe: '19 sobreviventes do funil + 13 clubes das competições Conmebol (7 Libertadores + 6 Sul-Americana).' },
+  { rodada: '16-avos', clubes: 32, formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Oitavas', clubes: 16, formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Quartas', clubes: 8,  formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Semis',   clubes: 4,  formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Final',   clubes: 2,  formato: 'Ida e volta', detalhe: 'Sábado 9 nov — encerra o ciclo dos mata-matas nacionais antes das finais continentais.' },
 ];
 
-const FUNNEL = [
-  { fase: 'Preliminar', entram: 108, saem: 55, byes: 2, origem: 'Todos os 108 clubes da Série B. Byes para o top-1 e top-2 do ranking Série B do ano anterior.' },
-  { fase: '1ª Fase',    entram: 150, saem: 75, byes: 1, origem: '55 sobreviventes + 95 clubes da Série A. Bye para o top-1 Série B.' },
-  { fase: '2ª Fase',    entram: 75,  saem: 38, byes: 1, origem: '75 sobreviventes. Bye para o top-1 Série B.' },
-  { fase: '3ª Fase',    entram: 38,  saem: 19, byes: 0, origem: '38 sobreviventes. Sem byes — todos jogam.' },
+const CB_PHASES = [
+  {
+    fase: 'Preliminar',
+    parts: [{ kind: 'serieb', count: 108 }],
+    origem: 'Todos os 108 clubes da Série B começam a caminhada.',
+  },
+  {
+    fase: '1ª Fase',
+    parts: [
+      { kind: 'survivor', count: 55 },
+      { kind: 'seriea',   count: 95 },
+      { kind: 'serieb',   count: 1, star: true },
+    ],
+    origem: '55 vencedores da Preliminar + os 95 clubes da Série A que não disputam competições internacionais + o vice-líder da Série B, que entra direto.',
+  },
+  {
+    fase: '2ª Fase',
+    parts: [{ kind: 'survivor', count: 75 }],
+    origem: '75 sobreviventes. Todos jogam.',
+  },
+  {
+    fase: '3ª Fase',
+    parts: [
+      { kind: 'survivor', count: 37 },
+      { kind: 'serieb',   count: 1, star: true },
+    ],
+    origem: '37 vencedores da 2ª Fase + o líder da Série B do ano anterior, que só estreia agora.',
+  },
+  {
+    fase: '16-avos',
+    parts: [
+      { kind: 'survivor', count: 19 },
+      { kind: 'conmebol', count: 13 },
+    ],
+    origem: '19 sobreviventes se encontram com os 13 clubes vindos da Libertadores e da Sul-Americana.',
+  },
 ];
 
 const LIBERTADORES = [
@@ -73,7 +104,7 @@ const LIBERTADORES = [
   { pos: 4, origem: 'Semifinalista da Copa dos Campeões' },
   { pos: 5, origem: 'Semifinalista da Copa dos Campeões' },
   { pos: 6, origem: 'Vice-campeão da Copa do Brasil' },
-  { pos: 7, origem: 'Melhor campanha geral (G7) — cascata quando os slots acima estão vagos.' },
+  { pos: 7, origem: 'Próximo melhor colocado na Copa dos Campeões.' },
 ];
 
 const tabsEl   = document.getElementById('copa-tabs');
@@ -132,7 +163,7 @@ function renderCampeoes() {
       <div>
         <h2 class="cop-h2">48 clubes, 12 grupos, 4 potes</h2>
         <p class="cop-lede">
-          A Copa dos Campeões Regionais é o campeonato nacional da proposta — o Brasileirão <strong>em formato de Libertadores</strong>. Reúne os melhores clubes das 6 ligas regionais, com quota proporcional ao tamanho de cada região.
+          A Copa dos Campeões é o campeonato nacional da proposta — 48 clubes das 6 ligas regionais decidem o título brasileiro <strong>em formato de Libertadores</strong>. As vagas de cada região são proporcionais ao seu tamanho.
         </p>
       </div>
 
@@ -141,7 +172,7 @@ function renderCampeoes() {
         <div class="cop-quotas">
           ${QUOTAS.map((q) => `
             <div class="cop-quota">
-              <div class="cop-quota__label"><span aria-hidden="true">${q.flag}</span>${q.liga}</div>
+              <div class="cop-quota__label">${q.liga}</div>
               <div class="cop-quota__value">${q.vagas}</div>
             </div>
           `).join('')}
@@ -153,12 +184,12 @@ function renderCampeoes() {
       </div>
 
       <div>
-        <h3 class="cop-h3">Sorteio em 4 potes (formato FIFA)</h3>
+        <h3 class="cop-h3">Sorteio em 4 potes</h3>
         <p class="cop-p">
-          Os 48 clubes vão a 4 potes de 12 com base no ranking regional do ano anterior. O sorteio distribui 1 clube de cada pote em cada um dos 12 grupos.
+          Os 48 clubes se dividem em 4 potes de 12, semeados pelo ranking regional do ano anterior. O sorteio distribui 1 clube de cada pote em cada um dos 12 grupos.
         </p>
         <p class="cop-p" style="margin-block-end:1.75rem;">
-          <strong>Geo-lock:</strong> nenhum grupo pode ter mais de um clube da mesma região. Cada grupo é obrigatoriamente uma mini-Copa do Brasil — 4 clubes, 4 regiões diferentes.
+          <strong>Bloqueio regional:</strong> nenhum grupo pode ter mais de um clube da mesma região. Cada grupo é, por construção, um recorte do país inteiro — 4 clubes, 4 regiões diferentes.
         </p>
         <div class="cop-potes">
           ${POTES.map((p) => `
@@ -173,7 +204,7 @@ function renderCampeoes() {
       <div>
         <h3 class="cop-h3">Um sorteio possível</h3>
         <p class="cop-p">
-          Exemplo ilustrativo com o ranking real de 2024: 12 grupos, cada um com 1 clube por pote e <strong>4 regiões diferentes</strong>. Amazonas FC representa o Norte no Pote 1, Paysandu no Pote 2, Remo no Pote 3 e Manaus FC no Pote 4 — o Norte aparece em <strong>cada tier</strong> do torneio, não só no topo.
+          Exemplo ilustrativo com o ranking real de 2024: 12 grupos, cada um com 1 clube por pote e <strong>4 regiões diferentes</strong>. Amazonas FC representa o Norte no Pote 1, Paysandu no Pote 2, Remo no Pote 3 e Manaus FC no Pote 4 — o Norte aparece em <strong>cada pote</strong> do torneio, não só no topo.
         </p>
         <p class="cop-p" style="margin-block-end:1.75rem;">
           Neste sorteio (um entre vários possíveis), a Nordestina recebeu o extra nos Potes 1 e 3, e a Paulista nos Potes 2 e 4. A distribuição dos extras é <strong>sorteada a cada ano</strong>, garantindo 2 extras para cada região ao longo dos 4 potes.
@@ -182,27 +213,27 @@ function renderCampeoes() {
       </div>
 
       <div>
-        <h3 class="cop-h3">Fase de grupos: 6 jogos cross-pot</h3>
+        <h3 class="cop-h3">Fase de grupos: 3 do grupo + 3 cruzados</h3>
         <p class="cop-p" style="margin-block-end:1.5rem;">
-          Cada clube joga <strong>6 partidas</strong>: 3 contra os adversários do próprio grupo e <strong>3 partidas cruzadas</strong> contra clubes do mesmo pote em outros grupos. Todas contam para a classificação do grupo.
+          Cada clube joga <strong>6 partidas</strong>: 3 contra os adversários do próprio grupo e <strong>3 partidas cruzadas</strong> contra clubes de outros grupos — sempre dentro do mesmo pote. Todas contam para a classificação do grupo.
         </p>
         <details class="cop-why">
-          <summary>Por que as cruzadas são intra-pote?</summary>
+          <summary>Por que as cruzadas ficam dentro do mesmo pote?</summary>
           <div class="cop-why__body">
-            <p>Assim, cada pote joga um mini-torneio balanceado contra clubes de força equivalente — Pote 1 tem seus clássicos entre gigantes, Pote 4 tem sua liga entre iguais. A expectativa em qualquer pote é <strong>~4,5 pontos em 3 jogos cruzados</strong> (empate estatístico entre pares), então as cruzadas são neutras para todos.</p>
-            <p>A diferença de nível entre os potes fica reservada aos <strong>jogos do próprio grupo</strong>, onde a semeadura da temporada anterior efetivamente pesa.</p>
+            <p>Assim, cada pote joga um mini-torneio equilibrado entre clubes de força parecida — Pote 1 tem seus clássicos entre gigantes, Pote 4 tem sua liga entre iguais. A expectativa em qualquer pote é <strong>~4,5 pontos em 3 jogos cruzados</strong> (empate estatístico entre pares), então as cruzadas são neutras para todos.</p>
+            <p>A diferença de nível entre os potes fica reservada aos <strong>jogos do próprio grupo</strong>, onde a semeadura da temporada anterior é que faz diferença.</p>
           </div>
         </details>
       </div>
 
       <div>
-        <h3 class="cop-h3">Exemplo: cross-pot do Grupo A</h3>
+        <h3 class="cop-h3">Exemplo: as cruzadas do Grupo A</h3>
         <p class="cop-p" style="margin-block-end:1.75rem;">
-          As 3 partidas cruzadas de cada clube do Grupo A. Cada rodada, o Grupo A enfrenta um outro grupo inteiro — os 4 clubes do Grupo A jogam contra os 4 clubes do outro grupo, pote contra pote.
+          As 3 partidas cruzadas de cada clube do Grupo A. Em cada rodada, o Grupo A enfrenta outro grupo inteiro — os 4 clubes de um lado jogam contra os 4 do outro, pote contra pote.
         </p>
         <div class="cop-cross">${crossHtml}</div>
         <p class="cop-p">
-          Amazonas FC (Pote 1, único clube do Norte no topo) enfrenta Bahia, Palmeiras e Botafogo — três dos maiores do país. Bangu (Pote 4) enfrenta Athletic Club, Botafogo-PB e Manaus FC — clubes de força equivalente. Os potes se cruzam entre si, mas nunca entre potes diferentes.
+          Amazonas FC (Pote 1, único clube do Norte no topo) enfrenta Bahia, Palmeiras e Botafogo — três dos maiores do país. Bangu (Pote 4) enfrenta Athletic Club, Botafogo-PB e Manaus FC — clubes de força equivalente. Cada clube cruza só com clubes do próprio pote, nunca com potes diferentes.
         </p>
       </div>
 
@@ -215,25 +246,43 @@ function renderCampeoes() {
 }
 
 function renderBrasil() {
-  const funnelHtml = FUNNEL.map((f) => {
-    const width = (f.entram / 150 * 100).toFixed(1);
-    const meta = `${f.entram} → ${f.saem}  ·  −${f.entram - f.saem}`;
-    const bye = f.byes ? `<span class="cop-funnel__bye">${f.byes} bye</span>` : '';
+  const KIND_LABEL = {
+    survivor: 'Sobrevivente',
+    seriea:   'Série A',
+    serieb:   'Série B',
+    conmebol: 'Vindo da Conmebol',
+  };
+
+  const phasesHtml = CB_PHASES.map((ph) => {
+    const total = ph.parts.reduce((s, p) => s + p.count, 0);
+    const legendParts = ph.parts.filter((p) => p.count > 0).map((p) => {
+      const star = p.star ? ' cb-square--star' : '';
+      return `
+        <span class="cb-legend__item">
+          <span class="cb-square cb-square--${p.kind}${star}" aria-hidden="true"></span>
+          ${p.count} ${KIND_LABEL[p.kind]}${p.star ? ' · entrada direta' : ''}
+        </span>
+      `;
+    }).join('');
+
+    const squares = ph.parts.flatMap((p) => {
+      if (!p.count) return [];
+      const star = p.star ? ' cb-square--star' : '';
+      return Array.from({ length: p.count }, () =>
+        `<span class="cb-square cb-square--${p.kind}${star}" aria-hidden="true"></span>`
+      );
+    }).join('');
+
     return `
-      <div class="cop-funnel__row">
-        <div class="cop-funnel__row-head">
-          <span class="cop-funnel__fase">${f.fase}</span>
-          <span class="cop-funnel__meta">${meta}</span>
+      <section class="cb-phase">
+        <div class="cb-phase__head">
+          <span class="cb-phase__label">${ph.fase}</span>
+          <span class="cb-phase__meta">${total} clubes</span>
         </div>
-        <div class="cop-funnel__body">
-          <div class="cop-funnel__bar" style="--w:${width}%">
-            <div class="cop-funnel__bar-surv" style="flex:${f.saem};"></div>
-            <div class="cop-funnel__bar-elim" style="flex:${f.entram - f.saem};"></div>
-          </div>
-          ${bye}
-        </div>
-        <p class="cop-funnel__origem">${f.origem}</p>
-      </div>
+        <div class="cb-phase__legend">${legendParts}</div>
+        <div class="cb-phase__grid">${squares}</div>
+        <p class="cb-phase__origem">${ph.origem}</p>
+      </section>
     `;
   }).join('');
 
@@ -250,43 +299,32 @@ function renderBrasil() {
       <div>
         <h2 class="cop-h2">216 clubes, da base ao topo</h2>
         <p class="cop-lede">
-          A FA Cup brasileira: <strong>todos os 216 clubes profissionais</strong> disputam — Série A e Série B das 6 ligas regionais. É o único torneio em que Palmeiras e um clube da base podem se cruzar oficialmente.
+          A copa aberta a todos: <strong>os 216 clubes profissionais</strong> disputam — Série A e Série B das 6 ligas regionais. É o único torneio em que Palmeiras e um clube da base podem se cruzar oficialmente.
         </p>
       </div>
 
       <div>
-        <h3 class="cop-h3">O funil da base</h3>
+        <h3 class="cop-h3">Rodada a rodada</h3>
         <p class="cop-p" style="margin-block-end:1.75rem;">
-          A Série B começa no funil e é eliminada rodada a rodada. A Série A entra na 1ª Fase. Restam 19 sobreviventes que se fundem com os 13 clubes vindos das competições Conmebol no 16-avos.
+          Cada quadrado é um clube. A Série B começa sozinha, a Série A entra na 1ª Fase, e os clubes vindos da Conmebol chegam no 16-avos.
         </p>
-        <p class="cop-funnel-legend">
-          <span class="cop-funnel-legend--surv">Sobreviventes</span>
-          <span class="cop-funnel-legend--elim">Eliminados</span>
-        </p>
-        <div class="cop-funnel">
-          ${funnelHtml}
-          <div class="cop-funnel__final">
-            <span class="cop-funnel__final-label">16-avos</span>
-            <div class="cop-funnel__final-bar"></div>
-            <span class="cop-funnel__final-meta">32 clubes · 19 sobreviventes + 13 Conmebol</span>
-          </div>
-        </div>
+        <div class="cb-phases">${phasesHtml}</div>
       </div>
 
       <div>
         <h3 class="cop-h3">Vagas Conmebol: 13 clubes direto ao 16-avos</h3>
         <p class="cop-p">
-          Os <strong>13 clubes que disputaram Conmebol no ano anterior</strong> (7 Libertadores + 6 Sul-Americana) entram diretamente no <strong>16-avos</strong>. Isso evita que gigantes atropelem clubes da base nas fases iniciais, reserva o suspense do mata-mata para quando as diferenças de nível importarem, e alivia o calendário de quem já teve semana dobrada por 6 meses.
+          Os <strong>13 clubes que disputaram Conmebol no ano anterior</strong> — 7 da Libertadores e 6 da Sul-Americana — entram direto no <strong>16-avos</strong>. Três razões: não atropelar clubes da base nas rodadas iniciais, reservar o mata-mata pesado para quando as diferenças de nível pesam de verdade, e aliviar o calendário de quem já teve semana dobrada por meses.
         </p>
       </div>
 
       <div class="cop-byes">
-        <h3 class="cop-h3">Byes premiam a Série B</h3>
+        <h3 class="cop-h3">A Série B tem entradas premiadas</h3>
         <p>
-          Os <strong>4 byes ao longo do funil</strong> vão para os clubes mais bem ranqueados da Série B do ano anterior. O top-2 dorme na Preliminar. O top-1 tem descanso em três rodadas seguintes.
+          Os dois melhores da Série B do ano anterior pulam rodadas iniciais. O <strong>vice-líder</strong> estreia direto na 1ª Fase; o <strong>líder</strong> só entra na 3ª Fase. As estrelas nos quadrados marcam essas entradas.
         </p>
         <p>
-          É um mecanismo estrutural: subir alguns lugares no ranking da Série B rende um caminho mais curto na Copa do Brasil da próxima temporada. A Série B fica disputada até o último jogo — não só pelo acesso, mas por byes.
+          É um incentivo estrutural: subir alguns lugares no ranking da Série B rende um caminho mais curto na Copa do Brasil da próxima temporada. A Série B fica disputada até o último jogo — não só pelo acesso à Série A, mas por essas entradas.
         </p>
       </div>
 
@@ -309,7 +347,7 @@ function renderConmebol() {
   const sulHtml = QUOTAS.map((q, i) => `
     <li>
       <span class="cop-vaga-list__pos">${i + 1}</span>
-      <span class="cop-vaga-list__origem"><span aria-hidden="true">${q.flag}</span>Melhor clube da ${q.liga} não classificado à Libertadores</span>
+      <span class="cop-vaga-list__origem">Melhor clube da ${q.liga} não classificado à Libertadores</span>
     </li>
   `).join('');
 
@@ -318,19 +356,19 @@ function renderConmebol() {
       <div>
         <h2 class="cop-h2">Vagas Conmebol</h2>
         <p class="cop-lede">
-          Onde as duas copas nacionais desembocam. <strong>A Sul-Americana garante uma vaga por região — o mecanismo-chave da proposta.</strong>
+          Onde a temporada nacional se conecta com o continental. As 7 vagas da Libertadores saem do desempenho nas copas nacionais; as 6 vagas da Sul-Americana saem das ligas regionais, uma por região.
         </p>
       </div>
 
       <div class="cop-conmebol">
         <section>
           <h3 class="cop-vaga-list__title">Libertadores</h3>
-          <p class="cop-vaga-list__sub">7 vagas · cascata prioritária</p>
+          <p class="cop-vaga-list__sub">Vagas pelas copas nacionais</p>
           <ol class="cop-vaga-list cop-vaga-list--lib">${libHtml}</ol>
         </section>
         <section>
           <h3 class="cop-vaga-list__title">Sul-Americana</h3>
-          <p class="cop-vaga-list__sub">6 vagas · uma por região, sem cascata</p>
+          <p class="cop-vaga-list__sub">Vagas pelas ligas regionais</p>
           <ol class="cop-vaga-list cop-vaga-list--sul">${sulHtml}</ol>
         </section>
       </div>

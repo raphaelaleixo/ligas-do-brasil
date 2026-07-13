@@ -6,6 +6,20 @@
   <title>Ligas Regionais | Ligas do Brasil</title>
   <meta name="description" content="Seis ligas regionais, 216 clubes: Paulista, Rio-Capixaba, Central, Sulista, Nordestina, Amazônica.">
 
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ligas do Brasil">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://raphaelaleixo.github.io/ligas-do-brasil/ligas">
+  <meta property="og:title" content="Ligas Regionais | Ligas do Brasil">
+  <meta property="og:description" content="Seis ligas regionais, 216 clubes: Paulista, Rio-Capixaba, Central, Sulista, Nordestina, Amazônica.">
+  <meta property="og:image" content="https://raphaelaleixo.github.io/ligas-do-brasil/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ligas Regionais | Ligas do Brasil">
+  <meta name="twitter:description" content="Seis ligas regionais, 216 clubes: Paulista, Rio-Capixaba, Central, Sulista, Nordestina, Amazônica.">
+  <meta name="twitter:image" content="https://raphaelaleixo.github.io/ligas-do-brasil/assets/img/og.png">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="assets/css/fonts.css">
@@ -48,8 +62,8 @@
         <li><a href="./">Início</a></li>
         <li><a href="manifesto">Manifesto</a></li>
         <li><a href="ligas">Ligas</a></li>
-        <li><a href="timeline">Calendário</a></li>
         <li><a href="copa">Copas</a></li>
+        <li><a href="timeline">Calendário</a></li>
       </ul>
     </nav>
   </header>
@@ -78,26 +92,10 @@
           </p>
         </div>
 
-        <div class="lig-table-wrap" aria-live="polite">
-          <p class="lig-loading" id="lig-loading">Carregando temporada…</p>
-          <table class="lig-table" id="lig-table" hidden>
-            <thead>
-              <tr>
-                <th class="lig-th lig-th--pos">#</th>
-                <th class="lig-th lig-th--name">Clube</th>
-                <th class="lig-th lig-th--num">J</th>
-                <th class="lig-th lig-th--num">V</th>
-                <th class="lig-th lig-th--num">E</th>
-                <th class="lig-th lig-th--num">D</th>
-                <th class="lig-th lig-th--num">GP</th>
-                <th class="lig-th lig-th--num">GC</th>
-                <th class="lig-th lig-th--num">SG</th>
-                <th class="lig-th lig-th--pts">Pts</th>
-              </tr>
-            </thead>
-            <tbody id="lig-rows"></tbody>
-          </table>
+        <div class="lig-clubs-wrap" id="lig-clubs-wrap" aria-live="polite" hidden>
+          <ol class="lig-clubs" id="lig-rows"></ol>
         </div>
+        <p class="lig-loading" id="lig-loading">Carregando temporada…</p>
 
         <aside class="lig-meta" id="lig-meta"></aside>
       </div>
@@ -105,7 +103,7 @@
   </main>
 
   <footer>
-    <div>Ligas do Brasil · 2026 · Temporada simulada, seed <span id="lig-seed">—</span></div>
+    <div>Ligas do Brasil · 2026</div>
   </footer>
 
   <script type="module" src="assets/js/nav.js"></script>
