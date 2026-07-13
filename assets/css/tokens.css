@@ -38,8 +38,9 @@
        Each section explicitly picks its bg/fg pair via .act-* classes. */
     --ink:        #0C0E0A;
     --paper:      #F4EFE3;
-    --green:      #00944E;
-    --green-deep: #046B38;
+    --green:        #007A40;
+    --green-deep:   #046B38;
+    --green-bright: #12BE6F;
     --gold:       #FFCB05;
     --blue:       #0A46B0;
     --terra:      #D8552F;
