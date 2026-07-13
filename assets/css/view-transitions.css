@@ -1,8 +1,13 @@
-@layer base {
-  @view-transition {
-    navigation: auto;
-  }
+/* Cross-document view transitions must be declared at top-level, not inside @layer. */
+@view-transition {
+  navigation: auto;
+}
 
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
+
+@layer base {
   /* Cross-fade for the whole viewport (default) */
   :where(::view-transition-old(root), ::view-transition-new(root)) {
     animation-duration: 250ms;
@@ -20,9 +25,5 @@
   /* Persist the site brand across navigations */
   .site-nav__brand {
     view-transition-name: brand;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    @view-transition { navigation: none; }
   }
 }
