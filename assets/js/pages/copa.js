@@ -114,8 +114,13 @@ let sel = 'campeoes';
 function renderTabs() {
   tabsEl.innerHTML = TABS.map((t) => `
     <button type="button" role="tab" data-key="${t.key}"
+      id="copa-tab-${t.key}" aria-controls="copa-detalhe"
+      tabindex="${t.key === sel ? '0' : '-1'}"
       class="cop-tab" aria-selected="${t.key === sel}">${t.label}</button>
   `).join('');
+  contentEl.setAttribute('role', 'tabpanel');
+  contentEl.setAttribute('tabindex', '0');
+  contentEl.setAttribute('aria-labelledby', `copa-tab-${sel}`);
 }
 
 function renderCampeoes() {
@@ -382,15 +387,33 @@ function render() {
   else                          renderConmebol();
 }
 
-tabsEl.addEventListener('click', (e) => {
-  const btn = e.target.closest('.cop-tab');
-  if (!btn) return;
-  sel = btn.dataset.key;
+function activate(key, { focus = false } = {}) {
+  sel = key;
   renderTabs();
   render();
   const url = new URL(location.href);
   url.searchParams.set('t', sel);
   history.replaceState(null, '', url);
+  if (focus) tabsEl.querySelector(`[data-key="${key}"]`)?.focus();
+}
+
+tabsEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.cop-tab');
+  if (!btn) return;
+  activate(btn.dataset.key);
+});
+
+tabsEl.addEventListener('keydown', (e) => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+  const keys = TABS.map((t) => t.key);
+  const idx = keys.indexOf(sel);
+  let next = idx;
+  if (e.key === 'ArrowLeft')  next = (idx - 1 + keys.length) % keys.length;
+  if (e.key === 'ArrowRight') next = (idx + 1) % keys.length;
+  if (e.key === 'Home')       next = 0;
+  if (e.key === 'End')        next = keys.length - 1;
+  e.preventDefault();
+  activate(keys[next], { focus: true });
 });
 
 const initial = new URLSearchParams(location.search).get('t');

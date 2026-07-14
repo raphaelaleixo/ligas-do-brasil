@@ -34,6 +34,10 @@ Na sua região, você vê seu time contra os rivais que importam: os clássicos 
 
 O que muda é o confronto entre gigantes de **regiões diferentes** — Fla × Palmeiras, Corinthians × Grêmio. Eles deixam de ser rodada garantida e passam a acontecer na **Copa dos Campeões**, com eliminação em jogo. Hoje esse clássico se repete duas vezes por ano, às vezes com um dos dois sem objetivo na tabela; na reforma ele volta a ser acontecimento. Menos vezes, muito mais peso.
 
+E aqui está a premissa de tudo: **20 clubes de elite é pouco demais para um país deste tamanho.** Some a Série B e chega a 40 clubes — os únicos com uma temporada nacional longa o bastante para sustentar um elenco profissional o ano inteiro. São cerca de **1.200 jogadores** (uns 30 por elenco) em condições de se desenvolver em alto nível, num país de 200 milhões de apaixonados por futebol. É pouco.
+
+A regionalização não é sobre proteger o seu gigante dos pequenos — é sobre alargar essa base. São **216 clubes**, cada um com o calendário de dez meses: cinco vezes mais lugares onde talento se forma e fica. Um clube como o América ganha uma temporada inteira para reconquistar torcida local, gerar receita e voltar a revelar jogadores — e a Copa dos Campeões lhe dá o palco para encarar o Palmeiras por mérito, e às vezes ganhar. Quanto mais clubes assim, melhor o futebol brasileiro inteiro — inclusive o gigante que você vai ao estádio ver.
+
 ### 3. Decidir o título nacional no mata-mata não é injusto?
 
 Os pontos corridos não acabam — mudam de lugar. As **Ligas Regionais** são pontos corridos puros, 34 rodadas: o melhor da temporada inteira leva a taça da sua região. Toda a lógica do "campeão mais justo" continua viva, no nível em que o torcedor vive o dia a dia.

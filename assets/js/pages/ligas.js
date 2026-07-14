@@ -153,19 +153,40 @@ let season = null;
 function renderTabs() {
   tabsEl.innerHTML = LEAGUES.map((l, i) => `
     <button type="button" role="tab" data-idx="${i}"
+      id="lig-tab-${i}" aria-controls="lig-clubs-wrap"
+      tabindex="${i === sel ? '0' : '-1'}"
       class="lig-tab" aria-selected="${i === sel}">${l.nome.replace('Liga ', '')}</button>
   `).join('');
+  clubsEl.setAttribute('role', 'tabpanel');
+  clubsEl.setAttribute('tabindex', '0');
+  clubsEl.setAttribute('aria-labelledby', `lig-tab-${sel}`);
 }
 
-tabsEl.addEventListener('click', (e) => {
-  const btn = e.target.closest('.lig-tab');
-  if (!btn) return;
-  sel = Number(btn.dataset.idx);
+function activate(idx, { focus = false } = {}) {
+  sel = idx;
   renderTabs();
   renderContent();
   const url = new URL(location.href);
   url.hash = `liga=${slug(LEAGUES[sel].nome)}`;
   history.replaceState(null, '', url);
+  if (focus) tabsEl.querySelector(`[data-idx="${idx}"]`)?.focus();
+}
+
+tabsEl.addEventListener('click', (e) => {
+  const btn = e.target.closest('.lig-tab');
+  if (!btn) return;
+  activate(Number(btn.dataset.idx));
+});
+
+tabsEl.addEventListener('keydown', (e) => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+  let next = sel;
+  if (e.key === 'ArrowLeft')  next = (sel - 1 + LEAGUES.length) % LEAGUES.length;
+  if (e.key === 'ArrowRight') next = (sel + 1) % LEAGUES.length;
+  if (e.key === 'Home')       next = 0;
+  if (e.key === 'End')        next = LEAGUES.length - 1;
+  e.preventDefault();
+  activate(next, { focus: true });
 });
 
 function renderContent() {

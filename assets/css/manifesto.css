@@ -94,12 +94,6 @@
       gap: 11px;
       padding: 0.9rem 1.1rem;
     }
-    .manifesto__liga-dot {
-      inline-size: 12px;
-      block-size: 12px;
-      flex: 0 0 auto;
-      display: inline-block;
-    }
     .manifesto__liga-info {
       display: flex;
       flex-direction: column;

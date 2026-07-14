@@ -182,37 +182,6 @@
     margin-inline: auto;
   }
 
-  /* Section-index eyebrow — used above every ato h2 */
-  .section-index {
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    margin: 0 0 1.25rem;
-    opacity: 0.75;
-  }
-  .section-index--gold { color: var(--gold); opacity: 1; }
-  .section-index--deep { color: var(--green-deep); opacity: 1; }
-
-  /* Eyebrow with a leading hairline (used in hero) */
-  .eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    margin: 0 0 clamp(1.5rem, 4vw, 2.75rem);
-  }
-  .eyebrow--gold { color: var(--gold); }
-  .eyebrow__lead {
-    inline-size: 34px;
-    block-size: 2px;
-    background: currentColor;
-    display: inline-block;
-  }
-
   /* Button — gold pill (primary CTA) */
   .btn {
     font-family: var(--font-mono);

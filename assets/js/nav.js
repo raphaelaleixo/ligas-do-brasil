@@ -25,7 +25,10 @@ export function wireDrawer() {
 
   const sync = () => {
     const open = drawer.matches(':popover-open');
-    if (toggle) toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+    }
     if (main) main.toggleAttribute('inert', open);
   };
 

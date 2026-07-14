@@ -123,7 +123,10 @@ function renderRevelation() {
   if (!el) return;
   el.innerHTML = REVELATION.map(r => `
     <li><figure class="revelation__card">
-      <span class="revelation__cups">🏆 ${r.copasVencidas.join(', ')}</span>
+      <span class="revelation__cups">
+        <span aria-hidden="true">🏆</span>
+        <span class="visually-hidden">Copas do Mundo vencidas: </span>${r.copasVencidas.join(', ')}
+      </span>
       <span class="revelation__player">${r.jogador}</span>
       <span class="revelation__club">${r.clubeRevelador} <span class="revelation__club-state">(${r.estado})</span></span>
     </figure></li>

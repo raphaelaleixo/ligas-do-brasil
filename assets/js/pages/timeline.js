@@ -26,8 +26,13 @@ let sel = 'copas-nacionais-e-internacionais';
 function renderTabs() {
   tabsEl.innerHTML = ARCH_ORDER.map((k) => `
     <button type="button" role="tab" data-key="${k}"
+      id="cal-tab-${k}" aria-controls="cal-grid"
+      tabindex="${k === sel ? '0' : '-1'}"
       class="cal-tab" aria-selected="${k === sel}">${ARCHETYPES[k].label}</button>
   `).join('');
+  gridEl.setAttribute('role', 'tabpanel');
+  gridEl.setAttribute('tabindex', '0');
+  gridEl.setAttribute('aria-labelledby', `cal-tab-${sel}`);
 }
 
 function renderLegend() {
@@ -95,12 +100,29 @@ function renderArchetype() {
   history.replaceState(null, '', url);
 }
 
+function activate(key, { focus = false } = {}) {
+  sel = key;
+  renderTabs();
+  renderArchetype();
+  if (focus) tabsEl.querySelector(`[data-key="${key}"]`)?.focus();
+}
+
 tabsEl.addEventListener('click', (e) => {
   const btn = e.target.closest('.cal-tab');
   if (!btn) return;
-  sel = btn.dataset.key;
-  renderTabs();
-  renderArchetype();
+  activate(btn.dataset.key);
+});
+
+tabsEl.addEventListener('keydown', (e) => {
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(e.key)) return;
+  const idx = ARCH_ORDER.indexOf(sel);
+  let next = idx;
+  if (e.key === 'ArrowLeft')  next = (idx - 1 + ARCH_ORDER.length) % ARCH_ORDER.length;
+  if (e.key === 'ArrowRight') next = (idx + 1) % ARCH_ORDER.length;
+  if (e.key === 'Home')       next = 0;
+  if (e.key === 'End')        next = ARCH_ORDER.length - 1;
+  e.preventDefault();
+  activate(ARCH_ORDER[next], { focus: true });
 });
 
 const params = new URLSearchParams(location.search);
