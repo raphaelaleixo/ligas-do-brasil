@@ -121,7 +121,7 @@
       padding: 1.25rem;
     }
     .cop-quota--total {
-      background: var(--green);
+      background: var(--green-bright);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -465,7 +465,7 @@
       font-weight: 900;
     }
     .cop-vaga-list--lib .cop-vaga-list__pos {
-      background: var(--green);
+      background: var(--green-bright);
       color: var(--ink);
     }
     .cop-vaga-list--sul .cop-vaga-list__pos {
