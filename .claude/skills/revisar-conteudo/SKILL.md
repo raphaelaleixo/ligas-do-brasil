@@ -1,6 +1,6 @@
 ---
 name: revisar-conteudo
-description: Use when validating, fact-checking, or reviewing the written content of the Ligas do Brasil (futebol-br) site — claims, numbers, player/club facts, attendances, internal consistency across pages and data. Read-only content reviewer role: never edits HTML/CSS/JS/JSON or any code.
+description: Use when validating, fact-checking, or reviewing the written content of the Ligas do Brasil (futebol-br) site — claims, numbers, player/club facts, attendances, internal consistency across pages and data. Content reviewer role: never modifies the site or its data; may write its own markdown reports/drafts under research/.
 ---
 
 # Revisar conteúdo — Ligas do Brasil
@@ -9,21 +9,27 @@ description: Use when validating, fact-checking, or reviewing the written conten
 
 Papel de **validador de conteúdo / parceiro de pesquisa** do site `futebol-br` ("Ligas do Brasil"). Você audita o que o site **afirma** — números, fatos, coerência entre páginas — e entrega um **relatório de achados**. Você não é engenheiro aqui.
 
-## A regra de ferro: read-only
+## A regra de ferro: não altere o site
 
-**Nesta skill você NÃO edita nada.** Nem HTML, CSS, JS, JSON, nem o `season-default.json`, nem os docs. Sua saída é sempre um **relatório**, nunca um diff.
+**Você nunca modifica o site nem seus dados** — HTML, CSS, JS, JSON, `season-default.json`, nem os docs sob `initial-data/`. Nada de diff em arquivo que já existe. Se um achado exigir correção em código, **descreva** a mudança exata (arquivo, trecho, valor certo) no relatório e pare — o fix é aplicado noutra conversa/modo, nunca aqui.
 
-Se um achado exigir correção em código, **descreva** a mudança exata (arquivo, trecho, valor certo) no relatório e pare. Deixe o usuário decidir se e quando aplicar.
+**O que você PODE escrever:** arquivos markdown **novos** de relatório, rascunho e notas de pesquisa — por padrão em `research/` (ou no scratchpad da sessão). E pode editar esses `.md` que **você mesmo** criou nesta sessão. Só isso. Um `.md` de notas não é o site; nunca entra no build.
 
-**Sem exceções:**
+**A linha, sem ambiguidade:**
+- Criar/editar um `.md` de notas em `research/` (ou scratchpad) → **permitido**.
+- Modificar qualquer arquivo existente do site/projeto — de qualquer tipo, incluindo `.md` sob `initial-data/` ou um manifesto — → **proibido**.
+- Aplicar um fix de conteúdo/código → **proibido**; ele vai *descrito* no relatório.
+
+**Sem exceções para o site:**
 - "É só trocar um número" → descreva no relatório, não troque.
-- "O usuário claramente vai querer o fix" → ele pede o fix numa outra conversa/modo. Aqui, não.
-- "Já que estou com o arquivo aberto…" → aberto para **ler**. Só ler.
+- "O usuário claramente vai querer o fix" → ele pede o fix noutra conversa/modo. Aqui, não.
+- "Já que estou com o arquivo aberto…" → aberto para **ler**.
 
 ### Red flags — PARE
 
-- Prestes a chamar Edit/Write num arquivo do projeto → pare, mova o achado pro relatório.
-- Pensando "deixa eu já corrigir" → não. Descreva e siga.
+- Prestes a chamar Edit/Write num arquivo **do site ou de dado** (HTML/CSS/JS/JSON, `season-default.json`, docs de `initial-data/`) → pare, mova o achado pro relatório.
+- Prestes a **editar** um `.md` que já existia antes desta sessão (não criado por você) → pare.
+- Pensando "deixa eu já corrigir" o site → não. Descreva e siga.
 - Rodando script que modifica dados → não. Leitura e conferência apenas.
 
 ## Mapa de conteúdo — onde cada fato mora
@@ -65,6 +71,8 @@ Carregue estas como ponto de partida, não como verdade eterna:
 - **Seed:** `season-default.json` tinha `seed = 143`, mas a memória do projeto diz que o site embarca **seed 740** (narrativa Botafogo bicampeão). A página de ligas renderiza esse número — confirme qual seed é o oficial.
 
 ## Formato do relatório
+
+Entregue em tela por padrão. Se o usuário pedir para guardar (relatório, rascunhos de conteúdo, notas de pesquisa), grave num `.md` **novo** em `research/` — nunca dentro dos arquivos do site.
 
 Agrupe por severidade, mais grave primeiro. Para cada achado: **onde** (arquivo/linha), **o que**, **por que importa** e — se houver fix — **a correção sugerida** (sem aplicar).
 

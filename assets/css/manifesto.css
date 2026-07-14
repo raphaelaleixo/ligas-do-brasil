@@ -48,6 +48,16 @@
     .manifesto__section p:last-child { margin-block-end: 0; }
     .manifesto__section p strong { font-weight: 700; color: var(--ink); }
     .manifesto__section p em { font-style: italic; }
+    .manifesto__section p a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: rgba(12, 14, 10, 0.35);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 120ms ease;
+    }
+    .manifesto__section p a:hover {
+      text-decoration-color: var(--green-deep);
+    }
 
     .manifesto__index {
       font-family: var(--font-mono);
@@ -124,6 +134,44 @@
       text-transform: none;
     }
     .manifesto__pull-accent { color: var(--green-deep); }
+
+    /* FAQ (accordion) */
+    .manifesto__q {
+      border-block-start: 1px solid rgba(12, 14, 10, 0.14);
+      padding-block: clamp(1rem, 2vw, 1.35rem);
+    }
+    .manifesto__q:last-of-type {
+      border-block-end: 1px solid rgba(12, 14, 10, 0.14);
+    }
+    .manifesto__q > summary {
+      font-family: var(--font-display);
+      font-weight: normal;
+      font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      gap: 14px;
+      align-items: baseline;
+      padding-inline-end: 1rem;
+    }
+    .manifesto__q > summary::-webkit-details-marker { display: none; }
+    .manifesto__q > summary::before {
+      content: '+';
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 1.1em;
+      line-height: 1;
+      color: var(--green-deep);
+      flex: 0 0 auto;
+      transition: transform 150ms ease;
+    }
+    .manifesto__q[open] > summary::before {
+      content: '−';
+    }
+    .manifesto__q[open] > summary { margin-block-end: 1rem; }
 
     /* Objections */
     .manifesto__objecao {
