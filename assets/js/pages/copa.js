@@ -68,16 +68,16 @@ const CB_PHASES = [
   {
     fase: '1ª Fase',
     parts: [
-      { kind: 'survivor', count: 55 },
+      { kind: 'survivor', count: 54 },
       { kind: 'seriea',   count: 95 },
       { kind: 'serieb',   count: 1, star: true },
     ],
-    origem: '55 vencedores da Preliminar + os 95 clubes da Série A que não disputam competições internacionais + o vice-líder da Série B, que entra direto.',
+    origem: '54 vencedores da Preliminar + os 95 clubes da Série A que não disputam competições internacionais + o vice-líder da Série B, que entra direto.',
   },
   {
     fase: '2ª Fase',
-    parts: [{ kind: 'survivor', count: 75 }],
-    origem: '75 sobreviventes. Todos jogam.',
+    parts: [{ kind: 'survivor', count: 74 }],
+    origem: '74 sobreviventes. Todos jogam.',
   },
   {
     fase: '3ª Fase',
