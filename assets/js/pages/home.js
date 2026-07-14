@@ -13,9 +13,9 @@ function renderAnalogy() {
   const host = document.getElementById('analogy-rows');
   if (!host) return;
   host.innerHTML = ANALOGIES.map(a => `
-    <div class="analogy__row">
-      <span class="analogy__liga">${a.liga}</span>
-      <span class="analogy__pop">${a.regiaoPop}</span>
+    <div class="analogy__row" role="row">
+      <span class="analogy__liga" role="cell">${a.liga}</span>
+      <span class="analogy__pop" role="cell">${a.regiaoPop}</span>
     </div>
   `).join('');
 }
