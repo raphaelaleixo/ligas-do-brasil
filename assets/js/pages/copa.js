@@ -76,16 +76,16 @@ const CB_PHASES = [
   },
   {
     fase: '2ª Fase',
-    parts: [{ kind: 'survivor', count: 74 }],
-    origem: '74 sobreviventes. Todos jogam.',
+    parts: [
+      { kind: 'survivor', count: 75 },
+      { kind: 'serieb',   count: 1, star: true },
+    ],
+    origem: '75 vencedores da 1ª Fase + o líder da Série B do ano anterior, que só estreia agora.',
   },
   {
     fase: '3ª Fase',
-    parts: [
-      { kind: 'survivor', count: 37 },
-      { kind: 'serieb',   count: 1, star: true },
-    ],
-    origem: '37 vencedores da 2ª Fase + o líder da Série B do ano anterior, que só estreia agora.',
+    parts: [{ kind: 'survivor', count: 38 }],
+    origem: '38 sobreviventes da 2ª Fase. Todos jogam.',
   },
   {
     fase: '16-avos',
@@ -326,7 +326,7 @@ function renderBrasil() {
       <div class="cop-byes">
         <h3 class="cop-h3">A Série B tem entradas premiadas</h3>
         <p>
-          Os dois melhores da Série B do ano anterior pulam rodadas iniciais. O <strong>vice-líder</strong> estreia direto na 1ª Fase; o <strong>líder</strong> só entra na 3ª Fase. As estrelas nos quadrados marcam essas entradas.
+          Os dois melhores da Série B do ano anterior pulam rodadas iniciais. O <strong>vice-líder</strong> estreia direto na 1ª Fase; o <strong>líder</strong> só entra na 2ª Fase. As estrelas nos quadrados marcam essas entradas.
         </p>
         <p>
           É um incentivo estrutural: subir alguns lugares no ranking da Série B rende um caminho mais curto na Copa do Brasil da próxima temporada. A Série B fica disputada até o último jogo — não só pelo acesso à Série A, mas por essas entradas.
