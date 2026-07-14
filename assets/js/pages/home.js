@@ -51,22 +51,22 @@ function renderWorkload() {
     ...WORKLOAD_COMPARISONS.flatMap(c => [c.atual.jogos, c.reforma.jogos])
   );
   el.innerHTML = WORKLOAD_COMPARISONS.map(c => `
-    <div class="workload__row">
+    <div class="workload__row" role="group" aria-label="${c.label}: ${c.delta} de jogos entre modelo atual e Ligas do Brasil">
       <div class="workload__row-head">
         <span class="workload__label">${c.label}</span>
-        <span class="workload__delta">${c.delta}</span>
+        <span class="workload__delta" aria-hidden="true">${c.delta}</span>
       </div>
       <p class="workload__subtitle">${c.subtitle}</p>
       <div class="workload__bars">
         <div class="workload__bar-row">
           <div class="workload__bar workload__bar--current" style="--w:${(c.atual.jogos / maxVal * 100).toFixed(1)}%">
-            <span class="workload__bar-value">${c.atual.jogos}<small> jogos</small></span>
+            <span class="workload__bar-value"><span class="visually-hidden">Modelo atual: </span>${c.atual.jogos}<small> jogos</small></span>
           </div>
           <p class="workload__bar-detail">${c.atual.det}</p>
         </div>
         <div class="workload__bar-row">
           <div class="workload__bar workload__bar--reform" style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}%">
-            <span class="workload__bar-value">${c.reforma.jogos}<small> jogos</small></span>
+            <span class="workload__bar-value"><span class="visually-hidden">Ligas do Brasil: </span>${c.reforma.jogos}<small> jogos</small></span>
           </div>
           <p class="workload__bar-detail">${c.reforma.det}</p>
         </div>
