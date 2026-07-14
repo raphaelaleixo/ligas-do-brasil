@@ -193,7 +193,7 @@
       background: var(--paper);
       padding: 1.5rem;
     }
-    .lig-meta__block--accent { background: var(--green); }
+    .lig-meta__block--accent { background: var(--green-bright); }
     .lig-meta__label {
       font-family: var(--font-mono);
       font-size: 0.66rem;

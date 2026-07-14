@@ -109,7 +109,7 @@
       background: var(--paper);
       padding: 1.25rem 1.4rem;
     }
-    .arch-counter--reform { background: var(--green); }
+    .arch-counter--reform { background: var(--green-bright); }
     .arch-counter__label {
       font-family: var(--font-mono);
       font-size: 0.64rem;
@@ -208,7 +208,7 @@
       border-inline-start: 0 solid transparent;
     }
     .cal-grid__slot[data-comp=""]           { background: var(--paper); color: rgba(12, 14, 10, 0.3); font-weight: 400; }
-    .cal-grid__slot[data-comp="liga_regional"]         { background: var(--green);      color: var(--ink); }
+    .cal-grid__slot[data-comp="liga_regional"]         { background: var(--green-bright); color: var(--ink); }
     .cal-grid__slot[data-comp="copa_campeoes"]         { background: var(--gold);       color: var(--ink); }
     .cal-grid__slot[data-comp="copa_brasil"]           { background: var(--blue);       color: var(--paper); }
     .cal-grid__slot[data-comp="conmebol_libertadores"] { background: var(--green-deep); color: var(--paper); }

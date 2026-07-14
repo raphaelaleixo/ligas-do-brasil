@@ -52,7 +52,7 @@ function renderLegend() {
   // Apply the same background rules as the grid slots to the legend swatches
   for (const s of legendEl.querySelectorAll('.cal-legend__swatch')) {
     const c = s.dataset.comp;
-    if (c === 'liga_regional')          s.style.background = 'var(--green)';
+    if (c === 'liga_regional')          s.style.background = 'var(--green-bright)';
     else if (c === 'copa_campeoes')     s.style.background = 'var(--gold)';
     else if (c === 'copa_brasil')       s.style.background = 'var(--blue)';
     else if (c === 'conmebol_libertadores') s.style.background = 'var(--green-deep)';

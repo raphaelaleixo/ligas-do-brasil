@@ -218,7 +218,7 @@
       font-size: 0.64rem;
     }
     .cop-pote-badge[data-pote="1"] { background: var(--gold);  color: var(--ink); }
-    .cop-pote-badge[data-pote="2"] { background: var(--green); color: var(--ink); }
+    .cop-pote-badge[data-pote="2"] { background: var(--green-bright); color: var(--ink); }
     .cop-pote-badge[data-pote="3"] { background: var(--blue);  color: var(--paper); }
     .cop-pote-badge[data-pote="4"] { background: var(--terra); color: var(--paper); }
     .cop-group__club { display: flex; flex-direction: column; }
