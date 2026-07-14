@@ -22,7 +22,7 @@
     }
     .analogy__head {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1.6fr 1fr;
+      grid-template-columns: 1.6fr 1fr;
       gap: 1rem;
       padding-block-end: 0.75rem;
       border-block-end: 2px solid var(--ink);
@@ -36,7 +36,7 @@
 
     .analogy__row {
       display: grid;
-      grid-template-columns: 1.6fr 1fr 1.6fr 1fr;
+      grid-template-columns: 1.6fr 1fr;
       gap: 1rem;
       align-items: center;
       padding-block: 1.15rem;
@@ -55,20 +55,13 @@
       font-size: clamp(1.2rem, 2.5vw, 1.75rem);
       font-variant-numeric: tabular-nums;
     }
-    .analogy__country {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 500;
-      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
-    }
-    .analogy__country-flag { font-size: 1.3em; }
-    .analogy__pop--secondary {
-      text-align: end;
-      font-weight: 600;
-      font-size: clamp(1rem, 2vw, 1.4rem);
-      font-variant-numeric: tabular-nums;
-      color: rgba(12, 14, 10, 0.55);
+    .analogy__floor {
+      margin: 1rem 0 0;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.6);
     }
 
     /* Nod pra Copa dos Campeões: card cheio em ouro */

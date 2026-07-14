@@ -1,12 +1,12 @@
 import { loadSeason } from '../season.js';
 
 const ANALOGIES = [
-  { liga: 'Nordestina',    regiaoPop: '54M', pais: 'Itália',         paisPop: '59M' },
-  { liga: 'Paulista',      regiaoPop: '44M', pais: 'Inglaterra',     paisPop: '57M' },
-  { liga: 'Central',       regiaoPop: '37M', pais: 'Espanha',        paisPop: '48M' },
-  { liga: 'Sulista',       regiaoPop: '30M', pais: 'Ucrânia',        paisPop: '32M' },
-  { liga: 'Rio-Capixaba',  regiaoPop: '20M', pais: 'Países Baixos',  paisPop: '18M' },
-  { liga: 'Amazônica',     regiaoPop: '18M', pais: 'Portugal',       paisPop: '10M' },
+  { liga: 'Nordestina',    regiaoPop: '54 mi' },
+  { liga: 'Paulista',      regiaoPop: '44 mi' },
+  { liga: 'Central',       regiaoPop: '37 mi' },
+  { liga: 'Sulista',       regiaoPop: '30 mi' },
+  { liga: 'Rio-Capixaba',  regiaoPop: '20 mi' },
+  { liga: 'Amazônica',     regiaoPop: '18 mi' },
 ];
 
 function renderAnalogy() {
@@ -16,8 +16,6 @@ function renderAnalogy() {
     <div class="analogy__row">
       <span class="analogy__liga">${a.liga}</span>
       <span class="analogy__pop">${a.regiaoPop}</span>
-      <span class="analogy__country">${a.pais}</span>
-      <span class="analogy__pop--secondary">${a.paisPop}</span>
     </div>
   `).join('');
 }

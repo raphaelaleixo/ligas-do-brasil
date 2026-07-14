@@ -3,12 +3,12 @@ import { loadSeason } from '../season.js';
 // potes = vagas fixas por pote [P1, P2, P3, P4]
 // extras = vagas extras rotativas entre {P1,P3} e {P2,P4} (só Nordestina e Paulista)
 const LEAGUES = [
-  { nome: 'Liga Nordestina',   regiaoPop: '54M', pais: 'Itália',        flag: '🇮🇹', paisPop: '59M', quota: 10, potes: [2, 2, 2, 2], extras: 2 },
-  { nome: 'Liga Paulista',     regiaoPop: '44M', pais: 'Inglaterra',    flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', paisPop: '57M', quota: 10, potes: [2, 2, 2, 2], extras: 2 },
-  { nome: 'Liga Central',      regiaoPop: '37M', pais: 'Espanha',       flag: '🇪🇸', paisPop: '48M', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
-  { nome: 'Liga Sulista',      regiaoPop: '30M', pais: 'Ucrânia',       flag: '🇺🇦', paisPop: '32M', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
-  { nome: 'Liga Rio-Capixaba', regiaoPop: '20M', pais: 'Países Baixos', flag: '🇳🇱', paisPop: '18M', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
-  { nome: 'Liga Amazônica',    regiaoPop: '18M', pais: 'Portugal',      flag: '🇵🇹', paisPop: '10M', quota: 4,  potes: [1, 1, 1, 1], extras: 0 },
+  { nome: 'Liga Nordestina',   regiaoPop: '54M', multiplo: '5,4×', quota: 10, potes: [2, 2, 2, 2], extras: 2 },
+  { nome: 'Liga Paulista',     regiaoPop: '44M', multiplo: '4,4×', quota: 10, potes: [2, 2, 2, 2], extras: 2 },
+  { nome: 'Liga Central',      regiaoPop: '37M', multiplo: '3,7×', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
+  { nome: 'Liga Sulista',      regiaoPop: '30M', multiplo: '3,0×', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
+  { nome: 'Liga Rio-Capixaba', regiaoPop: '20M', multiplo: '2,0×', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
+  { nome: 'Liga Amazônica',    regiaoPop: '18M', multiplo: '1,8×', quota: 4,  potes: [1, 1, 1, 1], extras: 0 },
 ];
 
 // Cidade-sede de cada clube. Chave = nome exato do clube no data.
@@ -179,9 +179,9 @@ function renderContent() {
       <div class="lig-meta__value">${meta.regiaoPop} <span class="lig-meta__unit">habitantes</span></div>
     </div>
     <div class="lig-meta__block">
-      <div class="lig-meta__label">Equivalente europeu</div>
-      <div class="lig-meta__value"><span aria-hidden="true">${meta.flag}</span>${meta.pais}</div>
-      <div class="lig-meta__hint">${meta.paisPop} habitantes — país que sustenta sua própria liga nacional.</div>
+      <div class="lig-meta__label">Escala europeia</div>
+      <div class="lig-meta__value">${meta.multiplo} a população de Portugal</div>
+      <div class="lig-meta__hint">País que, sozinho, sustenta uma liga nacional inteira.</div>
     </div>
     <div class="lig-meta__block lig-meta__block--accent">
       <div class="lig-meta__label">Vagas na Copa dos Campeões</div>
