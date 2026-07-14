@@ -15,7 +15,7 @@
 
   .act--ink   { background: var(--ink);   color: var(--paper); }
   .act--paper { background: var(--paper); color: var(--ink); }
-  .act--green { background: var(--green-bright); color: var(--ink); }
+  .act--green { background: var(--green); color: var(--ink); }
   .act--blue  { background: var(--blue);  color: var(--paper); }
 
   /* Sticky top nav — ink bg with backdrop blur */
