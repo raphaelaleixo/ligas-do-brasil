@@ -91,13 +91,13 @@ const WAFFLE_UNIT = 1000;
 function renderSleepingGiants() {
   const el = document.getElementById('giants-row');
   if (!el) return;
-  el.innerHTML = SLEEPING_GIANTS.map(g => {
+  el.innerHTML = SLEEPING_GIANTS.map((g, cardIdx) => {
     const filled = Math.round(g.mediaPublico / WAFFLE_UNIT);
     const cells = Array.from({ length: WAFFLE_CELLS }, (_, i) =>
-      `<span class="giants__cell"${i < filled ? ' data-filled' : ''}></span>`
+      `<span class="giants__cell" style="--i:${i}"${i < filled ? ' data-filled' : ''}></span>`
     ).join('');
     return `
-      <li><figure class="giants__card">
+      <li style="--i:${cardIdx}"><figure class="giants__card">
         <figcaption>
           <span class="giants__name">${g.nome}</span>
           <span class="giants__meta">${g.estado}</span>
