@@ -23,17 +23,6 @@
 @supports ((animation-timeline: view()) and (animation-range: entry)) {
   @media (prefers-reduced-motion: no-preference) {
     @layer components {
-      @keyframes act-reveal {
-        from { translate: 0 24px; }
-        to   { translate: 0 0; }
-      }
-
-      .act:not(.hero) {
-        animation: act-reveal linear both;
-        animation-range: entry 0% cover 20%;
-        animation-timeline: view();
-      }
-
       /* Metric cards: card fades+lifts, value counts up 0 → final. */
       @keyframes card-lift {
         from { translate: 0 16px; }
@@ -152,5 +141,52 @@
         animation-range: entry calc(10% + 5% * var(--i, 0)) cover 30%;
       }
     }
+  }
+}
+
+/* Hero pitch draws itself in on first paint.
+   Separate block: this is a time-based animation, not scroll-driven — no
+   dependency on animation-timeline: view(). `pathLength="1"` on each stroked
+   shape lets `stroke-dasharray: 1` mean "one full path" universally.
+   `stroke-dashoffset: 0` at rest = solid line, so browsers ignoring the
+   media query (reduced-motion) see the pitch normally. */
+.hero__pitch svg [pathLength] {
+  stroke-dasharray: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @layer components {
+    @keyframes hero-pitch-draw {
+      from { stroke-dashoffset: 1; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes hero-pitch-spot {
+      from { opacity: 0; scale: 0; }
+      to   { opacity: 1; scale: 1; }
+    }
+
+    .hero__pitch svg [pathLength] {
+      animation: hero-pitch-draw 900ms ease-out both;
+    }
+    .hero__pitch svg .pitch-spot {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: hero-pitch-spot 400ms ease-out both;
+    }
+
+    /* Sequence: boundary → midline → circle → left-then-right pairs → dots.
+       `svg` in each selector matches the base rule's specificity (0,2,1) so
+       cascade order wins — without it, the base `animation` shorthand's
+       implicit animation-delay: 0s would beat these lower-specificity rules. */
+    .hero__pitch svg .pitch-boundary            { animation-delay: 200ms; }
+    .hero__pitch svg .pitch-midline             { animation-delay: 800ms; }
+    .hero__pitch svg .pitch-circle              { animation-delay: 1200ms; }
+    .hero__pitch svg .pitch-goalbox--left       { animation-delay: 1500ms; }
+    .hero__pitch svg .pitch-goalbox--right      { animation-delay: 1700ms; }
+    .hero__pitch svg .pitch-goalarea--left      { animation-delay: 1900ms; }
+    .hero__pitch svg .pitch-goalarea--right     { animation-delay: 2100ms; }
+    .hero__pitch svg .pitch-spot--center        { animation-delay: 2400ms; }
+    .hero__pitch svg .pitch-spot--penalty-left  { animation-delay: 2600ms; }
+    .hero__pitch svg .pitch-spot--penalty-right { animation-delay: 2800ms; }
   }
 }
