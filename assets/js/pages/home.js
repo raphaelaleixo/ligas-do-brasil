@@ -6,7 +6,7 @@ const ANALOGIES = [
   { liga: 'Central',       regiaoPop: '37 mi' },
   { liga: 'Sulista',       regiaoPop: '30 mi' },
   { liga: 'Rio-Capixaba',  regiaoPop: '20 mi' },
-  { liga: 'Amazônica',     regiaoPop: '18 mi' },
+  { liga: 'Amazônica',     regiaoPop: '17 mi' },
 ];
 
 function renderAnalogy() {
