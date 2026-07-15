@@ -10,7 +10,7 @@ const exampleEl  = document.getElementById('arch-example');
 const legendEl   = document.getElementById('cal-legend');
 const gridEl     = document.getElementById('cal-grid');
 
-const ARCH_ORDER = ['copas-nacionais-e-internacionais', 'ligas-e-copas-nacionais', 'calendario-regional'];
+const ARCH_ORDER = ['copas-nacionais-e-internacionais', 'campeao-nacional', 'ligas-e-copas-nacionais', 'calendario-regional'];
 
 const LEGEND = [
   { key: 'liga_regional',          label: 'Liga Regional' },

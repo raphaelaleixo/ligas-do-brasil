@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { CB_PHASES, QUOTAS, CC_KO, CB_KO } from '../assets/js/data/copas.js';
+import { ARCHETYPES, calendarFor } from '../assets/js/data/archetypes.js';
 
 describe('copas data module é puro (importável em node)', () => {
   it('exporta QUOTAS somando 48', () => {
@@ -42,4 +43,40 @@ describe('formato dos mata-matas', () => {
       }
     });
   }
+});
+
+describe('arquétipos do calendário (decoupled, 47 semanas)', () => {
+  const esperado = {
+    'copas-nacionais-e-internacionais': 64,
+    'campeao-nacional': 62,
+    'ligas-e-copas-nacionais': 49,
+    'calendario-regional': 36,
+  };
+  for (const [slug, total] of Object.entries(esperado)) {
+    it(`${slug} soma ${total} jogos`, () => {
+      expect(ARCHETYPES[slug].totalGames).toBe(total);
+    });
+  }
+
+  it('nenhum arquétipo dobra o slot (mds e fds nunca são 2 jogos reais na mesma semana)', () => {
+    for (const slug of Object.keys(esperado)) {
+      const weeks = calendarFor(slug);
+      for (const w of weeks) {
+        // fds e mds podem coexistir (fim de semana + meio de semana), mas
+        // nenhum dos dois deve conter mais de um jogo. Slot nunca é array.
+        expect(Array.isArray(w.fds)).toBe(false);
+        expect(Array.isArray(w.mds)).toBe(false);
+      }
+    }
+  });
+
+  it('a contagem de jogos reais de cada arquétipo bate com totalGames', () => {
+    const conta = (slug) => calendarFor(slug).reduce((n, w) => {
+      const real = (k) => k && k.key && k.key !== 'fifa_pause';
+      return n + (real(w.fds) ? 1 : 0) + (real(w.mds) ? 1 : 0);
+    }, 0);
+    for (const [slug, total] of Object.entries(esperado)) {
+      expect(conta(slug), slug).toBe(total);
+    }
+  });
 });
