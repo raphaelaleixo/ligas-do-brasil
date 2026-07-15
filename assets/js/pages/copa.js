@@ -203,24 +203,24 @@ function renderBrasil() {
   contentEl.innerHTML = `
     <div class="cop-panel">
       <div>
-        <h2 class="cop-h2">216 clubes, da base ao topo</h2>
+        <h2 class="cop-h2">Do funil ao tropeço da elite</h2>
         <p class="cop-lede">
-          A copa aberta a todos: <strong>os 216 clubes profissionais</strong> disputam — Série A e Série B das 6 ligas regionais. É o único torneio em que Palmeiras e um clube da base podem se cruzar oficialmente.
+          Todos os 216 clubes são elegíveis. <strong>168 entram pelo funil</strong> — Série B e a Série A que não subiu à Copa dos Campeões — e a <strong>elite entra caindo</strong>: quem perde os 16-avos da Copa dos Campeões desce para os 16-avos daqui. É o único torneio em que um gigante que tropeçou cruza com um clube da base.
         </p>
       </div>
 
       <div>
         <h3 class="cop-h3">Rodada a rodada</h3>
         <p class="cop-p" style="margin-block-end:1.75rem;">
-          Cada quadrado é um clube. A Série B começa sozinha, a Série A entra na 1ª Fase, e os clubes vindos da Conmebol chegam no 16-avos.
+          Cada quadrado é um clube. A Série B abre sozinha, a Série A que não subiu entra na 1ª Fase, e os 16 clubes eliminados nos 16-avos da Copa dos Campeões descem para o 16-avos.
         </p>
         <div class="cb-phases">${phasesHtml}</div>
       </div>
 
       <div>
-        <h3 class="cop-h3">Vagas Conmebol: 13 clubes direto ao 16-avos</h3>
+        <h3 class="cop-h3">A elite entra caindo</h3>
         <p class="cop-p">
-          Os <strong>13 clubes da Série A que disputaram Conmebol no ano anterior</strong> — 7 da Libertadores e 6 da Sul-Americana — entram direto no <strong>16-avos</strong>. Três razões: não atropelar clubes da base nas rodadas iniciais, reservar o mata-mata pesado para quando as diferenças de nível pesam de verdade, e aliviar o calendário de quem já teve semana dobrada por meses.
+          Os <strong>16 clubes eliminados nos 16-avos da Copa dos Campeões</strong> não acabam a temporada nacional — descem para os 16-avos da Copa do Brasil, onde encontram os 16 sobreviventes do funil. É a segunda chance: perdeu a corrida pelo título, disputa o torneio aberto. Champions → Europa, versão brasileira.
         </p>
       </div>
 
