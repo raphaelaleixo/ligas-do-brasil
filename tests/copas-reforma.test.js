@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { CB_PHASES, QUOTAS } from '../assets/js/data/copas.js';
+import { CB_PHASES, QUOTAS, CC_KO, CB_KO } from '../assets/js/data/copas.js';
 
 describe('copas data module é puro (importável em node)', () => {
   it('exporta QUOTAS somando 48', () => {
@@ -31,4 +31,15 @@ describe('funil da Copa do Brasil fecha 100% (decoupled)', () => {
     expect(byName['2ª Fase']).toBe(64);
     expect(byName['3ª Fase']).toBe(32);
   });
+});
+
+describe('formato dos mata-matas', () => {
+  for (const [nome, KO] of [['CC', CC_KO], ['CB', CB_KO]]) {
+    it(`${nome}: só a final é jogo único`, () => {
+      for (const r of KO) {
+        if (r.rodada === 'Final') expect(r.formato).toBe('Jogo único');
+        else expect(r.formato).toBe('Ida e volta');
+      }
+    });
+  }
 });

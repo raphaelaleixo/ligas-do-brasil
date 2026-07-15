@@ -36,7 +36,7 @@ export const CROSS_ROUNDS = [
 ];
 
 export const CC_KO = [
-  { rodada: '16-avos', clubes: 32, formato: 'Ida e volta', detalhe: '2 melhores de cada grupo + 8 melhores 3ºs colocados.' },
+  { rodada: '16-avos', clubes: 32, formato: 'Ida e volta', detalhe: '2 melhores de cada grupo + 8 melhores 3ºs. Os 16 eliminados caem nos 16-avos da Copa do Brasil.' },
   { rodada: 'Oitavas', clubes: 16, formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Quartas', clubes: 8,  formato: 'Ida e volta', detalhe: '' },
   { rodada: 'Semis',   clubes: 4,  formato: 'Ida e volta', detalhe: '' },
