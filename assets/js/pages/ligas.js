@@ -8,7 +8,7 @@ const LEAGUES = [
   { nome: 'Liga Central',      regiaoPop: '37M', multiplo: '3,7×', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
   { nome: 'Liga Sulista',      regiaoPop: '30M', multiplo: '3,0×', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
   { nome: 'Liga Rio-Capixaba', regiaoPop: '20M', multiplo: '2,0×', quota: 8,  potes: [2, 2, 2, 2], extras: 0 },
-  { nome: 'Liga Amazônica',    regiaoPop: '18M', multiplo: '1,8×', quota: 4,  potes: [1, 1, 1, 1], extras: 0 },
+  { nome: 'Liga Amazônica',    regiaoPop: '17M', multiplo: '1,7×', quota: 4,  potes: [1, 1, 1, 1], extras: 0 },
 ];
 
 // Cidade-sede de cada clube. Chave = nome exato do clube no data.
