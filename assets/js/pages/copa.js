@@ -1,4 +1,4 @@
-import { QUOTAS, POTES, GROUPS, CROSS_ROUNDS, CC_KO, CB_KO, CB_PHASES, LIBERTADORES } from '../data/copas.js';
+import { QUOTAS, POTES, GROUPS, CROSS_ROUNDS, CC_KO, CB_KO, CB_PHASES, LIBERTADORES, SERIE_A_FUNIL } from '../data/copas.js';
 
 const REG = { NE: 'Nordestina', SP: 'Paulista', CE: 'Central', SUL: 'Sulista', RJ: 'Rio-Capixaba', AM: 'Amazônica' };
 
@@ -161,21 +161,17 @@ function renderBrasil() {
 
   const phasesHtml = CB_PHASES.map((ph) => {
     const total = ph.parts.reduce((s, p) => s + p.count, 0);
-    const legendParts = ph.parts.filter((p) => p.count > 0).map((p) => {
-      const star = p.star ? ' cb-square--star' : '';
-      return `
-        <span class="cb-legend__item">
-          <span class="cb-square cb-square--${p.kind}${star}" aria-hidden="true"></span>
-          ${p.count} ${KIND_LABEL[p.kind]}${p.star ? ' · entrada direta' : ''}
-        </span>
-      `;
-    }).join('');
+    const legendParts = ph.parts.filter((p) => p.count > 0).map((p) => `
+      <span class="cb-legend__item">
+        <span class="cb-square cb-square--${p.kind}" aria-hidden="true"></span>
+        ${p.count} ${KIND_LABEL[p.kind]}
+      </span>
+    `).join('');
 
     const squares = ph.parts.flatMap((p) => {
       if (!p.count) return [];
-      const star = p.star ? ' cb-square--star' : '';
       return Array.from({ length: p.count }, () =>
-        `<span class="cb-square cb-square--${p.kind}${star}" aria-hidden="true"></span>`
+        `<span class="cb-square cb-square--${p.kind}" aria-hidden="true"></span>`
       );
     }).join('');
 
@@ -200,42 +196,79 @@ function renderBrasil() {
     </div>
   `).join('');
 
+  const serieAHtml = SERIE_A_FUNIL.map((r) => `
+    <div class="cop-quota">
+      <div class="cop-quota__label">${r.liga}</div>
+      <div class="cop-quota__value">${r.vagas}</div>
+    </div>
+  `).join('');
+
+  const drainSurvivorSquares = Array.from({ length: 16 },
+    () => `<span class="cb-square cb-square--survivor" aria-hidden="true"></span>`).join('');
+  const drainCaidoSquares = Array.from({ length: 16 },
+    () => `<span class="cb-square cb-square--cc_caido" aria-hidden="true"></span>`).join('');
+  const drainMixedSquares = Array.from({ length: 32 }, (_, i) =>
+    `<span class="cb-square cb-square--${i < 16 ? 'survivor' : 'cc_caido'}" aria-hidden="true"></span>`
+  ).join('');
+
   contentEl.innerHTML = `
     <div class="cop-panel">
       <div>
-        <h2 class="cop-h2">Do funil ao tropeço da elite</h2>
+        <h2 class="cop-h2">A copa aberta a todos</h2>
         <p class="cop-lede">
-          Todos os 216 clubes são elegíveis. <strong>168 entram pelo funil</strong> — Série B e a Série A que não subiu à Copa dos Campeões — e a <strong>elite entra caindo</strong>: quem perde os 16-avos da Copa dos Campeões desce para os 16-avos daqui. É o único torneio em que um gigante que tropeçou cruza com um clube da base.
+          Os <strong>216 clubes profissionais</strong> são elegíveis — <strong>168 entram pelo funil</strong>, e a <strong>elite entra caindo</strong>. É o único torneio em que um gigante que tropeçou cruza com um clube da base.
         </p>
       </div>
 
       <div>
-        <h3 class="cop-h3">Rodada a rodada</h3>
+        <h3 class="cop-h3">Quem entra por onde</h3>
+        <p class="cop-p" style="margin-block-end:1.5rem;">
+          Dos 168 que entram pelo funil, <strong>108 são de Série B</strong> (todos os clubes) e <strong>60 são de Série A</strong> — os que não subiram à Copa dos Campeões, distribuídos por região.
+        </p>
+        <div class="cb-entry-bar" aria-label="108 Série B + 60 Série A somam 168 clubes no funil">
+          <div class="cb-entry-bar__seg cb-entry-bar__seg--serieb" style="flex-basis: ${(108 / 168 * 100).toFixed(2)}%;">108 Série B</div>
+          <div class="cb-entry-bar__seg cb-entry-bar__seg--seriea" style="flex-basis: ${(60 / 168 * 100).toFixed(2)}%;">60 Série A</div>
+        </div>
+        <p class="cop-eyebrow">Os 60 Série A por região</p>
+        <div class="cop-quotas">
+          ${serieAHtml}
+          <div class="cop-quota cop-quota--total">
+            <div class="cop-quota__label">Total</div>
+            <div class="cop-quota__value">60</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="cop-h3">O funil fecha 100%</h3>
         <p class="cop-p" style="margin-block-end:1.75rem;">
-          Cada quadrado é um clube. A Série B abre sozinha, a Série A que não subiu entra na 1ª Fase, e os 16 clubes eliminados nos 16-avos da Copa dos Campeões descem para o 16-avos.
+          Cada quadrado é um clube. A Série B abre sozinha na Preliminar; a Série A que não subiu entra na 1ª Fase. Nenhuma fase tem número ímpar — o funil fecha sem sobra.
         </p>
         <div class="cb-phases">${phasesHtml}</div>
       </div>
 
       <div>
-        <h3 class="cop-h3">A elite entra caindo</h3>
-        <p class="cop-p">
-          Os <strong>16 clubes eliminados nos 16-avos da Copa dos Campeões</strong> não acabam a temporada nacional — descem para os 16-avos da Copa do Brasil, onde encontram os 16 sobreviventes do funil. É a segunda chance: perdeu a corrida pelo título, disputa o torneio aberto. Champions → Europa, versão brasileira.
+        <h3 class="cop-h3">E aí a elite cai</h3>
+        <p class="cop-p" style="margin-block-end:1.5rem;">
+          Perdeu os 16-avos da Copa dos Campeões? Você não acabou a temporada nacional — desce pra cá. <strong>Champions → Europa, versão brasileira</strong>: os 16 clubes eliminados no 16-avos da CC encontram os 16 sobreviventes do funil no 16-avos da Copa do Brasil.
         </p>
-      </div>
-
-      <div class="cop-byes">
-        <h3 class="cop-h3">A Série B tem entradas premiadas</h3>
-        <p>
-          Os dois melhores da Série B do ano anterior pulam rodadas iniciais. O <strong>vice-líder</strong> estreia direto na 1ª Fase; o <strong>líder</strong> só entra na 2ª Fase. As estrelas nos quadrados marcam essas entradas.
-        </p>
-        <p>
-          É um incentivo estrutural: subir alguns lugares no ranking da Série B rende um caminho mais curto na Copa do Brasil da próxima temporada. A Série B fica disputada até o último jogo — não só pelo acesso à Série A, mas por essas entradas.
-        </p>
+        <div class="cb-drain">
+          <div class="cb-drain__label">16 sobreviventes do funil</div>
+          <div class="cb-drain__row">${drainSurvivorSquares}</div>
+          <div class="cb-drain__arrow" aria-hidden="true">▼ ▼ ▼ ▼</div>
+          <div class="cb-drain__label">16-avos · 32 clubes</div>
+          <div class="cb-drain__row cb-drain__row--mixed">${drainMixedSquares}</div>
+          <div class="cb-drain__arrow" aria-hidden="true">▲ ▲ ▲ ▲</div>
+          <div class="cb-drain__label">16 caídos da Copa dos Campeões</div>
+          <div class="cb-drain__row">${drainCaidoSquares}</div>
+        </div>
       </div>
 
       <div>
-        <h3 class="cop-h3">Mata-mata: 32 → 1</h3>
+        <h3 class="cop-h3">Mata-mata ida-e-volta</h3>
+        <p class="cop-p" style="margin-block-end:1.5rem;">
+          Do 16-avos até as semis, todo confronto é <strong>ida e volta</strong>, decidido pelo placar agregado. Só a <strong>final é jogo único</strong>.
+        </p>
         <div class="cop-ko">${koHtml}</div>
       </div>
     </div>
