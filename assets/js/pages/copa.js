@@ -156,7 +156,7 @@ function renderBrasil() {
     survivor: 'Sobrevivente',
     seriea:   'Série A',
     serieb:   'Série B',
-    cc_caido: 'Caiu da Copa dos Campeões',
+    cc_caido: 'caem da Copa dos Campeões',
   };
 
   const phasesHtml = CB_PHASES.map((ph) => {
@@ -203,14 +203,6 @@ function renderBrasil() {
     </div>
   `).join('');
 
-  const drainSurvivorSquares = Array.from({ length: 16 },
-    () => `<span class="cb-square cb-square--survivor" aria-hidden="true"></span>`).join('');
-  const drainCaidoSquares = Array.from({ length: 16 },
-    () => `<span class="cb-square cb-square--cc_caido" aria-hidden="true"></span>`).join('');
-  const drainMixedSquares = Array.from({ length: 32 }, (_, i) =>
-    `<span class="cb-square cb-square--${i < 16 ? 'survivor' : 'cc_caido'}" aria-hidden="true"></span>`
-  ).join('');
-
   contentEl.innerHTML = `
     <div class="cop-panel">
       <div>
@@ -240,28 +232,11 @@ function renderBrasil() {
       </div>
 
       <div>
-        <h3 class="cop-h3">O funil fecha 100%</h3>
+        <h3 class="cop-h3">Formato da competição</h3>
         <p class="cop-p" style="margin-block-end:1.75rem;">
           Cada quadrado é um clube. A Série B abre sozinha na Preliminar; a Série A que não subiu entra na 1ª Fase. Nenhuma fase tem número ímpar — o funil fecha sem sobra.
         </p>
         <div class="cb-phases">${phasesHtml}</div>
-      </div>
-
-      <div>
-        <h3 class="cop-h3">E aí a elite cai</h3>
-        <p class="cop-p" style="margin-block-end:1.5rem;">
-          Perdeu os 16-avos da Copa dos Campeões? Você não acabou a temporada nacional — desce pra cá. <strong>Champions → Europa, versão brasileira</strong>: os 16 clubes eliminados no 16-avos da CC encontram os 16 sobreviventes do funil no 16-avos da Copa do Brasil.
-        </p>
-        <div class="cb-drain">
-          <div class="cb-drain__label">16 sobreviventes do funil</div>
-          <div class="cb-drain__row">${drainSurvivorSquares}</div>
-          <div class="cb-drain__arrow" aria-hidden="true">▼ ▼ ▼ ▼</div>
-          <div class="cb-drain__label">16-avos · 32 clubes</div>
-          <div class="cb-drain__row cb-drain__row--mixed">${drainMixedSquares}</div>
-          <div class="cb-drain__arrow" aria-hidden="true">▲ ▲ ▲ ▲</div>
-          <div class="cb-drain__label">16 caídos da Copa dos Campeões</div>
-          <div class="cb-drain__row">${drainCaidoSquares}</div>
-        </div>
       </div>
 
       <div>

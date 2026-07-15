@@ -439,35 +439,6 @@
     .cb-entry-bar__seg--serieb { background: var(--terra); }
     .cb-entry-bar__seg--seriea { background: var(--green); }
 
-    /* Copa do Brasil — dreno CC→CB: 3 linhas de quadradinhos + setas convergentes */
-    .cb-drain {
-      display: grid;
-      gap: 0.6rem;
-      justify-items: start;
-      margin-block-end: 1rem;
-    }
-    .cb-drain__row {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, 16px);
-      gap: 4px;
-    }
-    .cb-drain__row--mixed {
-      grid-template-columns: repeat(auto-fill, 16px);
-    }
-    .cb-drain__label {
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: rgba(12, 14, 10, 0.72);
-    }
-    .cb-drain__arrow {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: rgba(12, 14, 10, 0.4);
-      letter-spacing: 3px;
-    }
-
     /* Byes callout */
     .cop-byes {
       background: var(--ink);
