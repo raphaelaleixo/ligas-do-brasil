@@ -123,8 +123,8 @@ const REVELATION = [
 function renderRevelation() {
   const el = document.getElementById('revelation-row');
   if (!el) return;
-  el.innerHTML = REVELATION.map((r, i) => `
-    <li style="--i:${i}"><figure class="revelation__card">
+  el.innerHTML = REVELATION.map((r) => `
+    <li><figure class="revelation__card">
       <span class="revelation__cups">
         <span aria-hidden="true">🏆</span>
         <span class="visually-hidden">Copas do Mundo vencidas: </span>${r.copasVencidas.join(', ')}

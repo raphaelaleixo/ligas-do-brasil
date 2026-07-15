@@ -23,37 +23,16 @@
 @supports ((animation-timeline: view()) and (animation-range: entry)) {
   @media (prefers-reduced-motion: no-preference) {
     @layer components {
-      /* Metric cards: card fades+lifts, value counts up 0 → final. */
-      @keyframes card-lift {
-        from { translate: 0 16px; }
-        to   { translate: 0 0; }
-      }
-
+      /* Metric cards: only the numbers count up; card containers stay static. */
       @keyframes count-up {
         from { --n: 0; }
         to   { --n: var(--n-final); }
       }
 
-      /* Named view-timeline on the section, referenced by children. Using each
-         card's own view() timeline would make sibling ranges collapse to the
-         same scroll position (cards in one row share viewport intersection);
-         pinning to the section — a much taller element — turns 10% offsets
-         into real scroll distance and makes the stagger visible. */
+      /* Named view-timeline on the section so per-child ranges translate to
+         real scroll distance (siblings in a row would otherwise share the
+         same viewport intersection and stagger would collapse). */
       .metrics { view-timeline: --metrics-tl; }
-
-      .metrics .metric-card {
-        animation: card-lift linear both;
-        animation-timeline: --metrics-tl;
-      }
-      /* Ranges reach deep into the `cover` phase (element height + viewport
-         height of scroll), so each animation plays over enough scroll to be
-         perceptible while the section sits on-screen. Endpoints shift 10% per
-         card, so cards cascade one after another with a bit of overlap. */
-      .metrics .metric-card:nth-child(1) { animation-range: entry 0%   cover 30%; }
-      .metrics .metric-card:nth-child(2) { animation-range: entry 10%  cover 40%; }
-      .metrics .metric-card:nth-child(3) { animation-range: entry 20%  cover 50%; }
-      .metrics .metric-card:nth-child(4) { animation-range: entry 30%  cover 60%; }
-      .metrics .metric-card:nth-child(5) { animation-range: entry 40%  cover 70%; }
 
       .metrics .metric-card__value {
         position: relative;
@@ -62,7 +41,7 @@
         animation: count-up linear both;
         animation-timeline: --metrics-tl;
       }
-      /* Number starts a beat after its card's lift begins, finishes a beat after. */
+      /* Each card's number staggers along the section timeline. */
       .metrics .metric-card:nth-child(1) .metric-card__value { animation-range: entry 5%   cover 40%; }
       .metrics .metric-card:nth-child(2) .metric-card__value { animation-range: entry 15%  cover 50%; }
       .metrics .metric-card:nth-child(3) .metric-card__value { animation-range: entry 25%  cover 60%; }
@@ -106,39 +85,21 @@
         animation-range: entry calc(30% + 5% * var(--i, 0)) cover 40%;
       }
 
-      /* Sleeping giants: card fades+lifts a beat before its waffle cells cascade in. */
+      /* Sleeping giants: only the filled waffle cells cascade in; the cards
+         themselves stay static. --ci on the <li> = card index (0-3); --i on
+         each cell = cell index (0-39). Both offsets fold into one range so
+         waffles cascade card-by-card. */
       @keyframes cell-pop {
         from { opacity: 0; scale: 0.6; }
         to   { opacity: 1; scale: 1; }
       }
 
-      /* Same trick as .metrics: pin cards + cells to the section's timeline so
-         the per-card stagger reads across real scroll distance. --ci on the <li>
-         is the card index (0-3); --i on each cell is the cell index (0-39). */
       .giants { view-timeline: --giants-tl; }
-
-      .giants__row > li {
-        animation: card-lift linear both;             /* reuse keyframe from Task 3 */
-        animation-timeline: --giants-tl;
-        animation-range: entry calc(0% + 12% * var(--ci, 0)) cover calc(20% + 12% * var(--ci, 0));
-      }
 
       .giants__cell[data-filled] {
         animation: cell-pop linear both;
         animation-timeline: --giants-tl;
         animation-range: entry calc(5% + 12% * var(--ci, 0) + 0.35% * var(--i, 0)) cover calc(30% + 12% * var(--ci, 0));
-      }
-
-      /* Revelation cards: staggered lift left-to-right. */
-      @keyframes card-lift-tall {
-        from { translate: 0 20px; }
-        to   { translate: 0 0; }
-      }
-
-      .revelation__row > li {
-        animation: card-lift-tall linear both;
-        animation-timeline: view();
-        animation-range: entry calc(10% + 5% * var(--i, 0)) cover 30%;
       }
     }
   }
