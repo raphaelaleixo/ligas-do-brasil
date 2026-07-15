@@ -84,8 +84,8 @@
       block-size: 38px;
       display: flex;
       align-items: center;
-      padding-inline-start: 14px;
-      min-inline-size: 56px;
+      padding-inline: 14px;
+      min-inline-size: max-content;
       inline-size: var(--w, 0%);
     }
     .workload__bar--current { background: var(--terra); }
