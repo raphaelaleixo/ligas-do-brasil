@@ -23,6 +23,44 @@
         animation-range: entry 0% cover 20%;
         animation-timeline: view();
       }
+
+      /* Metric cards: card fades+lifts, value counts up 0 → final. */
+      @keyframes card-lift {
+        from { opacity: 0; translate: 0 16px; }
+        to   { opacity: 1; translate: 0 0; }
+      }
+
+      @keyframes count-up {
+        from { --n: 0; }
+        to   { --n: var(--n-final); }
+      }
+
+      .metrics .metric-card {
+        animation: card-lift linear both;
+        animation-timeline: view();
+      }
+      /* Stagger the 5 cards by shifting the animation-range start.
+         :nth-child works because the cards are static in index.html. */
+      .metrics .metric-card:nth-child(1) { animation-range: entry 0%  cover 25%; }
+      .metrics .metric-card:nth-child(2) { animation-range: entry 5%  cover 25%; }
+      .metrics .metric-card:nth-child(3) { animation-range: entry 10% cover 25%; }
+      .metrics .metric-card:nth-child(4) { animation-range: entry 15% cover 25%; }
+      .metrics .metric-card:nth-child(5) { animation-range: entry 20% cover 25%; }
+
+      .metrics .metric-card__value {
+        position: relative;
+        color: transparent;                          /* hide underlying text */
+        counter-reset: num var(--n);
+        animation: count-up linear both;
+        animation-range: entry 20% cover 30%;
+        animation-timeline: view();
+      }
+      .metrics .metric-card__value::after {
+        content: counter(num);
+        position: absolute;
+        inset: 0;
+        color: var(--green-bright);                  /* the color the text used to have */
+      }
     }
   }
 }

@@ -23,7 +23,9 @@ function renderAnalogy() {
 function renderMetrics(season) {
   for (const el of document.querySelectorAll('[data-metric]')) {
     const key = el.getAttribute('data-metric');
-    el.textContent = season.meta[key];
+    const value = season.meta[key];
+    el.textContent = value;
+    el.style.setProperty('--n-final', value);
   }
 }
 
