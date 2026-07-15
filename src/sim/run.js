@@ -10,12 +10,12 @@ import { getAllTeams, getLeagues } from '../data/teams.js';
 
 const META = {
   totalClubes: 216,
-  tetoJogos: 63,
+  tetoJogos: 64,
   mesesGarantidos: 10,
   desempregadosEmAbril: 0,
   reducaoVoos: '>50%',
-  semanasUtilizaveis: 42,
-  semanasRodadaDupla: 21,
+  semanasUtilizaveis: 47,
+  semanasRodadaDupla: 26,
   semanasRodadaSimples: 21,
 };
 

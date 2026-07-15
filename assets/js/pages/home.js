@@ -31,16 +31,16 @@ const WORKLOAD_COMPARISONS = [
   {
     label: 'Clubes com calendário cheio',
     subtitle: 'Botafogo 2024 — campeão brasileiro e da Libertadores.',
-    delta: '−16%',
+    delta: '−15%',
     atual:   { jogos: 75, det: 'Carioca + Brasileirão + Copa do Brasil + Libertadores' },
-    reforma: { jogos: 63, det: '34 Liga Regional + 11 Copa dos Campeões + 5 Copa do Brasil + 13 Libertadores' },
+    reforma: { jogos: 64, det: '34 Liga Regional + 8 Copa dos Campeões + 9 Copa do Brasil + 13 Libertadores' },
   },
   {
     label: 'Clubes com pouca agenda',
     subtitle: 'Números atuais baseados no Madureira 2024 — jogando apenas o estadual.',
-    delta: '+169%',
+    delta: '+177%',
     atual:   { jogos: 13, det: '11 Campeonato Carioca (Taça Guanabara) + 2 Copa Rio' },
-    reforma: { jogos: 35, det: '34 Liga Regional + 1 Preliminar Copa do Brasil, espalhados por 10 meses' },
+    reforma: { jogos: 36, det: '34 Liga Regional + 2 Preliminar Copa do Brasil (ida-volta), espalhados por 10 meses' },
   },
 ];
 
