@@ -17,7 +17,6 @@ const LEGEND = [
   { key: 'copa_campeoes',          label: 'Copa dos Campeões' },
   { key: 'copa_brasil',            label: 'Copa do Brasil' },
   { key: 'conmebol_libertadores',  label: 'Libertadores' },
-  { key: 'conmebol_sul_americana', label: 'Sul-Americana' },
   { key: 'fifa_pause',             label: 'Data FIFA' },
 ];
 
@@ -56,7 +55,6 @@ function renderLegend() {
     else if (c === 'copa_campeoes')     s.style.background = 'var(--gold)';
     else if (c === 'copa_brasil')       s.style.background = 'var(--blue)';
     else if (c === 'conmebol_libertadores') s.style.background = 'var(--green-deep)';
-    else if (c === 'conmebol_sul_americana') s.style.background = 'var(--terra)';
     else if (c === 'fifa_pause')        s.style.background = 'rgba(12,14,10,0.06)';
     else if (c === 'final')             { s.style.background = 'transparent'; s.style.border = '3px solid var(--ink)'; }
   }

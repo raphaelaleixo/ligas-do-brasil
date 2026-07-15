@@ -212,7 +212,6 @@
     .cal-grid__slot[data-comp="copa_campeoes"]         { background: var(--gold);       color: var(--ink); }
     .cal-grid__slot[data-comp="copa_brasil"]           { background: var(--blue);       color: var(--paper); }
     .cal-grid__slot[data-comp="conmebol_libertadores"] { background: var(--green-deep); color: var(--paper); }
-    .cal-grid__slot[data-comp="conmebol_sul_americana"]{ background: var(--terra);      color: var(--paper); }
     .cal-grid__slot[data-comp="fifa_pause"] {
       background: rgba(12, 14, 10, 0.06);
       color: rgba(12, 14, 10, 0.5);

@@ -67,6 +67,11 @@ const CB_BASE   = [4, 6, 14, 19];         // Preliminar, 1ª, 2ª, 3ª (Fev–Ma
 // Copa do Brasil: 8 KO midweeks, ida-e-volta (16-avos → semis), starting
 // after the CC 16-avos (feeder: the elite side that fell out of the CC
 // 16-avos drops into the CB bracket there). Final is a WEEKEND.
+// NOTE: weeks 28, 31, 33, 34 also appear in CC_KO_MIDWEEKS. Safe today because
+// no archetype combines the full CB_KO_MIDWEEKS with CC_KO_MIDWEEKS beyond its
+// first two slots (`copas-nacionais-e-internacionais` uses CC_KO_MIDWEEKS.slice(0,2)).
+// A future archetype that maps both full arrays into the same buildWeekMap would
+// silently drop games via Map.set overwrite — split the week values first.
 const CB_KO_MIDWEEKS = [23, 25, 27, 28, 31, 33, 34, 38];
 // Libertadores midweeks matching real 2024 Botafogo dates (shifted +1 from
 // the pre-reform template to keep the real dates fixed under the new ramp week).
