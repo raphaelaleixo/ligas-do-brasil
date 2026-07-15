@@ -61,6 +61,37 @@
         inset: 0;
         color: var(--green-bright);                  /* the color the text used to have */
       }
+
+      /* Workload bars: scaleX from left; value fades in at ~70% of the bar's growth. */
+      @keyframes bar-grow {
+        from { transform: scaleX(0); }
+        to   { transform: scaleX(1); }
+      }
+      @keyframes bar-value-appear {
+        0%, 60% { opacity: 0; }
+        100%    { opacity: 1; }
+      }
+
+      .workload__bar {
+        transform-origin: left;
+        animation: bar-grow linear both;
+        animation-timeline: view();
+        /* Row 0 (current) starts sooner than row 1 (reform); second comparison
+           also starts a beat later than the first via :nth-child on .workload__row. */
+        animation-range: entry calc(15% + 5% * var(--i, 0)) cover 40%;
+      }
+      .workload__row:nth-child(2) .workload__bar {
+        animation-range: entry calc(30% + 5% * var(--i, 0)) cover 40%;
+      }
+
+      .workload__bar-value {
+        animation: bar-value-appear linear both;
+        animation-timeline: view();
+        animation-range: entry calc(15% + 5% * var(--i, 0)) cover 40%;
+      }
+      .workload__row:nth-child(2) .workload__bar-value {
+        animation-range: entry calc(30% + 5% * var(--i, 0)) cover 40%;
+      }
     }
   }
 }

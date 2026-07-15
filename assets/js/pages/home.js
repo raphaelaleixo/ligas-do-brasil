@@ -60,13 +60,13 @@ function renderWorkload() {
       </div>
       <p class="workload__subtitle">${c.subtitle}</p>
       <div class="workload__bars">
-        <div class="workload__bar-row">
+        <div class="workload__bar-row" style="--i:0">
           <div class="workload__bar workload__bar--current" style="--w:${(c.atual.jogos / maxVal * 100).toFixed(1)}%">
             <span class="workload__bar-value"><span class="visually-hidden">Modelo atual: </span>${c.atual.jogos}<small> jogos</small></span>
           </div>
           <p class="workload__bar-detail">${c.atual.det}</p>
         </div>
-        <div class="workload__bar-row">
+        <div class="workload__bar-row" style="--i:1">
           <div class="workload__bar workload__bar--reform" style="--w:${(c.reforma.jogos / maxVal * 100).toFixed(1)}%">
             <span class="workload__bar-value"><span class="visually-hidden">Ligas do Brasil: </span>${c.reforma.jogos}<small> jogos</small></span>
           </div>
