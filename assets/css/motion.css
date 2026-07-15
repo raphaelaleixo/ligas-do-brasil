@@ -1,7 +1,15 @@
-/* Scroll-driven entrance animations for editorial widgets.
-   Spec: docs/superpowers/specs/2026-07-15-scroll-driven-reveals-design.md
-   Gated behind @supports + prefers-reduced-motion — Firefox and users
-   who opt out of motion see the site's static baseline unchanged. */
+/* Scroll-triggered entrance animations for editorial widgets.
+   reveal.js flips <html>.no-js → .js and adds .is-revealed to any
+   [data-reveal] element that intersects the viewport. Animations are then
+   time-based (real durations), fire once, and don't reverse on scroll-up.
+
+   Fallback contract:
+   - No JS → .js never applied → the `.js` gates below don't match →
+     `color: transparent` / start-state / paused animations never fire →
+     content renders at its natural rest state (visible textContent, bars
+     at full width, waffle cells visible).
+   - prefers-reduced-motion: reduce → entire @media block is skipped →
+     same static rest state as no-JS. */
 
 /* @property must be at top level, not inside @layer. */
 @property --n {
@@ -9,98 +17,93 @@
   initial-value: 0;
   inherits: false;
 }
-/* --n-final is the count-up target. Registered so it has a defined initial
-   value (0) — otherwise cards populated async by JS start with an unset
-   custom property, the keyframe `to { --n: var(--n-final) }` resolves to
-   invalid, --n falls back to 0, and some engines cache that at animation
-   start and never refresh when JS later sets the real value. */
 @property --n-final {
   syntax: '<integer>';
   initial-value: 0;
   inherits: false;
 }
 
-@supports ((animation-timeline: view()) and (animation-range: entry)) {
-  @media (prefers-reduced-motion: no-preference) {
-    @layer components {
-      /* Metric cards: only the numbers count up; card containers stay static. */
-      @keyframes count-up {
-        from { --n: 0; }
-        to   { --n: var(--n-final); }
-      }
+@media (prefers-reduced-motion: no-preference) {
+  @layer components {
+    /* -------- Metric cards: number counts up when Impacto enters view -------- */
+    @keyframes count-up {
+      from { --n: 0; }
+      to   { --n: var(--n-final); }
+    }
 
-      /* Named view-timeline on the section so per-child ranges translate to
-         real scroll distance (siblings in a row would otherwise share the
-         same viewport intersection and stagger would collapse). */
-      .metrics { view-timeline: --metrics-tl; }
+    /* Only hide the underlying text + install the counter overlay when JS is
+       loaded. Without .js, cards show textContent (final number) directly. */
+    .js .metrics .metric-card__value {
+      position: relative;
+      color: transparent;
+      counter-reset: num var(--n);
+      animation: count-up 1400ms ease-out both;
+      animation-play-state: paused;
+    }
+    .js .metrics .metric-card__value::after {
+      content: counter(num);
+      position: absolute;
+      inset: 0;
+      color: var(--green-bright);
+    }
+    /* Per-card stagger: card 1 first, card 5 last. */
+    .js .metrics .metric-card:nth-child(1) .metric-card__value { animation-delay: 0ms; }
+    .js .metrics .metric-card:nth-child(2) .metric-card__value { animation-delay: 150ms; }
+    .js .metrics .metric-card:nth-child(3) .metric-card__value { animation-delay: 300ms; }
+    .js .metrics .metric-card:nth-child(4) .metric-card__value { animation-delay: 450ms; }
+    .js .metrics .metric-card:nth-child(5) .metric-card__value { animation-delay: 600ms; }
+    .js .metrics.is-revealed .metric-card__value {
+      animation-play-state: running;
+    }
 
-      .metrics .metric-card__value {
-        position: relative;
-        color: transparent;                          /* hide underlying text */
-        counter-reset: num var(--n);
-        animation: count-up linear both;
-        animation-timeline: --metrics-tl;
-      }
-      /* Each card's number staggers along the section timeline. */
-      .metrics .metric-card:nth-child(1) .metric-card__value { animation-range: entry 5%   cover 40%; }
-      .metrics .metric-card:nth-child(2) .metric-card__value { animation-range: entry 15%  cover 50%; }
-      .metrics .metric-card:nth-child(3) .metric-card__value { animation-range: entry 25%  cover 60%; }
-      .metrics .metric-card:nth-child(4) .metric-card__value { animation-range: entry 35%  cover 70%; }
-      .metrics .metric-card:nth-child(5) .metric-card__value { animation-range: entry 45%  cover 80%; }
-      .metrics .metric-card__value::after {
-        content: counter(num);
-        position: absolute;
-        inset: 0;
-        color: var(--green-bright);                  /* the color the text used to have */
-      }
+    /* -------- Workload bars: scaleX from left; number fades in near the end -- */
+    @keyframes bar-grow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes bar-value-appear {
+      from, 60% { opacity: 0; }
+      to        { opacity: 1; }
+    }
 
-      /* Workload bars: scaleX from left; value fades in at ~70% of the bar's growth. */
-      @keyframes bar-grow {
-        from { transform: scaleX(0); }
-        to   { transform: scaleX(1); }
-      }
-      @keyframes bar-value-appear {
-        0%, 60% { opacity: 0; }
-        100%    { opacity: 1; }
-      }
+    .workload__bar { transform-origin: left; }
 
-      .workload__bar {
-        transform-origin: left;
-        animation: bar-grow linear both;
-        animation-timeline: view();
-        /* Row 0 (current) starts sooner than row 1 (reform); second comparison
-           also starts a beat later than the first via :nth-child on .workload__row. */
-        animation-range: entry calc(15% + 5% * var(--i, 0)) cover 40%;
-      }
-      .workload__row:nth-child(2) .workload__bar {
-        animation-range: entry calc(30% + 5% * var(--i, 0)) cover 40%;
-      }
+    .js .workload .workload__bar {
+      animation: bar-grow 900ms ease-out both;
+      animation-play-state: paused;
+      animation-delay: calc(var(--i, 0) * 200ms);
+    }
+    .js .workload .workload__row:nth-child(2) .workload__bar {
+      animation-delay: calc(500ms + var(--i, 0) * 200ms);
+    }
+    .js .workload .workload__bar-value {
+      animation: bar-value-appear 900ms ease-out both;
+      animation-play-state: paused;
+      animation-delay: calc(var(--i, 0) * 200ms);
+    }
+    .js .workload .workload__row:nth-child(2) .workload__bar-value {
+      animation-delay: calc(500ms + var(--i, 0) * 200ms);
+    }
+    .js .workload.is-revealed .workload__bar,
+    .js .workload.is-revealed .workload__bar-value {
+      animation-play-state: running;
+    }
 
-      .workload__bar-value {
-        animation: bar-value-appear linear both;
-        animation-timeline: view();
-        animation-range: entry calc(15% + 5% * var(--i, 0)) cover 40%;
-      }
-      .workload__row:nth-child(2) .workload__bar-value {
-        animation-range: entry calc(30% + 5% * var(--i, 0)) cover 40%;
-      }
+    /* -------- Sleeping giants: waffle cells cascade card-by-card ------------- */
+    @keyframes cell-pop {
+      from { opacity: 0; scale: 0.6; }
+      to   { opacity: 1; scale: 1; }
+    }
 
-      /* Sleeping giants: only the filled waffle cells cascade in; the cards
-         themselves stay static. --ci on the <li> = card index (0-3); --i on
-         each cell = cell index (0-39). Both offsets fold into one range so
-         waffles cascade card-by-card. */
-      @keyframes cell-pop {
-        from { opacity: 0; scale: 0.6; }
-        to   { opacity: 1; scale: 1; }
-      }
-
-      .giants { view-timeline: --giants-tl; }
-
-      .giants__cell[data-filled] {
-        animation: cell-pop linear both;
-        animation-timeline: --giants-tl;
-        animation-range: entry calc(5% + 12% * var(--ci, 0) + 0.35% * var(--i, 0)) cover calc(30% + 12% * var(--ci, 0));
-      }
+    .js .giants .giants__cell[data-filled] {
+      animation: cell-pop 350ms ease-out both;
+      animation-play-state: paused;
+      /* --ci = card index (0-3); --i = cell index (0-39). Cards stagger 400ms
+         apart; cells inside a card stagger 15ms each. */
+      animation-delay: calc(var(--ci, 0) * 400ms + var(--i, 0) * 15ms);
+    }
+    .js .giants.is-revealed .giants__cell[data-filled] {
+      animation-play-state: running;
     }
   }
 }
