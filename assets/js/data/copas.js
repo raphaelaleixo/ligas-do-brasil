@@ -44,10 +44,10 @@ export const CC_KO = [
 ];
 
 export const CB_KO = [
-  { rodada: '16-avos', clubes: 32, formato: 'Ida e volta', detalhe: '' },
-  { rodada: 'Oitavas', clubes: 16, formato: 'Ida e volta', detalhe: '' },
-  { rodada: 'Quartas', clubes: 8,  formato: 'Ida e volta', detalhe: '' },
-  { rodada: 'Semis',   clubes: 4,  formato: 'Ida e volta', detalhe: '' },
+  { rodada: '16-avos', clubes: 32, formato: 'Ida e volta', detalhe: '16 sobreviventes do funil encontram 16 clubes eliminados nos 16-avos da Copa dos Campeões.' },
+  { rodada: 'Oitavas', clubes: 16, formato: 'Ida e volta', detalhe: '8 duelos, decididos pelo placar agregado.' },
+  { rodada: 'Quartas', clubes: 8,  formato: 'Ida e volta', detalhe: '4 duelos, decididos pelo placar agregado.' },
+  { rodada: 'Semis',   clubes: 4,  formato: 'Ida e volta', detalhe: '2 duelos, decididos pelo placar agregado.' },
   { rodada: 'Final',   clubes: 2,  formato: 'Jogo único',  detalhe: 'Sábado 9 nov — encerra o ciclo dos mata-matas nacionais antes das finais continentais.' },
 ];
 
