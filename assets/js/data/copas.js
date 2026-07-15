@@ -54,40 +54,46 @@ export const CB_KO = [
 export const CB_PHASES = [
   {
     fase: 'Preliminar',
-    parts: [{ kind: 'serieb', count: 108 }],
-    origem: 'Todos os 108 clubes da Série B começam a caminhada.',
+    parts: [{ kind: 'serieb', count: 80 }],
+    origem: 'Os 80 clubes de Série B de menor ranking abrem a caminhada.',
   },
   {
     fase: '1ª Fase',
     parts: [
-      { kind: 'survivor', count: 54 },
-      { kind: 'seriea',   count: 95 },
-      { kind: 'serieb',   count: 1, star: true },
+      { kind: 'survivor', count: 40 },
+      { kind: 'serieb',   count: 28 },
+      { kind: 'seriea',   count: 60 },
     ],
-    origem: '54 vencedores da Preliminar + os 95 clubes da Série A que não disputam competições internacionais + o vice-líder da Série B, que entra direto.',
+    origem: '40 vencedores da Preliminar + os 28 clubes de Série B mais bem ranqueados + os 60 clubes de Série A que não subiram à Copa dos Campeões.',
   },
   {
     fase: '2ª Fase',
-    parts: [
-      { kind: 'survivor', count: 75 },
-      { kind: 'serieb',   count: 1, star: true },
-    ],
-    origem: '75 vencedores da 1ª Fase + o líder da Série B do ano anterior, que só estreia agora.',
+    parts: [{ kind: 'survivor', count: 64 }],
+    origem: '64 vencedores da 1ª Fase.',
   },
   {
     fase: '3ª Fase',
-    parts: [{ kind: 'survivor', count: 38 }],
-    origem: '38 sobreviventes da 2ª Fase. Todos jogam.',
+    parts: [{ kind: 'survivor', count: 32 }],
+    origem: '32 sobreviventes da 2ª Fase.',
   },
   {
     fase: '16-avos',
     parts: [
-      { kind: 'survivor', count: 19 },
-      { kind: 'conmebol', count: 13 },
+      { kind: 'survivor', count: 16 },
+      { kind: 'cc_caido', count: 16 },
     ],
-    origem: '19 sobreviventes se encontram com os 13 clubes vindos da Libertadores e da Sul-Americana.',
+    origem: '16 sobreviventes do funil encontram os 16 clubes eliminados nos 16-avos da Copa dos Campeões — a elite que tropeçou cai aqui.',
   },
 ];
+
+export const SERIE_A_FUNIL = [
+  { liga: 'Liga Nordestina',   vagas: 8  },
+  { liga: 'Liga Paulista',     vagas: 8  },
+  { liga: 'Liga Central',      vagas: 10 },
+  { liga: 'Liga Sulista',      vagas: 10 },
+  { liga: 'Liga Rio-Capixaba', vagas: 10 },
+  { liga: 'Liga Amazônica',    vagas: 14 },
+]; // soma = 60
 
 export const LIBERTADORES = [
   { pos: 1, origem: 'Campeão da Copa dos Campeões' },

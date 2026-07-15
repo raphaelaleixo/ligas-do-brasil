@@ -156,7 +156,7 @@ function renderBrasil() {
     survivor: 'Sobrevivente',
     seriea:   'Série A',
     serieb:   'Série B',
-    conmebol: 'Vindo da Conmebol',
+    cc_caido: 'Caiu da Copa dos Campeões',
   };
 
   const phasesHtml = CB_PHASES.map((ph) => {

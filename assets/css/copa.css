@@ -406,6 +406,7 @@
     .cb-square--seriea   { background: var(--green); }
     .cb-square--serieb   { background: var(--terra); }
     .cb-square--conmebol { background: var(--gold); }
+    .cb-square--cc_caido { background: var(--gold); }
     .cb-square--star::after {
       content: '';
       position: absolute;

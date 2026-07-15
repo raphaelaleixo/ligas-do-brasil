@@ -9,3 +9,26 @@ describe('copas data module é puro (importável em node)', () => {
     expect(Array.isArray(CB_PHASES)).toBe(true);
   });
 });
+
+describe('funil da Copa do Brasil fecha 100% (decoupled)', () => {
+  // Cada fase: total de entrantes deve ser par e = 2× vencedores da próxima entrada de sobreviventes.
+  const totals = CB_PHASES.map(ph => ph.parts.reduce((s, p) => s + p.count, 0));
+  it('nenhuma fase tem total ímpar', () => {
+    for (const t of totals) expect(t % 2, `fase com total ${t}`).toBe(0);
+  });
+  it('16-avos = 16 sobreviventes do funil + 16 caídos da CC = 32', () => {
+    const dezasseis = CB_PHASES.find(p => p.fase === '16-avos');
+    const total = dezasseis.parts.reduce((s, p) => s + p.count, 0);
+    expect(total).toBe(32);
+    const caidos = dezasseis.parts.find(p => p.kind === 'cc_caido');
+    expect(caidos.count).toBe(16);
+  });
+  it('cadeia de sobreviventes: 80→40→(128)→64→32→16', () => {
+    // Preliminar 80 SB → 40; 1ª 128 → 64; 2ª 64 → 32; 3ª 32 → 16
+    const byName = Object.fromEntries(CB_PHASES.map(p => [p.fase, p.parts.reduce((s, x) => s + x.count, 0)]));
+    expect(byName['Preliminar']).toBe(80);
+    expect(byName['1ª Fase']).toBe(128);
+    expect(byName['2ª Fase']).toBe(64);
+    expect(byName['3ª Fase']).toBe(32);
+  });
+});
