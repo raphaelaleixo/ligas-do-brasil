@@ -25,7 +25,7 @@ function renderMetrics(season) {
     const key = el.getAttribute('data-metric');
     const value = season.meta[key];
     el.textContent = value;
-    el.style.setProperty('--n-final', value);
+    el.style.setProperty('--n-final', String(value));
   }
 }
 
@@ -97,7 +97,7 @@ function renderSleepingGiants() {
       `<span class="giants__cell" style="--i:${i}"${i < filled ? ' data-filled' : ''}></span>`
     ).join('');
     return `
-      <li style="--i:${cardIdx}"><figure class="giants__card">
+      <li style="--ci:${cardIdx}"><figure class="giants__card">
         <figcaption>
           <span class="giants__name">${g.nome}</span>
           <span class="giants__meta">${g.estado}</span>

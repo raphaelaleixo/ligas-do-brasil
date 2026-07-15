@@ -9,13 +9,23 @@
   initial-value: 0;
   inherits: false;
 }
+/* --n-final is the count-up target. Registered so it has a defined initial
+   value (0) — otherwise cards populated async by JS start with an unset
+   custom property, the keyframe `to { --n: var(--n-final) }` resolves to
+   invalid, --n falls back to 0, and some engines cache that at animation
+   start and never refresh when JS later sets the real value. */
+@property --n-final {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
 
 @supports ((animation-timeline: view()) and (animation-range: entry)) {
   @media (prefers-reduced-motion: no-preference) {
     @layer components {
       @keyframes act-reveal {
-        from { opacity: 0; translate: 0 24px; }
-        to   { opacity: 1; translate: 0 0; }
+        from { translate: 0 24px; }
+        to   { translate: 0 0; }
       }
 
       .act:not(.hero) {
@@ -26,8 +36,8 @@
 
       /* Metric cards: card fades+lifts, value counts up 0 → final. */
       @keyframes card-lift {
-        from { opacity: 0; translate: 0 16px; }
-        to   { opacity: 1; translate: 0 0; }
+        from { translate: 0 16px; }
+        to   { translate: 0 0; }
       }
 
       @keyframes count-up {
@@ -35,26 +45,40 @@
         to   { --n: var(--n-final); }
       }
 
+      /* Named view-timeline on the section, referenced by children. Using each
+         card's own view() timeline would make sibling ranges collapse to the
+         same scroll position (cards in one row share viewport intersection);
+         pinning to the section — a much taller element — turns 10% offsets
+         into real scroll distance and makes the stagger visible. */
+      .metrics { view-timeline: --metrics-tl; }
+
       .metrics .metric-card {
         animation: card-lift linear both;
-        animation-timeline: view();
+        animation-timeline: --metrics-tl;
       }
-      /* Stagger the 5 cards by shifting the animation-range start.
-         :nth-child works because the cards are static in index.html. */
-      .metrics .metric-card:nth-child(1) { animation-range: entry 0%  cover 25%; }
-      .metrics .metric-card:nth-child(2) { animation-range: entry 5%  cover 25%; }
-      .metrics .metric-card:nth-child(3) { animation-range: entry 10% cover 25%; }
-      .metrics .metric-card:nth-child(4) { animation-range: entry 15% cover 25%; }
-      .metrics .metric-card:nth-child(5) { animation-range: entry 20% cover 25%; }
+      /* Ranges reach deep into the `cover` phase (element height + viewport
+         height of scroll), so each animation plays over enough scroll to be
+         perceptible while the section sits on-screen. Endpoints shift 10% per
+         card, so cards cascade one after another with a bit of overlap. */
+      .metrics .metric-card:nth-child(1) { animation-range: entry 0%   cover 30%; }
+      .metrics .metric-card:nth-child(2) { animation-range: entry 10%  cover 40%; }
+      .metrics .metric-card:nth-child(3) { animation-range: entry 20%  cover 50%; }
+      .metrics .metric-card:nth-child(4) { animation-range: entry 30%  cover 60%; }
+      .metrics .metric-card:nth-child(5) { animation-range: entry 40%  cover 70%; }
 
       .metrics .metric-card__value {
         position: relative;
         color: transparent;                          /* hide underlying text */
         counter-reset: num var(--n);
         animation: count-up linear both;
-        animation-range: entry 20% cover 30%;
-        animation-timeline: view();
+        animation-timeline: --metrics-tl;
       }
+      /* Number starts a beat after its card's lift begins, finishes a beat after. */
+      .metrics .metric-card:nth-child(1) .metric-card__value { animation-range: entry 5%   cover 40%; }
+      .metrics .metric-card:nth-child(2) .metric-card__value { animation-range: entry 15%  cover 50%; }
+      .metrics .metric-card:nth-child(3) .metric-card__value { animation-range: entry 25%  cover 60%; }
+      .metrics .metric-card:nth-child(4) .metric-card__value { animation-range: entry 35%  cover 70%; }
+      .metrics .metric-card:nth-child(5) .metric-card__value { animation-range: entry 45%  cover 80%; }
       .metrics .metric-card__value::after {
         content: counter(num);
         position: absolute;
@@ -99,22 +123,27 @@
         to   { opacity: 1; scale: 1; }
       }
 
+      /* Same trick as .metrics: pin cards + cells to the section's timeline so
+         the per-card stagger reads across real scroll distance. --ci on the <li>
+         is the card index (0-3); --i on each cell is the cell index (0-39). */
+      .giants { view-timeline: --giants-tl; }
+
       .giants__row > li {
         animation: card-lift linear both;             /* reuse keyframe from Task 3 */
-        animation-timeline: view();
-        animation-range: entry calc(10% + 3% * var(--i, 0)) cover 25%;
+        animation-timeline: --giants-tl;
+        animation-range: entry calc(0% + 12% * var(--ci, 0)) cover calc(20% + 12% * var(--ci, 0));
       }
 
       .giants__cell[data-filled] {
         animation: cell-pop linear both;
-        animation-timeline: view();
-        animation-range: entry calc(20% + 0.6% * var(--i, 0)) cover 40%;
+        animation-timeline: --giants-tl;
+        animation-range: entry calc(5% + 12% * var(--ci, 0) + 0.35% * var(--i, 0)) cover calc(30% + 12% * var(--ci, 0));
       }
 
       /* Revelation cards: staggered lift left-to-right. */
       @keyframes card-lift-tall {
-        from { opacity: 0; translate: 0 20px; }
-        to   { opacity: 1; translate: 0 0; }
+        from { translate: 0 20px; }
+        to   { translate: 0 0; }
       }
 
       .revelation__row > li {
