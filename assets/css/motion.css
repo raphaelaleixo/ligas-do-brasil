@@ -1,0 +1,19 @@
+/* Scroll-driven entrance animations for editorial widgets.
+   Spec: docs/superpowers/specs/2026-07-15-scroll-driven-reveals-design.md
+   Gated behind @supports + prefers-reduced-motion — Firefox and users
+   who opt out of motion see the site's static baseline unchanged. */
+
+/* @property must be at top level, not inside @layer. */
+@property --n {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+@supports ((animation-timeline: view()) and (animation-range: entry)) {
+  @media (prefers-reduced-motion: no-preference) {
+    @layer components {
+      /* Keyframes and per-widget rules added in later tasks. */
+    }
+  }
+}
