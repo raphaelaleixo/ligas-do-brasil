@@ -113,8 +113,9 @@
   .site-nav__toggle[aria-expanded="true"] .site-nav__toggle-open { display: none; }
   .site-nav__toggle[aria-expanded="true"] .site-nav__toggle-close { display: block; }
 
-  /* Mobile: turn <ul> into a full-width dropdown drawer via popover. */
-  @media (max-width: 640px) {
+  /* Mobile / narrow: turn <ul> into a full-width dropdown drawer via popover.
+     Breakpoint sized so the 6 inline nav items don't wrap under the brand. */
+  @media (max-width: 800px) {
     /* Push the toggle button flush to the right edge:
        - display:contents on <nav> takes it out of flex flow so the popover
          doesn't count as a middle sibling;
@@ -192,6 +193,10 @@
     text-decoration: none;
     padding: 15px 26px;
     display: inline-block;
+    /* Strip user-agent chrome so this works uniformly on <a> and <button>. */
+    border: 0;
+    appearance: none;
+    cursor: pointer;
     transition: transform 120ms ease, background-color 140ms ease;
   }
   .btn:hover { transform: translateY(-2px); }
