@@ -1,0 +1,132 @@
+@layer components {
+  @scope (.feedback) {
+    .feedback__title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+      max-inline-size: 20ch;
+    }
+
+    .feedback__intro {
+      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+      line-height: 1.55;
+      max-inline-size: 60ch;
+      margin: 0 0 clamp(2rem, 4vw, 3rem);
+      color: rgba(12, 14, 10, 0.78);
+    }
+    .feedback__intro a {
+      color: var(--green-deep);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: text-decoration-thickness 120ms ease;
+    }
+    .feedback__intro a:hover { text-decoration-thickness: 2px; }
+
+    .feedback__form {
+      display: grid;
+      gap: clamp(1.25rem, 2.5vw, 1.75rem);
+      max-inline-size: 640px;
+    }
+
+    .feedback__field {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .feedback__label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(12, 14, 10, 0.72);
+    }
+
+    .feedback__optional {
+      opacity: 0.55;
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 0.72rem;
+      margin-inline-start: 0.25em;
+    }
+
+    .feedback__form input[type="text"],
+    .feedback__form textarea {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--ink);
+      background: transparent;
+      border: none;
+      border-block-end: 2px solid var(--ink);
+      padding: 0.5rem 0.15rem;
+      outline: none;
+      transition: border-color 120ms ease;
+      inline-size: 100%;
+    }
+    .feedback__form textarea {
+      resize: vertical;
+      min-block-size: 8lh;
+      border: 2px solid var(--ink);
+      padding: 0.65rem 0.75rem;
+    }
+    .feedback__form input[type="text"]:focus,
+    .feedback__form textarea:focus {
+      border-color: var(--green-deep);
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+    .feedback__form input[type="text"]:invalid:not(:placeholder-shown),
+    .feedback__form textarea:invalid:not(:placeholder-shown) {
+      border-color: var(--terra);
+    }
+
+    /* Honeypot: fully off-screen; keeps it out of layout, focus, and AT. */
+    .feedback__honeypot {
+      position: absolute;
+      inline-size: 1px;
+      block-size: 1px;
+      inset-inline-start: -9999px;
+      overflow: hidden;
+    }
+
+    .feedback__turnstile {
+      /* Reserve rough widget height so the layout doesn't jump when it loads. */
+      min-block-size: 65px;
+    }
+
+    .feedback__actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-block-start: 0.5rem;
+    }
+    .feedback__submit:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .feedback__status {
+      margin-block-start: clamp(1.5rem, 3vw, 2rem);
+      font-size: 1rem;
+      line-height: 1.55;
+      max-inline-size: 60ch;
+      min-block-size: 1.55em;                  /* reserve height, no layout shift */
+    }
+    .feedback__status--sending { color: rgba(12, 14, 10, 0.62); font-style: italic; }
+    .feedback__status--ok      { color: var(--green-deep); font-weight: 600; }
+    .feedback__status--error   { color: var(--terra); font-weight: 600; }
+    .feedback__status a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .feedback__noscript {
+      margin-block-start: 1rem;
+      color: var(--terra);
+      font-weight: 600;
+    }
+    .feedback__noscript a { color: inherit; text-decoration: underline; }
+  }
+}

@@ -1,0 +1,12 @@
+name = "ligas-do-brasil-issues"
+main = "src/worker.js"
+compatibility_date = "2026-07-01"
+
+# Non-secret config lives here (versioned). Secrets (GITHUB_TOKEN,
+# TURNSTILE_SECRET) are set separately via `wrangler secret put NAME`.
+[vars]
+GITHUB_OWNER = "raphaelaleixo"
+GITHUB_REPO = "ligas-do-brasil"
+# Comma-separated origins allowed to POST to this worker. Include the local
+# dev URL so `npx serve -p 5173` works during testing.
+ALLOWED_ORIGINS = "https://raphaelaleixo.github.io,http://localhost:5173,http://127.0.0.1:5173"

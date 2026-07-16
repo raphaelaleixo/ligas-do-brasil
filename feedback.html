@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Retorno · Ligas do Brasil</title>
+  <meta name="description" content="Envie sugestões, correções ou críticas sobre a proposta Ligas do Brasil. Cada retorno vira uma issue no repositório aberto do projeto.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ligas do Brasil">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://raphaelaleixo.github.io/ligas-do-brasil/feedback">
+  <meta property="og:title" content="Retorno · Ligas do Brasil">
+  <meta property="og:description" content="Envie sugestões, correções ou críticas sobre a proposta Ligas do Brasil.">
+  <meta property="og:image" content="https://raphaelaleixo.github.io/ligas-do-brasil/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Retorno · Ligas do Brasil">
+  <meta name="twitter:description" content="Envie sugestões, correções ou críticas sobre a proposta Ligas do Brasil.">
+  <meta name="twitter:image" content="https://raphaelaleixo.github.io/ligas-do-brasil/assets/img/og.png">
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400..700&display=swap"></noscript>
+  <link rel="stylesheet" href="assets/css/layers.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/view-transitions.css">
+  <link rel="stylesheet" href="assets/css/motion.css">
+  <link rel="stylesheet" href="assets/css/feedback.css">
+  <script type="module" src="assets/js/reveal.js"></script>
+
+  <!-- Cloudflare Turnstile widget -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#page-ready">Pular para o conteúdo</a>
+  <header class="site-nav">
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="5" width="4" height="8" stroke="#FFCB05" stroke-width="1.6"/>
+        <rect x="21" y="5" width="4" height="8" stroke="#FFCB05" stroke-width="1.6"/>
+        <rect x="1" y="1" width="24" height="16" stroke="#007A40" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#007A40" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#0A46B0" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+    <nav>
+      <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
+        <li><a href="./">Início</a></li>
+        <li><a href="manifesto">Manifesto</a></li>
+        <li><a href="ligas">Ligas</a></li>
+        <li><a href="copa">Copas</a></li>
+        <li><a href="timeline">Calendário</a></li>
+        <li><a href="feedback" aria-current="page">Retorno</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="page-ready">
+    <section class="act act--paper feedback">
+      <div class="act__inner">
+        <h1 class="feedback__title">Envie um retorno.</h1>
+        <p class="feedback__intro">
+          Sugestões, correções, provocações, dados que você acha que não bateram.
+          Cada envio vira uma <em>issue</em> pública no
+          <a href="https://github.com/raphaelaleixo/ligas-do-brasil/issues" target="_blank" rel="noopener noreferrer">repositório aberto do projeto</a>.
+          Não precisa ter conta no GitHub para escrever.
+        </p>
+
+        <form id="feedback-form" class="feedback__form" novalidate>
+          <label class="feedback__field">
+            <span class="feedback__label">Nome <span class="feedback__optional">(opcional)</span></span>
+            <input type="text" name="name" maxlength="80" autocomplete="name">
+          </label>
+
+          <label class="feedback__field">
+            <span class="feedback__label">Assunto</span>
+            <input type="text" name="title" required maxlength="200">
+          </label>
+
+          <label class="feedback__field">
+            <span class="feedback__label">Mensagem</span>
+            <textarea name="message" required maxlength="5000" rows="8"></textarea>
+          </label>
+
+          <!-- Honeypot: real users leave this empty; bots fill every field.
+               Hidden via CSS (position: absolute; off-screen) + aria-hidden
+               + tabindex=-1 + autocomplete=off. -->
+          <div class="feedback__honeypot" aria-hidden="true">
+            <label>
+              Não preencha este campo:
+              <input type="text" name="website" tabindex="-1" autocomplete="off">
+            </label>
+          </div>
+
+          <!-- Cloudflare Turnstile widget. The script auto-mounts on any
+               .cf-turnstile element and injects <input name="cf-turnstile-response">
+               with the token, which FormData picks up on submit.
+               On localhost we swap to Cloudflare's always-passes TEST key
+               (docs: developers.cloudflare.com/turnstile/troubleshooting/testing/)
+               so dev testing doesn't depend on widget-hostname config. -->
+          <div id="turnstile-widget" class="cf-turnstile feedback__turnstile"
+               data-theme="light"></div>
+          <script>
+            document.getElementById('turnstile-widget').setAttribute(
+              'data-sitekey',
+              /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+                ? '1x00000000000000000000AA'
+                : '0x4AAAAAAD2w0IGi5Ehy8vBM'
+            );
+          </script>
+
+          <div class="feedback__actions">
+            <button type="submit" class="btn btn--gold feedback__submit">Enviar retorno</button>
+          </div>
+        </form>
+
+        <div id="feedback-status" class="feedback__status" role="status" aria-live="polite"></div>
+
+        <noscript>
+          <p class="feedback__noscript">
+            O formulário precisa de JavaScript. Se preferir, abra uma
+            <a href="https://github.com/raphaelaleixo/ligas-do-brasil/issues/new" target="_blank" rel="noopener noreferrer">issue direto no GitHub</a>.
+          </p>
+        </noscript>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div>Ligas do Brasil · 2026</div>
+  </footer>
+
+  <script type="module" src="assets/js/nav.js"></script>
+  <script type="module" src="assets/js/pages/feedback.js"></script>
+</body>
+</html>

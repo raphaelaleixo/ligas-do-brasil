@@ -1,0 +1,15 @@
+# Template for worker/.dev.vars. Copy this file to .dev.vars and fill in
+# the real values there — .dev.vars is gitignored so it never gets committed.
+# This .example file is SAFE to commit; keep only placeholders below.
+#
+# For the DEPLOYED worker (not local dev), do NOT use this file. Set each
+# secret via `npx wrangler secret put <NAME>` — they're stored encrypted on
+# Cloudflare's side and never touch the repo.
+
+# GitHub fine-grained PAT — scope: only raphaelaleixo/ligas-do-brasil,
+# permission: Issues (read + write). Get one at
+# github.com/settings/personal-access-tokens
+GITHUB_TOKEN=github_pat_REPLACE_ME
+
+# Turnstile secret key. Cloudflare dashboard → Turnstile → widget → Settings.
+TURNSTILE_SECRET=0x4AAAA_REPLACE_ME
