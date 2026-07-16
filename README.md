@@ -73,8 +73,9 @@ working set local do autor.
 
 ## Deploy
 
-- **Site:** Vercel. `npx vercel --prod`. `vercel.json` reescreve
-  `/manifesto` → `manifesto.html` e cacheia assets com hash de conteúdo.
+- **Site:** GitHub Pages, servido de `main:/`. Push pra `main` publica —
+  não tem workflow customizado, é o Pages Jekyll padrão. URLs sem
+  extensão (`/manifesto`) funcionam pelo comportamento default do Jekyll.
 - **Worker:** Cloudflare Workers. Ver `worker/README.md`.
 
 ## Suporte de browser
