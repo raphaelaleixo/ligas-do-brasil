@@ -48,12 +48,13 @@
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
   }
   .site-nav__brand svg {
-    inline-size: 26px;
-    block-size: 18px;
+    inline-size: 32px;
+    block-size: 22px;
     display: block;
+    transform: translateY(-1px);
   }
 
   /* The <ul> carries popover="auto" for mobile drawer behaviour. On desktop we
