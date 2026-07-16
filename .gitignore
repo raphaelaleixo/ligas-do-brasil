@@ -2,3 +2,8 @@ node_modules
 # baked JSON entra no git p/ Pages deploy
 .DS_Store
 coverage
+
+# Working docs — mantidos no disco, fora do repo público
+design_handoff_ligas_do_brasil/
+plans/
+research/
