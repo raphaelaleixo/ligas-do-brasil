@@ -1,28 +1,36 @@
 @layer components {
-  @scope (.feedback) {
-    .feedback__title {
-      font-size: clamp(2.5rem, 6vw, 4rem);
-      line-height: 0.95;
-      letter-spacing: -0.01em;
-      margin: 0 0 clamp(1rem, 2vw, 1.5rem);
-      max-inline-size: 20ch;
+  /* Ink title band */
+  @scope (.fbk-title) {
+    :scope {
+      padding-block: clamp(2.75rem, 6vw, 5rem) 0;
     }
-
-    .feedback__intro {
-      font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-      line-height: 1.55;
-      max-inline-size: 60ch;
-      margin: 0 0 clamp(2rem, 4vw, 3rem);
-      color: rgba(12, 14, 10, 0.78);
+    .fbk-title__h1 {
+      font-family: var(--font-display);
+      font-weight: normal;
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin: 0 0 1.25rem;
     }
-    .feedback__intro a {
-      color: var(--green-deep);
+    .fbk-title__intro {
+      font-size: clamp(1rem, 1.6vw, 1.25rem);
+      line-height: 1.5;
+      max-inline-size: 62ch;
+      color: rgba(244, 239, 227, 0.75);
+      margin: 0 0 2rem;
+    }
+    .fbk-title__intro a {
+      color: var(--paper);
       text-decoration: underline;
       text-underline-offset: 3px;
       transition: text-decoration-thickness 120ms ease;
     }
-    .feedback__intro a:hover { text-decoration-thickness: 2px; }
+    .fbk-title__intro a:hover { text-decoration-thickness: 2px; }
+    .fbk-title__spacer { block-size: clamp(2rem, 5vw, 3.5rem); }
+  }
 
+  @scope (.feedback) {
     .feedback__form {
       display: grid;
       gap: clamp(1.25rem, 2.5vw, 1.75rem);
