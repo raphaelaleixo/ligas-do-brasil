@@ -1,4 +1,4 @@
-import { loadSeason } from '../season.js';
+import { getAllTeams } from '../../../src/data/teams.js';
 
 // potes = vagas fixas por pote [P1, P2, P3, P4]
 // extras = vagas extras rotativas entre {P1,P3} e {P2,P4} (só Nordestina e Paulista)
@@ -145,10 +145,8 @@ const rowsEl    = document.getElementById('lig-rows');
 const clubsEl   = document.getElementById('lig-clubs-wrap');
 const loadingEl = document.getElementById('lig-loading');
 const metaEl    = document.getElementById('lig-meta');
-const seedEl    = document.getElementById('lig-seed');
 
 let sel = 0;
-let season = null;
 
 function renderTabs() {
   tabsEl.innerHTML = LEAGUES.map((l, i) => `
@@ -220,11 +218,9 @@ function renderContent() {
     </div>
   `;
 
-  if (!season) return;
-
   // Ordena pelo ranking estrutural do clube — mesma base do sorteio da Copa
   // dos Campeões (potes ordenados por força). Não usa a tabela simulada.
-  const clubs = season.clubes
+  const clubs = getAllTeams()
     .filter((c) => c.liga_regional === meta.nome && c.divisao === 'A')
     .slice()
     .sort((a, b) => {
@@ -306,9 +302,3 @@ if (hashLiga) {
 
 renderTabs();
 renderContent();
-
-loadSeason().then((s) => {
-  season = s;
-  if (seedEl) seedEl.textContent = s.seed;
-  renderContent();
-});
