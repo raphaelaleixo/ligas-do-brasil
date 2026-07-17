@@ -24,13 +24,10 @@ calendário.
 ```
 /                    # páginas HTML estáticas (index, manifesto, ligas, copa, timeline, feedback)
 og.html              # template do card OG (aberto no browser → screenshot em assets/img/og.png)
-data/
-  season-default.json  # output do simulador, servido no site
 src/
   sim/               # match model, ligas regionais, copas, calendário, seeding
   data/              # dados canônicos (times, atributos, referências históricas)
 scripts/
-  bake-default.js    # roda o simulador end-to-end → data/season-default.json
   dev-server.py      # replica o rewrite do vercel.json pra dev local
 assets/
   css/               # cascade layers, container queries, light-dark(), view transitions
@@ -41,21 +38,21 @@ worker/              # Cloudflare Worker que recebe /feedback e abre issue no Gi
 
 ## O simulador
 
-`npm run bake` roda o simulador end-to-end — 216 clubes distribuídos em
-seis ligas regionais, Copa dos Campeões em quatro potes com sorteio
-FIFA-style + geo-lock, Copa do Brasil como funil de acesso — e produz
-`data/season-default.json`.
+`src/sim/` roda uma temporada inteira — 216 clubes distribuídos em seis ligas
+regionais, Copa dos Campeões em quatro potes com sorteio FIFA-style + geo-lock,
+Copa do Brasil como funil de acesso. É invocado direto do browser pela página
+`/simulador`, com seed vindo da URL (`?seed=N`).
 
-Ele existe pra provar duas coisas:
+O simulador existe pra provar duas coisas:
 
 1. **A reforma é calendaricamente viável.** 47 semanas úteis absorvem
    tudo com teto de 64 jogos por clube e zero mês desempregado.
 2. **A distribuição de vagas Libertadores/Sul-Am fecha** sob a nova
    arquitetura, amarrada aos campeões e cabeças-de-chave da CC.
 
-Nota honesta: o site consome uma fração pequena desse output (`meta` +
-`clubes`, ~5% do payload). O resto existe pros testes e pra sustentar o
-argumento; ainda não é renderizado.
+Cada visita à página `/simulador` gera uma temporada nova (ou reproduz uma
+temporada compartilhada via URL). O site não carrega uma temporada pré-baked —
+cada visitante roda a sua.
 
 ## Rodar local
 
@@ -66,10 +63,6 @@ npx serve -p 5173     # serve os HTMLs estáticos
 ```
 
 Abra <http://localhost:5173>.
-
-O comando `npm run bake` depende de `initial-data/teams.json`, que fica
-fora do repo público (dados canônicos de trabalho). Rodá-lo requer o
-working set local do autor.
 
 ## Deploy
 

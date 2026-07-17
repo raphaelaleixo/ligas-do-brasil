@@ -8,8 +8,7 @@
   },
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest",
-    "bake": "node scripts/bake-default.js"
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "jsdom": "^29.1.1",
