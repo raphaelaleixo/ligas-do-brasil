@@ -55,4 +55,22 @@
     padding: 1rem;
     text-align: center;
   }
+  .standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .standings-table th,
+  .standings-table td {
+    padding: 0.35rem 0.5rem;
+    text-align: left;
+  }
+  .standings-table th:nth-child(n+4),
+  .standings-table td:nth-child(n+4) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  .standings-row--cc         { background: color-mix(in oklab, var(--verde, #007A40) 12%, transparent); }
+  .standings-row--acesso     { background: color-mix(in oklab, var(--azul,  #0A46B0) 12%, transparent); }
+  .standings-row--rebaixado  { background: color-mix(in oklab, var(--vermelho, #C22) 12%, transparent); }
 }
