@@ -104,4 +104,36 @@
     margin-bottom: 0.5rem;
     opacity: 0.7;
   }
+
+  .cc-groups__grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+  .cc-group {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--ink);
+  }
+  .cc-group__title {
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .cc-group__table {
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+  }
+  .cc-group__row--classificado-direto,
+  .cc-group__row--classificado-terceiro {
+    background: color-mix(in oklab, var(--verde, #007A40) 14%, transparent);
+  }
+  .cc-group__row--classificado-terceiro {
+    /* Banda intermediária — mesma cor, borda tracejada superior sinaliza status "condicional passou". */
+    border-top: 1px dashed color-mix(in oklab, var(--verde, #007A40) 40%, transparent);
+  }
+  .cc-group__row--eliminado {
+    opacity: 0.55;
+  }
 }
