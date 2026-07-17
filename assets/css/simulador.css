@@ -458,9 +458,7 @@
     min-width: 0;
   }
   .cb-match__team--placeholder {
-    font-style: italic;
-    color: color-mix(in oklab, var(--ink) 55%, transparent);
-    border-bottom: 1px dashed currentColor;
+    color: var(--terra);
   }
   .cb-match__scores {
     display: inline-flex;
@@ -506,6 +504,7 @@
     border: 1px solid transparent;
   }
   .cb-legend__swatch--from-cc { background: var(--blue); border-color: var(--blue); }
+  .cb-legend__swatch--serie-b { background: var(--terra); border-color: var(--terra); }
   .cb-legend__foot {
     display: flex;
     flex-wrap: wrap;

@@ -95,12 +95,17 @@ export function renderCbBracket({ matamata, serieBIds, ccEliminadosIds, clubesBy
   legend.className = 'cb-legend';
   const items = document.createElement('ul');
   items.className = 'cb-legend__items';
-  const li = document.createElement('li');
-  const swatch = document.createElement('span');
-  swatch.className = 'cb-legend__swatch cb-legend__swatch--from-cc';
-  li.appendChild(swatch);
-  li.appendChild(document.createTextNode('Vem eliminado do 16-avos da Copa dos Campeões'));
-  items.appendChild(li);
+  for (const [modifier, label] of [
+    ['from-cc',  'Vem eliminado do 16-avos da Copa dos Campeões'],
+    ['serie-b',  'Clube da Série B'],
+  ]) {
+    const li = document.createElement('li');
+    const swatch = document.createElement('span');
+    swatch.className = `cb-legend__swatch cb-legend__swatch--${modifier}`;
+    li.appendChild(swatch);
+    li.appendChild(document.createTextNode(label));
+    items.appendChild(li);
+  }
   legend.appendChild(items);
   const foot = document.createElement('div');
   foot.className = 'cb-legend__foot';
