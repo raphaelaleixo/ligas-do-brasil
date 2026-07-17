@@ -22,7 +22,7 @@ export const GROUPS = [
   { id: 'E', slots: [[1, 'Atlético-MG', 'CE'], [2, 'Internacional', 'SUL'], [3, 'ABC', 'NE'], [4, 'Guarani', 'SP']] },
   { id: 'F', slots: [[1, 'Cruzeiro', 'CE'], [2, 'Criciúma', 'SUL'], [3, 'América-RN', 'NE'], [4, 'Ituano', 'SP']] },
   { id: 'G', slots: [[1, 'Flamengo', 'RJ'], [2, 'Vitória', 'NE'], [3, 'Juventude', 'SUL'], [4, 'Ponte Preta', 'SP']] },
-  { id: 'H', slots: [[1, 'Athletico-Paranaense', 'SUL'], [2, 'Atlético-GO', 'CE'], [3, 'Novorizontino', 'SP'], [4, 'Boavista', 'RJ']] },
+  { id: 'H', slots: [[1, 'Athletico-PR', 'SUL'], [2, 'Atlético-GO', 'CE'], [3, 'Novorizontino', 'SP'], [4, 'Boavista', 'RJ']] },
   { id: 'I', slots: [[1, 'Grêmio', 'SUL'], [2, 'Red Bull Bragantino', 'SP'], [3, 'Nova Iguaçu', 'RJ'], [4, 'CSA', 'NE']] },
   { id: 'J', slots: [[1, 'Fortaleza', 'NE'], [2, 'Vasco da Gama', 'RJ'], [3, 'Goiás', 'CE'], [4, 'Maringá', 'SUL']] },
   { id: 'K', slots: [[1, 'São Paulo', 'SP'], [2, 'Cuiabá', 'CE'], [3, 'Volta Redonda', 'RJ'], [4, 'Avaí', 'SUL']] },

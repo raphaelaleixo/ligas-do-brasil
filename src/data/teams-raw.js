@@ -1,5 +1,5 @@
-// Fonte de dados dos 108 clubes da Série A (18 por liga × 6 ligas).
-// Série B é gerada por seededSerieB em teams.js, não vive aqui.
+// Fonte de dados dos 216 clubes: 108 da Série A + 108 da Série B, 18 por
+// divisão × 6 ligas regionais.
 // Editar aqui para adicionar/mudar clubes; teams.js consome via import.
 export default {
   "ligas": [
@@ -24,6 +24,26 @@ export default {
         { "nome": "Santo André", "estado": "SP", "ranking": 3 },
         { "nome": "Portuguesa", "estado": "SP", "ranking": 3 },
         { "nome": "XV de Piracicaba", "estado": "SP", "ranking": 3 }
+      ],
+      "clubesB": [
+        { "nome": "Portuguesa Santista", "estado": "SP", "ranking": 3 },
+        { "nome": "Rio Claro", "estado": "SP", "ranking": 3 },
+        { "nome": "Capivariano", "estado": "SP", "ranking": 4 },
+        { "nome": "Primavera", "estado": "SP", "ranking": 4 },
+        { "nome": "Sertãozinho", "estado": "SP", "ranking": 3 },
+        { "nome": "Monte Azul", "estado": "SP", "ranking": 3 },
+        { "nome": "Comercial-SP", "estado": "SP", "ranking": 2 },
+        { "nome": "Marília AC", "estado": "SP", "ranking": 2 },
+        { "nome": "Juventus", "estado": "SP", "ranking": 3 },
+        { "nome": "XV de Jaú", "estado": "SP", "ranking": 2 },
+        { "nome": "São José-SP", "estado": "SP", "ranking": 3 },
+        { "nome": "Taubaté", "estado": "SP", "ranking": 2 },
+        { "nome": "União Barbarense", "estado": "SP", "ranking": 2 },
+        { "nome": "Grêmio Prudente", "estado": "SP", "ranking": 2 },
+        { "nome": "Barretos EC", "estado": "SP", "ranking": 2 },
+        { "nome": "Oeste", "estado": "SP", "ranking": 3 },
+        { "nome": "Osasco Audax", "estado": "SP", "ranking": 3 },
+        { "nome": "Paulista de Jundiaí", "estado": "SP", "ranking": 3 }
       ]
     },
     {
@@ -47,6 +67,26 @@ export default {
         { "nome": "Desportiva Ferroviária", "estado": "ES", "ranking": 2 },
         { "nome": "Goytacaz", "estado": "RJ", "ranking": 1 },
         { "nome": "Friburguense", "estado": "RJ", "ranking": 1 }
+      ],
+      "clubesB": [
+        { "nome": "Artsul", "estado": "RJ", "ranking": 2 },
+        { "nome": "Duque de Caxias", "estado": "RJ", "ranking": 3 },
+        { "nome": "Maricá", "estado": "RJ", "ranking": 3 },
+        { "nome": "Resende", "estado": "RJ", "ranking": 3 },
+        { "nome": "Cabofriense", "estado": "RJ", "ranking": 2 },
+        { "nome": "Serrano-RJ", "estado": "RJ", "ranking": 2 },
+        { "nome": "Olaria", "estado": "RJ", "ranking": 2 },
+        { "nome": "Macaé", "estado": "RJ", "ranking": 3 },
+        { "nome": "Barra Mansa", "estado": "RJ", "ranking": 2 },
+        { "nome": "Nova Cidade", "estado": "RJ", "ranking": 2 },
+        { "nome": "Angra dos Reis", "estado": "RJ", "ranking": 2 },
+        { "nome": "Vera Cruz-RJ", "estado": "RJ", "ranking": 1 },
+        { "nome": "Estrela do Norte-ES", "estado": "ES", "ranking": 2 },
+        { "nome": "Doze-ES", "estado": "ES", "ranking": 2 },
+        { "nome": "Serra-ES", "estado": "ES", "ranking": 2 },
+        { "nome": "Vilavelhense", "estado": "ES", "ranking": 2 },
+        { "nome": "Aster-ES", "estado": "ES", "ranking": 1 },
+        { "nome": "Rio Branco VN-ES", "estado": "ES", "ranking": 1 }
       ]
     },
     {
@@ -70,6 +110,26 @@ export default {
         { "nome": "River-PI", "estado": "PI", "ranking": 3 },
         { "nome": "Juazeirense", "estado": "BA", "ranking": 3 },
         { "nome": "Moto Club", "estado": "MA", "ranking": 2 }
+      ],
+      "clubesB": [
+        { "nome": "Bahia de Feira", "estado": "BA", "ranking": 3 },
+        { "nome": "Itabuna", "estado": "BA", "ranking": 2 },
+        { "nome": "Fluminense de Feira", "estado": "BA", "ranking": 2 },
+        { "nome": "Galícia", "estado": "BA", "ranking": 2 },
+        { "nome": "Maranguape", "estado": "CE", "ranking": 2 },
+        { "nome": "Atlético-CE", "estado": "CE", "ranking": 2 },
+        { "nome": "Icasa", "estado": "CE", "ranking": 3 },
+        { "nome": "Caucaia", "estado": "CE", "ranking": 2 },
+        { "nome": "Retrô FC", "estado": "PE", "ranking": 3 },
+        { "nome": "Central-PE", "estado": "PE", "ranking": 2 },
+        { "nome": "Salgueiro", "estado": "PE", "ranking": 2 },
+        { "nome": "ASA", "estado": "AL", "ranking": 3 },
+        { "nome": "Coruripe", "estado": "AL", "ranking": 2 },
+        { "nome": "Itabaiana", "estado": "SE", "ranking": 2 },
+        { "nome": "Sergipe", "estado": "SE", "ranking": 3 },
+        { "nome": "Sousa", "estado": "PB", "ranking": 2 },
+        { "nome": "Campinense", "estado": "PB", "ranking": 3 },
+        { "nome": "Potiguar de Mossoró", "estado": "RN", "ranking": 2 }
       ]
     },
     {
@@ -77,7 +137,7 @@ export default {
       "clubes": [
         { "nome": "Internacional", "estado": "RS", "ranking": 9 },
         { "nome": "Grêmio", "estado": "RS", "ranking": 9 },
-        { "nome": "Athletico-Paranaense", "estado": "PR", "ranking": 9 },
+        { "nome": "Athletico-PR", "estado": "PR", "ranking": 9 },
         { "nome": "Criciúma", "estado": "SC", "ranking": 7 },
         { "nome": "Juventude", "estado": "RS", "ranking": 7 },
         { "nome": "Maringá", "estado": "PR", "ranking": 6 },
@@ -93,6 +153,26 @@ export default {
         { "nome": "Joinville", "estado": "SC", "ranking": 3 },
         { "nome": "Brasil de Pelotas", "estado": "RS", "ranking": 3 },
         { "nome": "Cascavel", "estado": "PR", "ranking": 3 }
+      ],
+      "clubesB": [
+        { "nome": "Rio Branco-PR", "estado": "PR", "ranking": 3 },
+        { "nome": "Toledo", "estado": "PR", "ranking": 2 },
+        { "nome": "Prudentópolis", "estado": "PR", "ranking": 2 },
+        { "nome": "Cianorte", "estado": "PR", "ranking": 3 },
+        { "nome": "Foz do Iguaçu", "estado": "PR", "ranking": 2 },
+        { "nome": "Nacional-PR", "estado": "PR", "ranking": 2 },
+        { "nome": "Metropolitano", "estado": "SC", "ranking": 2 },
+        { "nome": "Marcílio Dias", "estado": "SC", "ranking": 2 },
+        { "nome": "Barra FC", "estado": "SC", "ranking": 2 },
+        { "nome": "Hercílio Luz", "estado": "SC", "ranking": 2 },
+        { "nome": "Concórdia", "estado": "SC", "ranking": 2 },
+        { "nome": "Camboriú", "estado": "SC", "ranking": 2 },
+        { "nome": "São Paulo-RS", "estado": "RS", "ranking": 1 },
+        { "nome": "Rio Grande", "estado": "RS", "ranking": 1 },
+        { "nome": "São Gabriel", "estado": "RS", "ranking": 1 },
+        { "nome": "Aimoré", "estado": "RS", "ranking": 2 },
+        { "nome": "São Luiz", "estado": "RS", "ranking": 2 },
+        { "nome": "Passo Fundo", "estado": "RS", "ranking": 1 }
       ]
     },
     {
@@ -116,6 +196,26 @@ export default {
         { "nome": "Brasiliense", "estado": "DF", "ranking": 3 },
         { "nome": "Gama", "estado": "DF", "ranking": 3 },
         { "nome": "Operário-MS", "estado": "MS", "ranking": 2 }
+      ],
+      "clubesB": [
+        { "nome": "Caldense", "estado": "MG", "ranking": 3 },
+        { "nome": "Democrata de Sete Lagoas", "estado": "MG", "ranking": 2 },
+        { "nome": "Guarani-MG", "estado": "MG", "ranking": 2 },
+        { "nome": "Mamoré", "estado": "MG", "ranking": 2 },
+        { "nome": "Nacional-MG", "estado": "MG", "ranking": 2 },
+        { "nome": "Patrocinense", "estado": "MG", "ranking": 2 },
+        { "nome": "Uberaba", "estado": "MG", "ranking": 2 },
+        { "nome": "URT", "estado": "MG", "ranking": 3 },
+        { "nome": "Tupi-MG", "estado": "MG", "ranking": 2 },
+        { "nome": "Valeriodoce", "estado": "MG", "ranking": 2 },
+        { "nome": "Grêmio Anápolis", "estado": "GO", "ranking": 2 },
+        { "nome": "Iporá", "estado": "GO", "ranking": 2 },
+        { "nome": "Anapolina", "estado": "GO", "ranking": 2 },
+        { "nome": "Morrinhos", "estado": "GO", "ranking": 2 },
+        { "nome": "Real Brasília", "estado": "DF", "ranking": 2 },
+        { "nome": "Ceilândia", "estado": "DF", "ranking": 2 },
+        { "nome": "Dom Bosco", "estado": "MT", "ranking": 1 },
+        { "nome": "Costa Rica-MS", "estado": "MS", "ranking": 2 }
       ]
     },
     {
@@ -139,6 +239,26 @@ export default {
         { "nome": "São Raimundo-RR", "estado": "RR", "ranking": 2 },
         { "nome": "Capital-TO", "estado": "TO", "ranking": 2 },
         { "nome": "São Raimundo-AM", "estado": "AM", "ranking": 2 }
+      ],
+      "clubesB": [
+        { "nome": "Cliper", "estado": "AM", "ranking": 2 },
+        { "nome": "Nacional Fast", "estado": "AM", "ranking": 2 },
+        { "nome": "Operário-AM", "estado": "AM", "ranking": 1 },
+        { "nome": "Penarol-AM", "estado": "AM", "ranking": 1 },
+        { "nome": "Sul América-AM", "estado": "AM", "ranking": 1 },
+        { "nome": "Carajás", "estado": "PA", "ranking": 2 },
+        { "nome": "Canaã", "estado": "PA", "ranking": 2 },
+        { "nome": "Esmac", "estado": "PA", "ranking": 2 },
+        { "nome": "Paragominas", "estado": "PA", "ranking": 2 },
+        { "nome": "Pinheirense", "estado": "PA", "ranking": 2 },
+        { "nome": "Tapajós", "estado": "PA", "ranking": 2 },
+        { "nome": "Izabelense", "estado": "PA", "ranking": 2 },
+        { "nome": "Palmas FC", "estado": "TO", "ranking": 2 },
+        { "nome": "Interporto", "estado": "TO", "ranking": 1 },
+        { "nome": "Santana-AP", "estado": "AP", "ranking": 1 },
+        { "nome": "Cristal-AP", "estado": "AP", "ranking": 1 },
+        { "nome": "Sport Genus", "estado": "RO", "ranking": 1 },
+        { "nome": "Baré", "estado": "RR", "ranking": 1 }
       ]
     }
   ]

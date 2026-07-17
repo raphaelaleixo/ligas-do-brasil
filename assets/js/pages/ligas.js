@@ -75,7 +75,7 @@ const CITIES = {
   'Vitória': 'Salvador',
 
   // Liga Sulista
-  'Athletico-Paranaense': 'Curitiba',
+  'Athletico-PR': 'Curitiba',
   'Avaí': 'Florianópolis',
   'Brasil de Pelotas': 'Pelotas',
   'Brusque': 'Brusque',
