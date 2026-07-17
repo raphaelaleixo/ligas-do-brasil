@@ -1,6 +1,11 @@
 import { simulateSeason } from '../../../src/sim/run.js';
+import { getAllTeams } from '../../../src/data/teams.js';
+import { renderRegionalLeaguesTab } from '../render/regional-leagues-tab.js';
+import { renderCcGroups } from '../render/cc-groups.js';
+import { renderCcBracket } from '../render/cc-bracket.js';
+import { renderCbBracket } from '../render/cb-bracket.js';
 
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
+const $  = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
 const MAX_SEED = 1e9;
@@ -17,26 +22,53 @@ function randomSeed() {
   return Math.floor(Math.random() * MAX_SEED);
 }
 
-function showResult(seed, _season) {
+let serieBIds = null;
+function getSerieBIds() {
+  if (serieBIds) return serieBIds;
+  serieBIds = new Set(getAllTeams().filter((t) => t.divisao !== 'A').map((t) => t.id));
+  return serieBIds;
+}
+
+function renderTab(name, season) {
+  const panel = $(`[role="tabpanel"][data-tab="${name}"]`);
+  panel.replaceChildren(); // clear
+  if (name === 'ligas') {
+    panel.appendChild(renderRegionalLeaguesTab({ ligasRegionais: season.ligasRegionais }));
+  } else if (name === 'cc') {
+    panel.appendChild(renderCcGroups({
+      grupos: season.copaCampeoes.grupos,
+      koRound16: season.copaCampeoes.matamata['16avos'],
+    }));
+    panel.appendChild(renderCcBracket({ matamata: season.copaCampeoes.matamata }));
+  } else if (name === 'cb') {
+    panel.appendChild(renderCbBracket({
+      matamata: season.copaBrasil.matamata,
+      serieBIds: getSerieBIds(),
+    }));
+  }
+}
+
+function showResult(seed, season) {
   $('[data-role="seed"]').textContent = String(seed);
   $('.sim-result').hidden = false;
   $('.sim-title .btn').textContent = 'Nova simulação';
+  renderTab('ligas', season);
+  renderTab('cc', season);
+  renderTab('cb', season);
 }
 
 function showError(msg) {
-  const host = $('.sim-title');
-  let el = $('.sim-error', host);
+  const host = $('.sim-title .act__inner') ?? $('.sim-title');
+  let el = $('.sim-error', host.parentElement ?? host);
   if (!el) {
     el = document.createElement('p');
     el.className = 'sim-error';
-    host.querySelector('.act__inner')?.appendChild(el);
+    host.appendChild(el);
   }
   el.textContent = msg;
 }
 
-function clearError() {
-  $$('.sim-error').forEach((el) => el.remove());
-}
+function clearError() { $$('.sim-error').forEach((el) => el.remove()); }
 
 function setBusy(busy) {
   $$('[data-role="new-sim"]').forEach((btn) => {
@@ -48,7 +80,6 @@ function setBusy(busy) {
 function runSim(seed) {
   clearError();
   setBusy(true);
-  // Yield para o browser pintar o estado busy antes de bloquear o thread.
   return new Promise((resolve) => setTimeout(resolve, 0))
     .then(() => {
       const season = simulateSeason(seed);
@@ -67,18 +98,28 @@ function navigateToSeed(seed) {
   return runSim(seed);
 }
 
-function onNewSimClick() {
-  const seed = randomSeed();
-  return navigateToSeed(seed);
+function selectTab(name) {
+  for (const btn of $$('.sim-tabs [role="tab"]')) {
+    const active = btn.dataset.tab === name;
+    btn.setAttribute('aria-selected', String(active));
+  }
+  for (const panel of $$('[role="tabpanel"]')) {
+    panel.hidden = panel.dataset.tab !== name;
+  }
 }
 
-function onCopyLinkClick() {
-  navigator.clipboard?.writeText(location.href);
+function onNewSimClick() { navigateToSeed(randomSeed()); }
+function onCopyLinkClick() { navigator.clipboard?.writeText(location.href); }
+function onTabClick(e) {
+  const tab = e.target.closest('[role="tab"]');
+  if (!tab) return;
+  selectTab(tab.dataset.tab);
 }
 
 function init() {
   $$('[data-role="new-sim"]').forEach((btn) => btn.addEventListener('click', onNewSimClick));
   $('[data-role="copy-link"]')?.addEventListener('click', onCopyLinkClick);
+  $('.sim-tabs')?.addEventListener('click', onTabClick);
   window.addEventListener('popstate', () => {
     const seed = readSeedFromUrl();
     if (seed !== null) runSim(seed);
@@ -91,5 +132,4 @@ function init() {
 if (typeof document !== 'undefined' && document.readyState !== 'loading') init();
 else document?.addEventListener?.('DOMContentLoaded', init);
 
-// Exporta apenas para testes; nunca importado por outros módulos do site.
-export const _test = { readSeedFromUrl, randomSeed, runSim, navigateToSeed };
+export const _test = { readSeedFromUrl, randomSeed, runSim, navigateToSeed, selectTab };
