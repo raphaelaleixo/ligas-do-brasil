@@ -171,21 +171,25 @@
 
   footer {
     background: var(--ink);
-    color: rgba(244, 239, 227, 0.5);
+    color: rgba(244, 239, 227, 0.8);
     padding: 2.5rem clamp(1.25rem, 4vw, 3.5rem);
     font-family: var(--font-mono);
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     border-block-start: 1px solid rgba(244, 239, 227, 0.12);
-  }
-  footer > * {
-    max-inline-size: var(--content-text);
-    margin-inline: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
   }
   footer a {
-    display: block;
-    margin-block-end: 0.5rem;
+    color: inherit;
+    order: 2;
+  }
+  footer a:hover {
+    color: var(--paper);
   }
 
   /* Button — gold pill (primary CTA) */
@@ -210,5 +214,10 @@
     background: transparent;
     color: var(--paper);
     border: 1px solid rgba(244, 239, 227, 0.4);
+  }
+  .btn--outline-ink {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid rgba(12, 14, 10, 0.4);
   }
 }
