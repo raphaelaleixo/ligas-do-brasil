@@ -10,6 +10,8 @@ const $  = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
 const MAX_SEED = 1e9;
+const VALID_TABS = ['ligas', 'cc', 'cb', 'conmebol'];
+const DEFAULT_TAB = 'ligas';
 
 function readSeedFromUrl() {
   const raw = new URLSearchParams(location.search).get('seed');
@@ -17,6 +19,11 @@ function readSeedFromUrl() {
   const n = Number(raw);
   if (!Number.isFinite(n) || n < 0 || n > MAX_SEED) return null;
   return Math.floor(n);
+}
+
+function readTabFromUrl() {
+  const raw = new URLSearchParams(location.search).get('tab');
+  return VALID_TABS.includes(raw) ? raw : null;
 }
 
 function randomSeed() {
@@ -65,6 +72,7 @@ function showResult(seed, season) {
   renderTab('cc', season);
   renderTab('cb', season);
   renderTab('conmebol', season);
+  selectTab(readTabFromUrl() ?? DEFAULT_TAB);
 }
 
 function showError(msg) {
@@ -104,7 +112,11 @@ function runSim(seed) {
 }
 
 function navigateToSeed(seed) {
-  history.pushState({}, '', `?seed=${seed}`);
+  const params = new URLSearchParams();
+  params.set('seed', String(seed));
+  const tab = readTabFromUrl();
+  if (tab) params.set('tab', tab);
+  history.pushState({}, '', `?${params.toString()}`);
   return runSim(seed);
 }
 
@@ -116,6 +128,12 @@ function selectTab(name) {
   for (const panel of $$('[role="tabpanel"]')) {
     panel.hidden = panel.dataset.tab !== name;
   }
+  const params = new URLSearchParams(location.search);
+  if (params.get('tab') === name) return;
+  if (name === DEFAULT_TAB) params.delete('tab');
+  else params.set('tab', name);
+  const q = params.toString();
+  history.replaceState({}, '', q ? `?${q}` : location.pathname);
 }
 
 function onNewSimClick() { navigateToSeed(randomSeed()); }
@@ -169,4 +187,4 @@ function init() {
 if (typeof document !== 'undefined' && document.readyState !== 'loading') init();
 else document?.addEventListener?.('DOMContentLoaded', init);
 
-export const _test = { readSeedFromUrl, randomSeed, runSim, navigateToSeed, selectTab };
+export const _test = { readSeedFromUrl, readTabFromUrl, randomSeed, runSim, navigateToSeed, selectTab };
