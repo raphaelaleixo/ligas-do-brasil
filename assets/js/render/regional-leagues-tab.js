@@ -28,11 +28,6 @@ export function renderRegionalLeaguesTab({ ligasRegionais }) {
     title.className = 'lig-block__title';
     title.textContent = liga.nome;
     summary.appendChild(title);
-    const detailsLink = document.createElement('a');
-    detailsLink.className = 'lig-block__details-link';
-    detailsLink.href = 'ligas';
-    detailsLink.textContent = 'ver detalhes em /ligas ↗';
-    summary.appendChild(detailsLink);
     block.appendChild(summary);
 
     const grid = document.createElement('div');
@@ -41,22 +36,50 @@ export function renderRegionalLeaguesTab({ ligasRegionais }) {
     for (const divisao of ['A', 'B']) {
       const col = document.createElement('div');
       col.className = 'lig-block__col';
+      const inner = document.createElement('div');
+      inner.className = 'lig-block__col-inner';
       const h = document.createElement('h3');
       h.className = 'lig-block__col-title';
       h.textContent = `Série ${divisao}`;
-      col.appendChild(h);
-      col.appendChild(renderStandingsTable({
+      inner.appendChild(h);
+      inner.appendChild(renderStandingsTable({
         tabela: divisao === 'A' ? liga.tabelaA : liga.tabelaB,
         qualificadosCampeoes: liga.qualificadosCampeoes,
         rebaixados: liga.rebaixados,
         acessos: liga.acessos,
         divisao,
       }));
+      col.appendChild(inner);
       grid.appendChild(col);
     }
 
     block.appendChild(grid);
     frag.appendChild(block);
   }
+
+  const legend = document.createElement('div');
+  legend.className = 'lig-legend';
+  const items = document.createElement('ul');
+  items.className = 'lig-legend__items';
+  for (const [modifier, label] of [
+    ['cc', 'Classificado à Copa dos Campeões'],
+    ['acesso', 'Acesso à Série A no ano seguinte'],
+    ['rebaixado', 'Rebaixado'],
+  ]) {
+    const li = document.createElement('li');
+    const swatch = document.createElement('span');
+    swatch.className = `lig-legend__swatch lig-legend__swatch--${modifier}`;
+    li.appendChild(swatch);
+    li.appendChild(document.createTextNode(label));
+    items.appendChild(li);
+  }
+  legend.appendChild(items);
+  const link = document.createElement('a');
+  link.className = 'lig-legend__link';
+  link.href = 'ligas';
+  link.textContent = 'ver detalhes em /ligas ↗';
+  legend.appendChild(link);
+  frag.appendChild(legend);
+
   return frag;
 }

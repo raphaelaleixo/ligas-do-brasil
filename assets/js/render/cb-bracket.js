@@ -1,7 +1,7 @@
 // Renderiza o mata-mata da Copa do Brasil — bracket horizontal com 5 colunas
-// (16avos → oitavas → quartas → semis → final). Cada confronto mostra placar;
-// times Série B ganham classe placeholder com itálico/tracejado/tom apagado;
-// campeão destacado com halo.
+// (16avos → oitavas → quartas → semis → final). Confrontos são cards brancos
+// com nomes completos + placares por perna; times Série B ganham a classe
+// placeholder (itálico + tracejado + tom apagado); campeão com halo dourado.
 
 const ROUND_LABELS = [
   ['16avos', '16-avos'],
@@ -11,45 +11,62 @@ const ROUND_LABELS = [
   ['final', 'Final'],
 ];
 
-const CONTEXT_LINE =
-  '16 clubes vêm da elite (bypass); 16 clubes emergem do funil de 168 clubes ' +
-  'Série B + 1 convidado. Chaveamento a partir daqui.';
+function nameOf(id, clubesById) {
+  return clubesById?.get(id)?.nome ?? id;
+}
 
-function renderMatch(m, { isFinal, campeao, serieBIds }) {
+function legsFor(pairing) {
+  if (Array.isArray(pairing.legs)) return pairing.legs;
+  return [{
+    casaId: pairing.casaId,
+    foraId: pairing.foraId,
+    golsCasa: pairing.golsCasa,
+    golsFora: pairing.golsFora,
+  }];
+}
+
+function renderMatch(pairing, { roundKey, campeao, serieBIds, ccEliminadosIds, clubesById }) {
+  const isFinal = roundKey === 'final';
+  const isRound32 = roundKey === '16avos';
   const el = document.createElement('div');
   el.className = 'cb-match';
   if (isFinal) el.classList.add('cb-match--final');
-  if (isFinal && m.vencedorId === campeao) el.classList.add('cb-match--campeao');
-  el.dataset.vencedor = m.vencedorId ?? '';
+  if (isFinal && pairing.vencedorId === campeao) el.classList.add('cb-match--campeao');
+  el.dataset.vencedor = pairing.vencedorId ?? '';
+
+  const legs = legsFor(pairing);
 
   for (const side of ['casa', 'fora']) {
-    const sideEl = document.createElement('div');
-    sideEl.className = `cb-match__side cb-match__side--${side}`;
-    if (m.vencedorId === m[`${side}Id`]) sideEl.classList.add('cb-match__side--vencedor');
+    const row = document.createElement('div');
+    row.className = `cb-match__row cb-match__row--${side}`;
+    const teamId = pairing[`${side}Id`];
+    if (pairing.vencedorId === teamId) row.classList.add('cb-match__row--vencedor');
+    if (isRound32 && ccEliminadosIds?.has(teamId)) row.classList.add('cb-match__row--from-cc');
 
     const nameEl = document.createElement('span');
     nameEl.className = 'cb-match__team';
-    if (serieBIds.has(m[`${side}Id`])) nameEl.classList.add('cb-match__team--placeholder');
-    nameEl.textContent = m[`${side}Id`];
+    if (serieBIds.has(teamId)) nameEl.classList.add('cb-match__team--placeholder');
+    nameEl.textContent = nameOf(teamId, clubesById);
+    row.appendChild(nameEl);
 
-    const scoreEl = document.createElement('span');
-    scoreEl.className = 'cb-match__score';
-    scoreEl.textContent = String(m[`gols${side === 'casa' ? 'Casa' : 'Fora'}`]);
+    const scoresWrap = document.createElement('span');
+    scoresWrap.className = 'cb-match__scores';
+    for (const leg of legs) {
+      const scoreEl = document.createElement('span');
+      scoreEl.className = 'cb-match__score';
+      const teamGoals = teamId === leg.casaId ? leg.golsCasa : leg.golsFora;
+      scoreEl.textContent = String(teamGoals);
+      scoresWrap.appendChild(scoreEl);
+    }
+    row.appendChild(scoresWrap);
 
-    sideEl.appendChild(nameEl);
-    sideEl.appendChild(scoreEl);
-    el.appendChild(sideEl);
+    el.appendChild(row);
   }
   return el;
 }
 
-export function renderCbBracket({ matamata, serieBIds }) {
+export function renderCbBracket({ matamata, serieBIds, ccEliminadosIds, clubesById }) {
   const frag = document.createDocumentFragment();
-
-  const ctx = document.createElement('p');
-  ctx.className = 'cb-bracket__context';
-  ctx.textContent = CONTEXT_LINE;
-  frag.appendChild(ctx);
 
   const bracket = document.createElement('div');
   bracket.className = 'cb-bracket';
@@ -63,13 +80,41 @@ export function renderCbBracket({ matamata, serieBIds }) {
     const matches = key === 'final' ? [matamata.final] : matamata[key];
     for (const m of matches) {
       round.appendChild(renderMatch(m, {
-        isFinal: key === 'final',
+        roundKey: key,
         campeao: matamata.campeao,
         serieBIds,
+        ccEliminadosIds,
+        clubesById,
       }));
     }
     bracket.appendChild(round);
   }
   frag.appendChild(bracket);
+
+  const legend = document.createElement('div');
+  legend.className = 'cb-legend';
+  const items = document.createElement('ul');
+  items.className = 'cb-legend__items';
+  const li = document.createElement('li');
+  const swatch = document.createElement('span');
+  swatch.className = 'cb-legend__swatch cb-legend__swatch--from-cc';
+  li.appendChild(swatch);
+  li.appendChild(document.createTextNode('Vem eliminado do 16-avos da Copa dos Campeões'));
+  items.appendChild(li);
+  legend.appendChild(items);
+  const foot = document.createElement('div');
+  foot.className = 'cb-legend__foot';
+  const note = document.createElement('p');
+  note.className = 'cb-legend__note';
+  note.textContent = 'Simulamos apenas do 16-avos em diante.';
+  foot.appendChild(note);
+  const link = document.createElement('a');
+  link.className = 'cb-legend__link';
+  link.href = 'copa';
+  link.textContent = 'ver detalhes em /copa ↗';
+  foot.appendChild(link);
+  legend.appendChild(foot);
+  frag.appendChild(legend);
+
   return frag;
 }

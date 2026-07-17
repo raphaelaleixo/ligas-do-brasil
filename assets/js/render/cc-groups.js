@@ -1,7 +1,7 @@
 // Renderiza a fase de grupos da Copa dos Campeões — 12 cards, cada um com
-// a tabela final. Marca top-2 como direto (verde ✓), 3º dentre os 8 melhores
-// como terceiro classificado (verde ⏱), 3º restante como neutro, 4º como
-// eliminado.
+// a tabela final. Marca top-2 como direto, 3º dentre os 8 melhores como
+// terceiro classificado, 3º restante como neutro, 4º como eliminado.
+// Classificação comunicada via cor de fundo da linha (sem ícones).
 
 function idsIn16avos(koRound16) {
   const ids = new Set();
@@ -37,19 +37,16 @@ export function renderCcGroups({ grupos, koRound16 }) {
       tr.dataset.id = row.id;
 
       let zoneClass = '';
-      let icon = '';
       if (i < 2) {
         zoneClass = 'cc-group__row--classificado-direto';
-        icon = '✓';
       } else if (i === 2 && advanced.has(row.id)) {
         zoneClass = 'cc-group__row--classificado-terceiro';
-        icon = '⏱';
       } else if (i === 3) {
         zoneClass = 'cc-group__row--eliminado';
       }
       if (zoneClass) tr.classList.add(zoneClass);
 
-      const cells = [String(i + 1), row.id, row.nome, String(row.pontos), icon];
+      const cells = [String(i + 1), row.nome, String(row.pontos)];
       for (const text of cells) {
         const td = document.createElement('td');
         td.textContent = text;

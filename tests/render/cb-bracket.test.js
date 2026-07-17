@@ -21,11 +21,6 @@ const matamata = {
 };
 
 describe('renderCbBracket', () => {
-  it('renders context line at top', () => {
-    const frag = renderCbBracket({ matamata, serieBIds: new Set(['NB2']) });
-    expect(frag.querySelector('.cb-bracket__context')).toBeTruthy();
-  });
-
   it('applies --placeholder class to Série B teams', () => {
     const frag = renderCbBracket({ matamata, serieBIds: new Set(['NB2']) });
     const placeholders = frag.querySelectorAll('.cb-match__team--placeholder');

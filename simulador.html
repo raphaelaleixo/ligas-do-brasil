@@ -77,32 +77,33 @@
   <main id="page-ready" class="sim">
     <section class="act act--ink sim-title">
       <div class="act__inner">
-        <h1>Simulador</h1>
+        <h1 class="sim-title__h1">Simulador</h1>
         <p class="sim-title__intro">
           As páginas anteriores mostraram uma temporada. Aqui você roda a sua.
           Cada clique gera uma temporada inteira — 34 rodadas em seis ligas regionais,
           Copa dos Campeões no molde da Champions, Copa do Brasil como funil dos 216 clubes.
           Compartilhe a URL pra outra pessoa ver a mesma temporada.
         </p>
-        <button class="btn btn--gold" data-role="new-sim">Nova simulação</button>
+        <div class="sim-title__actions">
+          <button class="btn btn--gold" data-role="new-sim">Nova simulação</button>
+          <button class="btn btn--outline-paper" data-role="copy-link" hidden>copiar link</button>
+        </div>
+        <div class="sim-title__spacer"></div>
       </div>
     </section>
 
-    <section class="act sim-result" hidden>
+    <section class="act act--paper sim-result" hidden>
       <div class="act__inner">
-        <div class="sim-meta">
-          <span>Temporada #<span data-role="seed"></span></span>
-          <button class="btn btn--outline-paper" data-role="new-sim">nova simulação</button>
-          <button class="btn btn--outline-paper" data-role="copy-link">copiar link</button>
-        </div>
         <nav class="sim-tabs" role="tablist">
-          <button role="tab" data-tab="ligas" aria-selected="true">Ligas Regionais</button>
-          <button role="tab" data-tab="cc" aria-selected="false">Copa dos Campeões</button>
-          <button role="tab" data-tab="cb" aria-selected="false">Copa do Brasil</button>
+          <button type="button" class="sim-tab" role="tab" data-tab="ligas" aria-selected="true">Ligas Regionais</button>
+          <button type="button" class="sim-tab" role="tab" data-tab="cc" aria-selected="false">Copa dos Campeões</button>
+          <button type="button" class="sim-tab" role="tab" data-tab="cb" aria-selected="false">Copa do Brasil</button>
+          <button type="button" class="sim-tab" role="tab" data-tab="conmebol" aria-selected="false">Conmebol</button>
         </nav>
         <div role="tabpanel" data-tab="ligas"></div>
         <div role="tabpanel" data-tab="cc" hidden></div>
         <div role="tabpanel" data-tab="cb" hidden></div>
+        <div role="tabpanel" data-tab="conmebol" hidden></div>
       </div>
     </section>
   </main>

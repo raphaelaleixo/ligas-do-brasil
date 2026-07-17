@@ -9,7 +9,7 @@ export function renderStandingsTable({ tabela, qualificadosCampeoes, rebaixados,
   table.className = 'standings-table';
 
   const thead = document.createElement('thead');
-  thead.innerHTML = '<tr><th>#</th><th></th><th>Clube</th><th>P</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr>';
+  thead.innerHTML = '<tr><th>#</th><th>Clube</th><th>P</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr>';
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
@@ -23,7 +23,6 @@ export function renderStandingsTable({ tabela, qualificadosCampeoes, rebaixados,
 
     const cells = [
       String(row.posicao),
-      row.id,
       row.nome,
       String(row.pontos),
       String(row.vitorias),
