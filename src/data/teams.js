@@ -1,10 +1,5 @@
-import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
+import teamsRaw from './teams-raw.js';
 import { createRng } from '../sim/rng.js';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const RAW_PATH = resolve(__dirname, '../../initial-data/teams.json');
 
 // Canonical 3-letter IDs for well-known clubs. Anything not in this map falls back to a derived ID.
 const CANONICAL_IDS = {
@@ -54,7 +49,7 @@ let _ligas = null;
 let _byId = null;
 
 function build() {
-  const raw = JSON.parse(readFileSync(RAW_PATH, 'utf8'));
+  const raw = teamsRaw;
   // Pre-reserve all canonical IDs so that non-canonical clubs whose names happen
   // to derive to a canonical ID (e.g., Botafogo-SP → BOT) don't steal it.
   const taken = new Set(Object.values(CANONICAL_IDS));
