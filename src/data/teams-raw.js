@@ -1,4 +1,5 @@
-// Fonte de verdade dos 216 clubes — versão versionada de initial-data/teams.json.
+// Fonte de dados dos 108 clubes da Série A (18 por liga × 6 ligas).
+// Série B é gerada por seededSerieB em teams.js, não vive aqui.
 // Editar aqui para adicionar/mudar clubes; teams.js consome via import.
 export default {
   "ligas": [
