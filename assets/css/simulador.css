@@ -1,0 +1,58 @@
+/* Shell do simulador. Detalhes de tabelas/brackets ficam nos módulos de render */
+/* e reusam ligas.css / copa.css via imports em cascade layer futuramente.    */
+@layer page {
+  .sim-title {
+    display: grid;
+    gap: 1.25rem;
+    padding-block: clamp(3rem, 8vw, 6rem);
+    text-align: center;
+  }
+  .sim-title__intro {
+    max-width: 52ch;
+    margin-inline: auto;
+    color: var(--paper-muted, var(--paper));
+    opacity: 0.9;
+  }
+  .sim-title .btn {
+    justify-self: center;
+  }
+  .sim-title .btn[aria-busy="true"] {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* meta bar aparece depois da sim rodar (task 10) — placeholder por enquanto */
+  .sim-result[hidden] { display: none; }
+  .sim-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-block: 1rem;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9rem;
+  }
+  .sim-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 1px solid var(--ink);
+    margin-bottom: 1.5rem;
+  }
+  .sim-tabs button[role="tab"] {
+    padding: 0.6rem 1rem;
+    background: transparent;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    font: inherit;
+    cursor: pointer;
+  }
+  .sim-tabs button[role="tab"][aria-selected="true"] {
+    border-bottom-color: var(--gold, currentColor);
+    font-weight: 600;
+  }
+  .sim-error {
+    color: var(--danger, crimson);
+    padding: 1rem;
+    text-align: center;
+  }
+}

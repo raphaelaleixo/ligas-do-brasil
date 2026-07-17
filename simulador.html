@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador | Ligas do Brasil</title>
+  <meta name="description" content="Rode uma temporada inteira da proposta Ligas do Brasil no seu browser.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ligas do Brasil">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:url" content="https://raphaelaleixo.github.io/ligas-do-brasil/simulador">
+  <meta property="og:title" content="Simulador | Ligas do Brasil">
+  <meta property="og:description" content="Rode uma temporada inteira da proposta Ligas do Brasil no seu browser.">
+  <meta property="og:image" content="https://raphaelaleixo.github.io/ligas-do-brasil/assets/img/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Simulador | Ligas do Brasil">
+  <meta name="twitter:description" content="Rode uma temporada inteira da proposta Ligas do Brasil no seu browser.">
+  <meta name="twitter:image" content="https://raphaelaleixo.github.io/ligas-do-brasil/assets/img/og.png">
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400..700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caprasimo&family=DM+Sans:ital,opsz,wght@0,9..40,400..900;1,9..40,400..700&display=swap"></noscript>
+  <link rel="stylesheet" href="assets/css/layers.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/view-transitions.css">
+  <link rel="stylesheet" href="assets/css/motion.css">
+  <link rel="stylesheet" href="assets/css/ligas.css">
+  <link rel="stylesheet" href="assets/css/copa.css">
+  <link rel="stylesheet" href="assets/css/simulador.css">
+  <script type="module" src="assets/js/reveal.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#page-ready">Pular para o conteúdo</a>
+  <header class="site-nav">
+    <a class="site-nav__brand" href="./">
+      <svg viewBox="0 0 26 18" fill="none" aria-hidden="true">
+        <rect x="1" y="5" width="4" height="8" stroke="#FFCB05" stroke-width="1.6"/>
+        <rect x="21" y="5" width="4" height="8" stroke="#FFCB05" stroke-width="1.6"/>
+        <rect x="1" y="1" width="24" height="16" stroke="#007A40" stroke-width="1.6"/>
+        <line x1="13" y1="1" x2="13" y2="17" stroke="#007A40" stroke-width="1.6"/>
+        <circle cx="13" cy="9" r="3.4" stroke="#0A46B0" stroke-width="1.6"/>
+      </svg>
+      Ligas do Brasil
+    </a>
+    <button class="site-nav__toggle" popovertarget="primary-nav" aria-label="Abrir menu" aria-expanded="false">
+      <svg class="site-nav__toggle-open" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="4" y1="7"  x2="20" y2="7"  stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2"/>
+        <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2"/>
+      </svg>
+      <svg class="site-nav__toggle-close" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <line x1="5" y1="5"  x2="19" y2="19" stroke="currentColor" stroke-width="2"/>
+        <line x1="19" y1="5" x2="5"  y2="19" stroke="currentColor" stroke-width="2"/>
+      </svg>
+    </button>
+    <nav>
+      <ul id="primary-nav" popover="auto" class="site-nav__links" role="list">
+        <li><a href="./">Início</a></li>
+        <li><a href="manifesto">Manifesto</a></li>
+        <li><a href="ligas">Ligas</a></li>
+        <li><a href="copa">Copas</a></li>
+        <li><a href="timeline">Calendário</a></li>
+        <li><a href="feedback">Feedback</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="page-ready" class="sim">
+    <section class="act act--ink sim-title">
+      <div class="act__inner">
+        <h1>Simulador</h1>
+        <p class="sim-title__intro">
+          As páginas anteriores mostraram uma temporada. Aqui você roda a sua.
+          Cada clique gera uma temporada inteira — 34 rodadas em seis ligas regionais,
+          Copa dos Campeões no molde da Champions, Copa do Brasil como funil dos 216 clubes.
+          Compartilhe a URL pra outra pessoa ver a mesma temporada.
+        </p>
+        <button class="btn btn--gold" data-role="new-sim">Nova simulação</button>
+      </div>
+    </section>
+
+    <section class="act sim-result" hidden>
+      <div class="act__inner">
+        <div class="sim-meta">
+          <span>Temporada #<span data-role="seed"></span></span>
+          <button class="btn btn--outline-paper" data-role="new-sim">nova simulação</button>
+          <button class="btn btn--outline-paper" data-role="copy-link">copiar link</button>
+        </div>
+        <nav class="sim-tabs" role="tablist">
+          <button role="tab" data-tab="ligas" aria-selected="true">Ligas Regionais</button>
+          <button role="tab" data-tab="cc" aria-selected="false">Copa dos Campeões</button>
+          <button role="tab" data-tab="cb" aria-selected="false">Copa do Brasil</button>
+        </nav>
+        <div role="tabpanel" data-tab="ligas"></div>
+        <div role="tabpanel" data-tab="cc" hidden></div>
+        <div role="tabpanel" data-tab="cb" hidden></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
