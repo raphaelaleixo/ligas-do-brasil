@@ -7,17 +7,7 @@ import { allocateConmebolSlots } from './conmebol.js';
 import { assignCalendar } from './calendar.js';
 import { computePerfis } from './perfis.js';
 import { getAllTeams, getLeagues } from '../data/teams.js';
-
-const META = {
-  totalClubes: 216,
-  tetoJogos: 64,
-  mesesGarantidos: 10,
-  desempregadosEmAbril: 0,
-  reducaoVoos: '>50%',
-  semanasUtilizaveis: 47,
-  semanasRodadaDupla: 26,
-  semanasRodadaSimples: 21,
-};
+import { META } from './meta.js';
 
 function ligaLookupFrom(qualificados) {
   const map = new Map();
