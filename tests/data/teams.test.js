@@ -2,21 +2,21 @@ import { describe, it, expect } from 'vitest';
 import { getAllTeams, getLeagues, getTeamById } from '../../src/data/teams.js';
 
 describe('teams data', () => {
-  it('provides 192 total clubs (108 Série A + 84 Série B)', () => {
+  it('provides 216 total clubs (108 Série A + 108 Série B)', () => {
     const all = getAllTeams();
-    expect(all).toHaveLength(192);
+    expect(all).toHaveLength(216);
     expect(all.filter(t => t.divisao === 'A')).toHaveLength(108);
-    expect(all.filter(t => t.divisao === 'B')).toHaveLength(84);
+    expect(all.filter(t => t.divisao === 'B')).toHaveLength(108);
   });
 
-  it('has 6 regional leagues, 18 A and 14 B in each', () => {
+  it('has 6 regional leagues, 18 A and 18 B in each', () => {
     const ligas = getLeagues();
     expect(ligas).toHaveLength(6);
     for (const l of ligas) {
       const a = l.clubes.filter(t => t.divisao === 'A');
       const b = l.clubes.filter(t => t.divisao === 'B');
       expect(a).toHaveLength(18);
-      expect(b).toHaveLength(14);
+      expect(b).toHaveLength(18);
     }
   });
 

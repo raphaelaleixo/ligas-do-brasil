@@ -16,7 +16,7 @@ describe('simulateSeason runs in a browser-like environment', () => {
     expect(s.copaCampeoes.grupos.length).toBe(12);
     expect(s.copaCampeoes.matamata.campeao).toBeTruthy();
     expect(s.copaBrasil.matamata.campeao).toBeTruthy();
-    expect(s.clubes.length).toBe(192);
+    expect(s.clubes.length).toBe(216);
   });
 
   it('simulateSeason is deterministic given the same seed', () => {

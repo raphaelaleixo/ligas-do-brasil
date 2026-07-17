@@ -1,4 +1,4 @@
-import { getLeagues, getAllTeams } from '../data/teams.js';
+import { getLeagues } from '../data/teams.js';
 
 function byRankDescNameAsc(a, b) {
   if (b.ranking_forca !== a.ranking_forca) return b.ranking_forca - a.ranking_forca;
@@ -14,6 +14,5 @@ export function seedYearZero() {
     const b = liga.clubes.filter((c) => c.divisao === 'B').slice().sort(byRankDescNameAsc);
     return { nome: liga.nome, tabelaA: a, tabelaB: b };
   });
-  const eliteBypass = getAllTeams().slice().sort(byRankDescNameAsc).slice(0, 13);
-  return { ligas, eliteBypass };
+  return { ligas };
 }

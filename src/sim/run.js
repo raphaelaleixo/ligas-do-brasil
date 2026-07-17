@@ -67,12 +67,15 @@ export function simulateSeason(seed) {
   const groupsDrawn = drawGroups(pots, lookup, rng);
   const { grupos, crossGroupMatches } = simulateGroupStage(groupsDrawn, rng);
   const { top2, melhoresTerceiros } = selectKnockoutQualifiers(grupos);
-  const clubes32Campeoes = [...top2.map((r) => ({ id: r.id })), ...melhoresTerceiros.map((r) => ({ id: r.id }))];
+  const clubes32Campeoes = [...top2, ...melhoresTerceiros];
   const koCampeoes = simulateKnockout(clubes32Campeoes, rng);
 
-  const pool = buildParticipantPool(seeded);
+  const pool = buildParticipantPool({ seeded, regional });
   const funnel = simulateFunnel(pool, rng);
-  const koBrasil = simulateMataMata(pool.eliteBypass, funnel.qualificadosParaMataMata, rng);
+  const cc16avosLosers = koCampeoes['16avos'].map((m) =>
+    m.vencedorId === m.casaId ? m.foraId : m.casaId
+  );
+  const koBrasil = simulateMataMata(cc16avosLosers, funnel.qualificadosParaMataMata, rng);
 
   const conmebol = allocateConmebolSlots({
     copaCampeoes: {
@@ -86,25 +89,39 @@ export function simulateSeason(seed) {
   });
 
   const regionalMatches = regional.ligas.flatMap((l) => l.matches);
+  const ccLegs = (pairing) =>
+    pairing.legs.map((leg) => ({
+      competicao: pairing.competicao,
+      rodada: pairing.rodada,
+      ...leg,
+    }));
   const campeoesMatches = [
     ...grupos.flatMap((g) => g.jogos),
     ...crossGroupMatches,
-    ...koCampeoes['16avos'].map((m) => ({ ...m, rodada: '16avos' })),
-    ...koCampeoes.oitavas.map((m) => ({ ...m, rodada: 'oitavas' })),
-    ...koCampeoes.quartas.map((m) => ({ ...m, rodada: 'quartas' })),
-    ...koCampeoes.semis.map((m) => ({ ...m, rodada: 'semis' })),
-    { ...koCampeoes.final, rodada: 'final' },
+    ...koCampeoes['16avos'].flatMap(ccLegs),
+    ...koCampeoes.oitavas.flatMap(ccLegs),
+    ...koCampeoes.quartas.flatMap(ccLegs),
+    ...koCampeoes.semis.flatMap(ccLegs),
+    ...ccLegs(koCampeoes.final),
   ];
+  // Flatten legs — each two-legged pairing produces 2 match records for the
+  // calendar; the final produces 1.
+  const cbLegs = (pairing) =>
+    pairing.legs.map((leg) => ({
+      competicao: pairing.competicao,
+      rodada: pairing.rodada,
+      ...leg,
+    }));
   const brasilMatches = [
-    ...funnel.preliminar.matches,
-    ...funnel.primeira.matches,
-    ...funnel.segunda.matches,
-    ...funnel.terceira.matches,
-    ...koBrasil['16avos'],
-    ...koBrasil.oitavas,
-    ...koBrasil.quartas,
-    ...koBrasil.semis,
-    koBrasil.final,
+    ...funnel.preliminar.matches.flatMap(cbLegs),
+    ...funnel.primeira.matches.flatMap(cbLegs),
+    ...funnel.segunda.matches.flatMap(cbLegs),
+    ...funnel.terceira.matches.flatMap(cbLegs),
+    ...koBrasil['16avos'].flatMap(cbLegs),
+    ...koBrasil.oitavas.flatMap(cbLegs),
+    ...koBrasil.quartas.flatMap(cbLegs),
+    ...koBrasil.semis.flatMap(cbLegs),
+    ...cbLegs(koBrasil.final),
   ];
   const clubIds = getAllTeams().map((t) => t.id);
   const calendar = assignCalendar({
@@ -166,14 +183,12 @@ export function simulateSeason(seed) {
       matamata: koCampeoes,
     },
     copaBrasil: {
-      eliteBypass: pool.eliteBypass,
-      convidadoId: pool.convidadoId,
+      ccEliminadosNos16avos: cc16avosLosers,
       funil: {
         preliminar: funnel.preliminar,
         primeira: funnel.primeira,
         segunda: funnel.segunda,
         terceira: funnel.terceira,
-        luckyLosers: funnel.luckyLosers,
       },
       matamata: koBrasil,
     },

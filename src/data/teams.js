@@ -67,7 +67,7 @@ function build() {
         liga_regional: nome,
       };
     });
-    const serieB = seededSerieB(nome, 14).map((c) => {
+    const serieB = seededSerieB(nome, 18).map((c) => {
       const id = deriveId(c.nome, taken);
       taken.add(id);
       return { ...c, id, liga_regional: nome };

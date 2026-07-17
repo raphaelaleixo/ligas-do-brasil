@@ -1,74 +1,51 @@
-import { simulateMatch } from './match.js';
 import { getTeamById } from '../data/teams.js';
+import { playCupPairing } from './knockout-pairing.js';
 
-export function buildParticipantPool(seeded) {
-  const eliteIds = new Set(seeded.eliteBypass.map((c) => c.id));
-  const eliteBypass = seeded.eliteBypass.map((c) => c.id);
+// Top-B qualifying spots per liga (advance directly to 1ª Fase without going
+// through Preliminar). 5 for the five larger ligas, 3 for Amazônica.
+// Sum = 5*5 + 3 = 28. The remaining Série B clubs (bottom-13 per liga except
+// Amazônica bottom-15) fill Preliminar: 5*13 + 15 = 80.
+const TOP_B_PER_LIGA = {
+  'Liga Nordestina':   5,
+  'Liga Paulista':     5,
+  'Liga Central':      5,
+  'Liga Sulista':      5,
+  'Liga Rio-Capixaba': 5,
+  'Liga Amazônica':    3,
+};
 
-  const naoEliteSerieA = seeded.ligas
-    .flatMap((l) => l.tabelaA)
-    .filter((c) => !eliteIds.has(c.id))
-    .map((c) => c.id);
+export function buildParticipantPool({ seeded, regional }) {
+  // Serie B split per liga by Year Zero ranking_forca (seeded.tabelaB is
+  // already sorted desc → asc-by-name).
+  const topBIds = [];
+  const preliminarBIds = [];
+  for (const l of seeded.ligas) {
+    const n = TOP_B_PER_LIGA[l.nome] ?? 5;
+    for (const c of l.tabelaB.slice(0, n)) topBIds.push(c.id);
+    for (const c of l.tabelaB.slice(n)) preliminarBIds.push(c.id);
+  }
 
-  const top6PerRegion = seeded.ligas.flatMap((l) => l.tabelaB.slice(0, 6));
-  const dropped = top6PerRegion
-    .slice()
-    .sort((a, b) => {
-      if (a.ranking_forca !== b.ranking_forca) return a.ranking_forca - b.ranking_forca;
-      if (a.nome < b.nome) return -1;
-      if (a.nome > b.nome) return 1;
-      return 0;
-    })[0];
-  const topSerieBIds = top6PerRegion
-    .filter((c) => c.id !== dropped.id)
-    .map((c) => c.id);
+  // Serie A non-elite: those in regional tabelaA whose ids are NOT in
+  // qualificadosCampeoes (the per-liga CC quota qualifiers).
+  const ccSet = new Set(regional.ligas.flatMap((l) => l.qualificadosCampeoes));
+  const naoEliteAIds = regional.ligas.flatMap((l) =>
+    l.tabelaA.filter((row) => !ccSet.has(row.id)).map((row) => row.id)
+  );
 
-  const excludedSerieB = seeded.ligas.flatMap((l) => l.tabelaB.slice(6));
-  const convidado = excludedSerieB
-    .slice()
-    .sort((a, b) => {
-      if (b.ranking_forca !== a.ranking_forca) return b.ranking_forca - a.ranking_forca;
-      if (a.nome < b.nome) return -1;
-      if (a.nome > b.nome) return 1;
-      return 0;
-    })[0];
-  const convidadoId = convidado.id;
-
-  const base = [...naoEliteSerieA, ...topSerieBIds, convidadoId];
   return {
-    eliteBypass, base,
-    convidadoId,
+    preliminarBIds,
+    topBIds,
+    naoEliteAIds,
     composicao: {
-      naoEliteSerieA: naoEliteSerieA.length,
-      topSerieB: topSerieBIds.length,
-      convidado: 1,
+      preliminarB: preliminarBIds.length,
+      topB: topBIds.length,
+      naoEliteA: naoEliteAIds.length,
     },
   };
 }
 
-function playCupMatch(homeId, awayId, rng, competicao = 'copa_brasil', rodada) {
-  const home = getTeamById(homeId);
-  const away = getTeamById(awayId);
-  let { golsCasa, golsFora } = simulateMatch(
-    { rankingHome: home.ranking_forca, rankingAway: away.ranking_forca },
-    rng
-  );
-  if (golsCasa === golsFora) {
-    const extra = simulateMatch(
-      { rankingHome: home.ranking_forca, rankingAway: away.ranking_forca },
-      rng
-    );
-    golsCasa += extra.golsCasa;
-    golsFora += extra.golsFora;
-  }
-  let vencedorId;
-  if (golsCasa > golsFora) vencedorId = homeId;
-  else if (golsCasa < golsFora) vencedorId = awayId;
-  else vencedorId = rng() < 0.5 ? homeId : awayId;
-  return { competicao, rodada, casaId: homeId, foraId: awayId, golsCasa, golsFora, vencedorId };
-}
 
-function seededPair(ids, rng, competicao, rodada) {
+function seededPair(ids, rng, competicao, rodada, { twoLegs } = { twoLegs: true }) {
   const sorted = ids
     .slice()
     .sort((a, b) => {
@@ -87,112 +64,39 @@ function seededPair(ids, rng, competicao, rodada) {
   for (let i = 0; i < half; i++) {
     const homeId = sorted[i];
     const awayId = sorted[sorted.length - 1 - i];
-    const m = playCupMatch(homeId, awayId, rng, competicao, rodada);
-    matches.push(m);
-    survivors.push(m.vencedorId);
+    const p = playCupPairing(homeId, awayId, rng, { competicao, rodada, twoLegs });
+    matches.push(p);
+    survivors.push(p.vencedorId);
   }
   return { matches, survivors };
 }
 
-function accumulatePerformance(perf, matchesByClub) {
-  for (const [id, matches] of matchesByClub.entries()) {
-    let pontos = 0, saldo = 0, gp = 0;
-    for (const m of matches) {
-      const home = m.casaId === id;
-      const gf = home ? m.golsCasa : m.golsFora;
-      const gc = home ? m.golsFora : m.golsCasa;
-      gp += gf; saldo += gf - gc;
-      if (m.vencedorId === id) pontos += 3;
-      else if (gf === gc) pontos += 1;
-    }
-    perf.set(id, { pontos, saldo, gp });
-  }
-}
-
 export function simulateFunnel(pool, rng) {
-  const matchesByClub = new Map();
-  const recordMatch = (m) => {
-    for (const id of [m.casaId, m.foraId]) {
-      if (!matchesByClub.has(id)) matchesByClub.set(id, []);
-      matchesByClub.get(id).push(m);
-    }
-  };
+  // Preliminar: 80 B (bottom-ranked) → 40 winners.
+  if (pool.preliminarBIds.length !== 80) {
+    throw new Error(`Preliminar expected 80, got ${pool.preliminarBIds.length}`);
+  }
+  const preliminar = seededPair(pool.preliminarBIds, rng, 'copa_brasil', 'preliminar', { twoLegs: true });
 
-  const convidadoId = pool.convidadoId;
-  const baseSansConvidado = pool.base.filter((id) => id !== convidadoId);
-  const sortedByRankAsc = baseSansConvidado.slice().sort((a, b) => {
-    const A = getTeamById(a).ranking_forca;
-    const B = getTeamById(b).ranking_forca;
-    if (A !== B) return A - B;
-    const nameA = getTeamById(a).nome;
-    const nameB = getTeamById(b).nome;
-    if (nameA < nameB) return -1;
-    if (nameA > nameB) return 1;
-    return 0;
-  });
+  // 1ª Fase: 40 preliminar-survivors + 28 top-B + 60 non-elite Serie A = 128 → 64.
+  const primeiraClubes = [...preliminar.survivors, ...pool.topBIds, ...pool.naoEliteAIds];
+  if (primeiraClubes.length !== 128) {
+    throw new Error(`1ª Fase expected 128, got ${primeiraClubes.length}`);
+  }
+  const primeira = seededPair(primeiraClubes, rng, 'copa_brasil', 'primeira', { twoLegs: true });
 
-  const preliminarClubes = sortedByRankAsc.slice(0, 26);
-  const naoPreliminar = sortedByRankAsc.slice(26);
-  const preliminar = seededPair(preliminarClubes, rng, 'copa_brasil', 'preliminar');
-  preliminar.matches.forEach(recordMatch);
+  // 2ª Fase: 64 → 32.
+  const segunda = seededPair(primeira.survivors, rng, 'copa_brasil', 'segunda', { twoLegs: true });
 
-  // 1ª Fase: 13 sobreviventes + 104 remaining + 1 convidado = 118 → 59
-  const primeiraClubes = [...preliminar.survivors, ...naoPreliminar, convidadoId];
-  if (primeiraClubes.length !== 118) throw new Error(`1ª Fase expected 118, got ${primeiraClubes.length}`);
-  const primeira = seededPair(primeiraClubes, rng, 'copa_brasil', 'primeira');
-  primeira.matches.forEach(recordMatch);
-
-  // 2ª Fase: 59 → give top seed a bye, pair the other 58 → 29 + 1 bye = 30
-  const segundaClubes = primeira.survivors.slice();
-  if (segundaClubes.length !== 59) throw new Error(`2ª Fase expected 59, got ${segundaClubes.length}`);
-  const sortedForBye = segundaClubes.slice().sort((a, b) => {
-    const A = getTeamById(a).ranking_forca;
-    const B = getTeamById(b).ranking_forca;
-    if (B !== A) return B - A;
-    const nameA = getTeamById(a).nome;
-    const nameB = getTeamById(b).nome;
-    if (nameA < nameB) return -1;
-    if (nameA > nameB) return 1;
-    return 0;
-  });
-  const byeClub = sortedForBye[0];
-  const paired58 = sortedForBye.slice(1);
-  const segunda = seededPair(paired58, rng, 'copa_brasil', 'segunda');
-  segunda.matches.forEach(recordMatch);
-  segunda.survivors = [byeClub, ...segunda.survivors];
-
-  // 3ª Fase: 30 → 15
-  const terceira = seededPair(segunda.survivors, rng, 'copa_brasil', 'terceira');
-  terceira.matches.forEach(recordMatch);
-
-  // Lucky Losers: 4 best eliminated in 3ª by campaign performance
-  const eliminatedIn3rd = terceira.matches.map((m) =>
-    m.vencedorId === m.casaId ? m.foraId : m.casaId
-  );
-  const perf = new Map();
-  accumulatePerformance(perf, matchesByClub);
-  const luckyLosers = eliminatedIn3rd
-    .slice()
-    .sort((a, b) => {
-      const A = perf.get(a) ?? { pontos: 0, saldo: 0, gp: 0 };
-      const B = perf.get(b) ?? { pontos: 0, saldo: 0, gp: 0 };
-      if (B.pontos !== A.pontos) return B.pontos - A.pontos;
-      if (B.saldo !== A.saldo) return B.saldo - A.saldo;
-      if (B.gp !== A.gp) return B.gp - A.gp;
-      const nameA = getTeamById(a).nome;
-      const nameB = getTeamById(b).nome;
-      if (nameA < nameB) return -1;
-      if (nameA > nameB) return 1;
-      return 0;
-    })
-    .slice(0, 4);
-
-  const qualificadosParaMataMata = [...terceira.survivors, ...luckyLosers];
+  // 3ª Fase: 32 → 16.
+  const terceira = seededPair(segunda.survivors, rng, 'copa_brasil', 'terceira', { twoLegs: true });
 
   return {
-    preliminar, primeira, segunda, terceira,
-    luckyLosers,
-    qualificadosParaMataMata,
+    preliminar,
+    primeira,
+    segunda,
+    terceira,
+    qualificadosParaMataMata: terceira.survivors, // 16
   };
 }
 
@@ -205,24 +109,43 @@ function shuffle(arr, rng) {
   return a;
 }
 
-export function simulateMataMata(eliteBypass, qualificados19, rng) {
-  const clubes32 = [...eliteBypass, ...qualificados19];
-  if (clubes32.length !== 32) throw new Error(`Expected 32 clubs, got ${clubes32.length}`);
-  const drawn = shuffle(clubes32, rng);
+// Copa do Brasil mata-mata: 16 clubs eliminated at CC 16-avos + 16 funnel
+// survivors = 32. Round of 32 always pairs a CC drop-out against a funnel
+// survivor (each pot shuffled independently, then zipped). Subsequent rounds
+// are sequential bracket. All rounds two-legged EXCEPT the final.
+export function simulateMataMata(ccEliminadosNos16avos, funnelQualified, rng) {
+  if (ccEliminadosNos16avos.length !== 16) {
+    throw new Error(`Expected 16 CC drop-outs, got ${ccEliminadosNos16avos.length}`);
+  }
+  if (funnelQualified.length !== 16) {
+    throw new Error(`Expected 16 funnel qualifiers, got ${funnelQualified.length}`);
+  }
+  const ccPot = shuffle(ccEliminadosNos16avos, rng);
+  const funnelPot = shuffle(funnelQualified, rng);
   const rounds = { '16avos': [], oitavas: [], quartas: [], semis: [], final: null };
-  let current = drawn;
-  for (const key of ['16avos', 'oitavas', 'quartas', 'semis']) {
+
+  // Round of 32: CC drop-out (home in leg 1) vs funnel survivor.
+  const winners16 = [];
+  for (let i = 0; i < 16; i++) {
+    const p = playCupPairing(ccPot[i], funnelPot[i], rng, { competicao: 'copa_brasil', rodada: '16avos', twoLegs: true });
+    rounds['16avos'].push(p);
+    winners16.push(p.vencedorId);
+  }
+
+  // Subsequent rounds: sequential bracket.
+  let current = winners16;
+  for (const key of ['oitavas', 'quartas', 'semis']) {
     const next = [];
     for (let i = 0; i < current.length; i += 2) {
-      const m = playCupMatch(current[i], current[i + 1], rng, 'copa_brasil', key);
-      rounds[key].push(m);
-      next.push(m.vencedorId);
+      const p = playCupPairing(current[i], current[i + 1], rng, { competicao: 'copa_brasil', rodada: key, twoLegs: true });
+      rounds[key].push(p);
+      next.push(p.vencedorId);
     }
     current = next;
   }
-  const finalMatch = playCupMatch(current[0], current[1], rng, 'copa_brasil', 'final');
-  rounds.final = finalMatch;
-  rounds.campeao = finalMatch.vencedorId;
-  rounds.vice = finalMatch.vencedorId === finalMatch.casaId ? finalMatch.foraId : finalMatch.casaId;
+  const final = playCupPairing(current[0], current[1], rng, { competicao: 'copa_brasil', rodada: 'final', twoLegs: false });
+  rounds.final = final;
+  rounds.campeao = final.vencedorId;
+  rounds.vice = final.vencedorId === final.casaId ? final.foraId : final.casaId;
   return rounds;
 }

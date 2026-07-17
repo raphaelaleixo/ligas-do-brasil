@@ -1,5 +1,6 @@
 import { simulateMatch } from './match.js';
 import { getTeamById } from '../data/teams.js';
+import { playCupPairing } from './knockout-pairing.js';
 
 function idAtPos(liga, pos) {
   return liga.tabelaA[pos - 1].id;
@@ -211,45 +212,71 @@ export function selectKnockoutQualifiers(grupos) {
   return { top2, melhoresTerceiros };
 }
 
-function playKnockoutMatch(homeId, awayId, rng) {
-  const home = getTeamById(homeId);
-  const away = getTeamById(awayId);
-  let { golsCasa, golsFora } = simulateMatch(
-    { rankingHome: home.ranking_forca, rankingAway: away.ranking_forca },
-    rng
-  );
-  if (golsCasa === golsFora) {
-    const extra = simulateMatch(
-      { rankingHome: home.ranking_forca, rankingAway: away.ranking_forca },
-      rng
-    );
-    golsCasa += extra.golsCasa;
-    golsFora += extra.golsFora;
+
+// Rank clubs by group-stage campaign quality — used to split the 32 qualifiers
+// into a seeded pot (top 16) and an unseeded pot (bottom 16) for the round of 32.
+function rankByCampaign(clubes) {
+  return clubes.slice().sort((a, b) => {
+    if (a.posicao !== b.posicao) return a.posicao - b.posicao;
+    if (b.pontos !== a.pontos) return b.pontos - a.pontos;
+    if (b.saldoGols !== a.saldoGols) return b.saldoGols - a.saldoGols;
+    if (b.golsPro !== a.golsPro) return b.golsPro - a.golsPro;
+    if (a.nome < b.nome) return -1;
+    if (a.nome > b.nome) return 1;
+    return 0;
+  });
+}
+
+// Champions-League-style draw for the round of 32: pair each seeded team with
+// a random unseeded team, avoiding same-group whenever possible. Falls back to
+// a straight seeded-vs-unseeded pairing if the same-group constraint can't be
+// satisfied within the attempt budget.
+function drawSeededPairings(seeded, unseeded, rng) {
+  const MAX_ATTEMPTS = 200;
+  for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+    const remaining = shuffle(unseeded, rng);
+    const pairings = [];
+    let ok = true;
+    for (const s of seeded) {
+      const idx = remaining.findIndex((u) => u.grupo !== s.grupo);
+      if (idx === -1) { ok = false; break; }
+      const [u] = remaining.splice(idx, 1);
+      pairings.push([s, u]);
+    }
+    if (ok) return pairings;
   }
-  let vencedorId;
-  if (golsCasa > golsFora) vencedorId = homeId;
-  else if (golsCasa < golsFora) vencedorId = awayId;
-  else {
-    const homeChance = 0.5 + (home.ranking_forca - away.ranking_forca) * 0.02;
-    vencedorId = rng() < homeChance ? homeId : awayId;
-  }
-  return { casaId: homeId, foraId: awayId, golsCasa, golsFora, vencedorId };
+  const shuffled = shuffle(unseeded, rng);
+  return seeded.map((s, i) => [s, shuffled[i]]);
 }
 
 export function simulateKnockout(clubes32, rng) {
-  const shuffled = shuffle(clubes32.map((c) => c.id), rng);
+  const ranked = rankByCampaign(clubes32);
+  const seeded = ranked.slice(0, 16);
+  const unseeded = ranked.slice(16);
+  const pairings = drawSeededPairings(seeded, unseeded, rng);
+
   const rounds = { '16avos': [], oitavas: [], quartas: [], semis: [], final: null };
-  let current = shuffled;
-  for (const key of ['16avos', 'oitavas', 'quartas', 'semis']) {
+
+  // Round of 32 uses the seeded draw. Seeded team is home in leg 1. Two-legged.
+  const winners16 = [];
+  for (const [s, u] of pairings) {
+    const p = playCupPairing(s.id, u.id, rng, { competicao: 'copa_campeoes', rodada: '16avos', twoLegs: true });
+    rounds['16avos'].push(p);
+    winners16.push(p.vencedorId);
+  }
+
+  // Subsequent rounds: sequential bracket. Two-legged except the final.
+  let current = winners16;
+  for (const key of ['oitavas', 'quartas', 'semis']) {
     const next = [];
     for (let i = 0; i < current.length; i += 2) {
-      const match = playKnockoutMatch(current[i], current[i + 1], rng);
-      rounds[key].push(match);
-      next.push(match.vencedorId);
+      const p = playCupPairing(current[i], current[i + 1], rng, { competicao: 'copa_campeoes', rodada: key, twoLegs: true });
+      rounds[key].push(p);
+      next.push(p.vencedorId);
     }
     current = next;
   }
-  const finalMatch = playKnockoutMatch(current[0], current[1], rng);
+  const finalMatch = playCupPairing(current[0], current[1], rng, { competicao: 'copa_campeoes', rodada: 'final', twoLegs: false });
   rounds.final = finalMatch;
   rounds.campeao = finalMatch.vencedorId;
   rounds.vice = finalMatch.vencedorId === finalMatch.casaId ? finalMatch.foraId : finalMatch.casaId;

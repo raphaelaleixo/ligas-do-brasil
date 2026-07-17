@@ -1,66 +1,80 @@
 import { describe, it, expect } from 'vitest';
 import { buildParticipantPool, simulateFunnel, simulateMataMata } from '../../src/sim/copa-brasil.js';
 import { seedYearZero } from '../../src/sim/seeding.js';
+import { simulateAllRegionalLeagues } from '../../src/sim/regional-league.js';
 import { createRng } from '../../src/sim/rng.js';
 
 describe('buildParticipantPool', () => {
   const seeded = seedYearZero();
-  const pool = buildParticipantPool(seeded);
+  const regional = simulateAllRegionalLeagues({ rng: createRng(1) });
+  const pool = buildParticipantPool({ seeded, regional });
 
-  it('has 13 elite bypass + 131 base = 144 total', () => {
-    expect(pool.eliteBypass).toHaveLength(13);
-    expect(pool.base).toHaveLength(131);
+  it('splits Série B: 80 preliminar + 28 top = 108 total', () => {
+    expect(pool.preliminarBIds).toHaveLength(80);
+    expect(pool.topBIds).toHaveLength(28);
   });
 
-  it('base pool composition: 95 non-elite Série A + 35 top-6-Série-B + 1 convidado', () => {
-    expect(pool.composicao.naoEliteSerieA).toBe(95);
-    expect(pool.composicao.topSerieB).toBe(35);
-    expect(pool.composicao.convidado).toBe(1);
+  it('has 60 non-elite Série A (108 A − 48 CC quota)', () => {
+    expect(pool.naoEliteAIds).toHaveLength(60);
   });
 
-  it('convidado técnico is defined', () => {
-    expect(pool.convidadoId).toBeDefined();
+  it('composicao mirrors pool counts', () => {
+    expect(pool.composicao.preliminarB).toBe(80);
+    expect(pool.composicao.topB).toBe(28);
+    expect(pool.composicao.naoEliteA).toBe(60);
   });
 
-  it('base clubs are all distinct', () => {
-    const ids = new Set(pool.base);
-    expect(ids.size).toBe(131);
+  it('all pool ids are distinct across preliminar-B / top-B / non-elite-A', () => {
+    const all = new Set([...pool.preliminarBIds, ...pool.topBIds, ...pool.naoEliteAIds]);
+    expect(all.size).toBe(168);
   });
 });
 
 describe('simulateFunnel', () => {
   const seeded = seedYearZero();
-  const pool = buildParticipantPool(seeded);
-  const rng = createRng(1);
-  const funnel = simulateFunnel(pool, rng);
+  const regional = simulateAllRegionalLeagues({ rng: createRng(1) });
+  const pool = buildParticipantPool({ seeded, regional });
+  const funnel = simulateFunnel(pool, createRng(1));
 
   it('processes each phase with the expected survivor counts', () => {
-    expect(funnel.preliminar.survivors).toHaveLength(13);
-    expect(funnel.primeira.survivors).toHaveLength(59);
-    expect(funnel.segunda.survivors).toHaveLength(30);
-    expect(funnel.terceira.survivors).toHaveLength(15);
-    expect(funnel.luckyLosers).toHaveLength(4);
-    expect(funnel.qualificadosParaMataMata).toHaveLength(19);
+    expect(funnel.preliminar.survivors).toHaveLength(40);
+    expect(funnel.primeira.survivors).toHaveLength(64);
+    expect(funnel.segunda.survivors).toHaveLength(32);
+    expect(funnel.terceira.survivors).toHaveLength(16);
+    expect(funnel.qualificadosParaMataMata).toHaveLength(16);
   });
 
-  it('Preliminar takes 26 base clubs', () => {
-    const preliminarIds = funnel.preliminar.matches.flatMap((m) => [m.casaId, m.foraId]);
-    expect(new Set(preliminarIds).size).toBe(26);
+  it('preliminar pairings cover all 80 clubes', () => {
+    const ids = funnel.preliminar.matches.flatMap((m) => [m.casaId, m.foraId]);
+    expect(new Set(ids).size).toBe(80);
+  });
+
+  it('every funnel pairing has 2 legs (two-legged confrontation)', () => {
+    for (const p of funnel.preliminar.matches) expect(p.legs).toHaveLength(2);
+    for (const p of funnel.primeira.matches) expect(p.legs).toHaveLength(2);
+    for (const p of funnel.segunda.matches) expect(p.legs).toHaveLength(2);
+    for (const p of funnel.terceira.matches) expect(p.legs).toHaveLength(2);
   });
 });
 
 describe('simulateMataMata', () => {
-  it('produces 5 rounds ending in a champion', () => {
+  it('produces 5 rounds ending in a champion, only the final is one-legged', () => {
     const seeded = seedYearZero();
-    const pool = buildParticipantPool(seeded);
-    const rng = createRng(1);
-    const funnel = simulateFunnel(pool, rng);
-    const mm = simulateMataMata(pool.eliteBypass, funnel.qualificadosParaMataMata, rng);
+    const regional = simulateAllRegionalLeagues({ rng: createRng(1) });
+    const pool = buildParticipantPool({ seeded, regional });
+    const funnel = simulateFunnel(pool, createRng(1));
+    const ccEliminados = regional.ligas[0].tabelaA.slice(0, 16).map((r) => r.id);
+    const mm = simulateMataMata(ccEliminados, funnel.qualificadosParaMataMata, createRng(1));
     expect(mm['16avos']).toHaveLength(16);
     expect(mm.oitavas).toHaveLength(8);
     expect(mm.quartas).toHaveLength(4);
     expect(mm.semis).toHaveLength(2);
     expect(mm.campeao).toBeDefined();
     expect(mm.vice).toBeDefined();
+    for (const p of mm['16avos']) expect(p.legs).toHaveLength(2);
+    for (const p of mm.oitavas)   expect(p.legs).toHaveLength(2);
+    for (const p of mm.quartas)   expect(p.legs).toHaveLength(2);
+    for (const p of mm.semis)     expect(p.legs).toHaveLength(2);
+    expect(mm.final.legs).toHaveLength(1);
   });
 });

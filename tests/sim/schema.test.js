@@ -36,7 +36,7 @@ describe('season JSON schema', () => {
   });
 
   it('copaBrasil has funil phases and matamata', () => {
-    for (const k of ['preliminar', 'primeira', 'segunda', 'terceira', 'luckyLosers']) {
+    for (const k of ['preliminar', 'primeira', 'segunda', 'terceira']) {
       expect(season.copaBrasil.funil).toHaveProperty(k);
     }
     expect(season.copaBrasil.matamata.campeao).toBeDefined();
@@ -49,11 +49,11 @@ describe('season JSON schema', () => {
     expect(all.size).toBe(13);
   });
 
-  it('perfisDashboard buckets add to 192', () => {
+  it('perfisDashboard buckets add to 216', () => {
     expect(
       season.perfisDashboard.elite.count +
       season.perfisDashboard.media.count +
       season.perfisDashboard.base.count
-    ).toBe(192);
+    ).toBe(216);
   });
 });

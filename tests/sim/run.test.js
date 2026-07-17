@@ -29,7 +29,7 @@ describe('simulateSeason', () => {
     expect(JSON.stringify(a)).toBe(JSON.stringify(b));
   });
 
-  it('produces exactly 192 clube entries', () => {
-    expect(season.clubes).toHaveLength(192);
+  it('produces exactly 216 clube entries', () => {
+    expect(season.clubes).toHaveLength(216);
   });
 });
