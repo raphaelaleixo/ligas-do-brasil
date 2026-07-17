@@ -32,7 +32,7 @@ scripts/
 assets/
   css/               # cascade layers, container queries, light-dark(), view transitions
   js/                # ES modules, sem bundler
-tests/               # Vitest — 98 testes cobrindo simulador + camada de dados
+tests/               # Vitest — 136 testes cobrindo simulador + camada de dados
 worker/              # Cloudflare Worker que recebe /feedback e abre issue no GitHub
 ```
 
@@ -58,7 +58,7 @@ cada visitante roda a sua.
 
 ```sh
 npm install
-npm test              # 98 testes do simulador
+npm test              # 136 testes do simulador
 npx serve -p 5173     # serve os HTMLs estáticos
 ```
 

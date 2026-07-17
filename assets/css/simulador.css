@@ -81,12 +81,18 @@
   }
   .lig-block__summary {
     cursor: pointer;
-    list-style: revert;
+    list-style: none;
   }
   .lig-block__title {
     font-family: var(--font-display, inherit);
     font-size: 1.25rem;
     font-weight: 700;
+  }
+  .lig-block__details-link {
+    margin-inline-start: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.75;
+    text-decoration: underline;
   }
   .lig-block__grid {
     margin-top: 1rem;
@@ -124,6 +130,9 @@
     width: 100%;
     font-variant-numeric: tabular-nums;
     font-size: 0.9rem;
+  }
+  .cc-group__table td {
+    padding: 0.25rem 0.4rem;
   }
   .cc-group__row--classificado-direto,
   .cc-group__row--classificado-terceiro {

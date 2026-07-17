@@ -15,6 +15,10 @@ describe('regressão anti-baked-seed', () => {
     expect(existsSync('assets/js/season.js')).toBe(false);
   });
 
+  it('initial-data/teams.json não existe mais', () => {
+    expect(existsSync('initial-data/teams.json')).toBe(false);
+  });
+
   it('nenhum arquivo do site referencia season-default ou loadSeason', () => {
     const out = execSync(
       `grep -rn 'season-default\\|loadSeason' assets/ *.html package.json 2>/dev/null || true`,

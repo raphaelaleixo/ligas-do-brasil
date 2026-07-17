@@ -109,7 +109,21 @@ function selectTab(name) {
 }
 
 function onNewSimClick() { navigateToSeed(randomSeed()); }
-function onCopyLinkClick() { navigator.clipboard?.writeText(location.href); }
+function onCopyLinkClick(e) {
+  const btn = e.currentTarget;
+  const original = btn.textContent;
+  if (!navigator.clipboard) {
+    btn.textContent = 'copie a URL';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+    return;
+  }
+  navigator.clipboard.writeText(location.href).then(
+    () => { btn.textContent = 'copiado ✓'; },
+    () => { btn.textContent = 'copie a URL'; }
+  ).finally(() => {
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  });
+}
 function onTabClick(e) {
   const tab = e.target.closest('[role="tab"]');
   if (!tab) return;
@@ -122,7 +136,12 @@ function init() {
   $('.sim-tabs')?.addEventListener('click', onTabClick);
   window.addEventListener('popstate', () => {
     const seed = readSeedFromUrl();
-    if (seed !== null) runSim(seed);
+    if (seed !== null) {
+      runSim(seed);
+    } else {
+      const result = document.querySelector('.sim-result');
+      if (result) result.hidden = true;
+    }
   });
 
   const seed = readSeedFromUrl();

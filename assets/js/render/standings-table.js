@@ -6,7 +6,7 @@ export function renderStandingsTable({ tabela, qualificadosCampeoes, rebaixados,
   const acc = new Set(acessos);
   const frag = document.createDocumentFragment();
   const table = document.createElement('table');
-  table.className = `standings-table standings-table--${divisao.toLowerCase()}`;
+  table.className = 'standings-table';
 
   const thead = document.createElement('thead');
   thead.innerHTML = '<tr><th>#</th><th></th><th>Clube</th><th>P</th><th>V</th><th>E</th><th>D</th><th>SG</th></tr>';

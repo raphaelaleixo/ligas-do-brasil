@@ -28,6 +28,11 @@ export function renderRegionalLeaguesTab({ ligasRegionais }) {
     title.className = 'lig-block__title';
     title.textContent = liga.nome;
     summary.appendChild(title);
+    const detailsLink = document.createElement('a');
+    detailsLink.className = 'lig-block__details-link';
+    detailsLink.href = 'ligas';
+    detailsLink.textContent = 'ver detalhes em /ligas ↗';
+    summary.appendChild(detailsLink);
     block.appendChild(summary);
 
     const grid = document.createElement('div');
