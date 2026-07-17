@@ -175,4 +175,55 @@
     box-shadow: 0 0 0 3px var(--gold, #FFCB05);
     background: color-mix(in oklab, var(--gold, #FFCB05) 8%, var(--paper));
   }
+
+  .cb-bracket__context {
+    max-width: 60ch;
+    margin-inline: auto;
+    text-align: center;
+    padding-block: 0.75rem 1.5rem;
+    opacity: 0.85;
+  }
+  .cb-bracket {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 1.5rem;
+    overflow-x: auto;
+    padding-block: 1rem;
+  }
+  .cb-bracket__round {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 180px;
+  }
+  .cb-bracket__round-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.7;
+  }
+  .cb-match {
+    display: grid;
+    gap: 0.15rem;
+    padding: 0.5rem 0.6rem;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+  .cb-match__side {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .cb-match__side--vencedor { font-weight: 700; }
+  .cb-match__side:not(.cb-match__side--vencedor) { opacity: 0.6; }
+  .cb-match__team--placeholder {
+    font-style: italic;
+    color: var(--ink-muted, color-mix(in oklab, var(--ink) 55%, transparent));
+    border-bottom: 1px dashed currentColor;
+  }
+  .cb-match--campeao {
+    box-shadow: 0 0 0 3px var(--gold, #FFCB05);
+    background: color-mix(in oklab, var(--gold, #FFCB05) 8%, var(--paper));
+  }
 }
