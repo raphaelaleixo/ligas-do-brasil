@@ -1,4 +1,4 @@
-import { loadSeason } from '../season.js';
+import { META } from '../../../src/sim/meta.js';
 
 const ANALOGIES = [
   { liga: 'Nordestina',    regiaoPop: '54 mi' },
@@ -20,10 +20,10 @@ function renderAnalogy() {
   `).join('');
 }
 
-function renderMetrics(season) {
+function renderMetrics() {
   for (const el of document.querySelectorAll('[data-metric]')) {
     const key = el.getAttribute('data-metric');
-    const value = season.meta[key];
+    const value = META[key];
     el.textContent = value;
     el.style.setProperty('--n-final', String(value));
   }
@@ -139,7 +139,4 @@ renderAnalogy();
 renderSleepingGiants();
 renderRevelation();
 renderWorkload();
-loadSeason().then((season) => {
-  window.__season = season;
-  renderMetrics(season);
-});
+renderMetrics();
