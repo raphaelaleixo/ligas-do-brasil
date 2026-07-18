@@ -65,7 +65,9 @@ function renderTab(name, season) {
 }
 
 function showResult(seed, season) {
-  $('.sim-result').hidden = false;
+  const result = $('.sim-result');
+  const wasHidden = result.hidden;
+  result.hidden = false;
   const copyLink = $('[data-role="copy-link"]');
   if (copyLink) copyLink.hidden = false;
   renderTab('ligas', season);
@@ -73,6 +75,18 @@ function showResult(seed, season) {
   renderTab('cb', season);
   renderTab('conmebol', season);
   selectTab(readTabFromUrl() ?? DEFAULT_TAB);
+  if (wasHidden) {
+    result.classList.remove('sim-result--enter');
+    // Force reflow so the animation restarts if the class was already there
+    // (e.g., after back-nav → new sim).
+    void result.offsetHeight;
+    result.classList.add('sim-result--enter');
+    result.addEventListener('animationend', function onEnd(e) {
+      if (e.target !== result || e.animationName !== 'sim-result-enter') return;
+      result.classList.remove('sim-result--enter');
+      result.removeEventListener('animationend', onEnd);
+    });
+  }
 }
 
 function showError(msg) {
