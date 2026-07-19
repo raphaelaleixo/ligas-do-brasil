@@ -183,6 +183,44 @@
       margin: 0 0 1.5rem;
     }
 
+    .manifesto__result-table {
+      margin: 0 0 2rem;
+      overflow-x: auto;
+    }
+    .manifesto__result-table table {
+      inline-size: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .manifesto__result-table th,
+    .manifesto__result-table td {
+      padding: 0.6rem 0.75rem;
+      text-align: end;
+      border-block-end: 1px solid rgba(12, 14, 10, 0.14);
+      font-variant-numeric: tabular-nums;
+    }
+    .manifesto__result-table th[scope="row"] {
+      text-align: start;
+      font-weight: 700;
+    }
+    .manifesto__result-table thead th {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(12, 14, 10, 0.55);
+      border-block-end: 2px solid rgba(12, 14, 10, 0.35);
+    }
+    .manifesto__result-table figcaption {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: rgba(12, 14, 10, 0.55);
+      margin-block-start: 0.75rem;
+      max-inline-size: 60ch;
+      text-align: start;
+      line-height: 1.5;
+    }
+
     ::selection {
       background: var(--gold);
       color: var(--ink);
