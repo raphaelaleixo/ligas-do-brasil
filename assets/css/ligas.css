@@ -31,6 +31,8 @@
       padding-block-end: 2px;
       margin-inline: -4px;
       scrollbar-width: none;
+      /* Reserve height so empty→JS-filled swap doesn't shift the layout. */
+      min-block-size: 44px;
     }
     .lig-tabs::-webkit-scrollbar { block-size: 0; }
     .lig-tab {
@@ -106,12 +108,10 @@
     .lig-head__swatch--cc  { background: var(--green); }
     .lig-head__swatch--reb { background: var(--terra); }
 
-    .lig-loading {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: rgba(12, 14, 10, 0.5);
-      padding-block: 3rem;
-      margin: 0;
+    /* 18 clubes por Série A · row ~62px + hairline gaps → reserva espaço
+       aproximado do estado populado pra o JS não empurrar layout ao injetar. */
+    .lig-clubs-wrap {
+      min-block-size: 72rem;
     }
 
     /* Lista simples de clubes (estilo alinhado com os cards da página Copas) */

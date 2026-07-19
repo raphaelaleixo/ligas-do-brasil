@@ -143,7 +143,6 @@ const tabsEl    = document.getElementById('ligas-tabs');
 const nameEl    = document.getElementById('lig-name');
 const rowsEl    = document.getElementById('lig-rows');
 const clubsEl   = document.getElementById('lig-clubs-wrap');
-const loadingEl = document.getElementById('lig-loading');
 const metaEl    = document.getElementById('lig-meta');
 
 let sel = 0;
@@ -288,9 +287,6 @@ function renderContent() {
       </li>
     `;
   }).join('');
-
-  loadingEl.hidden = true;
-  clubsEl.hidden = false;
 }
 
 // Initial hash → tab

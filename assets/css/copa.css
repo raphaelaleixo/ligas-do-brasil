@@ -27,6 +27,8 @@
       padding-block-end: 2px;
       margin-inline: -4px;
       scrollbar-width: none;
+      /* Reserve height so empty→JS-filled swap doesn't shift the layout. */
+      min-block-size: 44px;
     }
     .cop-tabs::-webkit-scrollbar { block-size: 0; }
     .cop-tab {
