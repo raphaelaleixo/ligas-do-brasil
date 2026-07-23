@@ -126,7 +126,7 @@ function renderCampeoes() {
         <details class="cop-why">
           <summary>Por que as cruzadas ficam dentro do mesmo pote?</summary>
           <div class="cop-why__body">
-            <p>Assim, cada pote joga um mini-torneio equilibrado entre clubes de força parecida — Pote 1 tem seus clássicos entre gigantes, Pote 4 tem sua liga entre iguais. A expectativa em qualquer pote é <strong>~4,5 pontos em 3 jogos cruzados</strong> (empate estatístico entre pares), então as cruzadas são neutras para todos.</p>
+            <p><strong>Um campeão enfrenta campeões:</strong> no Pote 1, o vencedor de cada região se mede com os vencedores das outras, inclusive os maiores do país — é o direito que ele conquistou ao ganhar a sua liga. Do outro lado, o clube pequeno enfrenta os seus: no Pote 4, joga as cruzadas entre iguais, sem ser atropelado por um gigante. Cada clube cruza sempre com os seus pares de semeadura, nunca com clubes de outro andar.</p>
             <p>A diferença de nível entre os potes fica reservada aos <strong>jogos do próprio grupo</strong>, onde a semeadura da temporada anterior é que faz diferença.</p>
           </div>
         </details>
