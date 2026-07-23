@@ -6,7 +6,11 @@ function idAtPos(liga, pos) {
   return liga.tabelaA[pos - 1].id;
 }
 
-export function buildPots(ligas) {
+// Semeadura geo-balanceada dos 48 em 4 potes de 12. Cada pote reúne uma "faixa"
+// de mérito de cada região, de modo que toda região apareça em todo pote na medida
+// das suas vagas: Amazônica (4) manda 1 por pote; as regiões de 8 vagas mandam 2;
+// Nordestina e Paulista (10) mandam 2 de base mais 1 "extra" sorteado entre elas.
+export function buildPots(ligas, rng) {
   const byName = new Map(ligas.map((l) => [l.nome, l]));
   const NE = byName.get('Liga Nordestina');
   const SP = byName.get('Liga Paulista');
@@ -15,24 +19,38 @@ export function buildPots(ligas) {
   const MG = byName.get('Liga Central');
   const N = byName.get('Liga Amazônica');
 
-  const pot1 = [NE, SP, GC, SUL, MG, N].flatMap((l) => [idAtPos(l, 1), idAtPos(l, 2)]);
-  const pot2 = [NE, SP, GC, SUL, MG, N].flatMap((l) => [idAtPos(l, 3), idAtPos(l, 4)]);
-  const pot3 = [
-    idAtPos(NE, 5), idAtPos(NE, 6),
-    idAtPos(SP, 5), idAtPos(SP, 6),
-    idAtPos(SUL, 5), idAtPos(MG, 5), idAtPos(GC, 5),
-    // Option C top-up:
-    idAtPos(SUL, 6), idAtPos(MG, 6), idAtPos(GC, 6),
-    idAtPos(NE, 7), idAtPos(SP, 7),
-  ];
-  const pot4 = [
-    idAtPos(NE, 8), idAtPos(NE, 9), idAtPos(NE, 10),
-    idAtPos(SP, 8), idAtPos(SP, 9), idAtPos(SP, 10),
-    idAtPos(SUL, 7), idAtPos(SUL, 8),
-    idAtPos(MG, 7), idAtPos(MG, 8),
-    idAtPos(GC, 7), idAtPos(GC, 8),
-  ];
-  return [pot1, pot2, pot3, pot4];
+  const pots = [[], [], [], []];
+
+  // Amazônica (4 vagas): 1 clube por pote — campeão no Pote 1, 4º no Pote 4.
+  for (let p = 0; p < 4; p++) pots[p].push(idAtPos(N, p + 1));
+
+  // Regiões de 8 vagas: 2 por pote, por faixa de ranking (posições 2p+1 e 2p+2).
+  for (const l of [GC, SUL, MG]) {
+    for (let p = 0; p < 4; p++) {
+      pots[p].push(idAtPos(l, 2 * p + 1), idAtPos(l, 2 * p + 2));
+    }
+  }
+
+  // Nordestina e Paulista (10 vagas cada): base de 2 por pote + 1 "extra" sorteado
+  // entre NE e SP, de modo que cada pote receba exatamente 1 extra e cada região
+  // termine com 10 (dois potes com 3, dois com 2). Quais potes levam o extra-NE vs
+  // o extra-SP é sorteado a cada temporada (RNG com seed).
+  const order = shuffle([0, 1, 2, 3], rng);
+  const neExtra = new Set(order.slice(0, 2)); // 2 potes onde a NE leva 3
+  fillBigRegion(NE, pots, (p) => neExtra.has(p));
+  fillBigRegion(SP, pots, (p) => !neExtra.has(p));
+
+  return pots;
+}
+
+// Distribui uma região de 10 vagas pelos 4 potes em ordem de ranking: os potes
+// marcados recebem 3 clubes consecutivos; os demais, 2 (3 + 3 + 2 + 2 = 10).
+function fillBigRegion(liga, pots, hasExtra) {
+  let pos = 1;
+  for (let p = 0; p < 4; p++) {
+    const count = hasExtra(p) ? 3 : 2;
+    for (let i = 0; i < count; i++) pots[p].push(idAtPos(liga, pos++));
+  }
 }
 
 function shuffle(arr, rng) {

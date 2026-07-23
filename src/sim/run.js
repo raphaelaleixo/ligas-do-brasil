@@ -62,7 +62,7 @@ export function simulateSeason(seed) {
 
   const regional = simulateAllRegionalLeagues({ rng });
 
-  const pots = buildPots(regional.ligas);
+  const pots = buildPots(regional.ligas, rng);
   const lookup = ligaLookupFrom(regional.ligas);
   const groupsDrawn = drawGroups(pots, lookup, rng);
   const { grupos, crossGroupMatches } = simulateGroupStage(groupsDrawn, rng);

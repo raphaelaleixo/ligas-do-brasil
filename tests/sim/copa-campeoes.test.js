@@ -17,42 +17,45 @@ function fakeLigas() {
 }
 
 describe('buildPots', () => {
-  const pots = buildPots(fakeLigas());
+  const regionOf = (id) => id.match(/^[A-Za-z]+/)[0];
+  const pots = buildPots(fakeLigas(), createRng(42));
 
   it('has 4 pots of 12 each', () => {
     expect(pots).toHaveLength(4);
     for (const pot of pots) expect(pot).toHaveLength(12);
   });
 
-  it('pot 1 is positions 1–2 of every league', () => {
-    for (const region of ['NE', 'SP', 'GC', 'SUL', 'MG', 'N']) {
-      expect(pots[0]).toContain(`${region}1`);
-      expect(pots[0]).toContain(`${region}2`);
+  it('Amazônica: exatamente 1 clube por pote, ranks 1–4 → potes 1–4', () => {
+    ['N1', 'N2', 'N3', 'N4'].forEach((id, p) => expect(pots[p]).toContain(id));
+    for (const pot of pots) {
+      expect(pot.filter((id) => regionOf(id) === 'N')).toHaveLength(1);
     }
   });
 
-  it('pot 2 is positions 3–4 of every league', () => {
-    for (const region of ['NE', 'SP', 'GC', 'SUL', 'MG', 'N']) {
-      expect(pots[1]).toContain(`${region}3`);
-      expect(pots[1]).toContain(`${region}4`);
+  it('regiões de 8 vagas (GC, SUL, MG): 2 por pote, por faixa de ranking', () => {
+    for (const region of ['GC', 'SUL', 'MG']) {
+      for (let p = 0; p < 4; p++) {
+        expect(pots[p]).toContain(`${region}${2 * p + 1}`);
+        expect(pots[p]).toContain(`${region}${2 * p + 2}`);
+      }
     }
   });
 
-  it('pot 3 explicit picks: NE5-6, SP5-6, SUL5, MG5, GC5', () => {
-    for (const id of ['NE5', 'NE6', 'SP5', 'SP6', 'SUL5', 'MG5', 'GC5']) {
-      expect(pots[2]).toContain(id);
+  it('NE e SP: 10 vagas cada, 3 em dois potes e 2 nos outros', () => {
+    for (const region of ['NE', 'SP']) {
+      const perPot = pots.map((pot) => pot.filter((id) => regionOf(id) === region).length);
+      expect(perPot.reduce((a, b) => a + b, 0)).toBe(10);
+      expect(perPot.filter((n) => n === 3)).toHaveLength(2);
+      expect(perPot.filter((n) => n === 2)).toHaveLength(2);
     }
   });
 
-  it('pot 3 top-up (Option C): SUL6, MG6, GC6, NE7, SP7', () => {
-    for (const id of ['SUL6', 'MG6', 'GC6', 'NE7', 'SP7']) {
-      expect(pots[2]).toContain(id);
-    }
-  });
-
-  it('pot 4 is the remaining 12', () => {
-    for (const id of ['NE8','NE9','NE10','SP8','SP9','SP10','SUL7','SUL8','MG7','MG8','GC7','GC8']) {
-      expect(pots[3]).toContain(id);
+  it('cada pote tem exatamente 1 extra: um de NE/SP com 3, o outro com 2', () => {
+    for (const pot of pots) {
+      const ne = pot.filter((id) => regionOf(id) === 'NE').length;
+      const sp = pot.filter((id) => regionOf(id) === 'SP').length;
+      expect(ne + sp).toBe(5);
+      expect(new Set([ne, sp])).toEqual(new Set([2, 3]));
     }
   });
 
@@ -64,6 +67,10 @@ describe('buildPots', () => {
     }
     expect(seen.size).toBe(48);
   });
+
+  it('é determinístico sob a mesma seed', () => {
+    expect(buildPots(fakeLigas(), createRng(7))).toEqual(buildPots(fakeLigas(), createRng(7)));
+  });
 });
 
 describe('drawGroups', () => {
@@ -74,7 +81,7 @@ describe('drawGroups', () => {
   }
 
   const ligas = fakeLigas();
-  const pots = buildPots(ligas);
+  const pots = buildPots(ligas, createRng(3));
   const lookup = ligaLookup(ligas);
 
   it('produces 12 groups of 4 with one from each pot', () => {
